@@ -8,16 +8,24 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class data_module implements ecjia_interface {
 
 	public function run(ecjia_api & $api) {
-		$db = RC_Loader::load_app_model('goods_model', 'goods');
-		RC_Loader::load_app_func('global', 'api');
-		
-		//流程逻辑开始
-		// runloop 流
-		$request = null;
-		$response = array();
-			
-		$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);
-		
+	
+		//如果用户登录获取其session
+		EM_Api::authSession(false);
+		$device = _POST('device', array());
+		$device['code'] = isset($device['code']) ? $device['code'] : '';
+		$cache_key = 'api_home_data_'.$_SESSION['user_rank'].'_'.ecjia::config('lang').'_'.$device['code'];
+// 		$response = RC_Cache::app_cache_get($cache_key, 'mobile');
+		if (empty($response)) {
+			$db = RC_Loader::load_app_model('goods_model', 'goods');
+			RC_Loader::load_app_func('global', 'api');
+			//流程逻辑开始
+			// runloop 流
+			$request = null;
+			$response = array();
+				
+			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);
+			RC_Cache::app_cache_set($cache_key, $response, 'mobile', 60);
+		}
 		return $response;
 			
 	}
@@ -27,7 +35,7 @@ function cycleimage_data($response, $request) {
 	$mobile_cycleimage = RC_Loader::load_app_class('mobile_method', 'mobile');
 	$device = _POST('device', array());
 	
-	if ($device['client'] == 'ipad') {
+	if (isset($device['client']) && $device['client'] == 'ipad') {
 		$cycleimageDatas = $mobile_cycleimage->cycleimage_data(true);
 	} else {
 		$cycleimageDatas = $mobile_cycleimage->cycleimage_phone_data(true);
@@ -85,26 +93,22 @@ function mobile_menu_data($response, $request) {
 
 function promote_goods_data($response, $request) {
 	$promote_goods_data = array();
-	$sales = EM_get_promote_goods();
-	if ( count($sales) > 4 ) {
-		$sales4 = array_slice($sales, 0, 4);
-	} else {
-		$sales4 = $sales;
-	}
-	if ( !empty($sales4) ) {
-		foreach ( $sales4 as $key => $val ) {
+	$order_sort = array('sort_order' => 'ASC', 'goods_id' => 'DESC');
+	$result = RC_Api::api('goods', 'goods_list', array('intro' => 'promotion', 'sort' => $order_sort, 'page' => 1, 'size' => 4));
+	
+	if ( !empty($result['list']) ) {
+		foreach ( $result['list'] as $key => $val ) {
 			$promote_goods_data[] = array(
-					'id' => $val['id'],
-					'goods_id' => $val['id'],           //多商铺中不用，后期删除
-					'name' => $val['name'],
-					'market_price' => $val['market_price'],
-					'shop_price' => $val['shop_price'],
-					'promote_price' => $val['promote_price'],
-					'brief' => $val['brief'],
+					'id'		=> $val['goods_id'],
+					'goods_id'	=> $val['goods_id'],           //多商铺中不用，后期删除
+					'name'		=> $val['goods_name'],
+					'market_price'	=> $val['market_price'],
+					'shop_price'	=> $val['shop_price'],
+					'promote_price'	=> $val['promote_price'],
 					'img' => array(
-							'small'=>API_DATA('PHOTO', $val['goods_thumb']),
-							'thumb'=>API_DATA('PHOTO', $val['goods_img']),
-							'url'=>API_DATA('PHOTO', $val['original_img'])
+							'small' => $val['goods_thumb'],
+							'thumb' => $val['goods_img'],
+							'url'	=> $val['original_img'],
 					)
 			);
 		}
@@ -116,83 +120,97 @@ function promote_goods_data($response, $request) {
 
 function new_goods_data($response, $request) {
 	$new_goods_data = array();
-	RC_Loader::load_app_func('goods' ,'goods');
-	$goods_list = get_recommend_goods('new');
-	foreach ($goods_list as $key => $val) {
-		$new_goods_data[] = array(
-				'goods_id'			=> $val['id'],           //多商铺中不用，后期删除
-				'id'			=> $val['id'],
-				'name' 			=> $val['name'],
-				'market_price'	=> $val['market_price'],
-				'shop_price'	=> $val['shop_price'],
-				'promote_price'	=> $val['promote_price'],
-				'brief' 		=> $val['brief'],
-				'img' => array(
-						'small'=>API_DATA('PHOTO', $val['thumb']),
-						'thumb'=>API_DATA('PHOTO', $val['goods_img']),
-						'url'=>API_DATA('PHOTO', $val['original_img'])
-				)
-		);
+	
+	$order_sort = array('sort_order' => 'ASC', 'goods_id' => 'DESC');
+	$result = RC_Api::api('goods', 'goods_list', array('intro' => 'new', 'sort' => $order_sort, 'page' => 1, 'size' => 4));
+	
+	if ( !empty($result['list']) ) {
+		foreach ( $result['list'] as $key => $val ) {
+			$new_goods_data[] = array(
+					'id'		=> $val['goods_id'],
+					'goods_id'	=> $val['goods_id'],           //多商铺中不用，后期删除
+					'name'		=> $val['goods_name'],
+					'market_price'	=> $val['market_price'],
+					'shop_price'	=> $val['shop_price'],
+					'promote_price'	=> $val['promote_price'],
+					'img' => array(
+							'small' => $val['goods_thumb'],
+							'thumb' => $val['goods_img'],
+							'url'	=> $val['original_img'],
+					)
+			);
+		}
 	}
 
 	$response['new_goods'] = $new_goods_data;
 	return $response;
 }
 
-function mobile_home_adsense1_data($response, $request) {
-
-	$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
-	$adsense1 = array(
-			'position_id'	=> ecjia::config('mobile_home_adsense1'),
-			'start_time'	=> array('elt' => RC_Time::gmtime()),
-			'end_time'		=> array('egt' => RC_Time::gmtime()),
-			'enabled'		=> 1,
-	);
-	$adsense_result1 = $ad_view->where($adsense1)->order('ad_id')->find();
-
-	$mobile_home_adsense1_data = array();
-	if (!empty($adsense_result1)) {
-		if (substr($adsense_result1['ad_code'], 0, 4) != 'http') {
-			$adsense_result1['ad_code'] = RC_Upload::upload_url().'/'.$adsense_result1['ad_code'];
-		}
-		$mobile_home_adsense1_data = array(
-				'image'	=> $adsense_result1['ad_code'],
-				'text'	=> $adsense_result1['ad_name'],
-				'url'	=> $adsense_result1['ad_link'],
-		);
-	}
-
-	$response['mobile_home_adsense1'] = $mobile_home_adsense1_data;
-	return $response;
-}
-
-function mobile_home_adsense2_data($response, $request) {
-	$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
-	$adsense2 = array(
-			'position_id'	=> ecjia::config('mobile_home_adsense2'),
-			'start_time'	=> array('elt' => RC_Time::gmtime()),
-			'end_time'		=> array('egt' => RC_Time::gmtime()),
-			'enabled'		=> 1,
-	);
-	$adsense_result2 = $ad_view->where($adsense2)->order('ad_id')->limit(4)->select();
-
-	$mobile_home_adsense2_data = array();
-	if (!empty($adsense_result2)) {
-		foreach ($adsense_result2 as $val) {
-			if (substr($val['ad_code'], 0, 4) != 'http') {
-				$val['ad_code'] = RC_Upload::upload_url().'/'.$val['ad_code'];
-			}
-			$mobile_home_adsense2_data[] = array(
-					'image'	=> $val['ad_code'],
-					'text'	=> $val['ad_name'],
-					'url'	=> $val['ad_link'],
+function mobile_tv_adsense_data($response, $request) {
+	$device = _POST('device', array());
+	if (isset($device['code']) && $device['code'] == '1006') {
+		$mobile_tv_adsense_group = unserialize(ecjia::config('mobile_tv_adsense_group'));
+		if ($mobile_tv_adsense_group['big_group'] == '' || $mobile_tv_adsense_group['big_group'] == 0) {
+			$response['mobile_tv_big_adsense'] = array();
+		} else {
+			$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
+			$adsense = array(
+					'position_id'	=> $mobile_tv_adsense_group['big_group'],
+					'start_time'	=> array('elt' => RC_Time::gmtime()),
+					'end_time'		=> array('egt' => RC_Time::gmtime()),
+					'enabled'		=> 1,
 			);
+			$adsense_result = $ad_view->where($adsense)->order('ad_id')->select();
+			
+			$mobile_tv_big_adsense = array();
+			if (!empty($adsense_result)) {
+				foreach ($adsense_result as $val) {
+					if (substr($val['ad_code'], 0, 4) != 'http') {
+						$val['ad_code'] = RC_Upload::upload_url().'/'.$val['ad_code'];
+					}
+					$mobile_tv_big_adsense[] = array(
+							'image'	=> $val['ad_code'],
+							'text'	=> $val['ad_name'],
+							'url'	=> $val['ad_link'],
+					);
+				}
+			}
+			
+			$response['mobile_tv_big_adsense'] = $mobile_tv_big_adsense;
+		}
+		if ($mobile_tv_adsense_group['small_group'] == '' || $mobile_tv_adsense_group['small_group'] == 0) {
+			$response['mobile_tv_small_adsense'] = array();
+		} else {
+			$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
+			$adsense = array(
+					'position_id'	=> $mobile_tv_adsense_group['small_group'],
+					'start_time'	=> array('elt' => RC_Time::gmtime()),
+					'end_time'		=> array('egt' => RC_Time::gmtime()),
+					'enabled'		=> 1,
+			);
+			$adsense_result = $ad_view->where($adsense)->order('ad_id')->select();
+			
+			$mobile_tv_small_adsense = array();
+			if (!empty($adsense_result)) {
+				foreach ($adsense_result as $val) {
+					if (substr($val['ad_code'], 0, 4) != 'http') {
+						$val['ad_code'] = RC_Upload::upload_url().'/'.$val['ad_code'];
+					}
+					$mobile_tv_small_adsense[] = array(
+							'image'	=> $val['ad_code'],
+							'text'	=> $val['ad_name'],
+							'url'	=> $val['ad_link'],
+					);
+				}
+			}
+			
+			$response['mobile_tv_small_adsense'] = $mobile_tv_small_adsense;
 		}
 	}
-
-	$response['mobile_home_adsense2'] = $mobile_home_adsense2_data;
+	
 	return $response;
 }
+
 
 function mobile_home_adsense_group($response, $request) {
 	if (ecjia::config('mobile_home_adsense_group') == '' || ecjia::config('mobile_home_adsense_group') == 0) {
@@ -370,7 +388,7 @@ function seller_recommend_data($response, $request) {
 		$where['msi.merchants_audit'] = 1;
 		$order_by = array('follower' => 'DESC', 'shop_id' => 'DESC');
 		
-		$user_id = EM_Api::$session['uid'];
+		$user_id = $_SESSION['user_id'];
 		$user_id = empty($user_id) ? 0 : $user_id;
 		$field ='msi.user_id, ssi.*, CONCAT(shoprz_brandName,shopNameSuffix) as seller_name, c.cat_name, ssi.shop_logo, count(cs.ru_id) as follower, SUM(IF(cs.user_id = '.$user_id.',1,0)) as is_follower';
 		$result = $msi_dbview->join(array('category', 'seller_shopinfo', 'collect_store'))
@@ -498,30 +516,52 @@ function seller_recommend_data($response, $request) {
 }
 
 function topic_data($response, $request) {
-	$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
-	$adsense = array(
-			'position_id'	=> ecjia::config('mobile_topic_adsense'),
-			'start_time'	=> array('elt' => RC_Time::gmtime()),
-			'end_time'		=> array('egt' => RC_Time::gmtime()),
-			'enabled'		=> 1,
-	);
-	$adsense_result = $ad_view->where($adsense)->order('ad_id')->select();
-	
-	$mobile_topic_adsense_data = array();
-	if (!empty($adsense_result)) {
-		foreach ($adsense_result as $val) {
-			if (substr($val['ad_code'], 0, 4) != 'http') {
-				$val['ad_code'] = RC_Upload::upload_url().'/'.$val['ad_code'];
+	if (ecjia::config('mobile_topic_adsense') == '' || ecjia::config('mobile_topic_adsense') == 0) {
+		$response['mobile_topic_adsense'] = array();
+	} else {
+		$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
+		$adsense = array(
+				'position_id'	=> ecjia::config('mobile_topic_adsense'),
+				'start_time'	=> array('elt' => RC_Time::gmtime()),
+				'end_time'		=> array('egt' => RC_Time::gmtime()),
+				'enabled'		=> 1,
+		);
+		$adsense_result = $ad_view->where($adsense)->order('ad_id')->select();
+		
+		$mobile_topic_adsense_data = array();
+		if (!empty($adsense_result)) {
+			foreach ($adsense_result as $val) {
+				if (substr($val['ad_code'], 0, 4) != 'http') {
+					$val['ad_code'] = RC_Upload::upload_url().'/'.$val['ad_code'];
+				}
+				$mobile_topic_adsense_data[] = array(
+						'image'	=> $val['ad_code'],
+						'text'	=> $val['ad_name'],
+						'url'	=> $val['ad_link'],
+				);
 			}
-			$mobile_topic_adsense_data[] = array(
-					'image'	=> $val['ad_code'],
-					'text'	=> $val['ad_name'],
-					'url'	=> $val['ad_link'],
+		}
+		
+		$response['mobile_topic_adsense'] = $mobile_topic_adsense_data;
+	}
+	return $response;
+}
+
+function mobile_toutiao_data($response, $request) {
+	$db_toutiao = RC_Loader::load_app_model('mobile_toutiao_model', 'mobile');
+	$result = $db_toutiao->order(array('sort_order' => 'ASC' , 'id' => 'desc'))->limit(5)->select();
+	$mobile_toutiao_data = array();
+	if (!empty($result)) {
+		foreach ($result as $val) {
+			$mobile_toutiao_data[] = array(
+					'tag'	=> $val['tag'],
+					'title'	=> $val['title'],
+					'url'	=> $val['content_url'],
 			);
 		}
 	}
 	
-	$response['mobile_topic_adsense'] = $mobile_topic_adsense_data;
+	$response['toutiao'] = $mobile_toutiao_data;
 	return $response;
 }
 
@@ -568,94 +608,16 @@ function api_get_url($url) {
 }
 
 
-
-function EM_get_promote_goods($cats = '')
-{
-    $time = RC_Time::gmtime();
-	$order_type=ecjia::config('recommend_order');
-    RC_Loader::load_app_func('common', 'goods');
-//     $_SESSION[discount] = empty($_SESSION[discount]) ?  1 : $_SESSION[discount];
-    $dbview = RC_Loader::load_app_model('goods_brand_member_viewmodel', 'goods');
-    RC_Loader::load_app_func('goods','goods');
-    /* 取得促销lbi的数量限制 */
-    $num = 4;//get_library_number("recommend_promotion");??????
-
-
-    $dbview->view = array(
-        'brand' => array(
-            'type' 		=> Component_Model_View::TYPE_LEFT_JOIN,
-            'alias' 	=> 'b',
-            'field'     => "g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price,IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price,promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, goods_img, g.original_img, b.brand_name,g.is_best, g.is_new, g.is_hot, g.is_promote, RAND() AS rnd",
-            'on' 		=> 'b.brand_id = g.brand_id '
-        ),
-        'member_price' => array(
-            'type' 		=> Component_Model_View::TYPE_LEFT_JOIN,
-            'alias' 	=> 'mp',
-            'on' 		=> "mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]'"
-        )
-    );
-    //$order = $order_type == 0 ? ' g.sort_order, g.last_update DESC' : ' rnd';
-    //..error:Unknown column 'ecs_g.sort_order' in 'order clause' 传字符串时正则加表前缀出错，因为FROM ecs_goods  AS g 
-    
-    $order = $order_type == 0 ? array('g.sort_order' => 'asc','g.last_update'=>'desc'): ' rnd';
-    $where = array(
-    		'g.is_on_sale'		=> 1 ,
-    		'g.is_alone_sale'	=> 1 ,
-    		'g.is_delete'		=> 0 ,
-    		'g.is_promote'		=> 1 ,
-    		'promote_start_date' => array('elt' => $time)  ,
-    		'promote_end_date'	=> array('egt' => $time)
-    );
-    /* 判断是否是多商户*/
-    $is_seller = ecjia_app::validate_application('seller');
-	if (!is_ecjia_error($is_seller)) {
-	    if (ecjia::config('review_goods')) {
-	    	$where['g.review_status'] = array('gt' => 2);
-	    }
-	}	
-    $result = $dbview->join(array('brand','member_price'))->where($where)->order($order)->limit($num)->select();
-    
-    $goods = array();
-    foreach ($result AS $idx => $row)
-    {
-        if ($row['promote_price'] > 0)
-        {
-            $promote_price = bargain_price($row['promote_price'], $row['promote_start_date'], $row['promote_end_date']);
-            $goods[$idx]['promote_price'] = $promote_price > 0 ? price_format($promote_price) : '';
-        } else {
-            $goods[$idx]['promote_price'] = '';
-        }
-
-        $goods[$idx]['id']           = $row['goods_id'];
-        $goods[$idx]['name']         = $row['goods_name'];
-        $goods[$idx]['brief']        = $row['goods_brief'];
-        $goods[$idx]['brand_name']   = $row['brand_name'];
-        $goods[$idx]['goods_style_name']   = add_style($row['goods_name'],$row['goods_name_style']);
-        $goods[$idx]['short_name']   = ecjia::config('goods_name_length') > 0 ? RC_String::sub_str($row['goods_name'], ecjia::config('goods_name_length')) : $row['goods_name'];
-        $goods[$idx]['short_style_name']   = add_style($goods[$idx]['short_name'],$row['goods_name_style']);
-        $goods[$idx]['market_price'] = $row['market_price'] > 0 ? price_format($row['market_price']) : 0 ;
-        $goods[$idx]['shop_price']   = $row['shop_price'] > 0 ? price_format($row['shop_price']) : __('免费');
-        $goods[$idx]['goods_thumb']        = get_image_path($row['goods_id'], $row['goods_thumb'], true);
-        $goods[$idx]['goods_img']    = get_image_path($row['goods_id'], $row['goods_img']);
-        $goods[$idx]['original_img']    = get_image_path($row['goods_id'], $row['original_img']);
-        $goods[$idx]['url']          = build_uri('goods', array('gid' => $row['goods_id']), $row['goods_name']);
-    }
-
-    return $goods;
-}
-
-
-
 RC_Hook::add_filter('api_home_data_runloop', 'cycleimage_data', 10, 2);
 RC_Hook::add_filter('api_home_data_runloop', 'mobile_menu_data', 10, 2);
 RC_Hook::add_filter('api_home_data_runloop', 'promote_goods_data', 10, 2);
 RC_Hook::add_filter('api_home_data_runloop', 'new_goods_data', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'mobile_home_adsense1_data', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'mobile_home_adsense2_data', 10, 2);
+RC_Hook::add_filter('api_home_data_runloop', 'mobile_tv_adsense_data', 10, 2);
 RC_Hook::add_filter('api_home_data_runloop', 'mobile_home_adsense_group', 10, 2);
 RC_Hook::add_filter('api_home_data_runloop', 'group_goods_data', 10, 2);
 RC_Hook::add_filter('api_home_data_runloop', 'mobilebuy_goods_data', 10, 2);
 RC_Hook::add_filter('api_home_data_runloop', 'seller_recommend_data', 10, 2);
 RC_Hook::add_filter('api_home_data_runloop', 'topic_data', 10, 2);
+// RC_Hook::add_filter('api_home_data_runloop', 'mobile_toutiao_data', 10, 2);
 
 // end
