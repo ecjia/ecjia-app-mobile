@@ -13,11 +13,7 @@ class validate_module implements ecjia_interface {
 		if (empty($code)) {
 			EM_Api::outPut(101);
 		}
-		
-		if ( RC_Session::session_id() != EM_Api::$session['sid']) {
-            RC_Session::destroy();
-            RC_Session::init(null, EM_Api::$session['sid']);
-        }
+		EM_Api::authSession(false);
 		
         if ($_SESSION['user_id'] > 0  || $_SESSION['admin_id'] > 0) {
         	$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
@@ -26,11 +22,9 @@ class validate_module implements ecjia_interface {
 	        if ($result['status'] != 1) {
 				return array('code_status' => 104, 'message' => '二维码已过期！');
 			} else {
-				$device_name = array('android' => 'Android', 'ipad' => 'iPad', 'iphone' => 'iPhone');
-				if ($result['device_code'] == '8001') {
-					$name = '收银台';
-				}
-				$message = ecjia::config('shop_name').$name.'请求登录，是否授权？';
+				$device_name = array('8001' => '收银台', '1006' => 'TV');
+				
+				$message = ecjia::config('shop_name').$device_name[$result['device_code']].'请求登录，是否授权？';
 				return array('code_status' => 101, 'message' => $message);
 			}
         }
@@ -169,13 +163,16 @@ function admin_login($uid)
 				'uid' => $_SESSION['admin_id']
 			),
 	);
-
+	$role_db = RC_Loader::load_model('role_model');
+	$role_name = $role_db->where(array('role_id' => $row['role_id']))->get_field('role_name');
 	$userinfo['userinfo'] = array(
 			'id' 			=> $row['user_id'],
 			'username'		=> $row['user_name'],
 			'email'			=> $row['email'],
 			'last_login' 	=> RC_Time::local_date(ecjia::config('time_format'), $row['last_login']),
 			'last_ip'		=> RC_Ip::area($row['last_ip']),
+			'role_name'		=> !empty($role_name) ? $role_name : '',
+			'avator_img'	=> RC_Uri::admin_url('statics/images/admin_avatar.png'),
 	);
 	
 	//修正关联设备号

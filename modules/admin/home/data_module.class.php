@@ -46,7 +46,7 @@ class data_module implements ecjia_interface {
 		$fields = "COUNT(*) AS order_count, SUM(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount";
 		
 		$where = array();
-		if ($_SESSION['ru_id'] > 0) {
+		if (isset($_SESSION['ru_id']) && $_SESSION['ru_id'] > 0) {
 			/*入驻商*/
 			$where['ru_id'] = $_SESSION['ru_id'];
 			$where[] = 'oii.order_id is null';
@@ -57,34 +57,17 @@ class data_module implements ecjia_interface {
 				$where['oi.main_order_id'] = 0;
 			}
 		}
-		if ($_SESSION['ru_id'] > 0) {
-			$order_count = $db_orderinfo_view->field('oi.order_id')->where(array_merge(array('oi.add_time' => array('gt' => $today_time)), $where))->group('oi.order_id')->select();
+		if (isset($_SESSION['ru_id']) && $_SESSION['ru_id'] > 0) {
+			$order_count = $db_orderinfo_view->field('COUNT(oi.order_id) AS order_count')->where(array_merge(array('oi.add_time' => array('gt' => $today_time)), $where))->find();
 			
-			$order_data_today['order_count'] = count($order_count);
-			$order_amount_result = $db_orderinfo_view->field('(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('gt' => $today_time)), $where))->group('og.order_id')->select();
-			$order_amount = 0;
+			$order_data_today['order_count'] = $order_count['order_count'];
+			$order_amount = $db_orderinfo_view->field('SUM(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('gt' => $today_time)), $where))->find();
+			$order_data_today['order_amount'] = $order_amount['order_amount'];
 			
-			if (!empty($order_amount_result)) {
-				foreach ($order_amount_result as $k => $v) {
-					$order_amount += $v['order_amount'];
-				}
-			}
-
-			$order_data_today['order_amount'] = $order_amount;
-			
-			$yersterday_order_count = $db_orderinfo_view->field('oi.order_id')->where(array_merge(array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->group('oi.order_id')->select();
-			$order_data_yesterday['order_count'] = count($yersterday_order_count);
-			$yersterday_order_amount_result = $db_orderinfo_view->field('(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->group('og.order_id')->select();
-			
-			$yersterday_order_amount = 0;
-				
-			if (!empty($yersterday_order_amount_result)) {
-				foreach ($yersterday_order_amount_result as $k => $v) {
-					$yersterday_order_amount += $v['order_amount'];
-				}
-			}
-			
-			$order_data_yesterday['order_amount'] = $yersterday_order_amount;
+			$yersterday_order_count = $db_orderinfo_view->field('COUNT(oi.order_id) AS order_count')->where(array_merge(array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->find();
+			$order_data_yesterday['order_count'] = $yersterday_order_count['order_count'];
+			$yersterday_order_amount = $db_orderinfo_view->field('SUM(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->find();
+			$order_data_yesterday['order_amount'] = $yersterday_order_amount['order_amount'];
 // 			$order_data_yesterday = $db_orderinfo_view->field($fields)->where(array_merge($order_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->find();
 		} else {
 			$order_count = $db_orderinfo_view->join(null)->field('COUNT(oi.order_id) AS order_count')->where(array_merge(array('oi.add_time' => array('gt' => $today_time)), $where))->find();
@@ -110,11 +93,9 @@ class data_module implements ecjia_interface {
 		
 		$unpaid_where = $order_query->order_await_pay('oi.');
 		$await_ship_where = $order_query->order_await_ship('oi.');
-		if ($_SESSION['ru_id'] > 0) {
-			$await_ship_orders_result = $db_orderinfo_view->field('oi.order_id')->where(array_merge($await_ship_where, $where))->group('oi.order_id')->select('oi.order_id');;
-			$unpaid_orders_result = $db_orderinfo_view->field('oi.order_id')->where(array_merge($unpaid_where, $where))->group('oi.order_id')->select('oi.order_id');
-			$await_ship_orders = count($await_ship_orders_result);
-			$unpaid_orders = count($unpaid_orders_result);
+		if (isset($_SESSION['ru_id']) && $_SESSION['ru_id'] > 0) {
+			$await_ship_orders = $db_orderinfo_view->where(array_merge($await_ship_where, $where))->count('oi.order_id');;
+			$unpaid_orders = $db_orderinfo_view->where(array_merge($unpaid_where, $where))->count('oi.order_id');
 		} else {
 			$await_ship_orders = $db_orderinfo_view->join(null)->where(array_merge($await_ship_where, $where))->count('oi.order_id');;
 			$unpaid_orders = $db_orderinfo_view->join(null)->where(array_merge($unpaid_where, $where))->count('oi.order_id');
@@ -137,11 +118,6 @@ class data_module implements ecjia_interface {
 					'label'	=> __('今日订单'),
 					'value'	=> intval($order_data_today['order_count']),
 				),
-// 				array(
-// 						'key'	=> 'unpaid_orders',
-// 						'label'	=> __('待付款订单'),
-// 						'value'	=> intval($unpaid_orders),
-// 				),
 				array(
 					'key'	=> 'today_total_visitors',
 					'label' => __('今日访客'),
@@ -162,6 +138,11 @@ class data_module implements ecjia_interface {
 						'label' => __('昨日访客'),
 						'value' => $next_total_visitors,
 				),
+// 				array(
+// 						'key'	=> 'unpaid_orders',
+// 						'label'	=> __('待付款订单'),
+// 						'value'	=> intval($unpaid_orders),
+// 				),
 // 				array(
 // 						'key'	=> 'await_ship_orders',
 // 						'label'	=> __('待发货订单'),

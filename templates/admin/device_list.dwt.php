@@ -82,11 +82,9 @@
 								     		<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除设备[{$val.device_name}]吗？{/t}" href='{RC_Uri::url("mobile/admin_device/remove","id={$val.id}&deviceval={$device_list.filter.deviceval}")}'>{t}永久删除{/t}</a>
 								     	{else}
 									     	{assign var=view_url value=RC_Uri::url('mobile/admin_device/preview',"id={$val.id}")}
-									      	<a class="data-pjax" href="{$view_url}" title="{$lang.view}">{t}查看{/t}</a>&nbsp;|&nbsp;
+									      	<a class="data-pjax" href="{$view_url}" title="{lang key='system::system.view'}">{t}查看{/t}</a>&nbsp;|&nbsp;
 									     	<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除设备[{$val.device_name}]至回收站吗？{/t}" href='{RC_Uri::url("mobile/admin_device/trash","id={$val.id}&deviceval={$device_list.filter.deviceval}")}' title="{t}移除{/t}">{t}移至回收站{/t}</a>
 								     	{/if}
-								     	
-								     	
 								     </div>
 									</td>
 									<td>
@@ -103,7 +101,7 @@
 									<td>{$val.add_time}</td>
 								</tr>
 								<!--  {foreachelse} -->
-							<tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
+							<tr><td class="no-records" colspan="10">{lang key='system::system.no_records'}</td></tr>
 							<!-- {/foreach} -->
 						</tbody>
 					</table>

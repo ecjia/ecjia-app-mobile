@@ -45,18 +45,16 @@ class message_module implements ecjia_interface {
 		
 		$order_info_msg = unserialize($order_message['message']);
 		$data = array();
-		$parameter = explode('&', end(explode('?', $order_info_msg['url'])));
-		if (!empty($parameter)) {
-			foreach ($parameter as $val) {
-				$tmp = explode('=',$val);
-				$data[$tmp[0]] = $tmp[1];
-			}
+		$url = explode('?', $order_info_msg['url']);
+		$parameter = explode('&', end($url));
+		foreach($parameter as $val){
+			$tmp = explode('=',$val);
+			$data[$tmp[0]] = isset($tmp[1]) ? $tmp[1] : '';
 		}
-		if (!empty($data) && $data['order_id'] > 0) {
+		if (isset($data['order_id']) && $data['order_id'] > 0) {
 			$where['oi.order_id'] = array('gt' => $data['order_id']);
 		}
-		
-		$order_result = $db_orderinfo_view->field('oi.order_id, add_time, (oi.goods_amount - oi.discount + oi.tax + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee) AS total_fee')->join($join)->where(array_merge(array('oi.order_status' => array('lt' => 2)), $where))->order(array('oi.order_id' => 'asc'))->select();
+		$order_result = $db_orderinfo_view->field('oi.order_id, add_time, oi.order_sn, (oi.goods_amount - oi.discount + oi.tax + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee) AS total_fee')->join($join)->where(array_merge(array('oi.order_status' => array('lt' => 2)), $where))->order(array('oi.order_id' => 'asc'))->select();
 		
 		if (!empty($order_result)) {
 			foreach ($order_result as $key => $val) {
@@ -92,8 +90,6 @@ class message_module implements ecjia_interface {
 		$size = EM_Api::$pagination['count'];
 		$page = EM_Api::$pagination['page'];
 		
-		//加载分页类
-		RC_Loader::load_sys_class('ecjia_page', false);
 		//实例化分页
 		$page_row = new ecjia_page($count, $size, 6, '', $page);
 		

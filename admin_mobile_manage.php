@@ -50,9 +50,6 @@ class admin_mobile_manage extends ecjia_admin {
 	public function init () {
 		$this->admin_priv('mobile_manage', ecjia::MSGTYPE_JSON);
 
-		/* 加载分页类 */
-		RC_Loader::load_sys_class('ecjia_page', false);
-		
 		$count = $this->db_mobile_manage->count();
 		$page = new ecjia_page ($count, 10, 5);
 		$mobile_manage = $this->db_mobile_manage->limit($page->limit())->order(array('sort' => 'DESC'))->select();
@@ -184,7 +181,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->db_mobile_manage->delete(array('app_id' => intval($_GET['id'])));
 		
 		ecjia_admin::admin_log($name, 'remove', 'mobile_manage');
-		$this->showmessage('删除客户端应用成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/init')));
+		$this->showmessage('删除客户端应用成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/init')));
 		
 	}
 	

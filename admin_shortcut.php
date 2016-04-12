@@ -201,6 +201,7 @@ class admin_shortcut extends ecjia_admin {
 				if (!empty($info)) {
 // 					$src = $info['savepath'] . '/' . $info['savename'];
 					$src = $upload->get_position($info); 
+					$upload->remove($rt['src']);
 				} else {
 					$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
@@ -208,25 +209,17 @@ class admin_shortcut extends ecjia_admin {
 			// 图片上传不能为空
 			elseif (empty($rt['src'])) {
 				$this->showmessage(__('请上传快捷菜单图标'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-			}
-
-			if ($src && $rt['src'] != $src) {
-// 				@unlink(RC_Upload::upload_path() . $rt['src']);
-				$upload->remove($rt['src']);
 			} else {
-			    $src = $rt['src'];
+				$src = $rt['src'];
 			}
-
-			$display = $_POST['img_display'];
-			if (!isset($display)) {
-				$display = 0;
-			}
+			
+			$display = isset($_POST['img_display']) ? 1 : 0;
        		$flashdb[$id] = array (
-       				'src'	=> $src,
-       				'url'	=> $_POST['img_url'],
-       				'display'	=> $display,
-       				'text'	=> $_POST['img_text'],
-       				'sort'	=> $_POST['img_sort']
+       			'src'	=> $src,
+       			'url'	=> $_POST['img_url'],
+       			'display'	=> $display,
+       			'text'	=> $_POST['img_text'],
+       			'sort'	=> $_POST['img_sort']
        		);
 
        		$flashdb[$id] = $this->mobile->shortcut_struct($flashdb[$id]);
@@ -235,7 +228,7 @@ class admin_shortcut extends ecjia_admin {
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_shortcut_data, serialize($flashdb));
 
 			ecjia_admin::admin_log($_POST['img_text'], 'edit', 'mobile_shortcut');
-		    $this->showmessage('编辑快捷菜单成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_shortcut/init')));
+		    $this->showmessage('编辑快捷菜单成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_shortcut/init')));
 		}
 	}
 

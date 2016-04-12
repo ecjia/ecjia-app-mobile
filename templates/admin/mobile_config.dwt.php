@@ -28,6 +28,8 @@
 					<li><a href="#adsense" data-toggle="tab">{t}移动广告位设置{/t}</a></li>
 					<li><a href="#mobile_login" data-toggle="tab">{t}登录页色值设置{/t}</a></li>
 					<li><a href="#hot_city" data-toggle="tab">{t}热门城市配置{/t}</a></li>
+					<li><a href="#message_notice" data-toggle="tab">{t}消息提醒{/t}</a></li>
+					<li><a href="#integral_manage" data-toggle="tab">{t}积分设置{/t}</a></li>
 				</ul>
 				<div class="tab-content tab_merchants">
 					<div class="tab-pane active" id="tab1">
@@ -72,12 +74,6 @@
 							<label class="control-label">{t}咨询默认回复设置：{/t}</label>
 							<div class="controls">
 								<input type='text' name='mobile_feedback_autoreply' value='{$mobile_feedback_autoreply}'>
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{t}掌柜UrlScheme设置：{/t}</label>
-							<div class="controls">
-								<input type='text' name='mobile_shopkeeper_urlscheme' value='{$mobile_shopkeeper_urlscheme}'>
 							</div>
 						</div>
 						<div class="control-group formSep">
@@ -186,6 +182,18 @@
 								<input type='text' name='shop_ipad_download' value='{$shop_ipad_download}'>
 							</div>
 						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}掌柜UrlScheme设置：{/t}</label>
+							<div class="controls">
+								<input type='text' name='mobile_shopkeeper_urlscheme' value='{$mobile_shopkeeper_urlscheme}'>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}商城UrlScheme设置：{/t}</label>
+							<div class="controls">
+								<input type='text' name='mobile_shop_urlscheme' value='{$mobile_shop_urlscheme}'>
+							</div>
+						</div>
 					</div>
 					<div class="tab-pane" id="adsense">
 						<div class="control-group formSep edit-page">
@@ -232,30 +240,6 @@
 							</div>
 						</div>
 						<div class="control-group formSep edit-page">
-							<label class="control-label">{t}移动首页广告图A：{/t}</label>
-							<div class="controls">
-								<select name='mobile_home_adsense1'>
-									<option value='0'>{t}请选择...{/t}</option>
-									<!-- {foreach from=$ad_position_list item=list} -->
-										<option value="{$list.position_id}" {if $list.position_id eq $mobile_home_adsense1}selected{/if}>{$list.position_name}</option>
-									<!-- {/foreach} -->
-								</select>
-								<span class="help-block">{t}请选择所需展示的广告位。注意：只能显示一张广告图片。{/t}</span>
-							</div>
-						</div>
-						<div class="control-group formSep edit-page">
-							<label class="control-label">{t}移动首页广告图B：{/t}</label>
-							<div class="controls">
-								<select name='mobile_home_adsense2'>
-									<option value='0'>{t}请选择...{/t}</option>
-									<!-- {foreach from=$ad_position_list item=list} -->
-										<option value="{$list.position_id}" {if $list.position_id eq $mobile_home_adsense2}selected{/if}>{$list.position_name}</option>
-									<!-- {/foreach} -->
-								</select>
-								<span class="help-block">{t}请选择所需展示的广告位。注意：最多只能显示四张广告图片。{/t}</span>
-							</div>
-						</div>
-						<div class="control-group formSep edit-page">
 							<label class="control-label">{t}首页主题类设置：{/t}</label>
 							<div class="controls">
 								<select name='mobile_topic_adsense'>
@@ -265,6 +249,30 @@
 									<!-- {/foreach} -->
 								</select>
 								<span class="help-block">{t}请选择广告位，用来显示首页主题类内容{/t}</span>
+							</div>
+						</div>
+						<div class="control-group formSep edit-page">
+							<label class="control-label">{t}TV首页大图广告组：{/t}</label>
+							<div class="controls">
+								<select name='mobile_tv_big_adsense'>
+									<option value='0'>{t}请选择...{/t}</option>
+									<!-- {foreach from=$ad_position_list item=list} -->
+										<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_big_adsense}selected{/if}>{$list.position_name}</option>
+									<!-- {/foreach} -->
+								</select>
+								<span class="help-block">{t}请选择所需展示的广告位。{/t}</span>
+							</div>
+						</div>
+						<div class="control-group formSep edit-page">
+							<label class="control-label">{t}TV首页小图广告组：{/t}</label>
+							<div class="controls">
+								<select name='mobile_tv_small_adsense'>
+									<option value='0'>{t}请选择...{/t}</option>
+									<!-- {foreach from=$ad_position_list item=list} -->
+										<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_small_adsense}selected{/if}>{$list.position_name}</option>
+									<!-- {/foreach} -->
+								</select>
+								<span class="help-block">{t}请选择所需展示的广告位。{/t}</span>
 							</div>
 						</div>
 					</div>
@@ -393,9 +401,90 @@
 							</div>
 						</div>
 					</div>
+					<div class="tab-pane edit-page" id="message_notice">
+						<div class="control-group formSep">
+							<label class="control-label">{t}提醒卖家发货：{/t}</label>
+							<div class="controls chk_radio">
+								<input type='radio' name='remind_seller_ship' value='2'>短信提醒<input type='radio' name='remind_seller_ship' value='1'>推送提醒<input type='radio' name='remind_seller_ship' value='0'>不提醒
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="integral_manage">
+						<h3 class="heading">签到送积分</h3>
+						<div class="control-group formSep">
+							<label class="control-label">{t}是否开启签到送：{/t}</label>
+							<div class="controls">
+								<div id="is_open_checkin">
+					                <input class="nouniform" name="checkin_award_open" type="checkbox"  {if $checkin_award_open eq 1}checked="checked"{/if}  value="1"/>
+					            </div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}签到送类型：{/t}</label>
+							<div class="controls">
+								<select name='checkin_award_type'>
+									<option value="integral">送积分</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}签到送额度：{/t}</label>
+							<div class="controls">
+								<input type='text' name='checkin_award' value='{$checkin_award}'>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}连续签到天数：{/t}</label>
+							<div class="controls">
+								<input type='text' name='checkin_extra_day' value='{$checkin_extra_day}'>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}连续签到送额度：{/t}</label>
+							<div class="controls">
+								<input type='text' name='checkin_extra_award' value='{$checkin_extra_award}'>
+							</div>
+						</div>
+						<h3 class="heading">评论送积分</h3>
+						<div class="control-group formSep">
+							<label class="control-label">{t}是否开启评论送：{/t}</label>
+							<div class="controls">
+								<div id="is_open_comment_integral">
+					                <input class="nouniform" name="comment_award_open" type="checkbox"  {if $comment_award_open eq 1}checked="checked"{/if}  value="1"/>
+					            </div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}评论一次可获得的奖励：{/t}</label>
+							<div class="controls">
+								<input type='text' name='comment_award' value='{$comment_award}'>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label"><strong>{t}会员等级{/t}</strong></label>
+							<label class="control-label">
+								<strong>评价后可获得奖励</strong>
+							</label>
+						</div>
+						<!-- {foreach from=$user_rank_list item=item} -->
+						<div class="control-group">
+							<label class="control-label">{t}{$item.rank_name}：{/t}</label>
+							<div class="controls">
+								<input type='text' name="comment_award_rules[{$item.rank_id}]" value="{$item.comment_award}">
+							</div>
+						</div>
+						<!-- {/foreach} -->
+						<div class="control-group">
+							<div class="controls">
+								<span class="help-block">{t}不用次规则这设置为0或不填，否则已该规则为准！{/t}</span>
+							</div>
+						</div>
+						
+					</div>
 					<div class="control-group">
 						<div class="controls">
-							<input type="submit" value="{$lang.button_submit}" class="btn btn-gebo" />
+							<input type="submit" value="{lang key='system::system.button_submit'}" class="btn btn-gebo" />
 						</div>
 					</div>
 				</div>
