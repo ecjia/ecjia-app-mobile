@@ -14,7 +14,6 @@ class mobile_installer  extends ecjia_installer {
     
     
     public function install() {
-    	/* 设备信息*/
         $table_name = 'mobile_device';
         if (!RC_Model::make()->table_exists($table_name)) {
             $schemes = array(
@@ -37,7 +36,7 @@ class mobile_installer  extends ecjia_installer {
             );
             RC_Model::make()->create_table($table_name, $schemes);
         }
-        /* 今日热点*/
+        
         $table_name = 'mobile_news';
         if (!RC_Model::make()->table_exists($table_name)) {
         	$schemes = array(
@@ -75,8 +74,7 @@ class mobile_installer  extends ecjia_installer {
         	);
         	RC_Model::make()->create_table($table_name, $schemes);
         }
-		
-        /* 客户端管理*/
+        
         $table_name = 'mobile_manage';
         if (!RC_Model::make()->table_exists($table_name)) {
             $schemes = array(
@@ -94,41 +92,6 @@ class mobile_installer  extends ecjia_installer {
                 "PRIMARY KEY (`app_id`)"
             );
             RC_Model::make()->create_table($table_name, $schemes);
-        }
-        
-        /* 今日头条*/
-        $table_name = 'mobile_toutiao';
-    	if (!RC_Model::make()->table_exists($table_name)) {
-            $schemes = array(
-                "`id` int(11) unsigned NOT NULL AUTO_INCREMENT",
-                "`title` varchar(100) DEFAULT NULL",
-                "`tag` varchar(20) DEFAULT NULL",
-                "`description` varchar(255) DEFAULT NULL",
-                "`image` varchar(100) DEFAULT NULL",
-                "`content_url` varchar(100) DEFAULT NULL",
-                "`sort_order` smallint(4) unsigned NOT NULL DEFAULT '100'",
-                "`status` tinyint(1) unsigned NOT NULL DEFAULT '1'",
-                "`create_time` int(10) unsigned NOT NULL DEFAULT '0'",
-                "`update_time` int(10) unsigned NOT NULL DEFAULT '0'",
-                "PRIMARY KEY (`id`)"
-            );
-            RC_Model::make()->create_table($table_name, $schemes);
-        }
-        
-        /* 扫码登录*/
-        $table_name = 'qrcode_validate';
-        if (!RC_Model::make()->table_exists($table_name)) {
-        	$schemes = array(
-        			"`user_id` int(40) NOT NULL COMMENT 'user_id'",
-        			"`is_admin` bit(1) NOT NULL COMMENT '是否是管理员'",
-        			"`uuid` varchar(20) NOT NULL COMMENT 'code'",
-        			"`status` tinyint(4) NOT NULL COMMENT '状态'",
-        			"`expires_in` int(11) NOT NULL COMMENT '有效期'",
-        			"`device_udid` char(40) DEFAULT NULL",
-        			"`device_client` char(10) DEFAULT NULL",
-        			"`device_code` char(4) DEFAULT NULL",
-        	);
-        	RC_Model::make()->create_table($table_name, $schemes);
         }
         
         RC_Loader::load_app_class('mobile_method', 'mobile');
@@ -159,8 +122,11 @@ class mobile_installer  extends ecjia_installer {
         if (!ecjia::config('mobile_launch_adsense', ecjia::CONFIG_CHECK)) {
             ecjia_config::instance()->insert_config('hidden', 'mobile_launch_adsense', '', array('type' => 'hidden'));
         }
-        if (!ecjia::config('mobile_tv_adsense_group', ecjia::CONFIG_CHECK)) {
-            ecjia_config::instance()->insert_config('hidden', 'mobile_tv_adsense_group', '', array('type' => 'hidden'));
+        if (!ecjia::config('mobile_home_adsense1', ecjia::CONFIG_CHECK)) {
+            ecjia_config::instance()->insert_config('hidden', 'mobile_home_adsense1', '', array('type' => 'hidden'));
+        }
+        if (!ecjia::config('mobile_home_adsense2', ecjia::CONFIG_CHECK)) {
+            ecjia_config::instance()->insert_config('hidden', 'mobile_home_adsense2', '', array('type' => 'hidden'));
         }
         if (!ecjia::config('mobile_home_adsense_group', ecjia::CONFIG_CHECK)) {
         	ecjia_config::instance()->insert_config('hidden', 'mobile_home_adsense_group', '', array('type' => 'hidden'));
@@ -226,11 +192,6 @@ class mobile_installer  extends ecjia_installer {
             RC_Model::make()->drop_table($table_name);
         }
         
-    	$table_name = 'mobile_toutiao';
-        if (RC_Model::make()->table_exists($table_name)) {
-            RC_Model::make()->drop_table($table_name);
-        }
-        
         RC_Loader::load_app_class('mobile_method', 'mobile');
         if (ecjia::config(mobile_method::STORAGEKEY_discover_data, ecjia::CONFIG_CHECK)) {
             ecjia_config::instance()->delete_config(mobile_method::STORAGEKEY_discover_data);
@@ -254,10 +215,12 @@ class mobile_installer  extends ecjia_installer {
         if (ecjia::config('mobile_launch_adsense', ecjia::CONFIG_CHECK)) {
             ecjia_config::instance()->delete_config('mobile_launch_adsense');
         }
-        if (ecjia::config('mobile_tv_adsense_group', ecjia::CONFIG_CHECK)) {
-            ecjia_config::instance()->delete_config('mobile_tv_adsense_group');
+        if (ecjia::config('mobile_home_adsense1', ecjia::CONFIG_CHECK)) {
+            ecjia_config::instance()->delete_config('mobile_home_adsense1');
         }
-        
+        if (ecjia::config('mobile_home_adsense2', ecjia::CONFIG_CHECK)) {
+            ecjia_config::instance()->delete_config('mobile_home_adsense2');
+        }
         if (ecjia::config('mobile_home_adsense_group', ecjia::CONFIG_CHECK)) {
         	ecjia_config::instance()->delete_config('mobile_home_adsense_group');
         }

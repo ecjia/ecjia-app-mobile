@@ -42,8 +42,6 @@ class mobile_admin_purview_api extends Component_Event_Api {
         		array('action_name' => __('编辑移动应用管理'),    'action_code' => 'mobile_manage_update', 'relevance'   => ''),
         		array('action_name' => __('删除移动应用管理'),    'action_code' => 'mobile_manage_delete', 'relevance'   => ''),
         		
-        		array('action_name' => __('今日头条管理'),    'action_code' => 'mobile_toutiao_manage', 'relevance'   => ''),
-        		array('action_name' => __('删除今日头条'),    'action_code' => 'mobile_toutiao_delete', 'relevance'   => ''),
         );
         
         return $purviews;

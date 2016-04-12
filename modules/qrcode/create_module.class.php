@@ -26,7 +26,7 @@ class create_module implements ecjia_interface {
 				'is_admin'   => $is_admin,
 				'uuid'		 => $code,
 				'status'	 => 0,
-				'expires_in' => RC_Time::gmtime() + 600,
+				'expires_in' => RC_Time::gmtime() + 10*60,
 				'device_udid' => $device['udid'],
 				'device_client' => $device['client'],
 				'device_code'	=> $device['code'],

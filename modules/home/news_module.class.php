@@ -11,7 +11,7 @@ class news_module implements ecjia_interface {
 		
 		$db_mobile_news = RC_Loader::load_app_model('mobile_news_model', 'mobile');
 		/* 查询今日热点总数*/
-		$count = $db_mobile_news->where(array('group_id' => 0, 'status' => 1))->count();
+		$count = $db_mobile_news->where(array('group_id' => 0))->count();
 		
 		/* 查询总数为0时直接返回  */
 		if ($count == 0) {
@@ -27,6 +27,8 @@ class news_module implements ecjia_interface {
 		$size = EM_Api::$pagination['count'];
 		$page = EM_Api::$pagination['page'];
 		
+		//加载分页类
+		RC_Loader::load_sys_class('ecjia_page', false);
 		//实例化分页
 		$page_row = new ecjia_page($count, $size, 6, '', $page);
 		

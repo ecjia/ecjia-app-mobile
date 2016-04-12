@@ -38,6 +38,8 @@ class admin_mobile_news extends ecjia_admin {
 	public function init () {
 		$this->admin_priv('mobile_news_manage');
 		/* 查询今日热点总数*/
+		/* 加载分页类 */
+		RC_Loader::load_sys_class('ecjia_page', false);
 		$count = $this->db_mobile_news->where(array('group_id' => 0, 'type' => 'article'))->count();
 
 		$page = new ecjia_page ($count, 10, 5);

@@ -260,7 +260,7 @@ class admin_device extends ecjia_admin {
 		$db_device = RC_Loader::load_app_model('mobile_device_model');
 		$filter = array ();
 		$filter['keywords'] = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
-		$filter['deviceval']= empty($_GET['deviceval']) ? 0 : intval($_GET['deviceval']);
+		$filter['deviceval']   = intval($_GET['deviceval']);
 		
 		if ($filter['keywords']) {
 			$where[]= "device_name LIKE '%" . mysql_like_quote($filter['keywords']) . "%'";
@@ -269,20 +269,17 @@ class admin_device extends ecjia_admin {
 		if ($filter['deviceval'] == 0) {
 			$where['in_status'] = 0;
 		}
-		
-		$android = 'android';
+		//安卓
 		if ($filter['deviceval'] == 1) {
-			$where[] ="device_client = '" .$android. "' and in_status = 0";
+			$where[] ="device_client = '" .android. "' and in_status = 0";
 		}
-		
-		$iphone = 'iphone';
+		//iphone
 		if ($filter['deviceval'] == 2) {
-			$where[] = "device_client = '" .$iphone. "' and in_status = 0";
+			$where[] = "device_client = '" .iphone. "' and in_status = 0";
 		}
-		
-		$ipad = 'ipad';
+		//ipad
 		if ($filter['deviceval'] == 3) {
-			$where[] = "device_client = '" .$ipad. "' and in_status = 0";
+			$where[] = "device_client = '" .ipad. "' and in_status = 0";
 		}
 		
 		if ($filter['deviceval'] == 4) {
@@ -292,13 +289,14 @@ class admin_device extends ecjia_admin {
 		$field = "SUM(IF(in_status=0,1,0)) AS count,SUM(IF(device_client='android' and in_status = 0,1,0)) AS android,SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone,SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad,SUM(IF(in_status = 1,1,0)) AS trashed";
 		$msg_count = $db_device->field($field)->find();
 		$msg_count = array(
-			'count'		=> empty($msg_count['count']) ? 0 : $msg_count['count'],
-			'android'	=> empty($msg_count['android']) ? 0 : $msg_count['android'],
-			'iphone'	=> empty($msg_count['iphone']) ? 0 : $msg_count['iphone'],
-			'ipad'	    => empty($msg_count['ipad']) ? 0 : $msg_count['ipad'],
-			'trashed'	=> empty($msg_count['trashed']) ? 0 : $msg_count['trashed']
+				'count'		=> empty($msg_count['count']) ? 0 : $msg_count['count'],
+				'android'	=> empty($msg_count['android']) ? 0 : $msg_count['android'],
+				'iphone'	=> empty($msg_count['iphone']) ? 0 : $msg_count['iphone'],
+				'ipad'	    => empty($msg_count['ipad']) ? 0 : $msg_count['ipad'],
+				'trashed'	=> empty($msg_count['trashed']) ? 0 : $msg_count['trashed']
 		);
 		
+		RC_Loader::load_sys_class('ecjia_page', false);
 		$count = $db_device->where($where)->count();
 		$page = new ecjia_page($count,10, 5);
 	
