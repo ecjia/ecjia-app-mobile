@@ -39,7 +39,11 @@ class data_module implements ecjia_interface {
 				$seller_shopinfo_db = RC_Loader::load_app_model('seller_shopinfo_model', 'seller');
 				$ru_id = $seller_shopinfo_db->where(array('geohash' => array('like' => "%$where_geohash%")))->get_field('ru_id', true);
 				
-				$request['o2o_seller'] = $ru_id;
+				if (!empty($ru_id)) {
+					$request['o2o_seller'] = array_merge($ru_id, array('0'));
+				} else {
+					$request['o2o_seller'] = 0;
+				}
 			}
 				
 			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);
@@ -456,9 +460,7 @@ function seller_recommend_data($response, $request) {
 			RC_Loader::load_app_func('goods', 'goods');
 			$mobilebuy_db = RC_Loader::load_app_model('goods_activity_model', 'goods');
 			$v_where = array('is_on_sale' => 1, 'is_alone_sale' => 1, 'is_delete' => 0);
-			if (isset($request['o2o_seller']) && !empty($request['o2o_seller']) && is_array($request['o2o_seller'])) {
-				$v_where['user_id'] = $request['o2o_seller'];
-			}
+			
 			foreach ($result as $key => $val) {
 				$v_where['user_id'] = $val['user_id'];
 				if(ecjia::config('review_goods') == 1){
