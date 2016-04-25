@@ -12,7 +12,7 @@ class data_module implements ecjia_interface {
 		//如果用户登录获取其session
 		EM_Api::authSession(false);
 		$device = _POST('device', array());
-		$location = _POST('location');
+		$location = _POST('location'); 
 // 		$location = array(
 // 				'latitude'	=> '31.235450744628906',
 // 				'longitude' => '121.41641998291016',
