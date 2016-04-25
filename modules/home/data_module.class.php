@@ -446,7 +446,7 @@ function seller_recommend_data($response, $request) {
 		$result = $msi_dbview->join(array('category', 'seller_shopinfo', 'collect_store'))
 								->field($field)
 								->where($where)
-								->limit(4)
+								->limit(6)
 								->group('msi.shop_id')
 								->order($order_by)
 								->select();
