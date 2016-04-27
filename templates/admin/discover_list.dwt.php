@@ -25,10 +25,10 @@
 					<table class="table table-striped table-hide-edit" data-rowlink="a">
 						<thead>
 							<tr>
-								<th class="w180">{t}百宝箱图标{/t}</th>
-								<th>{t}百宝箱链接{/t}</th>
-								<th>{t}是否显示{/t}</th>
-								<th class="w150">{t}百宝箱排序{/t}</th>
+								<th class="w180">{lang key='mobile::mobile.discover_icon'}</th>
+								<th>{lang key='mobile::mobile.discover_icon'}</th>
+								<th>{lang key='mobile::mobile.is_show'}</th>
+								<th class="w150">{lang key='mobile::mobile.discover_sort'}</th>
 							</tr>
 						</thead>
 						<!-- {foreach from=$playerdb item=item key=key} -->
@@ -42,17 +42,17 @@
 								<span><a href="{$item.url}" target="_blank">{$item.url}</a></span><br>
 								{$item.text}
 								<div class="edit-list">
-									<a class="data-pjax" href="{RC_Uri::url('mobile/admin_discover/edit',"id={$key}")}" title="{t}编辑{/t}">{t}编辑{/t}</a>&nbsp;|&nbsp;
-									<a data-toggle="ajaxremove" class="ajaxremove ecjiafc-red" data-msg="{t}您确定要删除该百宝箱吗？{/t}" href="{RC_Uri::url('mobile/admin_discover/remove',"id={$key}")}" title="{t}移除{/t}">{t}删除{/t}</a>
+									<a class="data-pjax" href='{RC_Uri::url("mobile/admin_discover/edit", "id={$key}")}' title="{lang key='system::system.edit'}">{lang key='system::system.edit'}</a>&nbsp;|&nbsp;
+									<a data-toggle="ajaxremove" class="ajaxremove ecjiafc-red" data-msg="{lang key='mobile::mobile.drop_discover_confirm'}" href='{RC_Uri::url("mobile/admin_discover/remove", "id={$key}")}' title="{lang key='system::system.drop'}">{lang key='system::system.drop'}</a>
 							    </div>
 							</td>
 							<td>
 						    	<i class="{if $item.display eq '1'}fontello-icon-ok cursor_pointer{else}fontello-icon-cancel cursor_pointer{/if}" data-trigger="toggleState" data-url="{RC_Uri::url('mobile/admin_discover/toggle_show')}" data-id="{$key}" ></i>
 							</td>
-							<td><span class="edit_sort cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('mobile/admin_discover/edit_sort',"id={$key}")}" data-name="sort" data-pk="{$key}"  data-title="编辑百宝箱排序">{$item.sort}</span></td>
+							<td><span class="edit_sort cursor_pointer" data-trigger="editable" data-url='{RC_Uri::url("mobile/admin_discover/edit_sort", "id={$key}")}' data-name="sort" data-pk="{$key}"  data-title="{lang key='mobile::mobile.edit_discover_sort'}">{$item.sort}</span></td>
 						</tr>
 						<!-- {foreachelse} -->
-						   <tr><td class="no-records" colspan="10">{t}没有找到任何记录{/t}</td></tr>
+						   <tr><td class="no-records" colspan="10">{lang key='system::system.no_records'}</td></tr>
 						<!-- {/foreach} -->
 					</table>
 				</div>

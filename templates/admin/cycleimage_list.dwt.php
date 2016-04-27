@@ -24,9 +24,9 @@
 					<table class="table table-striped table-hide-edit" data-rowlink="a">
 						<thead>
 							<tr>
-								<th class="w180">{t}缩略图{/t}</th>
-								<th>{t}图片链接{/t}</th>
-								<th class="w150">{t}排序{/t}</th>
+								<th class="w180">{lang key='mobile::mobile.thumbnail'}</th>
+								<th>{lang key='mobile::mobile.img_url'}</th>
+								<th class="w150">{lang key='mobile::mobile.sort_order'}</th>
 							</tr>
 						</thead>
 						<!-- {foreach from=$playerdb item=item key=key} -->
@@ -40,14 +40,14 @@
 								<span><a href="{$item.url}" target="_blank">{$item.url}</a></span><br>
 								{$item.text}
 								<div class="edit-list">
-									<a class="data-pjax" href="{RC_Uri::url("mobile/{$action}/edit","id={$key}")}" title="{t}编辑{/t}">{t}编辑{/t}</a>&nbsp;|&nbsp;
-									<a data-toggle="ajaxremove" class="ajaxremove ecjiafc-red" data-msg="{t}您确定要删除这张轮播图吗？{/t}" href="{RC_Uri::url("mobile/{$action}/remove","id={$key}")}" title="{t}移除{/t}">{t}删除{/t}</a>
+									<a class="data-pjax" href='{RC_Uri::url("mobile/{$action}/edit", "id={$key}")}' title="{lang key='system::system.edit'}">{lang key='system::system.edit'}</a>&nbsp;|&nbsp;
+									<a data-toggle="ajaxremove" class="ajaxremove ecjiafc-red" data-msg="{lang key='mobile::mobile.drop_cycleimage_confirm'}" href='{RC_Uri::url("mobile/{$action}/remove", "id={$key}")}' title="{lang key='system::system.drop'}">{lang key='system::system.drop'}</a>
 							    </div>
 							</td>
-							<td><span class="edit_sort cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url("mobile/{$action}/edit_sort","id={$key}")}" data-name="sort" data-pk="{$key}"  data-title="编辑轮播图排序">{$item.sort}</span></td>
+							<td><span class="edit_sort cursor_pointer" data-trigger="editable" data-url='{RC_Uri::url("mobile/{$action}/edit_sort", "id={$key}")}' data-name="sort" data-pk="{$key}" data-title="{lang key='mobile::mobile.edit_sort'}">{$item.sort}</span></td>
 						</tr>
 						<!-- {foreachelse} -->
-						   <tr><td class="no-records" colspan="10">{t}没有找到任何记录{/t}</td></tr>
+						   <tr><td class="no-records" colspan="10">{lang key='system::system.no_records'}</td></tr>
 						<!-- {/foreach} -->
 					</table>
 				</div>

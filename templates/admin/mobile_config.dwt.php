@@ -22,66 +22,62 @@
 		<div class="span12">
 			<div class="tabbable tabs-left">
 				<ul class="nav nav-tabs tab_merchants_nav">
-					<li class="active"><a href="#tab1" data-toggle="tab">{t}基本信息{/t}</a></li>
-					<li><a href="#touch" data-toggle="tab">{t}微商城设置{/t}</a></li>
-					<li><a href="#load_app" data-toggle="tab">{t}APP下载地址{/t}</a></li>
-					<li><a href="#adsense" data-toggle="tab">{t}移动广告位设置{/t}</a></li>
-					<li><a href="#mobile_login" data-toggle="tab">{t}登录页色值设置{/t}</a></li>
-					<li><a href="#hot_city" data-toggle="tab">{t}热门城市配置{/t}</a></li>
+					<li class="active"><a href="#tab1" data-toggle="tab">{lang key='mobile::mobile.basic_info'}</a></li>
+					<li><a href="#touch" data-toggle="tab">{lang key='mobile::mobile.touch_set'}</a></li>
+					<li><a href="#load_app" data-toggle="tab">{lang key='mobile::mobile.download_url'}</a></li>
+					<li><a href="#adsense" data-toggle="tab">{lang key='mobile::mobile.adsense_set'}</a></li>
+					<li><a href="#mobile_login" data-toggle="tab">{lang key='mobile::mobile.mobile_login'}</a></li>
+					<li><a href="#hot_city" data-toggle="tab">{lang key='mobile::mobile.hot_city_set'}</a></li>
+					<li><a href="#message_notice" data-toggle="tab">{lang key='mobile::mobile.message_notice'}</a></li>
+					<li><a href="#integral_manage" data-toggle="tab">{lang key='mobile::mobile.integral_manage'}</a></li>
 				</ul>
 				<div class="tab-content tab_merchants">
 					<div class="tab-pane active" id="tab1">
 						<div class="control-group formSep">
-							<label class="control-label">{t}移动应用 Logo：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.label_mobile_logo'}</label>
 							<div class="controls">
 								<div class="fileupload {if $mobile_app_icon}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_app_icon}" alt="{t}暂无图片{/t}" />
+										<img src="{$mobile_app_icon}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
-									<span class="fileupload-new">{t}浏览{/t}</span>
-									<span class="fileupload-exists">{t}修改{/t}</span>
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 									<input type="file" name="mobile_app_icon"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{t}您确定要删除此文件吗？{/t}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_app_icon')}" {if $mobile_app_icon}data-removefile="true"{/if}>{t}删除{/t}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_app_icon')}" {if $mobile_app_icon}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}移动应用简介：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.shop_app_description'}</label>
 							<div class="controls">
 								<input type='text' name='shop_app_description' value='{$shop_app_description}'>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}红包使用说明：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.label_bonus_readme'}</label>
 							<div class="controls">
 								<select name='bonus_readme' class="artilce_list">
 									<!-- {if !$bonus_readme.title} -->
-										<option value='-1'>{t}请选择...{/t}</option>
+										<option value='-1'>{lang key='mobile::mobile.pls_select'}</option>
 									<!-- {else} -->
 										<option value="{$bonus_readme.id}">{$bonus_readme.title}</option>
 									<!-- {/if} -->
 								</select>
 								<input type='text' name='article_search' class='m_l5 keywords'/>
-								<input type='button' class='btn article_search' value='搜索' data-url="{url path='mobile/admin_config/search_article'}"/>
-								<span class="help-block">{t}请选择一篇文章，作为您的红包使用说明{/t}</span>
+								<input type='button' class='btn article_search' value="{lang key='mobile::mobile.search'}" data-url="{url path='mobile/admin_config/search_article'}"/>
+								<span class="help-block">{lang key='mobile::mobile.search_notice'}</span>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}咨询默认回复设置：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_feedback_autoreply'}</label>
 							<div class="controls">
 								<input type='text' name='mobile_feedback_autoreply' value='{$mobile_feedback_autoreply}'>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}掌柜UrlScheme设置：{/t}</label>
-							<div class="controls">
-								<input type='text' name='mobile_shopkeeper_urlscheme' value='{$mobile_shopkeeper_urlscheme}'>
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{t}PC商城地址：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.shop_pc_url'}</label>
 							<div class="controls">
 								<input type='text' name='shop_pc_url' value='{$shop_pc_url}'>
 							</div>
@@ -89,7 +85,7 @@
 					</div>
 					<div class="tab-pane" id="touch">
 						<div class="control-group formSep">
-							<label class="control-label">{t}是否开启微商城：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.is_open_config'}</label>
 							<div class="controls">
 								<div id="info-toggle-button">
 					                <input class="nouniform" name="wap_config" type="checkbox"  {if $wap_config eq 1}checked="checked"{/if}  value="1"/>
@@ -97,23 +93,23 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}微商城 Logo：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.wap_Logo'}</label>
 							<div class="controls">
 								<div class="fileupload {if $wap_logo}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$wap_logo}" alt="{t}暂无图片{/t}" />
+										<img src="{$wap_logo}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
-									<span class="fileupload-new">{t}浏览{/t}</span>
-									<span class="fileupload-exists">{t}修改{/t}</span>
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 									<input type="file" name="wap_logo"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{t}您确定要删除此文件吗？{/t}" data-href="{RC_Uri::url('mobile/admin_config/del','code=wap_logo')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{t}删除{/t}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=wap_logo')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}微商城地址：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.shop_touch_url'}</label>
 							<div class="controls">
 								<input type='text' name='shop_touch_url' value='{$shop_touch_url}'>
 							</div>
@@ -121,103 +117,115 @@
 					</div>
 					<div class="tab-pane" id="load_app">
 						<div class="control-group formSep">
-							<label class="control-label">{t}iPhone下载二维码：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.iphone_qr_code'}</label>
 							<div class="controls">
 								<div class="fileupload {if $mobile_iphone_qr_code}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_iphone_qr_code}" alt="{t}暂无图片{/t}" />
+										<img src="{$mobile_iphone_qr_code}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
-									<span class="fileupload-new">{t}浏览{/t}</span>
-									<span class="fileupload-exists">{t}修改{/t}</span>
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 									<input type="file" name="mobile_iphone_qr_code"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{t}您确定要删除此文件吗？{/t}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_iphone_qr_code')}" {if $mobile_iphone_qr_code}data-removefile="true"{/if}>{t}删除{/t}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_iphone_qr_code')}" {if $mobile_iphone_qr_code}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}iPhone下载地址：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.shop_iphone_download'}</label>
 							<div class="controls">
 								<input type='text' name='shop_iphone_download' value='{$shop_iphone_download}'>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}Android下载二维码：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.android_qr_code'}</label>
 							<div class="controls">
 								<div class="fileupload {if $mobile_android_qr_code}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_android_qr_code}" alt="{t}暂无图片{/t}" />
+										<img src="{$mobile_android_qr_code}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
-									<span class="fileupload-new">{t}浏览{/t}</span>
-									<span class="fileupload-exists">{t}修改{/t}</span>
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 									<input type="file" name="mobile_android_qr_code"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{t}您确定要删除此文件吗？{/t}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_android_qr_code')}" {if $mobile_android_qr_code}data-removefile="true"{/if}>{t}删除{/t}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_android_qr_code')}" {if $mobile_android_qr_code}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}Android下载地址：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.shop_android_download'}</label>
 							<div class="controls">
 								<input type='text' name='shop_android_download' value='{$shop_android_download}'>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}iPad下载二维码：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.ipad_qr_code'}</label>
 							<div class="controls">
 								<div class="fileupload {if $mobile_ipad_qr_code}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_ipad_qr_code}" alt="{t}暂无图片{/t}" />
+										<img src="{$mobile_ipad_qr_code}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
-									<span class="fileupload-new">{t}浏览{/t}</span>
-									<span class="fileupload-exists">{t}修改{/t}</span>
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 									<input type="file" name="mobile_ipad_qr_code"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{t}您确定要删除此文件吗？{/t}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_ipad_qr_code')}" {if $mobile_ipad_qr_code}data-removefile="true"{/if}>{t}删除{/t}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_ipad_qr_code')}" {if $mobile_ipad_qr_code}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}iPad下载地址：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.shop_ipad_download'}</label>
 							<div class="controls">
 								<input type='text' name='shop_ipad_download' value='{$shop_ipad_download}'>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.shopkeeper_urlscheme'}</label>
+							<div class="controls">
+								<input type='text' name='mobile_shopkeeper_urlscheme' value='{$mobile_shopkeeper_urlscheme}'>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.shop_urlscheme'}</label>
+							<div class="controls">
+								<input type='text' name='mobile_shop_urlscheme' value='{$mobile_shop_urlscheme}'>
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane" id="adsense">
 						<div class="control-group formSep edit-page">
-							<label class="control-label">{t}移动启动页广告图：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_launch_adsense'}</label>
 							<div class="controls">
 								<select name='mobile_launch_adsense'>
-									<option value='0'>{t}请选择...{/t}</option>
+									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
 									<!-- {foreach from=$ad_position_list item=list} -->
 										<option value="{$list.position_id}" {if $list.position_id eq $mobile_launch_adsense}selected{/if}>{$list.position_name}</option>
 									<!-- {/foreach} -->
 								</select>
-								<span class="help-block">{t}请选择所需展示的广告位。{/t}</span>
+								<span class="help-block">{lang key='mobile::mobile.launch_adsense_notice'}</span>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}移动首页广告组：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.launch_adsense_group'}</label>
 							<div class="controls control-group draggable">
 								<div class="ms-container span6" id="ms-custom-navigation">
 									<div class="ms-selectable">
 										<div class="search-header">
-											<input class="span12" id="ms-search" type="text" placeholder="{t}筛选搜索到的应用名称{/t}" autocomplete="off">
+											<input class="span12" id="ms-search" type="text" placeholder="{lang key='mobile::mobile.filter_app_name'}" autocomplete="off">
 										</div>
 										<ul class="ms-list nav-list-ready select_adsense_group">
 											<!-- {foreach from=$ad_position_list item=list} -->
 											<li data-id="{$list.position_id}" id="position_id_{$list.position_id}" class="ms-elem-selectable isShow"><span>{$list.position_name}</span></li>
 											<!-- {foreachelse}-->
-											<li class="ms-elem-selectable disabled"><span>暂无内容</span></li>
+											<li class="ms-elem-selectable disabled"><span>{lang key='mobile::mobile.no_content'}</span></li>
 											<!-- {/foreach} -->
 										</ul>
 									</div>
 									<div class="ms-selection">
-										<div class="custom-header custom-header-align">所选广告位</div>
+										<div class="custom-header custom-header-align">{lang key='mobile::mobile.selected_ad_position'}</div>
 										<ul class="ms-list nav-list-content">
 											<!-- {foreach from=$mobile_home_adsense_group item=item key=key} -->
 											<li class="ms-elem-selection">
@@ -232,46 +240,46 @@
 							</div>
 						</div>
 						<div class="control-group formSep edit-page">
-							<label class="control-label">{t}移动首页广告图A：{/t}</label>
-							<div class="controls">
-								<select name='mobile_home_adsense1'>
-									<option value='0'>{t}请选择...{/t}</option>
-									<!-- {foreach from=$ad_position_list item=list} -->
-										<option value="{$list.position_id}" {if $list.position_id eq $mobile_home_adsense1}selected{/if}>{$list.position_name}</option>
-									<!-- {/foreach} -->
-								</select>
-								<span class="help-block">{t}请选择所需展示的广告位。注意：只能显示一张广告图片。{/t}</span>
-							</div>
-						</div>
-						<div class="control-group formSep edit-page">
-							<label class="control-label">{t}移动首页广告图B：{/t}</label>
-							<div class="controls">
-								<select name='mobile_home_adsense2'>
-									<option value='0'>{t}请选择...{/t}</option>
-									<!-- {foreach from=$ad_position_list item=list} -->
-										<option value="{$list.position_id}" {if $list.position_id eq $mobile_home_adsense2}selected{/if}>{$list.position_name}</option>
-									<!-- {/foreach} -->
-								</select>
-								<span class="help-block">{t}请选择所需展示的广告位。注意：最多只能显示四张广告图片。{/t}</span>
-							</div>
-						</div>
-						<div class="control-group formSep edit-page">
-							<label class="control-label">{t}首页主题类设置：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.launch_topic_set'}</label>
 							<div class="controls">
 								<select name='mobile_topic_adsense'>
-									<option value='0'>{t}请选择...{/t}</option>
+									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
 									<!-- {foreach from=$ad_position_list item=list} -->
 										<option value="{$list.position_id}" {if $list.position_id eq $mobile_topic_adsense}selected{/if}>{$list.position_name}</option>
 									<!-- {/foreach} -->
 								</select>
-								<span class="help-block">{t}请选择广告位，用来显示首页主题类内容{/t}</span>
+								<span class="help-block">{lang key='mobile::mobile.topic_adsense_help'}</span>
+							</div>
+						</div>
+						<div class="control-group formSep edit-page">
+							<label class="control-label">{lang key='mobile::mobile.tv_big_ad_group'}</label>
+							<div class="controls">
+								<select name='mobile_tv_big_adsense'>
+									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
+									<!-- {foreach from=$ad_position_list item=list} -->
+										<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_big_adsense}selected{/if}>{$list.position_name}</option>
+									<!-- {/foreach} -->
+								</select>
+								<span class="help-block">{lang key='mobile::mobile.tv_ad_help'}</span>
+							</div>
+						</div>
+						<div class="control-group formSep edit-page">
+							<label class="control-label">{lang key='mobile::mobile.tv_small_ad_group'}</label>
+							<div class="controls">
+								<select name='mobile_tv_small_adsense'>
+									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
+									<!-- {foreach from=$ad_position_list item=list} -->
+										<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_small_adsense}selected{/if}>{$list.position_name}</option>
+									<!-- {/foreach} -->
+								</select>
+								<span class="help-block">{lang key='mobile::mobile.tv_ad_help'}</span>
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane" id="mobile_login">
-						<h3 class="heading">手机端登录页设置</h3>
+						<h3 class="heading">{lang key='mobile::mobile.mobile_login_set'}</h3>
 						<div class="control-group formSep">
-							<label class="control-label">{t}手机端登录页前景色：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_login_fgcolor'}</label>
 							<div class="controls">
 								<div class="input-append color" data-color="{$mobile_phone_login_fgcolor}">
 									<input class="w100" name="mobile_phone_login_fgcolor" type="text" value="{$mobile_phone_login_fgcolor}">
@@ -282,7 +290,7 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}手机端登录页背景色：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_login_bgcolor'}</label>
 							<div class="controls">
 								<div class="input-append color" data-color="{$mobile_phone_login_bgcolor}">
 									<input class="w100" name="mobile_phone_login_bgcolor" type="text" value="{$mobile_phone_login_bgcolor}">
@@ -293,24 +301,24 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}手机端登录页背景图片：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_login_bgimage'}</label>
 							<div class="controls">
 								<div class="fileupload {if $mobile_phone_login_bgimage}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_phone_login_bgimage}" alt="{t}暂无图片{/t}" />
+										<img src="{$mobile_phone_login_bgimage}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
-									<span class="fileupload-new">{t}浏览{/t}</span>
-									<span class="fileupload-exists">{t}修改{/t}</span>
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 									<input type="file" name="mobile_phone_login_bgimage"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{t}您确定要删除此文件吗？{/t}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_phone_login_bgimage')}" {if $mobile_phone_login_bgimage}data-removefile="true"{/if}>{t}删除{/t}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_phone_login_bgimage')}" {if $mobile_phone_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
-						<h3 class="heading">Pad登录页设置</h3>
+						<h3 class="heading">{lang key='mobile::mobile.pad_login_set'}</h3>
 						<div class="control-group formSep">
-							<label class="control-label">{t}Pad登录页前景色：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.pad_login_fgcolor'}</label>
 							<div class="controls">
 								<div class="input-append color" data-color="{$mobile_pad_login_fgcolor}">
 									<input class="w100" name="mobile_pad_login_fgcolor" type="text" value="{$mobile_pad_login_fgcolor}">
@@ -321,7 +329,7 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}Pad登录页背景色：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.pad_login_bgcolor'}</label>
 							<div class="controls">
 								<div class="input-append color" data-color="{$mobile_pad_login_bgcolor}">
 									<input class="w100" name="mobile_pad_login_bgcolor" type="text" value="{$mobile_pad_login_bgcolor}">
@@ -332,25 +340,25 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}Pad登录页背景图片：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.pad_login_bgimage'}</label>
 							<div class="controls">
 								<div class="fileupload {if $mobile_pad_login_bgimage}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_pad_login_bgimage}" alt="{t}暂无图片{/t}" />
+										<img src="{$mobile_pad_login_bgimage}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
-									<span class="fileupload-new">{t}浏览{/t}</span>
-									<span class="fileupload-exists">{t}修改{/t}</span>
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 									<input type="file" name="mobile_pad_login_bgimage"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{t}您确定要删除此文件吗？{/t}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_pad_login_bgimage')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{t}删除{/t}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_pad_login_bgimage')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane" id="hot_city">
 						<div class="control-group formSep">
-							<label class="control-label">{t}已选择的热门城市：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.selected_area'}</label>
 							<div class="controls selected_area chk_radio">
 								<!-- {foreach from=$mobile_recommend_city item=region key=id} -->
 								<input class="uni_style" type="checkbox" name="regions[]" value="{$id}" checked="checked" /> <span class="m_r10">{$region}&nbsp;&nbsp;</span>
@@ -358,44 +366,124 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}请选择热门城市：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.hot_city'}</label>
 							<div class="controls">
 								<div class="ms-container ms-shipping span12" id="ms-custom-navigation">
 									<div class="ms-selectable ms-mobile-selectable span2">
 										<div class="search-header">
-											<input class="span12" type="text" placeholder="搜索的国家名称" autocomplete="off" id="selCountry" />
+											<input class="span12" type="text" placeholder="{lang key='mobile::mobile.search_country_name'}" autocomplete="off" id="selCountry" />
 										</div>
 										<ul class="ms-list ms-list-mobile nav-list-ready selCountry" data-url="{url path='shipping/region/init' args='target=selProvinces&type=1'}" data-next="selProvinces">
 											<!-- {foreach from=$countries item=country key=key} -->
 											<li class="ms-elem-selectable select_hot_city" data-val="{$country.region_id}"><span>{$country.region_name|escape:html}</span></li>
 											<!-- {foreachelse} -->
-											<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{t}没有国家地区可选…{/t}</span></li>
+											<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{lang key='mobile::mobile.empty_country'}</span></li>
 											<!-- {/foreach} -->
 										</ul>
 									</div>
 									<div class="ms-selectable ms-mobile-selectable span2">
 										<div class="search-header">
-											<input class="span12" type="text" placeholder="搜索的省份名称" autocomplete="off" id="selProvinces" />
+											<input class="span12" type="text" placeholder="{lang key='mobile::mobile.search_province_name'}" autocomplete="off" id="selProvinces" />
 										</div>
 										<ul class="ms-list ms-list-mobile nav-list-ready selProvinces" data-url="{url path='shipping/region/init' args='target=selCities&type=2'}" data-next="selCities">
-											<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{t}请先选择省份名称…{/t}</span></li>
+											<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{lang key='mobile::mobile.select_province_first'}</span></li>
 										</ul>
 									</div>
 									<div class="ms-selectable ms-mobile-selectable span2">
 										<div class="search-header">
-											<input class="span12" type="text" placeholder="搜索的市/区名称" autocomplete="off" id="selCities" />
+											<input class="span12" type="text" placeholder="{lang key='mobile::mobile.search_city_name'}" autocomplete="off" id="selCities" />
 										</div>
 										<ul class="ms-list ms-list-mobile nav-list-ready selCities">
-											<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{t}请先选择市/区名称…{/t}</span></li>
+											<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{lang key='mobile::mobile.select_city_first'}</span></li>
 										</ul>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="tab-pane edit-page" id="message_notice">
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.remind_seller_ship'}</label>
+							<div class="controls chk_radio">
+								<input type='radio' name='remind_seller_ship' value='2'>{lang key='mobile::mobile.message_notice'}<input type='radio' name='remind_seller_ship' value='1'>{lang key='mobile::mobile.push_notice'}<input type='radio' name='remind_seller_ship' value='0'>{lang key='mobile::mobile.not_notice'}
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="integral_manage">
+						<h3 class="heading">{lang key='mobile::mobile.sign_points'}</h3>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.is_open_sign_points'}</label>
+							<div class="controls">
+								<div id="is_open_checkin">
+					                <input class="nouniform" name="checkin_award_open" type="checkbox"  {if $checkin_award_open eq 1}checked="checked"{/if}  value="1"/>
+					            </div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.checkin_award_type'}</label>
+							<div class="controls">
+								<select name='checkin_award_type'>
+									<option value="integral">{lang key='mobile::mobile.checkin_award'}</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.checkin_award'}</label>
+							<div class="controls">
+								<input type='text' name='checkin_award' value='{$checkin_award}'>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.checkin_extra_day'}</label>
+							<div class="controls">
+								<input type='text' name='checkin_extra_day' value='{$checkin_extra_day}'>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.checkin_extra_award'}</label>
+							<div class="controls">
+								<input type='text' name='checkin_extra_award' value='{$checkin_extra_award}'>
+							</div>
+						</div>
+						<h3 class="heading">{lang key='mobile::mobile.comment_integral'}</h3>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.comment_award_open'}</label>
+							<div class="controls">
+								<div id="is_open_comment_integral">
+					                <input class="nouniform" name="comment_award_open" type="checkbox"  {if $comment_award_open eq 1}checked="checked"{/if}  value="1"/>
+					            </div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.comment_once_award'}</label>
+							<div class="controls">
+								<input type='text' name='comment_award' value='{$comment_award}'>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label"><strong>{lang key='mobile::mobile.user_rank'}</strong></label>
+							<label class="control-label">
+								<strong>{lang key='mobile::mobile.comment_get_award'}</strong>
+							</label>
+						</div>
+						<!-- {foreach from=$user_rank_list item=item} -->
+						<div class="control-group">
+							<label class="control-label">{t}{$item.rank_name}：{/t}</label>
+							<div class="controls">
+								<input type='text' name="comment_award_rules[{$item.rank_id}]" value="{$item.comment_award}">
+							</div>
+						</div>
+						<!-- {/foreach} -->
+						<div class="control-group">
+							<div class="controls">
+								<span class="help-block">{lang key='mobile::mobile.comment_award_rules'}</span>
+							</div>
+						</div>
+					</div>
 					<div class="control-group">
 						<div class="controls">
-							<input type="submit" value="{$lang.button_submit}" class="btn btn-gebo" />
+							<input type="submit" value="{lang key='system::system.button_submit'}" class="btn btn-gebo" />
 						</div>
 					</div>
 				</div>
@@ -403,5 +491,4 @@
 		</div>
 	</form>
 </div>
-
 <!-- {/block} -->

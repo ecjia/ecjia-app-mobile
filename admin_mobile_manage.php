@@ -38,9 +38,7 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		RC_Script::enqueue_script('bootstrap-placeholder');
 		
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('客户端管理'), RC_Uri::url('mobile/admin_mobile_manage/init')));
-		
-		
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_manage'), RC_Uri::url('mobile/admin_mobile_manage/init')));
 	}
 
 					
@@ -50,9 +48,6 @@ class admin_mobile_manage extends ecjia_admin {
 	public function init () {
 		$this->admin_priv('mobile_manage', ecjia::MSGTYPE_JSON);
 
-		/* 加载分页类 */
-		RC_Loader::load_sys_class('ecjia_page', false);
-		
 		$count = $this->db_mobile_manage->count();
 		$page = new ecjia_page ($count, 10, 5);
 		$mobile_manage = $this->db_mobile_manage->limit($page->limit())->order(array('sort' => 'DESC'))->select();
@@ -65,13 +60,12 @@ class admin_mobile_manage extends ecjia_admin {
 			}
 		}
 		
-		
 		$this->assign('mobile_manage', $mobile_manage);
 		$this->assign('mobile_manage_page', $page->show(5));
-		$this->assign('action_link', array('text' => __('添加客户端应用'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/add')));
+		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.add_mobile_app'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/add')));
 		ecjia_screen::$current_screen->remove_last_nav_here();
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('客户端管理')));
-		$this->assign('ur_here', __('客户端管理'));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_manage')));
+		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_manage'));
 		
 		$this->display('mobile_manage_list.dwt');
 	}
@@ -83,9 +77,9 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->admin_priv('mobile_manage_add', ecjia::MSGTYPE_JSON);
 		
 		$mobile_client = array('iphone' => 'iPhone', 'ipad' => 'iPad', 'android' => 'Android');
-		$this->assign('action_link', array('text' => __('客户端管理'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/init')));
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('添加客户端应用')));
-		$this->assign('ur_here', __('添加客户端应用'));
+		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.mobile_manage'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/init')));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_mobile_app')));
+		$this->assign('ur_here', RC_Lang::get('mobile::mobile.add_mobile_app'));
 		$this->assign('mobile_client', $mobile_client);
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_manage/insert'));
 		$this->display('mobile_manage_info.dwt');
@@ -103,24 +97,25 @@ class admin_mobile_manage extends ecjia_admin {
 		$status = isset($_POST['status']) ? $_POST['status'] : 0;
 		
 		$data = array(
-				'app_name'		=> $name,
-				'device_client'	=> $client,
-				'device_code'		=> $code,
-				'bundle_id'	=> $bundleid,
-				'app_key'	=> $appkey,
-				'app_secret'	=> $appsecret,
-				'platform'	=> $platform,
-				'status'	=> $status,
-				'add_time'	=> RC_Time::gmtime(),
-				'sort'		=> intval($_POST['sort']),
+			'app_name'		=> $name,
+			'device_client'	=> $client,
+			'device_code'	=> $code,
+			'bundle_id'		=> $bundleid,
+			'app_key'		=> $appkey,
+			'app_secret'	=> $appsecret,
+			'platform'		=> $platform,
+			'status'		=> $status,
+			'add_time'		=> RC_Time::gmtime(),
+			'sort'			=> intval($_POST['sort']),
 		);
 		$id = $this->db_mobile_manage->insert($data);
 		
 		ecjia_admin::admin_log($data['app_name'], 'add', 'mobile_manage');
 		
-		$links[] = array('text' => __('客户端管理'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/init'));
-		$this->showmessage('添加客户端应用成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', 'id='.$id)));
+		$links[] = array('text' => RC_Lang::get('mobile::mobile.mobile_manage'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/init'));
+		$links[] = array('text' => RC_Lang::get('mobile::mobile.continueadd_mobile_app'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/add'));
 		
+		$this->showmessage(RC_Lang::get('mobile::mobile.add_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', 'id='.$id)));
 	}
 	
 	/**
@@ -133,13 +128,11 @@ class admin_mobile_manage extends ecjia_admin {
 		$mobile_client = array('iphone' => 'iPhone', 'ipad' => 'iPad', 'android' => 'Android');
 		$this->assign('mobile_client', $mobile_client);
 		$this->assign('mobile_manage', $mobile_manage);
-		$this->assign('action_link', array('text' => __('客户端管理'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/init')));
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('编辑客户端应用')));
-		$this->assign('ur_here', __('编辑客户端应用'));
+		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.mobile_manage'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/init')));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.edit_mobile_app')));
+		$this->assign('ur_here', RC_Lang::get('mobile::mobile.edit_mobile_app'));
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_manage/update'));
 		$this->display('mobile_manage_info.dwt');
-	
-	
 	}
 	
 	/**
@@ -156,23 +149,19 @@ class admin_mobile_manage extends ecjia_admin {
 		$status = isset($_POST['status']) ? $_POST['status'] : 0;
 		$id = intval($_POST['id']);
 		$data = array(
-				'app_name'		=> $name,
-				'device_client'	=> $client,
-				'bundle_id'	=> $bundleid,
-				'app_key'	=> $appkey,
-				'app_secret'	=> $appsecret,
-				'platform'	=> $platform,
-				'status'	=> $status,
-				'add_time'	=> RC_Time::gmtime(),
-				'sort'		=> intval($_POST['sort']),
+			'app_name'		=> $name,
+			'device_client'	=> $client,
+			'bundle_id'		=> $bundleid,
+			'app_key'		=> $appkey,
+			'app_secret'	=> $appsecret,
+			'platform'		=> $platform,
+			'status'		=> $status,
+			'add_time'		=> RC_Time::gmtime(),
+			'sort'			=> intval($_POST['sort']),
 		);
 		$this->db_mobile_manage->where(array('app_id' => $id))->update($data);
 		ecjia_admin::admin_log($data['app_name'], 'edit', 'mobile_manage');
-		
-		
-		$this->showmessage('修改客户端应用成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', 'id='.$id)));
-		
-		
+		$this->showmessage(RC_Lang::get('mobile::mobile.edit_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', 'id='.$id)));
 	}
 	
 	/**
@@ -184,7 +173,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->db_mobile_manage->delete(array('app_id' => intval($_GET['id'])));
 		
 		ecjia_admin::admin_log($name, 'remove', 'mobile_manage');
-		$this->showmessage('删除客户端应用成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/init')));
+		$this->showmessage(RC_Lang::get('mobile::mobile.remove_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/init')));
 		
 	}
 	
@@ -202,12 +191,8 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->db_mobile_manage->where(array('app_id' => $id))->update($data);
 		ecjia_admin::admin_log($name, 'edit', 'mobile_manage');
 		
-		$this->showmessage(__('客户端排序修改成功！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_mobile_manage/init')));
-		
+		$this->showmessage(RC_Lang::get('mobile::mobile.order_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_mobile_manage/init')));
 	}
-	
-	
-
 }
 
 //end

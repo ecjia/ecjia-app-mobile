@@ -17,6 +17,18 @@
                     disabled: "success"
                 }
             });
+			$('#is_open_checkin').toggleButtons({
+                style: {
+                    enabled: "info",
+                    disabled: "success"
+                }
+            });
+			$('#is_open_comment_integral').toggleButtons({
+                style: {
+                    enabled: "info",
+                    disabled: "success"
+                }
+            });
 		},
 		set_conf : function() {
 			var $this = $("form[name='theForm']");

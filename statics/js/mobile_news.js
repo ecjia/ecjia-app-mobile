@@ -68,19 +68,25 @@
 		},
 		remove_area : function () {
 			$('.icon-trash').live('click', function () {
+				if ($(this).parent('a').hasClass('ajaxremove')) {
+					return;
+				}
 				var index = $(this).parents('.select_mobile_area').index();
-				var ii = 0;
-				$('.mobile_news_edit').children('.mobile_news_edit_area').each(function(i) {
-					if (i == index) {
-						if (!$(this).hasClass('ecjiaf-dn')) {
-							$('.mobile_news_edit').children().eq(0).removeClass('ecjiaf-dn');
-						}
-						$(this).remove();
-						ii = 1;
-					}
-					i = i + 1 -ii;
-					$(this).children('h4').html('今日热点 ' + i);
-				});
+				
+				$('.mobile_news_edit').children().eq(0).removeClass('ecjiaf-dn');
+				$('.mobile_news_edit').children('.mobile_news_edit_area').eq(index).remove();
+//				var ii = 0;
+//				$('.mobile_news_edit').children('.mobile_news_edit_area').each(function(i) {
+//					if (i == index) {
+//						if (!$(this).hasClass('ecjiaf-dn')) {
+//							$('.mobile_news_edit').children().eq(0).removeClass('ecjiaf-dn');
+//						}
+//						$(this).remove();
+//						ii = 1;
+//					}
+//					i = i + 1 -ii;
+//					$(this).children('h4').html('今日热点 ' + i);
+//				});
 			});
 		},
 		issue_submit : function () {
@@ -99,7 +105,7 @@
 					if ($(this).val() == '') {
 						num = i+1;
 						$('.mobile_news_edit').children().addClass('ecjiaf-dn').eq(0).removeClass('ecjiaf-dn');
-						var error = {'message':'请填写今日热点 ' + num + ' 的内容', 'state':'error'};
+						var error = {'message':'请填写今日热点 ' + num + ' 的标题', 'state':'error'};
 						ecjia.admin.showmessage(error);
 						flog = true;
 						return false;
@@ -108,24 +114,36 @@
 				if (flog) {
 					return false;
 				}
-				$('.mobile_news_edit').children().find('input[name="image_url[]"]').each(function(i) {
-					if ($(this).val() == '') {
+				$('.mobile_news_edit').children().find('.thumbnail').each(function(i) {
+					if ($(this).children().length <= 0) {
 						num = i+1;
 						$('.mobile_news_edit').children().addClass('ecjiaf-dn').eq(0).removeClass('ecjiaf-dn');
-						var error = {'message':'请填写今日热点 ' + num + ' 的内容', 'state':'error'};
+						var error = {'message':'请上传今日热点 ' + num + ' 的封面', 'state':'error'};
 						ecjia.admin.showmessage(error);
 						flog = true;
 						return false;
+					}
+					var val = $("input[name='max_id']").val();
+					if (val != undefined) {
+						var j = $('.mobile_news_edit').children().eq(i).find('input[name="url"]').val();
+						if (j == undefined) {
+							var src = $(this).children().attr('src');
+							if (src.indexOf("http://") < 0 ) {
+								var value = parseInt(val) + 1;
+								$("input[name='max_id']").val(value);
+								$('.mobile_news_edit').children().eq(i).find('input[name="image_url[]"]').attr('name', 'image_url[' + value + ']');
+							}
+						}
 					}
 				});
 				if (flog) {
 					return false;
 				}
-				$('.mobile_news_edit').children().find('input[name^="description"]').each(function(i) {
+				$('.mobile_news_edit').children().find('textarea[name^="description"]').each(function(i) {
 					if ($(this).val() == '') {
 						num = i+1;
 						$('.mobile_news_edit').children().addClass('ecjiaf-dn').eq(0).removeClass('ecjiaf-dn');
-						var error = {'message':'请填写今日热点 ' + num + ' 的内容', 'state':'error'};
+						var error = {'message':'请填写今日热点 ' + num + ' 的摘要', 'state':'error'};
 						ecjia.admin.showmessage(error);
 						flog = true;
 						return false;
@@ -138,7 +156,7 @@
 					if ($(this).val() == '') {
 						num = i+1;
 						$('.mobile_news_edit').children().addClass('ecjiaf-dn').eq(0).removeClass('ecjiaf-dn');
-						var error = {'message':'请填写今日热点 ' + num + ' 的内容', 'state':'error'};
+						var error = {'message':'请填写今日热点 ' + num + ' 的图文链接', 'state':'error'};
 						ecjia.admin.showmessage(error);
 						flog = true;
 						return false;
@@ -147,7 +165,6 @@
 				if (flog) {
 					return false;
 				}
-				
 				
 				$(this).ajaxSubmit({
 					dataType:"json",
@@ -183,13 +200,7 @@
 				}
 			});
 		},
-		
-		
 	}
-
-
-
 })(ecjia.admin, jQuery);
-
 
 // end

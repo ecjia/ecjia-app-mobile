@@ -39,7 +39,7 @@ class admin_discover extends ecjia_admin {
 
 		RC_Script::enqueue_script('bootstrap-placeholder');
 
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('百宝箱'), RC_Uri::url('mobile/admin_discover/init')));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.discover'), RC_Uri::url('mobile/admin_discover/init')));
 	}
 
 	/**
@@ -49,9 +49,9 @@ class admin_discover extends ecjia_admin {
 		$this->admin_priv('discover_manage',ecjia::MSGTYPE_JSON);
 
 		ecjia_screen::$current_screen->remove_last_nav_here();
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('百宝箱')));
-		$this->assign('ur_here', __('百宝箱'));
-		$this->assign('action_link_special', array('text' => __('添加百宝箱'), 'href' => RC_Uri::url('mobile/admin_discover/add')));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.discover')));
+		$this->assign('ur_here', RC_Lang::get('mobile::mobile.discover_list'));
+		$this->assign('action_link_special', array('text' => RC_Lang::get('mobile::mobile.add_discover'), 'href' => RC_Uri::url('mobile/admin_discover/add')));
 
 		$this->assign('uri', RC_Uri::site_url());
 
@@ -80,10 +80,10 @@ class admin_discover extends ecjia_admin {
 			);
 
 			$this->assign('rt', $rt);
-			ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('添加百宝箱')));
-			$this->assign('ur_here', __('添加百宝箱'));
+			ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_discover')));
+			$this->assign('ur_here', RC_Lang::get('mobile::mobile.add_discover'));
 			$this->assign('form_action', RC_Uri::url('mobile/admin_discover/add'));
-			$this->assign('action_link', array('text' => __('百宝箱'), 'href' => RC_Uri::url('mobile/admin_discover/init')));
+			$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.discover_list'), 'href' => RC_Uri::url('mobile/admin_discover/init')));
 
 			$this->display('discover_edit.dwt');
 		}
@@ -100,11 +100,11 @@ class admin_discover extends ecjia_admin {
 					$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 			} else {
-			    $this->showmessage(__('请上传百宝箱图标'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			    $this->showmessage(RC_Lang::get('mobile::mobile.upload_discover_icon'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 
 			if (empty($_POST['img_url'])) {
-				$this->showmessage(__('请填写链接地址'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				$this->showmessage(RC_Lang::get('mobile::mobile.link_url_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 			if (!isset($_POST['img_display'])) {
 				$insert_arr = $this->mobile->shortcut_struct(array('src' => $src, 'url' => $_POST['img_url'], 'text' => $_POST['img_text'] ,'display' => 0,'sort' => $_POST['img_sort']));
@@ -119,10 +119,10 @@ class admin_discover extends ecjia_admin {
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
-			$links[] = array('text' => __('百宝箱列表'), 'href' => RC_Uri::url('mobile/admin_discover/init'));
+			$links[] = array('text' => RC_Lang::get('mobile::mobile.discover_list'), 'href' => RC_Uri::url('mobile/admin_discover/init'));
 
 			ecjia_admin::admin_log($_POST['img_text'], 'add', 'mobile_discover');
-			$this->showmessage('添加百宝箱成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_discover/add')));
+			$this->showmessage(RC_Lang::get('mobile::mobile.add_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_discover/add')));
 		}
 	}
 
@@ -137,7 +137,7 @@ class admin_discover extends ecjia_admin {
 		if (isset($flashdb[$id])) {
 			$rt = $flashdb[$id];
 		} else {
-			$links[] = array('text' => __('百宝箱列表'), 'href' => RC_Uri::url('mobile/admin_discover/init'));
+			$links[] = array('text' => RC_Lang::get('mobile::mobile.discover_list'), 'href' => RC_Uri::url('mobile/admin_discover/init'));
 		}
 
 		if (empty($_POST['step'])) {
@@ -148,11 +148,11 @@ class admin_discover extends ecjia_admin {
 			$rt['img_sort']      = empty($rt['sort']) ? 0 : $rt['sort'];
 			$rt['id']            = $id;
 
-			ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('编辑百宝箱')));
+			ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.edit_discover')));
 
-			$this->assign('ur_here', __('编辑百宝箱'));
+			$this->assign('ur_here', RC_Lang::get('mobile::mobile.edit_discover'));
 			$this->assign('form_action', RC_Uri::url('mobile/admin_discover/edit'));
-			$this->assign('action_link', array('text' => __('百宝箱列表'), 'href' => RC_Uri::url('mobile/admin_discover/init')));
+			$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.discover_list'), 'href' => RC_Uri::url('mobile/admin_discover/init')));
 			$this->assign('rt', $rt);
 
 			$this->display('discover_edit.dwt');
@@ -167,27 +167,20 @@ class admin_discover extends ecjia_admin {
 				if (!empty($info)) {
 // 					$src = $info['savepath'] . '/' . $info['savename'];
 					$src = $upload->get_position($info);
+					$upload->remove($rt['src']);
 				} else {
 					$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 			}
 			// 图片上传不能为空
 			elseif (empty($rt['src'])) {
-				$this->showmessage(__('请上传百宝箱图标'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-			}
-
-
-			if ($src && $rt['src'] != $src) {
-// 				@unlink(RC_Upload::upload_path() . $rt['src']);
-				$upload->remove($rt['src']);
+				$this->showmessage(RC_Lang::get('mobile::mobile.upload_discover_icon'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			} else {
 			    $src = $rt['src'];
 			}
 
-			$display = $_POST['img_display'];
-			if (!isset($display)) {
-				$display = 0;
-			}
+			$display = isset($_POST['img_display']) ? 1 : 0;
+			
        		$flashdb[$id] = array(
        			'src'	=> $src,
        			'url'	=> $_POST['img_url'],
@@ -202,7 +195,7 @@ class admin_discover extends ecjia_admin {
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
 			ecjia_admin::admin_log($_POST['img_text'], 'edit', 'mobile_discover');
-		    $this->showmessage('编辑百宝箱成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_discover/init')));
+		    $this->showmessage(RC_Lang::get('mobile::mobile.edit_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_discover/init')));
 		}
 	}
 
@@ -217,8 +210,8 @@ class admin_discover extends ecjia_admin {
 		if (isset($flashdb[$id])) {
 			$rt = $flashdb[$id];
 		} else {
-			$links[] = array('text' => __('百宝箱列表'), 'href' => RC_Uri::url());
-			$this->showmessage(__('没有指定的百宝箱！'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $links));
+			$links[] = array('text' => RC_Lang::get('mobile::mobile.discover_list'), 'href' => RC_Uri::url());
+			$this->showmessage(RC_Lang::get('mobile::mobile.no_appointed_discover'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $links));
 		}
 
 		if (strpos($rt['src'], 'http') === false) {
@@ -232,7 +225,7 @@ class admin_discover extends ecjia_admin {
 		ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
 		ecjia_admin::admin_log($rt['text'], 'remove', 'mobile_discover');
-		$this->showmessage(__('删除百宝箱成功！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		$this->showmessage(RC_Lang::get('mobile::mobile.drop_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
 	/**
@@ -245,7 +238,7 @@ class admin_discover extends ecjia_admin {
 		$order = intval(trim($_POST['value']));
 
 		if (!is_numeric($order)) {
-			$this->showmessage(__('输入格式不正确！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			$this->showmessage(RC_Lang::get('mobile::mobile.format_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
 			$flashdb = $this->mobile->discover_data();
 			$flashdb[$id]['sort'] = $order;
@@ -254,7 +247,7 @@ class admin_discover extends ecjia_admin {
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
-			$this->showmessage(__('百宝箱列表排序操作成功！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_discover/init')) );
+			$this->showmessage(RC_Lang::get('mobile::mobile.order_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_discover/init')) );
 		}
 	}
 
@@ -268,24 +261,19 @@ class admin_discover extends ecjia_admin {
 		$val    = intval($_POST['val']);
 
 		$flashdb = $this->mobile->discover_data();
+		
 		$flashdb[$id]['display'] = $val;
 		$text = $flashdb[$id]['text'];
 
-		if (!empty($text)) {
-			$text = '，'.$text;
-		}
-		$display = $flashdb[$id]['display'];
-
-		$flashdb = $this->mobile->shortcut_sort($flashdb);
+// 		$flashdb = $this->mobile->shortcut_sort($flashdb);
 
 		ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
-
-		if ($display == 1) {
-			ecjia_admin::admin_log('显示百宝箱'.$text, 'setup', 'mobile_discover');
+		if ($val == 1) {
+			ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.display_discover'), $text), 'setup', 'mobile_discover');
 		} else {
-			ecjia_admin::admin_log('隐藏百宝箱'.$text, 'setup', 'mobile_discover');
+			ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.hide_discover'), $text), 'setup', 'mobile_discover');
 		}
-		$this->showmessage('切换是否显示操作成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content'=> $val));
+		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content'=> $val, 'pjaxurl' => RC_uri::url('mobile/admin_discover/init')));
 	}
 }
 

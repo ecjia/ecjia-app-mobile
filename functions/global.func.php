@@ -17,6 +17,7 @@ function assign_adminlog_content() {
 	ecjia_admin_log::instance()->add_object('mobile_config','配置');
 	ecjia_admin_log::instance()->add_object('mobile_news','今日热点');
 	ecjia_admin_log::instance()->add_object('mobile_manage','移动应用管理');
+	ecjia_admin_log::instance()->add_object('mobile_toutiao','今日头条');
 	
 }
 

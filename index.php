@@ -1,6 +1,5 @@
 <?php
-defined('IN_ROYALCMS') or exit('No permission resources.');
-RC_Loader::load_sys_class('ecjia_front', false);
+defined('IN_ECJIA') or exit('No permission resources.');
 
 class index extends ecjia_front {
 
@@ -31,16 +30,32 @@ class index extends ecjia_front {
 	public function login()
 	{
 		/* js加载ecjia.js*/
-		$this->assign('ecjia_js', RC_Uri::admin_url('statics/ecjia.js/ecjia.js'));
+		$this->assign('ecjia_js', RC_Uri::admin_url('statics/lib/ecjia-js/ecjia.js'));
 		/* js与css加载路径*/
 		$this->assign('front_url', RC_App::apps_url('templates/front', __FILE__));
+		
+		$qrcode = $_GET['qrcode'];
+		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
+		
+		$info = $db->find(array('uuid' => $qrcode));
+		//判断前后台
+		if (!empty($info) && $info['is_admin']) {
+			$urlscheme = ecjia::config('mobile_shopkeeper_urlscheme');
+			$this->assign('android_upload_url', 'http://www.pgyer.com/ecjia-shopkeeper-android');
+			$this->assign('iphone_upload_url', 'http://www.pgyer.com/ecjia-shopkeeper-iphone');
+		} else {
+			$urlscheme = ecjia::config('mobile_shop_urlscheme');
+			$this->assign('android_upload_url', 'http://www.pgyer.com/ecjia-shopkeeper-android');
+			$this->assign('iphone_upload_url', 'http://www.pgyer.com/ecjia-shopkeeper-iphone');
+		}
+		
 		/* 判断是否是ecjia设备扫描*/
 // 		ECJiaBrowse/1.2.0
-		if(!ereg('ECJiaBrowse', $_SERVER['HTTP_USER_AGENT'])) {
+		if(!preg_match('/ECJiaBrowse/', $_SERVER['HTTP_USER_AGENT'])) {
 			// 通过iframe的方式试图打开APP，如果能正常打开，会直接切换到APP，并自动阻止a标签的默认行为
 			// 否则打开a标签的href链接
 			$js = "<script>var ifr = document.createElement('iframe');
-			ifr.src = '".ecjia::config('mobile_shopkeeper_urlscheme')."app?open_type=qrlogin';
+			ifr.src = '".trim($urlscheme)."app?open_type=qrlogin';
 			ifr.style.display = 'none';
 			document.body.appendChild(ifr);
 			window.setTimeout(function(){
@@ -50,17 +65,16 @@ class index extends ecjia_front {
 			$this->assign('js', $js);
 			$this->display('app_loading.dwt');exit();
 	    }
-
-		$qrcode = $_GET['qrcode'];
-		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
-		$where = array(
-				'expires_in' => array('gt' => RC_Time::gmtime()), 
-				'status'	 => 0,
-				'uuid'		 => $qrcode,
-		);
+	    
+	    $where = array(
+	    		'expires_in' => array('gt' => RC_Time::gmtime()),
+	    		'status'	 => 0,
+	    		'uuid'		 => $qrcode,
+	    );
+		
 		$db->where($where)->update(array('status' => 1));
 		
-		header("location: ".ecjia::config('mobile_shopkeeper_urlscheme')."app?open_type=qrlogin");
+		header("location: ".$urlscheme."app?open_type=qrlogin");
 	}
 }
 

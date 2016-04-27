@@ -49,7 +49,7 @@
 								required : "请填写应用名称！" 
 						},
 						client : {
-							required : "请填写应用client！" 
+							required : "请选择应用client！" 
 						},
 						code : {
 							required : "请填写应用code！" 

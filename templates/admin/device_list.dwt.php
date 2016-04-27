@@ -31,24 +31,24 @@
 
 	<!-- 批量操作和搜索 -->
 	<div class="row-fluid batch" >
-		<form method="post" action="{$search_action}" name="searchForm">
+		<form method="post" action="{$search_action}&deviceval={$device_list.filter.deviceval}" name="searchForm">
 			<div class="btn-group f_l m_r5">
 				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-					<i class="fontello-icon-cog"></i>{t}批量操作{/t}
+					<i class="fontello-icon-cog"></i>{lang key='mobile::mobile.batch_handle'}
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
 					<!-- {if $device_list.filter.deviceval eq '4'} -->
-					<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=returndevice&deviceval={$device_list.filter.deviceval}"}' data-msg="您确定要这么做吗？" data-noSelectMsg="请先选中要还原的设备！" data-name="id" href="javascript:;"><i class="fontello-icon-reply-all"></i>{t}还原设备{/t}</a></li>
-					<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=del&deviceval={$device_list.filter.deviceval}"}'  data-msg="您确定要这么做吗？" data-noSelectMsg="请先选中要永久删除的设备！" data-name="id" href="javascript:;"><i class="fontello-icon-trash"></i>{t}永久删除{/t}</a></li>
+					<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=returndevice&deviceval={$device_list.filter.deviceval}"}' data-msg="{lang key='mobile::mobile.batch_restore_confirm'}" data-noSelectMsg="{lang key='mobile::mobile.select_restore_device'}" data-name="id" href="javascript:;"><i class="fontello-icon-reply-all"></i>{lang key='mobile::mobile.restore_device'}</a></li>
+					<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=del&deviceval={$device_list.filter.deviceval}"}'  data-msg="{lang key='mobile::mobile.batch_remove_confirm'}" data-noSelectMsg="{lang key='mobile::mobile.select_remove_device'}" data-name="id" href="javascript:;"><i class="fontello-icon-trash"></i>{lang key='mobile::mobile.delete_forever'}</a></li>
 					<!-- {else} -->
-					<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=trash&deviceval={$device_list.filter.deviceval}"}'  data-msg="您确定要这么做吗？" data-noSelectMsg="请先选中要移至回收站的设备！" data-name="id" href="javascript:;"><i class="fontello-icon-box"></i>{t}移至回收站{/t}</a></li>
+					<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=trash&deviceval={$device_list.filter.deviceval}"}'  data-msg="{lang key='mobile::mobile.batch_trash_confirm'}" data-noSelectMsg="{lang key='mobile::mobile.select_trash_device'}" data-name="id" href="javascript:;"><i class="fontello-icon-box"></i>{lang key='mobile::mobile.move_to_recyclebin'}</a></li>
 					<!-- {/if} -->
 				</ul>
 			</div>
 			<div class="choose_list f_r" >
-				<input type="text" name="keywords" value="{$device_list.filter.keywords}" placeholder="请输入设备名称"/>
-				<button class="btn search_device" type="button">搜索</button>
+				<input type="text" name="keywords" value="{$device_list.filter.keywords}" placeholder="{lang key='mobile::mobile.device_name_keywords_empty'}"/>
+				<button class="btn search_device" type="button">{lang key='mobile::mobile.search'}</button>
 			</div>
 		</form>
 	</div>
@@ -61,11 +61,11 @@
 						<thead>
 							<tr>
 								<th class="table_checkbox"><input type="checkbox" name="select_rows" data-toggle="selectall" data-children=".checkbox"/></th>
-								<th class="w200">{t}设备类型{/t}</th>
-								<th class="w300">{t}设备名称{/t}</th>
-								<th class="w200">{t}操作系统{/t}</th>
-								<th class="w200">{t}位置{/t}</th>
-								<th class="w200">{t}添加时间{/t}</th>
+								<th class="w200">{lang key='mobile::mobile.device_type'}</th>
+								<th class="w300">{lang key='mobile::mobile.device_name'}</th>
+								<th class="w200">{lang key='mobile::mobile.device_os'}</th>
+								<th class="w200">{lang key='mobile::mobile.location'}</th>
+								<th class="w200">{lang key='mobile::mobile.add_time'}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -78,38 +78,35 @@
 									{$val.device_client}
 							    	<div class="edit-list">
 								     	{if $device_list.filter.deviceval eq '4'}
-     										<a class="toggle_view" data-msg="{t}您确定要将此设备还原吗？{/t}" href='{url path="mobile/admin_device/returndevice" args="id={$val.id}"}' data-pjax-url='{url path="mobile/admin_device/init" args="deviceval={$device_list.filter.deviceval}"}' data-val="back">还原</a>&nbsp;|&nbsp;
-								     		<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除设备[{$val.device_name}]吗？{/t}" href='{RC_Uri::url("mobile/admin_device/remove","id={$val.id}&deviceval={$device_list.filter.deviceval}")}'>{t}永久删除{/t}</a>
+     										<a class="toggle_view" data-msg="{lang key='mobile::mobile.restore_decice_confirm'}" href='{url path="mobile/admin_device/returndevice" args="id={$val.id}"}' data-pjax-url='{url path="mobile/admin_device/init" args="deviceval={$device_list.filter.deviceval}"}' data-val="back">{lang key='mobile::mobile.restore_device'}</a>&nbsp;|&nbsp;
+								     		<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{lang key='mobile::mobile.remove_decice_confirm'}" href='{RC_Uri::url("mobile/admin_device/remove","id={$val.id}&deviceval={$device_list.filter.deviceval}")}'>{lang key='mobile::mobile.delete_forever'}</a>
 								     	{else}
-									     	{assign var=view_url value=RC_Uri::url('mobile/admin_device/preview',"id={$val.id}")}
-									      	<a class="data-pjax" href="{$view_url}" title="{$lang.view}">{t}查看{/t}</a>&nbsp;|&nbsp;
-									     	<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{t}您确定要删除设备[{$val.device_name}]至回收站吗？{/t}" href='{RC_Uri::url("mobile/admin_device/trash","id={$val.id}&deviceval={$device_list.filter.deviceval}")}' title="{t}移除{/t}">{t}移至回收站{/t}</a>
+									      	<a class="data-pjax" href='{RC_Uri::url("mobile/admin_device/preview", "id={$val.id}")}' title="{lang key='system::system.view'}">{lang key='system::system.view'}</a>&nbsp;|&nbsp;
+									     	<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{lang key='mobile::mobile.trash_decice_confirm'}" href='{RC_Uri::url("mobile/admin_device/trash", "id={$val.id}&deviceval={$device_list.filter.deviceval}")}' title="{lang key='mobile::mobile.move_to_recyclebin'}">{lang key='mobile::mobile.move_to_recyclebin'}</a>
 								     	{/if}
-								     	
-								     	
 								     </div>
 									</td>
 									<td>
-									{if $val.device_name && $val.device_udid}
+									<!-- {if $val.device_name && $val.device_udid} -->
 									{$val.device_name}<br>{$val.device_udid}
-									{elseif $val.device_name}
+									<!-- {elseif $val.device_name} -->
 									{$val.device_name}
-									{elseif $val.device_udid}
+									<!-- {elseif $val.device_udid} -->
 									{$val.device_udid}
-									{/if}
+									<!-- {/if} -->
 									</td>
 									<td>{$val.device_os}</td>
 									<td>{$val.location_province}</td>
 									<td>{$val.add_time}</td>
 								</tr>
 								<!--  {foreachelse} -->
-							<tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
+							<tr><td class="no-records" colspan="10">{lang key='system::system.no_records'}</td></tr>
 							<!-- {/foreach} -->
 						</tbody>
 					</table>
+					<!-- {$device_list.page} -->
 				</div>
 			</form>
 		</div>
 	</div> 
-	<!-- {$device_list.page} -->
 <!-- {/block} -->

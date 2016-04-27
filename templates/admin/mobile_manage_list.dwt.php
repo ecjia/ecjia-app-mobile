@@ -1,10 +1,7 @@
 <?php defined('IN_ECJIA') or exit('No permission resources.');?>
 <!-- {extends file="ecjia.dwt.php"} -->
-
 <!-- {block name="footer"} -->
-
 <!-- {/block} -->
-
 <!-- {block name="main_content"} -->
 <div>
 	<h3 class="heading">
@@ -22,13 +19,13 @@
 				<table class="table table-striped table-hide-edit" data-rowlink="a">
 					<thead>
 						<tr>
-							<th class="w50">{t}应用ID{/t}</th>
-							<th>{t}应用名称{/t}</th>
-							<th>{t}应用包名{/t}</th>
-							<th>{t}客户端{/t}</th>
-							<th>{t}服务平台{/t}</th>
-							<th>{t}排序{/t}</th>
-							<th class="w100">{t}创建时间{/t}</th>
+							<th class="w50">{lang key='mobile::mobile.app_id'}</th>
+							<th>{lang key='mobile::mobile.app_name'}</th>
+							<th>{lang key='mobile::mobile.package_name'}</th>
+							<th>{lang key='mobile::mobile.package_name'}</th>
+							<th>{lang key='mobile::mobile.platform'}</th>
+							<th>{lang key='mobile::mobile.sort_order'}</th>
+							<th class="w100">{lang key='mobile::mobile.create_time'}</th>
 						</tr>
 					</thead>
 					<!-- {foreach from=$mobile_manage item=item key=key name=children} -->
@@ -39,8 +36,8 @@
 						<td class="hide-edit-area">
 							{$item.app_name}
 							<div class="edit-list">
-								<a class="data-pjax" href="{RC_Uri::url('mobile/admin_mobile_manage/edit',"id={$item.app_id}")}" title="{t}编辑{/t}">{t}编辑{/t}</a>&nbsp;|&nbsp;
-								<a data-toggle="ajaxremove" class="ajaxremove ecjiafc-red" data-msg="{t}您确定要删除该移动应用吗？{/t}" href="{RC_Uri::url('mobile/admin_mobile_manage/remove',"id={$item.app_id}")}" title="{t}移除{/t}">{t}删除{/t}</a>
+								<a class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_manage/edit", "id={$item.app_id}")}' title="{lang key='system::system.edit'}">{lang key='system::system.edit'}</a>&nbsp;|&nbsp;
+								<a data-toggle="ajaxremove" class="ajaxremove ecjiafc-red" data-msg="{lang key='mobile::mobile.drop_mobile_confirm'}" href='{RC_Uri::url("mobile/admin_mobile_manage/remove", "id={$item.app_id}")}' title="{lang key='system::system.drop'}">{lang key='system::system.drop'}</a>
 						    </div>
 						</td>
 						<td>
@@ -51,24 +48,24 @@
 						</td>
 						<td>
 							<!-- {if $item.platform eq 'umeng-push'} -->
-							{t}友盟推送{/t}
+							{lang key='mobile::mobile.umeng_push'}
 							<!-- {/if} -->
 						</td>
 						<td>
-							<span class="edit_sort cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('mobile/admin_mobile_manage/edit_sort',"id={$item.app_id}")}" data-name="sort" data-pk="{$item.app_id}"  data-title="编辑客户端排序">{$item.sort}</span>
+							<span class="edit_sort cursor_pointer" data-trigger="editable" data-url='{RC_Uri::url("mobile/admin_mobile_manage/edit_sort", "id={$item.app_id}")}' data-name="sort" data-pk="{$item.app_id}" data-title="{lang key='mobile::mobile.edit_sort'}">{$item.sort}</span>
 						</td>
 						<td>
 							{$item.add_time}
 						</td>
 					</tr>
 					<!-- {foreachelse} -->
-					   <tr><td class="no-records" colspan="7">{t}没有找到任何记录{/t}</td></tr>
+					   <tr><td class="no-records" colspan="7">{lang key='system::system.no_records'}</td></tr>
 					<!-- {/foreach} -->
 				</table>
+				{$mobile_manage_page}
 			</div>
 			<!-- system end -->
 		</div>
 	</div>
 </div>
-{$mobile_manage_page}
 <!-- {/block} -->

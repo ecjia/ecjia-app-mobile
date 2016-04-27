@@ -29,7 +29,7 @@ class admin_mobile_news extends ecjia_admin {
 
 		RC_Script::enqueue_script('bootstrap-placeholder');
 
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('今日热点'), RC_Uri::url('mobile/admin_mobile_news/init')));
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_news'), RC_Uri::url('mobile/admin_mobile_news/init')));
 	}
 
 	/**
@@ -37,15 +37,19 @@ class admin_mobile_news extends ecjia_admin {
 	 */
 	public function init () {
 		$this->admin_priv('mobile_news_manage');
+		
+		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_news_list'));
+		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.add_mobile_news'), 'href' => RC_Uri::url('mobile/admin_mobile_news/add')));
+		ecjia_screen::get_current_screen()->remove_last_nav_here();
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_news')));
+		
 		/* 查询今日热点总数*/
-		/* 加载分页类 */
-		RC_Loader::load_sys_class('ecjia_page', false);
 		$count = $this->db_mobile_news->where(array('group_id' => 0, 'type' => 'article'))->count();
-
 		$page = new ecjia_page ($count, 10, 5);
-		$result = $this->db_mobile_news->where(array('group_id' => 0, 'type' => 'article'))->limit($page->limit())->select();
+		$result = $this->db_mobile_news->where(array('group_id' => 0, 'type' => 'article'))->limit($page->limit())->order(array('id' => 'asc'))->select();
+		
 		$mobile_news = array();
-		if ( !empty ($result)) {
+		if (!empty($result)) {
 			foreach ($result as $key => $val) {
 				if (!empty($val['image'])) {
 					if (substr($val['image'], 0, 4) != 'http') {
@@ -53,15 +57,15 @@ class admin_mobile_news extends ecjia_admin {
 					}
 				}
 				$mobile_news[$key] = array(
-						'id'		=> $val['id'],
-						'title'		=> $val['title'],
-						'description' => $val['description'],
-						'image'		  => $val['image'],
-						'content_url' => $val['content_url'],
-						'create_time' => RC_Time::local_date(ecjia::config('time_format'), $val['create_time']),
+					'id'			=> $val['id'],
+					'title'			=> $val['title'],
+					'description' 	=> $val['description'],
+					'image'		  	=> $val['image'],
+					'content_url' 	=> $val['content_url'],
+					'create_time' 	=> RC_Time::local_date(ecjia::config('time_format'), $val['create_time']),
 				);
 
-				$child_result = $this->db_mobile_news->where(array('group_id' => $val['id'], 'type' => 'article'))->select();
+				$child_result = $this->db_mobile_news->where(array('group_id' => $val['id'], 'type' => 'article'))->order(array('id' => 'asc'))->select();
 				if ( !empty($child_result)) {
 					foreach ($child_result as $v) {
 						if (!empty($v['iamge'])) {
@@ -70,25 +74,19 @@ class admin_mobile_news extends ecjia_admin {
 							}
 						}
 						$mobile_news[$key]['children'][] = array(
-							'id'		=> $v['id'],
-							'title'		=> $v['title'],
-							'description' => $v['description'],
-							'image'		  => $v['image'],
-							'content_url' => $v['content_url'],
-							'create_time' => RC_Time::local_date(ecjia::config('time_format'), $v['create_time']),
+							'id'			=> $v['id'],
+							'title'			=> $v['title'],
+							'description' 	=> $v['description'],
+							'image'		  	=> $v['image'],
+							'content_url' 	=> $v['content_url'],
+							'create_time' 	=> RC_Time::local_date(ecjia::config('time_format'), $v['create_time']),
 						);
 					}
 				}
 			}
 		}
-
 		$this->assign('mobile_news', $mobile_news);
 		$this->assign('mobile_news_page', $page->show(5));
-		$this->assign('action_link', array('text' => __('添加今日热点'), 'href' => RC_Uri::url('mobile/admin_mobile_news/add')));
-		ecjia_screen::$current_screen->remove_last_nav_here();
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('今日热点')));
-		$this->assign('ur_here', __('今日热点'));
-
 		$this->display('mobile_news.dwt');
 	}
 
@@ -97,9 +95,9 @@ class admin_mobile_news extends ecjia_admin {
 	 */
 	public function add() {
 		$this->admin_priv('mobile_news_add', ecjia::MSGTYPE_JSON);
-		$this->assign('action_link', array('text' => __('今日热点'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init')));
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('添加今日热点')));
-		$this->assign('ur_here', __('添加今日热点'));
+		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.mobile_news_list'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init')));
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_mobile_news')));
+		$this->assign('ur_here', RC_Lang::get('mobile::mobile.add_mobile_news'));
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_news/insert'));
 		$this->display('mobile_news_edit.dwt');
 	}
@@ -118,21 +116,20 @@ class admin_mobile_news extends ecjia_admin {
 				if ((isset($_FILES['image_url']['error'][$key]) && $_FILES['image_url']['error'][$key] == 0) ||(!isset($_FILES['image_url']['error'][$key]) && isset($_FILES['image_url']['tmp_name'][$key]) && $_FILES['image_url']['tmp_name'][$key] != 'none')) {
 					$upload = RC_Upload::uploader('image', array('save_path' => 'data/mobile_news', 'auto_sub_dirs' => false));
 					$file = array(
-							'name'	=> $_FILES['image_url']['name'][$key],
-							'type'	=> $_FILES['image_url']['type'][$key],
-							'tmp_name'	=> $_FILES['image_url']['tmp_name'][$key],
-							'error'	=> $_FILES['image_url']['error'][$key],
-							'size'	=> $_FILES['image_url']['size'][$key]
+						'name'		=> $_FILES['image_url']['name'][$key],
+						'type'		=> $_FILES['image_url']['type'][$key],
+						'tmp_name'	=> $_FILES['image_url']['tmp_name'][$key],
+						'error'		=> $_FILES['image_url']['error'][$key],
+						'size'		=> $_FILES['image_url']['size'][$key]
 					);
 					$info = $upload->upload($file);
 					if (!empty($info)) {
-// 						$image_url = $info['savepath'] . '/' . $info['savename'];
 						$image_url = $upload->get_position($info);
 					} else {
 						$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
 				} else {
-					$this->showmessage(__('上传文件错误！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					$this->showmessage(RC_Lang::get('mobile::mobile.upload_file_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 
 				$data = array (
@@ -154,9 +151,8 @@ class admin_mobile_news extends ecjia_admin {
 			}
 		}
 
-		$links[] = array('text' => __('今日热点列表'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init'));
-		$this->showmessage('添加今日热点成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', 'id='.$group_id)));
-
+		$links[] = array('text' => RC_Lang::get('mobile::mobile.mobile_news_list'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init'));
+		$this->showmessage(RC_Lang::get('mobile::mobile.add_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', 'id='.$group_id)));
 	}
 
 	/**
@@ -164,8 +160,12 @@ class admin_mobile_news extends ecjia_admin {
 	 */
 	public function edit() {
 		$this->admin_priv('mobile_news_update', ecjia::MSGTYPE_JSON);
+		
+		$this->assign('ur_here', RC_Lang::get('mobile::mobile.edit_mobile_news'));
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.edit_mobile_news')));
+		
 		$id = $_GET['id'];
-		$mobile_news = $this->db_mobile_news->where(array('id' => $id , 'or', 'group_id' => $id))->order(array('group_id' => 'asc'))->select();
+		$mobile_news = $this->db_mobile_news->where(array('id' => $id , 'or', 'group_id' => $id))->order(array('id' => 'asc'))->select();
 
 		if (!empty($mobile_news)) {
 			foreach ($mobile_news as $key => $val) {
@@ -178,14 +178,12 @@ class admin_mobile_news extends ecjia_admin {
 			}
 		}
 
-
-		$this->assign('action_link', array('text' => __('今日热点'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init')));
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('编辑今日热点')));
-		$this->assign('ur_here', __('编辑今日热点'));
+		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.mobile_news_list'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init')));
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_news/update'));
 		$this->assign('mobile_news', $mobile_news);
 		$this->assign('mobile_news_id', $id);
 		$this->assign('mobile_news_status', $mobile_news_status);
+		
 		$this->display('mobile_news_edit.dwt');
 	}
 
@@ -194,38 +192,38 @@ class admin_mobile_news extends ecjia_admin {
 	 */
 	public function update() {
 		$this->admin_priv('mobile_news_update', ecjia::MSGTYPE_JSON);
+		
 		$post = $_POST;
-		$group_id = $_POST['group_id'];
-
-		$group_news = $this->db_mobile_news->where(array('id' => $group_id , 'or', 'group_id' => $group_id))->get_field('id', true);
-
+		$group_id = !empty($_POST['group_id']) ? $_POST['group_id'] : 0;
+		$id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
+		$group_news = $this->db_mobile_news->where(array('id' => $id , 'or', 'group_id' => $id))->get_field('id', true);
+		
 		if (!empty($post)) {
 			foreach ($post['title'] as $key => $val) {
 				$data = array (
-						'group_id'		=> $key == $group_id ? 0 : $group_id,
-						'title'			=> $post['title'][$key],
-						'description'	=> $post['description'][$key],
-						'content_url'	=> $post['content_url'][$key],
-						'type'			=> 'article',
+					'group_id'		=> $key == $id ? 0 : $id,
+					'title'			=> $post['title'][$key],
+					'description'	=> $post['description'][$key],
+					'content_url'	=> $post['content_url'][$key],
+					'type'			=> 'article',
 				);
 
 				/* 处理上传的LOGO图片 */
 				if ((isset($_FILES['image_url']['error'][$key]) && $_FILES['image_url']['error'][$key] == 0) ||(!isset($_FILES['image_url']['error'][$key]) && isset($_FILES['image_url']['tmp_name'][$key]) && $_FILES['image_url']['tmp_name'][$key] != 'none')) {
 					$upload = RC_Upload::uploader('image', array('save_path' => 'data/mobile_news', 'auto_sub_dirs' => false));
 					$file = array(
-						'name'	=> $_FILES['image_url']['name'][$key],
-						'type'	=> $_FILES['image_url']['type'][$key],
+						'name'		=> $_FILES['image_url']['name'][$key],
+						'type'		=> $_FILES['image_url']['type'][$key],
 						'tmp_name'	=> $_FILES['image_url']['tmp_name'][$key],
-						'error'	=> $_FILES['image_url']['error'][$key],
-						'size'	=> $_FILES['image_url']['size'][$key]
+						'error'		=> $_FILES['image_url']['error'][$key],
+						'size'		=> $_FILES['image_url']['size'][$key]
 					);
 					$info = $upload->upload($file);
 					if (!empty($info)) {
 						$image = $this->db_mobile_news->where(array('id' => $key))->get_field('image');
 						$upload->remove($image);
-// 						$image_url = $info['savepath'] . '/' . $info['savename'];
 						$image_url = $upload->get_position($info);
-						$data = array_merge($data, array('image' => $image_url));
+						$data['image'] = $image_url;
 					} else {
 						$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
@@ -235,14 +233,14 @@ class admin_mobile_news extends ecjia_admin {
 					$this->db_mobile_news->where(array('id' => $key))->update($data);
 					ecjia_admin::admin_log($data['title'], 'edit', 'mobile_news');
 				} else {
-					$data = array_merge($data, array('create_time'	=> RC_Time::gmtime()));
+					$data['create_time'] = RC_Time::gmtime();
 					$this->db_mobile_news->insert($data);
 					ecjia_admin::admin_log($data['title'], 'edit', 'mobile_news');
 				}
 			}
 		}
-		$links[] = array('text' => __('今日热点列表'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init'));
-		$this->showmessage('编辑今日热点成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/init')));
+		$links[] = array('text' => RC_Lang::get('mobile::mobile.mobile_news_list'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init'));
+		$this->showmessage(RC_Lang::get('mobile::mobile.edit_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', array('id' => $id))));
 	}
 
 	public function remove() {
@@ -259,19 +257,19 @@ class admin_mobile_news extends ecjia_admin {
 
 		$title = $this->db_mobile_news->where(array('id' => $id))->get_field('title');
 		ecjia_admin::admin_log($title, 'remove', 'mobile_news');
-		$this->showmessage(__('删除今日热点成功！'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		$this->showmessage(RC_Lang::get('mobile::mobile.remove_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
 	public function issue() {
 		$id = $_GET['id'];
 		$this->db_mobile_news->where(array('id' => $id, 'group_id'=> 0))->update(array('status' => 1));
-		$this->showmessage('发布成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', 'id='.$id)));
+		$this->showmessage(RC_Lang::get('mobile::mobile.issue_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', 'id='.$id)));
 	}
 
 	public function unissue() {
 		$id = $_GET['id'];
 		$this->db_mobile_news->where(array('id' => $id, 'group_id'=> 0))->update(array('status' => 0));
-		$this->showmessage('取消发布成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', 'id='.$id)));
+		$this->showmessage(RC_Lang::get('mobile::mobile.cancel_issue_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', 'id='.$id)));
 	}
 }
 

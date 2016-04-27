@@ -14,8 +14,8 @@
 	</div>
 	<div class="btns" id="state1">
 		<img id="state2Img" width="100%" src="{RC_App::apps_url('mobile/templates/front/image/btns.png')}" />
-		<a class='android' data-url="http://www.pgyer.com/ecjia-shopkeeper-android" href="javascript:;"></a>
-		<a class='iphone' data-url="http://www.pgyer.com/ecjia-shopkeeper-iphone" href="javascript:;"></a>
+		<a class='android' data-url="{$android_upload_url}" href="javascript:;"></a>
+		<a class='iphone' data-url="{$iphone_upload_url}" href="javascript:;"></a>
 	</div>
 	<div class="btns" id="state2">
 		<img id="state2Img" width="100%" src="{RC_App::apps_url('mobile/templates/front/image/btn.png')}" />
