@@ -17,9 +17,18 @@ class data_module implements ecjia_interface {
 // 				'latitude'	=> '31.235450744628906',
 // 				'longitude' => '121.41641998291016',
 // 		);
+
+		
+		if (is_array($location) && isset($location['latitude']) && isset($location['longitude'])) {
+			$request = array('location' => $location);
+			$geohash = RC_Loader::load_app_class('geohash', 'shipping');
+			$where_geohash = $geohash->encode($location['latitude'] , $location['longitude']);
+			$where_geohash = substr($where_geohash, 0, 5);
+		}
+		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
-		$cache_key = 'api_home_data_'.$_SESSION['user_rank'].'_'.ecjia::config('lang').'_'.$device['code'];
-// 		$response = RC_Cache::app_cache_get($cache_key, 'mobile');
+		$cache_key = 'api_home_data_'.$_SESSION['user_rank'].'_'.ecjia::config('lang').'_'.$device['code'].'_'.$where_geohash;
+		$response = RC_Cache::app_cache_get($cache_key, 'mobile');
 		if (empty($response)) {
 			$db = RC_Loader::load_app_model('goods_model', 'goods');
 			RC_Loader::load_app_func('global', 'api');
@@ -30,20 +39,15 @@ class data_module implements ecjia_interface {
 			$response = array();
 			
 			/* 根据经纬度查询附近店铺*/
-			if (is_array($location) && isset($location['latitude']) && isset($location['longitude'])) {
-				$request = array('location' => $location);
-				$geohash = RC_Loader::load_app_class('geohash', 'shipping');
-				$where_geohash = $geohash->encode($location['latitude'] , $location['longitude']);
-				$where_geohash = substr($where_geohash, 0, 5);
-			
+			if (!empty($where_geohash)) {
 				$seller_shopinfo_db = RC_Loader::load_app_model('seller_shopinfo_model', 'seller');
 				$ru_id = $seller_shopinfo_db->where(array('geohash' => array('like' => "%$where_geohash%")))->get_field('ru_id', true);
-				
-				if (!empty($ru_id)) {
-					$request['o2o_seller'] = array_merge($ru_id, array('0'));
-				} else {
-					$request['o2o_seller'] = 0;
-				}
+			}
+			
+			if (!empty($ru_id)) {
+				$request['o2o_seller'] = array_merge($ru_id, array('0'));
+			} else {
+				$request['o2o_seller'] = 0;
 			}
 				
 			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);
