@@ -45,7 +45,7 @@ class data_module implements ecjia_interface {
 			}
 			
 			if (!empty($ru_id)) {
-				$request['o2o_seller'] = array_merge($ru_id, array('0'));
+				$request['o2o_seller'] = array_merge($ru_id);
 			} else {
 				$request['o2o_seller'] = 0;
 			}
