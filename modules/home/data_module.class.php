@@ -18,7 +18,7 @@ class data_module implements ecjia_interface {
 // 				'longitude' => '121.41641998291016',
 // 		);
 
-		
+		$request = null;
 		if (is_array($location) && isset($location['latitude']) && isset($location['longitude'])) {
 			$request = array('location' => $location);
 			$geohash = RC_Loader::load_app_class('geohash', 'shipping');
@@ -28,6 +28,7 @@ class data_module implements ecjia_interface {
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
 		$cache_key = 'api_home_data_'.$_SESSION['user_rank'].'_'.ecjia::config('lang').'_'.$device['code'].'_'.$where_geohash;
+
 		$response = RC_Cache::app_cache_get($cache_key, 'mobile');
 		if (empty($response)) {
 			$db = RC_Loader::load_app_model('goods_model', 'goods');
@@ -35,7 +36,6 @@ class data_module implements ecjia_interface {
 			
 			//流程逻辑开始
 			// runloop 流
-			$request = null;
 			$response = array();
 			
 			/* 根据经纬度查询附近店铺*/
@@ -49,7 +49,7 @@ class data_module implements ecjia_interface {
 			} else {
 				$request['o2o_seller'] = 0;
 			}
-				
+
 			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);
 			RC_Cache::app_cache_set($cache_key, $response, 'mobile', 60);
 		}
@@ -319,7 +319,7 @@ function group_goods_data($response, $request) {
 			}
 		}
 		
-		if (isset($request['o2o_seller']) && !empty($request['o2o_seller']) && is_array($request['o2o_seller'])) {
+		if (isset($request['o2o_seller'])) {
 			$groupwhere['g.user_id'] = $request['o2o_seller'];
 		}
 		
@@ -382,7 +382,7 @@ function mobilebuy_goods_data($response, $request) {
 			$mobilebuywhere['g.review_status'] = array('gt' => 2);
 		}
 		
-		if (isset($request['o2o_seller']) && !empty($request['o2o_seller']) && is_array($request['o2o_seller'])) {
+		if (isset($request['o2o_seller'])) {
 			$mobilebuywhere['g.user_id'] = $request['o2o_seller'];
 		}
 		
@@ -442,7 +442,7 @@ function seller_recommend_data($response, $request) {
 		$user_id = $_SESSION['user_id'];
 		$user_id = empty($user_id) ? 0 : $user_id;
 		
-		if (isset($request['o2o_seller']) && !empty($request['o2o_seller']) && is_array($request['o2o_seller'])) {
+		if (isset($request['o2o_seller'])) {
 			$where['msi.user_id'] = $request['o2o_seller'];
 		}
 		
