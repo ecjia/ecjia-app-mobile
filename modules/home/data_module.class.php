@@ -45,9 +45,9 @@ class data_module implements ecjia_interface {
 			}
 			
 			if (!empty($ru_id)) {
-				$request['o2o_seller'] = array_merge($ru_id);
+				$request['o2o_seller'] = $ru_id;
 			} else {
-				$request['o2o_seller'] = 0;
+				$request['o2o_seller'] = '';
 			}
 
 			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);
