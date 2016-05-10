@@ -307,6 +307,7 @@ function group_goods_data($response, $request) {
 		$groupwhere['act_type']		= GAT_GROUP_BUY;
 		$groupwhere['start_time']	= array('elt' => RC_Time::gmtime());
 		$groupwhere['end_time']		= array('egt' => RC_Time::gmtime());
+		$groupwhere['is_finished'] 	= 0;
 		$groupwhere[] = 'g.goods_id is not null';
 		$groupwhere['g.is_delete'] = '0';
 		$groupwhere['g.is_on_sale'] = 1;
