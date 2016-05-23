@@ -50,7 +50,7 @@ class data_module implements ecjia_interface {
 				$request['o2o_seller'] = '';
 			}
 
-			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);
+			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
 			RC_Cache::app_cache_set($cache_key, $response, 'mobile', 60);
 		}
 		return $response;
@@ -133,8 +133,8 @@ function promote_goods_data($response, $request) {
 	if ( !empty($result['list']) ) {
 		foreach ( $result['list'] as $key => $val ) {
 			$promote_goods_data[] = array(
-					'id'		=> $val['goods_id'],
-					'goods_id'	=> $val['goods_id'],           //多商铺中不用，后期删除
+					'id'		=> intval($val['goods_id']),
+					'goods_id'	=> intval($val['goods_id']),           //多商铺中不用，后期删除
 					'name'		=> $val['goods_name'],
 					'market_price'	=> $val['market_price'],
 					'shop_price'	=> $val['shop_price'],
@@ -168,8 +168,8 @@ function new_goods_data($response, $request) {
 	if ( !empty($result['list']) ) {
 		foreach ( $result['list'] as $key => $val ) {
 			$new_goods_data[] = array(
-					'id'		=> $val['goods_id'],
-					'goods_id'	=> $val['goods_id'],           //多商铺中不用，后期删除
+					'id'		=> intval($val['goods_id']),
+					'goods_id'	=> intval($val['goods_id']),           //多商铺中不用，后期删除
 					'name'		=> $val['goods_name'],
 					'market_price'	=> $val['market_price'],
 					'shop_price'	=> $val['shop_price'],
