@@ -238,7 +238,7 @@ class admin_device extends ecjia_admin {
 		
 		$android = 'android';
 		if ($filter['deviceval'] == 1) {
-			$where[] ="device_client = '" .$android. "' and in_status = 0";
+			$where[] ="device_client = '" .$android. "' and device_code != 8001 and in_status = 0";
 		}
 		
 		$iphone = 'iphone';
@@ -260,7 +260,7 @@ class admin_device extends ecjia_admin {
 			$where['in_status'] = 1;
 		}
 	
-		$field = "SUM(IF(in_status=0,1,0)) AS count, SUM(IF(device_client='android' and in_status = 0,1,0)) AS android, SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone, SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad, SUM(IF(device_client='android' and device_code='8001' and in_status = 0,1,0)) AS cashier, SUM(IF(in_status = 1,1,0)) AS trashed";
+		$field = "SUM(IF(in_status=0,1,0)) AS count, SUM(IF(device_client='android' and device_code !='8001' and in_status = 0,1,0)) AS android, SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone, SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad, SUM(IF(device_client='android' and device_code='8001' and in_status = 0,1,0)) AS cashier, SUM(IF(in_status = 1,1,0)) AS trashed";
 		$msg_count = $db_device->field($field)->find();
 		$msg_count = array(
 			'count'		=> empty($msg_count['count']) 	? 0 : $msg_count['count'],
