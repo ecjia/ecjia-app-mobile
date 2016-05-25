@@ -251,17 +251,23 @@ class admin_device extends ecjia_admin {
 			$where[] = "device_client = '" .$ipad. "' and in_status = 0";
 		}
 		
+		$cashier = 'android';
 		if ($filter['deviceval'] == 4) {
+			$where[] = "device_client = '" .$cashier. "' and device_code = 8001 and in_status = 0";
+		}
+		
+		if ($filter['deviceval'] == 5) {
 			$where['in_status'] = 1;
 		}
 	
-		$field = "SUM(IF(in_status=0,1,0)) AS count, SUM(IF(device_client='android' and in_status = 0,1,0)) AS android, SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone, SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad, SUM(IF(in_status = 1,1,0)) AS trashed";
+		$field = "SUM(IF(in_status=0,1,0)) AS count, SUM(IF(device_client='android' and in_status = 0,1,0)) AS android, SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone, SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad, SUM(IF(device_client='android' and device_code='8001' and in_status = 0,1,0)) AS cashier, SUM(IF(in_status = 1,1,0)) AS trashed";
 		$msg_count = $db_device->field($field)->find();
 		$msg_count = array(
-			'count'		=> empty($msg_count['count']) ? 0 : $msg_count['count'],
+			'count'		=> empty($msg_count['count']) 	? 0 : $msg_count['count'],
 			'android'	=> empty($msg_count['android']) ? 0 : $msg_count['android'],
-			'iphone'	=> empty($msg_count['iphone']) ? 0 : $msg_count['iphone'],
-			'ipad'	    => empty($msg_count['ipad']) ? 0 : $msg_count['ipad'],
+			'iphone'	=> empty($msg_count['iphone']) 	? 0 : $msg_count['iphone'],
+			'ipad'	    => empty($msg_count['ipad']) 	? 0 : $msg_count['ipad'],
+			'cashier'	=> empty($msg_count['cashier']) ? 0 : $msg_count['cashier'],
 			'trashed'	=> empty($msg_count['trashed']) ? 0 : $msg_count['trashed']
 		);
 		

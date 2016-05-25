@@ -24,7 +24,8 @@
 			<li class="{if $device_list.filter.deviceval eq '1'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=1"}'>Android<span class="badge badge-info">{$device_list.msg_count.android}</span></a></li>
 			<li class="{if $device_list.filter.deviceval eq '2'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=2"}'>iPhone<span class="badge badge-info">{$device_list.msg_count.iphone}</span></a></li>
 			<li class="{if $device_list.filter.deviceval eq '3'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=3"}'>iPad<span class="badge badge-info">{$device_list.msg_count.ipad}</span></a></li>
-			<li class="{if $device_list.filter.deviceval eq '4'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=4"}'>回收站<span class="badge badge-info">{$device_list.msg_count.trashed}</span></a></li>
+			<li class="{if $device_list.filter.deviceval eq '4'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=4"}'>收银台<span class="badge badge-info">{$device_list.msg_count.cashier}</span></a></li>
+			<li class="{if $device_list.filter.deviceval eq '5'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=5"}'>回收站<span class="badge badge-info">{$device_list.msg_count.trashed}</span></a></li>
 		</ul>
 		<!-- </div> -->
 	<!-- </div> -->
@@ -38,7 +39,7 @@
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<!-- {if $device_list.filter.deviceval eq '4'} -->
+					<!-- {if $device_list.filter.deviceval eq '5'} -->
 					<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=returndevice&deviceval={$device_list.filter.deviceval}"}' data-msg="{lang key='mobile::mobile.batch_restore_confirm'}" data-noSelectMsg="{lang key='mobile::mobile.select_restore_device'}" data-name="id" href="javascript:;"><i class="fontello-icon-reply-all"></i>{lang key='mobile::mobile.restore_device'}</a></li>
 					<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=del&deviceval={$device_list.filter.deviceval}"}'  data-msg="{lang key='mobile::mobile.batch_remove_confirm'}" data-noSelectMsg="{lang key='mobile::mobile.select_remove_device'}" data-name="id" href="javascript:;"><i class="fontello-icon-trash"></i>{lang key='mobile::mobile.delete_forever'}</a></li>
 					<!-- {else} -->
@@ -77,7 +78,7 @@
 									<td class="hide-edit-area">
 									{$val.device_client}
 							    	<div class="edit-list">
-								     	{if $device_list.filter.deviceval eq '4'}
+								     	{if $device_list.filter.deviceval eq '5'}
      										<a class="toggle_view" data-msg="{lang key='mobile::mobile.restore_decice_confirm'}" href='{url path="mobile/admin_device/returndevice" args="id={$val.id}"}' data-pjax-url='{url path="mobile/admin_device/init" args="deviceval={$device_list.filter.deviceval}"}' data-val="back">{lang key='mobile::mobile.restore_device'}</a>&nbsp;|&nbsp;
 								     		<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="{lang key='mobile::mobile.remove_decice_confirm'}" href='{RC_Uri::url("mobile/admin_device/remove","id={$val.id}&deviceval={$device_list.filter.deviceval}")}'>{lang key='mobile::mobile.delete_forever'}</a>
 								     	{else}
