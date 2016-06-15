@@ -21,13 +21,14 @@ class admin_mobile_toutiao extends ecjia_admin {
         RC_Style::enqueue_style('chosen');
         RC_Script::enqueue_script('jquery-uniform');
         RC_Style::enqueue_style('uniform-aristo');
-        RC_Script::enqueue_script('bootstrap-editable-script',RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
-        RC_Style::enqueue_style('bootstrap-editable-css',RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
-        
+        RC_Script::enqueue_script('bootstrap-editable-script', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
+        RC_Style::enqueue_style('bootstrap-editable-css', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
         RC_Script::enqueue_script('jquery.toggle.buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/jquery.toggle.buttons.js'));
         RC_Style::enqueue_style('bootstrap-toggle-buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/bootstrap-toggle-buttons.css'));
         
         RC_Script::enqueue_script('product_news', RC_App::apps_url('statics/js/mobile_toutiao.js', __FILE__));
+        RC_Script::localize_script('product_news', 'js_lang', RC_Lang::get('mobile::mobile.js_lang'));
+        
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_headline'), RC_Uri::url('mobile/admin_mobile_toutiao/init')));
 	}
 
@@ -87,7 +88,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 			$this->showmessage(RC_Lang::get('mobile::mobile.upload_headline_img'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
-		if (strstr($_POST['content_url'], "http://") || strstr($_POST['content_url'], "https://")) {
+		if (strstr($_POST['content_url'], "http://") || strstr($_POST['content_url'], "https://") || strstr($_POST['content_url'], "ecjiaopen://")) {
 			$url = $_POST['content_url'];
 		} else {
 			$url = "http://".$_POST['content_url'];
@@ -147,7 +148,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 			$this->showmessage(RC_Lang::get('mobile::mobile.headline_title_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
-		if (strstr($_POST['content_url'], "http://") || strstr($_POST['content_url'], "https://")) {
+		if (strstr($_POST['content_url'], "http://") || strstr($_POST['content_url'], "https://")  || strstr($_POST['content_url'], "ecjiaopen://")) {
 			$url = $_POST['content_url'];
 		} else {
 			$url = "http://".$_POST['content_url'];
