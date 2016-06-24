@@ -8,7 +8,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class data_module implements ecjia_interface {
 
 	public function run(ecjia_api & $api) {
-	
 		//如果用户登录获取其session
 		EM_Api::authSession(false);
 		$device = _POST('device', array());
@@ -22,12 +21,13 @@ class data_module implements ecjia_interface {
 		if (is_array($location) && isset($location['latitude']) && isset($location['longitude'])) {
 			$request = array('location' => $location);
 			$geohash = RC_Loader::load_app_class('geohash', 'shipping');
-			$where_geohash = $geohash->encode($location['latitude'] , $location['longitude']);
-			$where_geohash = substr($where_geohash, 0, 5);
+			$geohash_code = $geohash->encode($location['latitude'] , $location['longitude']);
+			$geohash_code = substr($where_geohash, 0, 5);
+			$request['geohash_code'] = $geohash_code;
 		}
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
-		$cache_key = 'api_home_data_'.$_SESSION['user_rank'].'_'.ecjia::config('lang').'_'.$device['code'].'_'.$where_geohash;
+		$cache_key = 'api_home_data_'.$_SESSION['user_rank'].'_'.ecjia::config('lang').'_'.$device['code'].'_'.$geohash_code;
 
 		$response = RC_Cache::app_cache_get($cache_key, 'mobile');
 		if (empty($response)) {
@@ -37,18 +37,6 @@ class data_module implements ecjia_interface {
 			//流程逻辑开始
 			// runloop 流
 			$response = array();
-			
-			/* 根据经纬度查询附近店铺*/
-			if (!empty($where_geohash)) {
-				$seller_shopinfo_db = RC_Loader::load_app_model('seller_shopinfo_model', 'seller');
-				$ru_id = $seller_shopinfo_db->where(array('geohash' => array('like' => "%$where_geohash%")))->get_field('ru_id', true);
-			}
-			
-			if (!empty($ru_id)) {
-				$request['o2o_seller'] = $ru_id;
-			} else {
-				$request['o2o_seller'] = '';
-			}
 
 			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
 			RC_Cache::app_cache_set($cache_key, $response, 'mobile', 60);
@@ -87,11 +75,11 @@ function cycleimage_data($response, $request) {
 	}
 	
 	/* url解析判断规律   适用于2.8以及以前，之后是否废弃需确认*/
-	foreach ($player_data as $key => $val) {
-		$action_info = api_get_url($val['url']);
-		$player_data[$key]['action'] = $action_info['action'];
-		$player_data[$key]['action_id'] = $action_info['action_id'];
-	}
+// 	foreach ($player_data as $key => $val) {
+// 		$action_info = api_get_url($val['url']);
+// 		$player_data[$key]['action'] = $action_info['action'];
+// 		$player_data[$key]['action_id'] = $action_info['action_id'];
+// 	}
 	
 	$response['player'] = $player_data;
 	
@@ -320,13 +308,23 @@ function group_goods_data($response, $request) {
 			}
 		}
 		
-		if (isset($request['o2o_seller'])) {
-			$groupwhere['g.user_id'] = $request['o2o_seller'];
+// 		if (isset($request['o2o_seller'])) {
+// 			$groupwhere['g.user_id'] = $request['o2o_seller'];
+// 		}
+
+		/* 根据经纬度查询附近店铺*/
+		if (isset($request['geohash_code']) && !empty($request['geohash_code'])) {
+			$groupwhere['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
 		$db_goods_activity = RC_Loader::load_app_model('goods_activity_viewmodel', 'goods');
 		
-		$res = $db_goods_activity->field('ga.act_id, ga.goods_id, ga.goods_name, ga.start_time, ga.end_time, ext_info, shop_price, market_price, goods_brief, goods_thumb, goods_img, original_img')->join(array('goods'))->where($groupwhere)->limit(4)->order(array('ga.act_id' => 'desc'))->select();
+		$res = $db_goods_activity->field('ga.act_id, ga.goods_id, ga.goods_name, ga.start_time, ga.end_time, ext_info, shop_price, market_price, goods_brief, goods_thumb, goods_img, original_img')
+								 ->join(array('goods', 'seller_shopinfo'))
+								 ->where($groupwhere)
+								 ->limit(4)
+								 ->order(array('ga.act_id' => 'desc'))
+								 ->select();
 
 		$group_goods_data = array();
 		if (!empty($res)) {
@@ -383,12 +381,21 @@ function mobilebuy_goods_data($response, $request) {
 			$mobilebuywhere['g.review_status'] = array('gt' => 2);
 		}
 		
-		if (isset($request['o2o_seller'])) {
-			$mobilebuywhere['g.user_id'] = $request['o2o_seller'];
+// 		if (isset($request['o2o_seller'])) {
+// 			$mobilebuywhere['g.user_id'] = $request['o2o_seller'];
+// 		}
+		
+		/* 根据经纬度查询附近店铺*/
+		if (isset($request['geohash_code']) && !empty($request['geohash_code'])) {
+			$mobilebuywhere['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
 		$db_goods_activity = RC_Loader::load_app_model('goods_activity_viewmodel', 'goods');
-		$res = $db_goods_activity->field('ga.act_id, ga.goods_id, ga.goods_name, ga.start_time, ga.end_time, ext_info, shop_price, market_price, goods_brief, goods_thumb, goods_img, original_img')->join(array('goods'))->where($mobilebuywhere)->order(array('act_id' => 'DESC'))->limit(4)->select();
+		$res = $db_goods_activity->field('ga.act_id, ga.goods_id, ga.goods_name, ga.start_time, ga.end_time, ext_info, shop_price, market_price, goods_brief, goods_thumb, goods_img, original_img')
+								 ->join(array('goods', 'seller_shopinfo'))
+								 ->where($mobilebuywhere)
+								 ->order(array('act_id' => 'DESC'))
+								 ->limit(4)->select();
 		 
 		$mobilebuy_goods = array();
 		if (!empty($res)) {
@@ -431,28 +438,32 @@ function seller_recommend_data($response, $request) {
 	$is_active = ecjia_app::is_active('ecjia.seller');
 	
 	if (!is_ecjia_error($result) && $is_active) {
-		$msi_dbview = RC_Loader::load_app_model('merchants_shop_information_viewmodel', 'seller');
-		$area_id = _POST('area_id', 0);
-		if ($area_id > 0) {
-			$where['city'] = $area_id;
-		}
-		$where['ssi.status'] = 1;
-		$where['msi.merchants_audit'] = 1;
-		$order_by = array('follower' => 'DESC', 'shop_id' => 'DESC');
+// 		$msi_dbview = RC_Loader::load_app_model('merchants_shop_information_viewmodel', 'seller');
+		$ssi_dbview = RC_Loader::load_app_model('seller_shopinfo_viewmodel', 'seller');
+		
+// 		$where['ssi.status'] = 1;
+// 		$where['msi.merchants_audit'] = 1;
+		$order_by = array('follower' => 'DESC', 'ssi.id' => 'DESC');
 		
 		$user_id = $_SESSION['user_id'];
 		$user_id = empty($user_id) ? 0 : $user_id;
 		
-		if (isset($request['o2o_seller'])) {
-			$where['msi.user_id'] = $request['o2o_seller'];
+// 		if (isset($request['o2o_seller'])) {
+// 			$where['msi.user_id'] = $request['o2o_seller'];
+// 		}
+		
+		/* 根据经纬度查询附近店铺*/
+		if (isset($request['geohash_code']) && !empty($request['geohash_code'])) {
+			$where['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
-		$field ='msi.user_id, ssi.*, CONCAT(shoprz_brandName,shopNameSuffix) as seller_name, c.cat_name, ssi.shop_logo, count(cs.ru_id) as follower, SUM(IF(cs.user_id = '.$user_id.',1,0)) as is_follower';
-		$result = $msi_dbview->join(array('category', 'seller_shopinfo', 'collect_store'))
+		$field ='ssi.id as seller_id, ssi.shop_name as seller_name, ssi.*, sc.cat_name, count(cs.ru_id) as follower, SUM(IF(cs.user_id = '.$user_id.',1,0)) as is_follower';
+// 		$result = $msi_dbview->join(array('category', 'seller_shopinfo', 'collect_store'))
+		$result = $ssi_dbview->join(array('seller_category', 'collect_store'))
 								->field($field)
 								->where($where)
 								->limit(6)
-								->group('msi.shop_id')
+								->group('ssi.id')
 								->order($order_by)
 								->select();
 		$list = array();
@@ -467,7 +478,8 @@ function seller_recommend_data($response, $request) {
 			$v_where = array('is_on_sale' => 1, 'is_alone_sale' => 1, 'is_delete' => 0);
 			
 			foreach ($result as $key => $val) {
-				$v_where['user_id'] = $val['user_id'];
+// 				$v_where['user_id'] = $val['user_id'];
+				$v_where['seller_id'] = $val['seller_id'];
 				if(ecjia::config('review_goods') == 1){
 					$v_where['review_status'] = array('gt' => 2);
 				}
@@ -519,14 +531,7 @@ function seller_recommend_data($response, $request) {
 							$activity_type = $mobilebuy_price > $price ? $activity_type : 'MOBILEBUY_GOODS';
 							$object_id = $mobilebuy_price > $price ? $object_id : $mobilebuy['act_id'];
 						}
-						// 							if (!empty($groupbuy)) {
-						// 								$ext_info = unserialize($groupbuy['ext_info']);
-						// 								$price_ladder = $ext_info['price_ladder'];
-						// 								$groupbuy_price  = $price_ladder[0]['price'];
-						// 								$price = $groupbuy_price > $price ? $price : $groupbuy_price;
-						// 								$activity_type = $groupbuy_price > $price ? $activity_type : 'GROUPBUY_GOODS';
-						// 								$object_id = $mobilebuy_price > $price ? $object_id : $groupbuy['act_id'];
-						// 							}
+						
 						/* 计算节约价格*/
 						$saving_price = ($v['shop_price'] - $price) > 0 ? $v['shop_price'] - $price : 0;
 		
@@ -554,7 +559,7 @@ function seller_recommend_data($response, $request) {
 		
 		
 				$list[] = array(
-						'id'				=> $val['user_id'],
+						'id'				=> $val['seller_id'],
 						'seller_name'		=> $val['seller_name'],
 						'seller_category'	=> $val['cat_name'],
 						'seller_logo'		=> empty($val['shop_logo']) ?  '' : RC_Upload::upload_url().'/'.$val['shop_logo'],
@@ -624,47 +629,47 @@ function mobile_toutiao_data($response, $request) {
 	return $response;
 }
 
-// url解析
-function api_get_url($url) {
+// // url解析
+// function api_get_url($url) {
 
-    $out = array(
-            'action' => '',
-            'action_id' => 0
-        );
-    //$site_url = dirname($GLOBALS['ecs']->url());
+//     $out = array(
+//             'action' => '',
+//             'action_id' => 0
+//         );
+//     //$site_url = dirname($GLOBALS['ecs']->url());
     
-	$site_url=dirname(SITE_URL);//获取路径  $site_url=dirname(RC_Config::system('CUSTOM_MAIN_SITE_URL'));//获取路径
-    if (strpos($url, $site_url) === false) {
-        return $out;
-    }
+// 	$site_url=dirname(SITE_URL);//获取路径  $site_url=dirname(RC_Config::system('CUSTOM_MAIN_SITE_URL'));//获取路径
+//     if (strpos($url, $site_url) === false) {
+//         return $out;
+//     }
 
-    if (strpos($url, '/goods.php') !== false) {
-        $action = 'goods';
-        $act_arr = explode('/goods.php', $url);
-        if (strpos($act_arr[1], '?id=') !== false) {
-            $action_id = ltrim($act_arr[1], '?id=');
-        }
-    } else if (strpos($url, '/category.php') !== false) {
-        $action = 'category';
-        $act_arr = explode('/category.php', $url);
-        if (strpos($act_arr[1], '?id=') !== false) {
-            $action_id = ltrim($act_arr[1], '?id=');
-        }
-    } else if (strpos($url, '/brand.php') !== false) {
-        $action = 'brand';
-        $act_arr = explode('/brand.php', $url);
-        if (strpos($act_arr[1], '?id=') !== false) {
-            $action_id = ltrim($act_arr[1], '?id=');
-        }
-    } else {
-        return $out;
-    }
+//     if (strpos($url, '/goods.php') !== false) {
+//         $action = 'goods';
+//         $act_arr = explode('/goods.php', $url);
+//         if (strpos($act_arr[1], '?id=') !== false) {
+//             $action_id = ltrim($act_arr[1], '?id=');
+//         }
+//     } else if (strpos($url, '/category.php') !== false) {
+//         $action = 'category';
+//         $act_arr = explode('/category.php', $url);
+//         if (strpos($act_arr[1], '?id=') !== false) {
+//             $action_id = ltrim($act_arr[1], '?id=');
+//         }
+//     } else if (strpos($url, '/brand.php') !== false) {
+//         $action = 'brand';
+//         $act_arr = explode('/brand.php', $url);
+//         if (strpos($act_arr[1], '?id=') !== false) {
+//             $action_id = ltrim($act_arr[1], '?id=');
+//         }
+//     } else {
+//         return $out;
+//     }
 
-    $out['action'] = $action;
-    $out['action_id'] = (int)$action_id;
+//     $out['action'] = $action;
+//     $out['action_id'] = (int)$action_id;
 
-    return $out;
-}
+//     return $out;
+// }
 
 
 RC_Hook::add_filter('api_home_data_runloop', 'cycleimage_data', 10, 2);
