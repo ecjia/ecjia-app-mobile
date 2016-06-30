@@ -22,7 +22,7 @@ class data_module implements ecjia_interface {
 			$request = array('location' => $location);
 			$geohash = RC_Loader::load_app_class('geohash', 'shipping');
 			$geohash_code = $geohash->encode($location['latitude'] , $location['longitude']);
-			$geohash_code = substr($where_geohash, 0, 5);
+			$geohash_code = substr($geohash_code, 0, 5);
 			$request['geohash_code'] = $geohash_code;
 		}
 		
@@ -457,7 +457,7 @@ function seller_recommend_data($response, $request) {
 			$where['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
-		$field ='ssi.id as seller_id, ssi.shop_name as seller_name, ssi.*, sc.cat_name, count(cs.ru_id) as follower, SUM(IF(cs.user_id = '.$user_id.',1,0)) as is_follower';
+		$field ='ssi.id as seller_id, ssi.shop_name as seller_name, ssi.*, sc.cat_name, count(cs.seller_id) as follower, SUM(IF(cs.user_id = '.$user_id.',1,0)) as is_follower';
 // 		$result = $msi_dbview->join(array('category', 'seller_shopinfo', 'collect_store'))
 		$result = $ssi_dbview->join(array('seller_category', 'collect_store'))
 								->field($field)
