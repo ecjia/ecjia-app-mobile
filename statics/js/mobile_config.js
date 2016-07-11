@@ -59,7 +59,7 @@
 					$next = $('.' + $this.parent().attr('data-next'));
 					$next_attr = $this.parent().attr('data-next');
 				/* 如果是县乡级别的，不触发后续操作 */
-				if ($this.parent().hasClass('selDistricts')) {
+				if ($this.parent().hasClass('selCities')) {
 					$this.siblings().removeClass('disabled');
 					if (val != 0)$this.addClass('disabled');
 					return;
