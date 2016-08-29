@@ -26,6 +26,7 @@
 					<li><a href="#touch" data-toggle="tab">{lang key='mobile::mobile.touch_set'}</a></li>
 					<li><a href="#load_app" data-toggle="tab">{lang key='mobile::mobile.download_url'}</a></li>
 					<li><a href="#adsense" data-toggle="tab">{lang key='mobile::mobile.adsense_set'}</a></li>
+					<li><a href="#tv_adsense" data-toggle="tab">TV广告位设置</a></li>
 					<li><a href="#mobile_login" data-toggle="tab">{lang key='mobile::mobile.mobile_login'}</a></li>
 					<li><a href="#hot_city" data-toggle="tab">{lang key='mobile::mobile.hot_city_set'}</a></li>
 					<li><a href="#message_notice" data-toggle="tab">{lang key='mobile::mobile.message_notice'}</a></li>
@@ -80,6 +81,18 @@
 							<label class="control-label">{lang key='mobile::mobile.shop_pc_url'}</label>
 							<div class="controls">
 								<input type='text' name='shop_pc_url' value='{$shop_pc_url}'>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}邀请说明：{/t}</label>
+							<div class="controls">
+								<textarea class="span12 h100" name="recommend_notice" cols="40" rows="3">{$recommend_notice}</textarea>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{t}分享说明：{/t}</label>
+							<div class="controls">
+								<textarea class="span12 h100" name="share_notice" cols="40" rows="3">{$share_notice}</textarea>
 							</div>
 						</div>
 					</div>
@@ -356,6 +369,132 @@
 							</div>
 						</div>
 					</div>
+					<div class="tab-pane" id="tv_adsense">
+						<div class="control-group formSep edit-page">
+							<label class="control-label">TV首页广告位</label>
+							<div class="controls">
+								<select name='mobile_tv_home_adsense'>
+									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
+									<!-- {foreach from=$ad_position_list item=list} -->
+										<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_home_adsense}selected{/if}>{$list.position_name}</option>
+									<!-- {/foreach} -->
+								</select>
+								<span class="help-block">{lang key='mobile::mobile.launch_adsense_notice'}</span>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">TV首页广告组</label>
+							<div class="controls control-group draggable">
+								<div class="ms-container span6" id="ms-custom-navigation">
+									<div class="ms-selectable">
+										<div class="search-header">
+											<input class="span12" id="ms-search" type="text" placeholder="{lang key='mobile::mobile.filter_adsense_name'}" autocomplete="off">
+										</div>
+										<ul class="ms-list tv-nav-list-ready select_tv_adsense_group">
+											<!-- {foreach from=$ad_position_list item=list} -->
+											<li data-id="{$list.position_id}" id="position_id_{$list.position_id}" class="ms-elem-selectable isShow"><span>{$list.position_name}</span></li>
+											<!-- {foreachelse}-->
+											<li class="ms-elem-selectable disabled"><span>{lang key='mobile::mobile.no_content'}</span></li>
+											<!-- {/foreach} -->
+										</ul>
+									</div>
+									<div class="ms-selection">
+										<div class="custom-header custom-header-align">{lang key='mobile::mobile.selected_ad_position'}</div>
+										<ul class="ms-list nav-list-ready tv-nav-list-content">
+											<!-- {foreach from=$mobile_tv_home_adsense_group item=item key=key} -->
+											<li class="tv-ms-elem-selection ms-elem-selection">
+												<input type="hidden" value="{$item.position_id}" name="mobile_tv_home_adsense_group[]" />
+												<!-- {$item.position_name} -->
+												<span class="edit-list"><i class="fontello-icon-minus-circled ecjiafc-red del"></i></span>
+											</li>
+											<!-- {/foreach} -->
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="mobile_login">
+						<h3 class="heading">{lang key='mobile::mobile.mobile_login_set'}</h3>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_login_fgcolor'}</label>
+							<div class="controls">
+								<div class="input-append color" data-color="{$mobile_phone_login_fgcolor}">
+									<input class="w100" name="mobile_phone_login_fgcolor" type="text" value="{$mobile_phone_login_fgcolor}">
+									<span class="add-on">
+										<i class="dft_color" style='margin-top: 2px;'></i>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_login_bgcolor'}</label>
+							<div class="controls">
+								<div class="input-append color" data-color="{$mobile_phone_login_bgcolor}">
+									<input class="w100" name="mobile_phone_login_bgcolor" type="text" value="{$mobile_phone_login_bgcolor}">
+									<span class="add-on">
+										<i class="dft_color" style='margin-top: 2px;'></i>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_login_bgimage'}</label>
+							<div class="controls">
+								<div class="fileupload {if $mobile_phone_login_bgimage}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
+										<img src="{$mobile_phone_login_bgimage}" alt="{lang key='mobile::mobile.no_image'}" />
+									</div>
+									<span class="btn btn-file">
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
+									<input type="file" name="mobile_phone_login_bgimage"/>
+									</span>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_phone_login_bgimage')}" {if $mobile_phone_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+								</div>
+							</div>
+						</div>
+						<h3 class="heading">{lang key='mobile::mobile.pad_login_set'}</h3>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.pad_login_fgcolor'}</label>
+							<div class="controls">
+								<div class="input-append color" data-color="{$mobile_pad_login_fgcolor}">
+									<input class="w100" name="mobile_pad_login_fgcolor" type="text" value="{$mobile_pad_login_fgcolor}">
+									<span class="add-on">
+										<i class="dft_color" style='margin-top: 2px;'></i>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.pad_login_bgcolor'}</label>
+							<div class="controls">
+								<div class="input-append color" data-color="{$mobile_pad_login_bgcolor}">
+									<input class="w100" name="mobile_pad_login_bgcolor" type="text" value="{$mobile_pad_login_bgcolor}">
+									<span class="add-on">
+										<i class="dft_color" style='margin-top: 2px;'></i>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.pad_login_bgimage'}</label>
+							<div class="controls">
+								<div class="fileupload {if $mobile_pad_login_bgimage}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
+										<img src="{$mobile_pad_login_bgimage}" alt="{lang key='mobile::mobile.no_image'}" />
+									</div>
+									<span class="btn btn-file">
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
+									<input type="file" name="mobile_pad_login_bgimage"/>
+									</span>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_pad_login_bgimage')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 					<div class="tab-pane" id="hot_city">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.selected_area'}</label>
@@ -405,7 +544,27 @@
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.remind_seller_ship'}</label>
 							<div class="controls chk_radio">
-								<input type='radio' name='remind_seller_ship' value='2'>{lang key='mobile::mobile.message_notice'}<input type='radio' name='remind_seller_ship' value='1'>{lang key='mobile::mobile.push_notice'}<input type='radio' name='remind_seller_ship' value='0'>{lang key='mobile::mobile.not_notice'}
+								<input type='radio' name='order_reminder_type' value='2' {if $order_reminder_type eq 2}checked='checked'{/if} />{lang key='mobile::mobile.message_notice'}
+								<input type='radio' name='order_reminder_type' value='1' {if $order_reminder_type eq 1}checked='checked'{/if} />{lang key='mobile::mobile.push_notice'}
+								<input type='radio' name='order_reminder_type' value='0' {if $order_reminder_type eq 0}checked='checked'{/if} />{lang key='mobile::mobile.not_notice'}
+							</div>
+						</div>
+						
+						<div class="control-group formSep order_reminder_2 {if $order_reminder_type eq '0' || $order_reminder_type eq '1'}ecjiaf-dn{/if}">
+							<label class="control-label order_reminder_2">{lang key='mobile::mobile.order_remind_by_message'}</label>
+							<div class="controls chk_radio order_reminder_2">
+								<input type='text' name='order_reminder_mobile' value='{$order_reminder_value}'>
+							</div>
+						</div>
+						<div class="control-group formSep order_reminder_1 {if $order_reminder_type eq '0' || $order_reminder_type eq '2'}ecjiaf-dn{/if}">
+							<label class="control-label">{lang key='mobile::mobile.order_remind_by_push'}</label>
+							<div class="controls chk_radio">
+								<select name='order_reminder_push'>
+									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
+									<!-- {foreach from=$admin_user_list item=list} -->
+										<option value="{$list.user_id}" {if $list.user_id eq $order_reminder_value}selected{/if}>{$list.user_name}</option>
+									<!-- {/foreach} -->
+								</select>
 							</div>
 						</div>
 					</div>
@@ -423,7 +582,7 @@
 							<label class="control-label">{lang key='mobile::mobile.checkin_award_type'}</label>
 							<div class="controls">
 								<select name='checkin_award_type'>
-									<option value="integral">{lang key='mobile::mobile.checkin_award'}</option>
+									<option value="integral">{lang key='mobile::mobile.integral'}</option>
 								</select>
 							</div>
 						</div>

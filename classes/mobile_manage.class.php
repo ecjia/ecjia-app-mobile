@@ -77,7 +77,6 @@ class mobile_manage {
         return $applist;
     }
     
-    
 }
 
 // end

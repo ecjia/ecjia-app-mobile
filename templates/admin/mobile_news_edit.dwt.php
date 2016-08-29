@@ -58,7 +58,7 @@
 			<div class="mobile_news_edit">
 				<!-- {foreach from=$mobile_news key=key item=list name=mobile}-->
 				<div class="mobile_news_edit_area {if $key neq '0'}ecjiaf-dn{/if}">
-					<h4 class="heading">{lang key='mobile::mobile.mobile_news'}&nbsp;{$key+1}</h4>
+					<h4 class="heading">{lang key='mobile::mobile.mobile_news'} {$key+1}</h4>
 					<fieldset>
 						<div class="control-group control-group-small formSep">
 							<label class="control-label">{lang key='mobile::mobile.label_title'}</label>

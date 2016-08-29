@@ -28,16 +28,14 @@ class admin_discover extends ecjia_admin {
 		RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('smoke');
-
 		RC_Script::enqueue_script('jquery.toggle.buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/jquery.toggle.buttons.js'));
 		RC_Style::enqueue_style('bootstrap-toggle-buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/bootstrap-toggle-buttons.css'));
-
 		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
 		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
-
-		RC_Script::enqueue_script('discover', RC_App::apps_url('statics/js/discover.js' , __FILE__), array(), false, false);
-
 		RC_Script::enqueue_script('bootstrap-placeholder');
+		
+		RC_Script::enqueue_script('discover', RC_App::apps_url('statics/js/discover.js', __FILE__), array(), false, false);
+		RC_Script::localize_script('discover', 'js_lang', RC_Lang::get('mobile::mobile.js_lang'));
 
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.discover'), RC_Uri::url('mobile/admin_discover/init')));
 	}
@@ -119,7 +117,7 @@ class admin_discover extends ecjia_admin {
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
-			$links[] = array('text' => RC_Lang::get('mobile::mobile.discover_list'), 'href' => RC_Uri::url('mobile/admin_discover/init'));
+			$links[] = array('text' => RC_Lang::get('mobile::mobile.return_discover_list'), 'href' => RC_Uri::url('mobile/admin_discover/init'));
 
 			ecjia_admin::admin_log($_POST['img_text'], 'add', 'mobile_discover');
 			$this->showmessage(RC_Lang::get('mobile::mobile.add_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_discover/add')));
@@ -258,7 +256,7 @@ class admin_discover extends ecjia_admin {
 		$this->admin_priv('discover_update',ecjia::MSGTYPE_JSON);
 
 		$id     = intval($_POST['id']);
-		$val    = intval($_POST['val']);
+		$val	= intval($_POST['val']);
 
 		$flashdb = $this->mobile->discover_data();
 		
@@ -273,7 +271,7 @@ class admin_discover extends ecjia_admin {
 		} else {
 			ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.hide_discover'), $text), 'setup', 'mobile_discover');
 		}
-		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content'=> $val, 'pjaxurl' => RC_uri::url('mobile/admin_discover/init')));
+		$this->showmessage(RC_Lang::get('mobile::mobile.edit_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content'=> $val, 'pjaxurl' => RC_uri::url('mobile/admin_discover/init')));
 	}
 }
 

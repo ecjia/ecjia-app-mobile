@@ -34,10 +34,10 @@ class admin_cycleimage extends ecjia_admin {
 		RC_Style::enqueue_style('bootstrap-toggle-buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/bootstrap-toggle-buttons.css'));
 		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
 		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
-
-		RC_Script::enqueue_script('cycleimage', RC_App::apps_url('statics/js/cycleimage.js' , __FILE__), array(), false, false);
-
 		RC_Script::enqueue_script('bootstrap-placeholder');
+		
+		RC_Script::enqueue_script('cycleimage', RC_App::apps_url('statics/js/cycleimage.js', __FILE__), array(), false, false);
+		RC_Script::localize_script('cycleimage', 'js_lang', RC_Lang::get('mobile::mobile.js_lang'));
 
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.ipad_cycleimage'), RC_Uri::url('mobile/admin_cycleimage/init')));
 	}
@@ -46,7 +46,7 @@ class admin_cycleimage extends ecjia_admin {
 	 * 轮播图列表页面加载
 	 */
 	public function init() {
-		$this->admin_priv('cycleimage_manage',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('cycleimage_manage', ecjia::MSGTYPE_JSON);
 
 		$playerdb = $this->mobile->cycleimage_data(true);
 
@@ -55,33 +55,32 @@ class admin_cycleimage extends ecjia_admin {
 
 		ecjia_screen::$current_screen->add_help_tab(array(
 			'id'		=> 'overview',
-			'title'		=> __('打开应用功能'),
+			'title'		=> RC_Lang::get('mobile::mobile.open_app_function'),
 			'content'	=>
-			'<p>打开发现: ecjiaopen://app?open_type=discover' .
-			'<p>打开二维码扫描: ecjiaopen://app?open_type=qrcode</p>' .
-			'<p>打开二维码分享: ecjiaopen://app?open_type=qrshare</p>' .
-			'<p>打开浏览记录: ecjiaopen://app?open_type=history</p>' .
-			'<p>打开咨询: ecjiaopen://app?open_type=feedback</p>' .
-			'<p>打开地图: ecjiaopen://app?open_type=map</p>' .
-			'<p>打开消息中心: ecjiaopen://app?open_type=message</p>' .
-			'<p>打开搜索: ecjiaopen://app?open_type=search</p>' .
-			'<p>打开帮助中心: ecjiaopen://app?open_type=help</p>'
-		 ));
-
-	    ecjia_screen::$current_screen->add_help_tab(array(
+			'<p>'.RC_Lang::get('mobile::mobile.open_discover').'ecjiaopen://app?open_type=discover' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_qrcode').'ecjiaopen://app?open_type=qrcode</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_qrshare').'ecjiaopen://app?open_type=qrshare</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_history').'ecjiaopen://app?open_type=history</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_feedback').'ecjiaopen://app?open_type=feedback</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_map').'ecjiaopen://app?open_type=map</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_message').'ecjiaopen://app?open_type=message</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_search').'ecjiaopen://app?open_type=search</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_help').'ecjiaopen://app?open_type=help</p>'
+		));
+		ecjia_screen::$current_screen->add_help_tab(array(
 		    'id'		=> 'managing-pages',
-		    'title'		=> __('打开商品订单用户'),
+		    'title'		=> RC_Lang::get('mobile::mobile.open_goods_order_user'),
 		    'content'	=>
-		    '<p>打开商品列表: ecjiaopen://app?open_type=goods_list&category_id={id}, {id}是分类的ID</p>' .
-		    '<p>打开商品评论: ecjiaopen://app?open_type=goods_comment&goods_id={id}, {id}是商品的ID</p>' .
-		    '<p>打开商品祥情: ecjiaopen://app?open_type=goods_detail&goods_id={id}, {id}是商品的ID</p>' .
-		    '<p>打开我的订单: ecjiaopen://app?open_type=orders_list</p>' .
-		    '<p>打开订单祥情: ecjiaopen://app?open_type=orders_detail&order_id={id}, {id}是订单的ID</p>' .
-		    '<p>打开我的钱包: ecjiaopen://app?open_type=user_wallet</p>' .
-		    '<p>打开地址管理: ecjiaopen://app?open_type=user_address</p>' .
-		    '<p>打开账户余额: ecjiaopen://app?open_type=user_account</p>' .
-		    '<p>打开修改密码: ecjiaopen://app?open_type=user_password</p>' .
-		    '<p>打开用户中心: ecjiaopen://app?open_type=user_center</p>'
+		    '<p>'.RC_Lang::get('mobile::mobile.open_goods_list').'ecjiaopen://app?open_type=goods_list&category_id={id}, {id}'.RC_Lang::get('mobile::mobile.is_category_id').'</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_goods_comment').'ecjiaopen://app?open_type=goods_comment&goods_id={id}, {id}'.RC_Lang::get('mobile::mobile.is_goods_id').'</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_goods_detail').'ecjiaopen://app?open_type=goods_detail&goods_id={id}, {id}'.RC_Lang::get('mobile::mobile.is_goods_id').'</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_oder_list').'ecjiaopen://app?open_type=orders_list</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_order_detail').'ecjiaopen://app?open_type=orders_detail&order_id={id}, {id}'.RC_Lang::get('mobile::mobile.is_order_id').'</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_user_wallet').'ecjiaopen://app?open_type=user_wallet</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_user_address').'ecjiaopen://app?open_type=user_address</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_user_account').'ecjiaopen://app?open_type=user_account</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_user_password').'ecjiaopen://app?open_type=user_password</p>' .
+			'<p>'.RC_Lang::get('mobile::mobile.open_user_center').'ecjiaopen://app?open_type=user_center</p>'
 	    ));
 
 		$this->assign('uri', RC_Uri::site_url());
@@ -152,7 +151,7 @@ class admin_cycleimage extends ecjia_admin {
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_cycleimage_data, serialize($flashdb));
 
-			$links[] = array('text' => RC_Lang::get('mobile::mobile.cycleimage_list'), 'href' => RC_Uri::url('mobile/admin_cycleimage/init'));
+			$links[] = array('text' => RC_Lang::get('mobile::mobile.return_cycleimage_list'), 'href' => RC_Uri::url('mobile/admin_cycleimage/init'));
 
 			ecjia_admin::admin_log($_POST['img_text'], 'add', 'mobile_cycleimage');
 			$this->showmessage(RC_Lang::get('mobile::mobile.add_cycleimage_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_cycleimage/add')));
@@ -278,7 +277,6 @@ class admin_cycleimage extends ecjia_admin {
 			$flashdb[$id]['sort'] = $order;
 
 			$flashdb = $this->mobile->shortcut_sort($flashdb);
-
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_cycleimage_data, serialize($flashdb));
 
 			$this->showmessage(RC_Lang::get('mobile::mobile.order_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_cycleimage/init')) );

@@ -46,7 +46,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 		$this->assign('search_action', RC_Uri::url('mobile/admin_mobile_toutiao/init'));
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_toutiao/batch'));
 		
-		$lists = $this->get_list();
+		$lists = $this->get_toutiao_list();
 		$this->assign('lists', $lists);
 		
 		$this->display('toutiao_list.dwt');
@@ -104,7 +104,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 			'status'		=> isset($_POST['status']) ?  1 : 0,
 			'create_time' 	=> RC_Time::gmtime()
 		);
-		$id = $this->db_mobile_toutiao->insert($data);
+		$id = $this->db_mobile_toutiao->toutiao_manage($data);
 		
 		ecjia_admin::admin_log($_POST['title'], 'add', 'mobile_toutiao');
 		
@@ -129,7 +129,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.mobile_headline_list'), 'href' => RC_Uri::url('mobile/admin_mobile_toutiao/init')));
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_toutiao/update'));
 		
-		$data = $this->db_mobile_toutiao->where(array('id' => $_GET['id']))->find();
+		$data = $this->db_mobile_toutiao->toutiao_find($_GET['id']);
 		$data['image'] = !empty($data['image']) ? RC_Upload::upload_url($data['image']) : '';
 		if ($data['create_time']) {
 			$data['create_time'] = RC_Time::local_date(ecjia::config('time_format') , $data['create_time']);
@@ -155,6 +155,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 		}
 		
 		$data = array(
+			'id' 			=> $_POST['id'],
 			'title'  		=> $_POST['title'],
 			'tag'			=> $_POST['tag'],
 			'description'  	=> $_POST['description'],
@@ -171,14 +172,15 @@ class admin_mobile_toutiao extends ecjia_admin {
 				$src = $upload->get_position($info);
 				$data['image'] = $src;
 				/* 获取旧的图片地址,并删除 */
-				$old_pic = $this->db_mobile_toutiao->where(array('id' => $_POST['id']))->get_field('image');
-				$upload->remove($old_pic);
+// 				$old_pic = $this->db_mobile_toutiao->where(array('id' => $_POST['id']))->get_field('image');
+				$info = $this->db_mobile_toutiao->toutiao_find($_POST['id']);
+				$upload->remove($info['image']);
 			} else {
 				$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 		}
 		
-		$update = $this->db_mobile_toutiao->where(array('id' => $_POST['id']))->update($data);
+		$update = $this->db_mobile_toutiao->toutiao_manage($data);
 		ecjia_admin::admin_log($_POST['title'], 'edit', 'mobile_toutiao');
 		if ($update) {
 			$this->showmessage(RC_Lang::get('mobile::mobile.edit_headline_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/edit', array('id' => $_POST['id']))));
@@ -193,8 +195,8 @@ class admin_mobile_toutiao extends ecjia_admin {
 	public function remove() {
 		$this->admin_priv('mobile_toutiao_delete');
 		
-		$info = $this->db_mobile_toutiao->where(array('id' => $_GET['id']))->find();
-		$delete = $this->db_mobile_toutiao->where(array('id' => $_GET['id'] ))->delete();
+		$info = $this->db_mobile_toutiao->toutiao_find($_GET['id']);
+		$delete = $this->db_mobile_toutiao->toutiao_remove($_GET['id']);
  		
 		$disk = RC_Filesystem::disk();
 		$disk->delete(RC_Upload::upload_path($info['image']));
@@ -212,8 +214,12 @@ class admin_mobile_toutiao extends ecjia_admin {
 	public function remove_image() {
 		$this->admin_priv('mobile_toutiao_delete');
 	
-		$info = $this->db_mobile_toutiao->where(array('id' => $_GET['id']))->find();
-		$this->db_mobile_toutiao->where(array('id' => $_GET['id'] ))->update(array('image'=>''));
+		$info = $this->db_mobile_toutiao->toutiao_find($_GET['id']);
+		$data = array(
+			'id'	=> $_GET['id'],
+			'image'	=> ''
+		);
+		$this->db_mobile_toutiao->toutiao_manage($data);
 			
 		$disk = RC_Filesystem::disk();
 		$disk->delete(RC_Upload::upload_path($info['image']));
@@ -230,44 +236,45 @@ class admin_mobile_toutiao extends ecjia_admin {
 		if (isset($_POST['checkboxes'])) {
 			$idArr = explode(',' , $_POST['checkboxes']);
 			
-			$title_list = $this->db_mobile_toutiao->in(array('id' => $idArr))->select();
+			$title_list = $this->db_mobile_toutiao->toutiao_batch(array('id' => $idArr), 'select');
 			$disk = RC_Filesystem::disk();
 			foreach ($title_list as $v) {
 				$disk->delete(RC_Upload::upload_path($v['image']));
 				ecjia_admin::admin_log($v['title'], 'batch_remove', 'mobile_toutiao');
 			}
-			$this->db_mobile_toutiao->in(array('id' => $idArr))->delete();
+			$this->db_mobile_toutiao->toutiao_batch(array('id' => $idArr), 'delete');
 			
 			$this->showmessage(RC_Lang::get('mobile::mobile.drop_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/init')));
 		} else {
 			$this->showmessage(RC_Lang::get('mobile::mobile.pls_selece_option'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
-
+	
 	/**
 	 * 获取列表
 	 * @return array
 	 */
-	private function get_list() {
+	private function get_toutiao_list() {
+		$db_mobile_toutiao = RC_Loader::load_app_model('mobile_toutiao_model', 'mobile');
+		
 		$keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 		$where = '';
 		if ($keywords) {
 			$where['title'] = array('like' => '%'.$keywords.'%');
 		}
-		
-		$count = $this->db_mobile_toutiao->where($where)->count();
+	
+		$count = $db_mobile_toutiao->toutiao_count($where);
 		$page = new ecjia_page($count, 10, 5);
+		$option = array('where' => $where, 'order' => array('create_time' => 'desc'), 'limit' => $page->limit());
+		$rows = $db_mobile_toutiao->toutiao_list($option);
 		
-		$rows = $this->db_mobile_toutiao->where($where)->order(array('create_time' => 'desc'))->limit($page->limit())->select();
 		if (!empty($rows)) {
 			foreach ($rows as $key => $val) {
 				$rows[$key]['create_time'] = RC_Time::local_date(ecjia::config('time_format'), $val['create_time']);
-				$rows[$key]['image'] = empty($val['image']) ? '' : RC_Upload::upload_url($val['image']);
-			}	
+				$rows[$key]['image'] = empty($val['image']) ? RC_Uri::admin_url('statics/images/nopic.png') : RC_Upload::upload_url($val['image']);
+			}
 		}
-		
-		$arr = array('item' => $rows, 'page' => $page->show(5), 'desc' => $page->page_desc());
-		return $arr;
+		return array('item' => $rows, 'page' => $page->show(5), 'desc' => $page->page_desc());
 	}
 }
 // end

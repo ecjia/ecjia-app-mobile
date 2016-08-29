@@ -1,0 +1,26 @@
+<?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
+class mobile_activity_log_model extends Component_Model_Model {
+	public $table_name = '';
+	public function __construct() {
+		$this->db_config = RC_Config::load_config('database');
+		$this->db_setting = 'default';
+		$this->table_name = 'mobile_activity_log';
+		parent::__construct();
+	}	
+	
+	public function activity_log_count($where) {
+		return $this->where($where)->count();
+	}
+	
+	/**
+	 * 获取活动记录列表数据
+	 * @return array
+	 */
+	public function activity_record_list($option) {
+		return $this->where($option['where'])->order($option['order'])->limit($option['limit'])->select();
+	}
+}
+
+// end

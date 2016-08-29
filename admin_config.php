@@ -26,14 +26,15 @@ class admin_config extends ecjia_admin {
 		RC_Script::enqueue_script('jquery-uniform');
 		RC_Script::enqueue_script('bootstrap-placeholder');
 		
-		RC_Style::enqueue_style('mobile_config', RC_App::apps_url('statics/css/mobile_config.css' , __FILE__), array(), false, false);
-		RC_Style::enqueue_style('goods-colorpicker-style', RC_Uri::admin_url() . '/statics/lib/colorpicker/css/colorpicker.css');
+		RC_Style::enqueue_style('mobile_config', RC_App::apps_url('statics/css/mobile_config.css', __FILE__), array(), false, false);
+		RC_Style::enqueue_style('goods-colorpicker-style', RC_Uri::admin_url('/statics/lib/colorpicker/css/colorpicker.css'));
 		RC_Script::enqueue_script('goods-colorpicker-script', RC_Uri::admin_url('/statics/lib/colorpicker/bootstrap-colorpicker.js'), array());
 		
 		RC_Script::enqueue_script('jquery.toggle.buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/jquery.toggle.buttons.js'));
 		RC_Style::enqueue_style('bootstrap-toggle-buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/bootstrap-toggle-buttons.css'));
 		
-		RC_Script::enqueue_script('mobile_config', RC_App::apps_url('statics/js/mobile_config.js' , __FILE__), array(), false, false);
+		RC_Script::enqueue_script('mobile_config', RC_App::apps_url('statics/js/mobile_config.js', __FILE__), array(), false, false);
+		RC_Script::localize_script('mobile_config', 'js_lang', RC_Lang::get('mobile::mobile.js_lang'));
 	}
 
 					
@@ -68,9 +69,9 @@ class admin_config extends ecjia_admin {
 		$region_data = $this->db_region->where(array('region_id' => $mobile_recommend_city ))->select();
 		if (!empty($region_data)) {
 			foreach ( $region_data as $key => $val ) {
-				if( empty($val['region_name']) ) {
+				if ( empty($val['region_name']) ) {
 					$regions[$val['region_id']] = '<lable  style="color:red">' .RC_Lang::get('mobile::mobile.region_removed'). '</lable>';
-				} else{
+				} else {
 					$regions[$val['region_id']] = $val['region_name'];
 				}
 			}
@@ -117,13 +118,30 @@ class admin_config extends ecjia_admin {
 	  	$this->assign('mobile_launch_adsense', ecjia::config('mobile_launch_adsense'));
 	  	$this->assign('mobile_home_adsense_group', $mobile_home_adsense_group);
 	  	
+	  	$mobile_tv_home_adsense_group = $tv_adsense_group = array();
+	  	if (ecjia::config('mobile_home_adsense_group', ecjia::CONFIG_EXISTS)) {
+	  		$tv_adsense_group = explode(',', ecjia::config('mobile_tv_home_adsense_group'));
+	  	}
+	  	
+	  	if (!empty($tv_adsense_group)) {
+	  		foreach ($tv_adsense_group as $val) {
+	  			$tv_adsense = RC_Api::api('adsense', 'adsense_position_list', array('position_id' => $val));
+	  			if (!empty($tv_adsense['arr'])) {
+	  				$mobile_tv_home_adsense_group[] = $tv_adsense['arr'][0];
+	  			}
+	  		}
+	  	}
+	  	
+	  	$this->assign('mobile_tv_home_adsense', ecjia::config('mobile_tv_home_adsense'));
+	  	$this->assign('mobile_tv_home_adsense_group', $mobile_tv_home_adsense_group);
+	  	
 	  	$mobile_tv_adsense_group = unserialize(ecjia::config('mobile_tv_adsense_group'));
 	  	$this->assign('mobile_tv_big_adsense', $mobile_tv_adsense_group['big_group']);
 	  	$this->assign('mobile_tv_small_adsense', $mobile_tv_adsense_group['small_group']);
 	  	
 	  	
 	  	$this->assign('mobile_recommend_city', $regions);
-	  	$this->assign('countries',        $this->db_region->get_regions());
+	  	$this->assign('countries', $this->db_region->get_regions());
 	  	$this->assign('ad_position_list', $ad_position_list['arr']);
 		$this->assign('form_action', RC_Uri::url('mobile/admin_config/update'));
 		
@@ -147,6 +165,7 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_topic_adsense', ecjia::config('mobile_topic_adsense'));
 		$this->assign('mobile_shopkeeper_urlscheme', ecjia::config('mobile_shopkeeper_urlscheme'));
 		$this->assign('mobile_shop_urlscheme', ecjia::config('mobile_shop_urlscheme'));
+		
 		
 		/* 签到送积分*/
 		$this->assign('checkin_award_open', ecjia::config('checkin_award_open'));
@@ -175,6 +194,19 @@ class admin_config extends ecjia_admin {
 		$this->assign('comment_award_open', ecjia::config('comment_award_open'));
 		$this->assign('comment_award', ecjia::config('comment_award'));
 		
+		/* 推荐分成说明设置*/
+		$recommend_notice			= ecjia::config('recommend_notice');
+		$share_notice				= ecjia::config('share_notice');
+		$this->assign('recommend_notice', $recommend_notice);
+		$this->assign('share_notice', $share_notice);
+		
+		/* 管理员信息*/
+		$admin_user_list = RC_Model::model('admin_user_model')->field(array('user_id', 'user_name'))->select();
+		$this->assign('admin_user_list', $admin_user_list);
+		$order_reminder_type = ecjia::config('order_reminder_type', ecjia::CONFIG_CHECK) ? ecjia::config('order_reminder_type') : 0;
+		
+		$this->assign('order_reminder_type', $order_reminder_type);
+		$this->assign('order_reminder_value', ecjia::config('order_reminder_value'));
 		
 		$this->assign_lang();
 		$this->display('mobile_config.dwt');
@@ -186,28 +218,28 @@ class admin_config extends ecjia_admin {
 	public function update() {
 		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
 		
-		$mobile_tv_big_adsense = $_POST['mobile_tv_big_adsense'];
-		$mobile_tv_small_adsense = $_POST['mobile_tv_small_adsense'];
-		$mobile_launch_adsense = $_POST['mobile_launch_adsense'];
-		$regions = isset($_POST['regions']) ? $_POST['regions'] : '';
-		$mobile_pad_login_fgcolor = $_POST['mobile_pad_login_fgcolor'];
-		$mobile_pad_login_bgcolor = $_POST['mobile_pad_login_bgcolor'];
-		$mobile_phone_login_fgcolor = $_POST['mobile_phone_login_fgcolor'];
-		$mobile_phone_login_bgcolor = $_POST['mobile_phone_login_bgcolor'];
-		$bonus_readme = $_POST['bonus_readme'];
-		$mobile_feedback_autoreply = $_POST['mobile_feedback_autoreply'];
-		$mobile_topic_adsense = $_POST['mobile_topic_adsense'];
-		$mobile_shopkeeper_urlscheme = trim($_POST['mobile_shopkeeper_urlscheme']);
-		$mobile_shop_urlscheme = trim($_POST['mobile_shop_urlscheme']);
-		$adsense_group = !empty($_POST['mobile_home_adsense_group']) ? $_POST['mobile_home_adsense_group'] : '';
+		$mobile_tv_big_adsense 			= !empty($_POST['mobile_tv_big_adsense']) 		? $_POST['mobile_tv_big_adsense'] 				: '';
+		$mobile_tv_small_adsense 		= !empty($_POST['mobile_tv_small_adsense']) 	? $_POST['mobile_tv_small_adsense'] 			: '';
+		$mobile_launch_adsense 			= !empty($_POST['mobile_launch_adsense']) 		? $_POST['mobile_launch_adsense'] 				: '';
+		$regions 						= isset($_POST['regions']) 						? $_POST['regions'] 							: '';
+		$mobile_pad_login_fgcolor 		= !empty($_POST['mobile_pad_login_fgcolor']) 	? trim($_POST['mobile_pad_login_fgcolor']) 		: '';
+		$mobile_pad_login_bgcolor 		= !empty($_POST['mobile_pad_login_bgcolor']) 	? trim($_POST['mobile_pad_login_bgcolor']) 		: '';
+		$mobile_phone_login_fgcolor 	= !empty($_POST['mobile_phone_login_fgcolor']) 	? trim($_POST['mobile_phone_login_fgcolor']) 	: '';
+		$mobile_phone_login_bgcolor 	= !empty($_POST['mobile_phone_login_bgcolor']) 	? trim($_POST['mobile_phone_login_bgcolor']) 	: '';
+		$bonus_readme 					= !empty($_POST['bonus_readme']) 				? $_POST['bonus_readme'] 						: '';
+		$mobile_feedback_autoreply 		= !empty($_POST['mobile_feedback_autoreply']) 	? trim($_POST['mobile_feedback_autoreply']) 	: '';
+		$mobile_topic_adsense 			= !empty($_POST['mobile_topic_adsense']) 		? $_POST['mobile_topic_adsense'] 				: '';
+		$mobile_shopkeeper_urlscheme 	= !empty($_POST['mobile_shopkeeper_urlscheme']) ? trim($_POST['mobile_shopkeeper_urlscheme']) 	: '';
+		$mobile_shop_urlscheme 			= !empty($_POST['mobile_shop_urlscheme']) 		? trim($_POST['mobile_shop_urlscheme']) 		: '';
+		$adsense_group 					= !empty($_POST['mobile_home_adsense_group']) 	? $_POST['mobile_home_adsense_group'] 			: '';
 		
-		$shop_app_description = trim($_POST['shop_app_description']);
-		$shop_iphone_download = trim($_POST['shop_iphone_download']);
-		$shop_android_download = trim($_POST['shop_android_download']);
-		$shop_ipad_download = trim($_POST['shop_ipad_download']);
-		$shop_pc_url = trim($_POST['shop_pc_url']);
-		$shop_touch_url = trim($_POST['shop_touch_url']);
-		$wap_config = isset($_POST['wap_config']) ? 1 : 0;
+		$shop_app_description 			= !empty($_POST['shop_app_description']) 	? trim($_POST['shop_app_description']) 	: '';
+		$shop_iphone_download 			= !empty($_POST['shop_iphone_download']) 	? trim($_POST['shop_iphone_download']) 	: '';
+		$shop_android_download 			= !empty($_POST['shop_android_download']) 	? trim($_POST['shop_android_download']) : '';
+		$shop_ipad_download 			= !empty($_POST['shop_ipad_download']) 		? trim($_POST['shop_ipad_download']) 	: '';
+		$shop_pc_url 					= !empty($_POST['shop_pc_url']) 			? trim($_POST['shop_pc_url']) 			: '';
+		$shop_touch_url 				= !empty($_POST['shop_touch_url']) 			? trim($_POST['shop_touch_url']) 		: '';
+		$wap_config 					= isset($_POST['wap_config']) ? 1 : 0;
 		
 		$mobile_home_adsense_group = '';
 		$checkin_extra_award_value = '';
@@ -226,9 +258,23 @@ class admin_config extends ecjia_admin {
 			$mobile_home_adsense_group = substr($mobile_home_adsense_group, 0, -1);
 		}
 		
+		$tv_sadsense_group = !empty($_POST['mobile_tv_home_adsense_group']) 	? $_POST['mobile_tv_home_adsense_group'] 			: '';
+		
+		$mobile_tv_home_adsense_group = '';
+		if (!empty($tv_sadsense_group)) {
+			foreach ($tv_sadsense_group as $val) {
+				$mobile_tv_home_adsense_group .= $val.',';
+			}
+			$mobile_tv_home_adsense_group = substr($mobile_tv_home_adsense_group, 0, -1);
+		}
+		
+		ecjia_config::instance()->write_config('mobile_tv_home_adsense_group', $mobile_tv_home_adsense_group);
+		ecjia_config::instance()->write_config('mobile_tv_home_adsense', intval($_POST['mobile_tv_home_adsense']));
 		/* iphone二维码上传*/
 		if (isset($_FILES['mobile_iphone_qr_code'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'save_name' => 'mobile_iphone_qr_code', 'replace' => true,'auto_sub_dirs' => false));		
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'mobile_iphone_qr_code';});
+			
 			$image_info = $upload->upload($_FILES['mobile_iphone_qr_code']);
 			/* 判断是否上传成功 */
 			if (!empty($image_info)) {
@@ -236,38 +282,44 @@ class admin_config extends ecjia_admin {
 				$data =  array(
 					'value'  => $mobile_iphone_qr_code
 				);
-				ecjia_config::instance()->write_config('mobile_iphone_qr_code',       $mobile_iphone_qr_code);
+				ecjia_config::instance()->write_config('mobile_iphone_qr_code', $mobile_iphone_qr_code);
 			}
 		}
 		/* android二维码上传*/
 		if (isset($_FILES['mobile_android_qr_code'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'save_name' => 'mobile_android_qr_code', 'replace' => true,'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'mobile_android_qr_code';});
+			
 			$image_info = $upload->upload($_FILES['mobile_android_qr_code']);
 			/* 判断是否上传成功 */
 			if (!empty($image_info)) {
 				$mobile_android_qr_code = $upload->get_position($image_info);
 				$data =  array(
-						'value'  => $mobile_android_qr_code
+					'value'  => $mobile_android_qr_code
 				);
-				ecjia_config::instance()->write_config('mobile_android_qr_code',       $mobile_android_qr_code);
+				ecjia_config::instance()->write_config('mobile_android_qr_code', $mobile_android_qr_code);
 			}
 		}
 		/* ipad二维码上传*/
 		if (isset($_FILES['mobile_ipad_qr_code'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'save_name' => 'mobile_ipad_qr_code', 'replace' => true,'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'mobile_ipad_qr_code';});
+			
 			$image_info = $upload->upload($_FILES['mobile_ipad_qr_code']);
 			/* 判断是否上传成功 */
 			if (!empty($image_info)) {
 				$mobile_ipad_qr_code = $upload->get_position($image_info);
 				$data =  array(
-						'value'  => $mobile_ipad_qr_code
+					'value'  => $mobile_ipad_qr_code
 				);
-				ecjia_config::instance()->write_config('mobile_ipad_qr_code',       $mobile_ipad_qr_code);
+				ecjia_config::instance()->write_config('mobile_ipad_qr_code', $mobile_ipad_qr_code);
 			}
 		}
 		
 		if (isset($_FILES['mobile_pad_login_bgimage'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'save_name' => 'mobile_pad_login_bgimage', 'replace' => true, 'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'mobile_pad_login_bgimage';});
+			
 			$mobile_pad_login_bgimage_info = $upload->upload($_FILES['mobile_pad_login_bgimage']);
 			/* 判断是否上传成功 */
 			if (!empty($mobile_pad_login_bgimage_info)) {
@@ -277,7 +329,9 @@ class admin_config extends ecjia_admin {
 		}
 		
 		if (isset($_FILES['mobile_phone_login_bgimage'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'save_name' => 'mobile_phone_login_bgimage', 'replace' => true, 'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'mobile_phone_login_bgimage';});
+			
 			$mobile_phone_login_bgimage_info = $upload->upload($_FILES['mobile_phone_login_bgimage']);
 			/* 判断是否上传成功 */
 			if (!empty($mobile_phone_login_bgimage_info)) {
@@ -288,8 +342,10 @@ class admin_config extends ecjia_admin {
 		
 		/* 上传app logo图标*/
 		if (isset($_FILES['mobile_app_icon'])) {
-			$upload_mobile_app_icon = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'save_name' => 'mobile_app_icon', 'replace' => true, 'auto_sub_dirs' => false));
-			$mobile_app_icon_info = $upload_mobile_app_icon->upload($_FILES['mobile_app_icon']);
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'mobile_app_icon';});
+			
+			$mobile_app_icon_info = $upload->upload($_FILES['mobile_app_icon']);
 			if (!empty($mobile_app_icon_info)) {
 				$mobile_app_icon = $upload->get_position($mobile_app_icon_info);
 				ecjia_config::instance()->write_config('shop_app_icon', $mobile_app_icon);
@@ -298,8 +354,10 @@ class admin_config extends ecjia_admin {
 		
 		/* 上传touch logo图标*/
 		if (isset($_FILES['wap_logo'])) {
-			$upload_wap_logo = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'save_name' => 'wap_logo', 'replace' => true, 'auto_sub_dirs' => false));
-			$wap_logo = $upload_wap_logo->upload($_FILES['wap_logo']);
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'wap_logo';});
+			
+			$wap_logo = $upload->upload($_FILES['wap_logo']);
 			if (!empty($wap_logo)) {
 				$wap_logo_icon = $upload->get_position($wap_logo);
 				ecjia_config::instance()->write_config('wap_logo', $wap_logo_icon);
@@ -337,9 +395,9 @@ class admin_config extends ecjia_admin {
 		$checkin_award = !empty($_POST['checkin_award']) ? intval($_POST['checkin_award']) : 0;
 		$checkin_extra_day = !empty($_POST['checkin_extra_day']) ? intval($_POST['checkin_extra_day']) : 0;
 		$checkin_extra_award = !empty($_POST['checkin_extra_award']) ? intval($_POST['checkin_extra_award']) : 0;
-		if ($checkin_extra_day > 0 ) {
+// 		if ($checkin_extra_day > 0 ) {
 			$checkin_extra_award_value = serialize(array('day' => $checkin_extra_day, 'extra_award' => $checkin_extra_award));
-		}
+// 		}
 		
 		ecjia_config::instance()->write_config('checkin_award_open', $checkin_award_open);
 		ecjia_config::instance()->write_config('checkin_award_type', $checkin_award_type);
@@ -366,6 +424,22 @@ class admin_config extends ecjia_admin {
 			}
 		}
 		ecjia_config::instance()->write_config('comment_award_rules', $comment_award_rules);
+		$order_reminder_type = intval($_POST['order_reminder_type']);
+		ecjia_config::instance()->write_config('order_reminder_type', $order_reminder_type);
+		if ($order_reminder_type == 1) {
+			$order_reminder_value = intval($_POST['order_reminder_push']);
+		} elseif($order_reminder_type == 2) {
+			$order_reminder_value = trim($_POST['order_reminder_mobile']);
+		} else {
+			$order_reminder_value = '';
+		}
+		ecjia_config::instance()->write_config('order_reminder_value', $order_reminder_value);
+		
+		/*推荐*/
+		$recommend_notice			= $_POST['recommend_notice'];
+		$share_notice				= $_POST['share_notice'];
+		ecjia_config::instance()->write_config('recommend_notice', $recommend_notice);
+		ecjia_config::instance()->write_config('share_notice', $share_notice);
 		
 		ecjia_admin::admin_log(RC_Lang::get('mobile::mobile.mobile_config_set'), 'setup', 'mobile_config');
 		$this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/init')));
@@ -396,15 +470,13 @@ class admin_config extends ecjia_admin {
 		if (!empty($result['arr'])) {
 			foreach ($result['arr'] as $val) {
 				$list[] = array(
-						'id' => $val['article_id'],
-						'name' => $val['title']
+					'id' 	=> $val['article_id'],
+					'name' 	=> $val['title']
 				);
 			}
 		}
 		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $list));
 	}
-	
-
 }
 
 //end

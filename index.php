@@ -41,12 +41,14 @@ class index extends ecjia_front {
 		//判断前后台
 		if (!empty($info) && $info['is_admin']) {
 			$urlscheme = ecjia::config('mobile_shopkeeper_urlscheme');
+			$this->assign('upload_image', RC_App::apps_url('mobile/templates/front/image/icon.png'));
 			$this->assign('android_upload_url', 'http://www.pgyer.com/ecjia-shopkeeper-android');
 			$this->assign('iphone_upload_url', 'http://www.pgyer.com/ecjia-shopkeeper-iphone');
 		} else {
 			$urlscheme = ecjia::config('mobile_shop_urlscheme');
-			$this->assign('android_upload_url', 'http://www.pgyer.com/ecjia-shopkeeper-android');
-			$this->assign('iphone_upload_url', 'http://www.pgyer.com/ecjia-shopkeeper-iphone');
+			$this->assign('upload_image', RC_App::apps_url('mobile/templates/front/image/icon1.png'));
+			$this->assign('android_upload_url', ecjia::config('shop_android_download'));
+			$this->assign('iphone_upload_url', ecjia::config('shop_iphone_download'));
 		}
 		
 		/* 判断是否是ecjia设备扫描*/

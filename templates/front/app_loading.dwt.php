@@ -1,3 +1,4 @@
+<!-- {nocache} -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,7 +11,7 @@
 
 <body>
 	<div class="pic">
-		<img id="bannerImg" width="100%" src="{RC_App::apps_url('mobile/templates/front/image/icon.png')}" />
+		<img id="bannerImg" width="100%" src="{$upload_image}" />
 	</div>
 	<div class="btns" id="state1">
 		<img id="state2Img" width="100%" src="{RC_App::apps_url('mobile/templates/front/image/btns.png')}" />
@@ -35,4 +36,5 @@ ecjia.front.loading.init();
 {$js}
 </body>
 </html>
+<!-- {/nocache} -->
 

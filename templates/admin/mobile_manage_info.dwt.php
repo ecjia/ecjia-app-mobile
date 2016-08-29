@@ -19,21 +19,21 @@
 		<form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data" >
 			<fieldset>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.app_name'}：</label>
+					<label class="control-label">{lang key='mobile::mobile.label_app_name'}</label>
 					<div class="controls">
 						<input class="span4" name="name" type="text" value="{$mobile_manage.app_name}" />
 						<span class="input-must">{lang key='system::system.require_field'}</span> 
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.package_name'}：</label>
+					<label class="control-label">{lang key='mobile::mobile.label_package_name'}</label>
 					<div class="controls">
 						<input class="span4" name="bundleid" type="text" value="{$mobile_manage.bundle_id}" />
 						<span class="input-must">{lang key='system::system.require_field'}</span> 
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.client'}</label>
+					<label class="control-label">{lang key='mobile::mobile.label_client'}</label>
 					<div class="controls">
 						<select name='client' class="span4">
 							<option value=''>{lang key='mobile::mobile.label_select'}</option>
@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.platform'}：</label>
+					<label class="control-label">{lang key='mobile::mobile.label_platform'}</label>
 					<div class="controls">
 						<select name='platform' class="span4">
 							<option value=''>{lang key='mobile::mobile.label_select'}</option>

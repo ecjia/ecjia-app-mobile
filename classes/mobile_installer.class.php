@@ -1,10 +1,10 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
 
-class mobile_installer  extends ecjia_installer {
+class mobile_installer extends ecjia_installer {
 
     protected $dependent = array(
-        'ecjia.system'    => '1.0',
+        'ecjia.system' => '1.0',
     );
 
     public function __construct() {
@@ -131,6 +131,99 @@ class mobile_installer  extends ecjia_installer {
         	RC_Model::make()->create_table($table_name, $schemes);
         }
         
+        /* 签到*/
+        $table_name = 'mobile_checkin';
+        if (!RC_Model::make()->table_exists($table_name)) {
+        	$schemes = array(
+        			 "`id` int(10) unsigned NOT NULL AUTO_INCREMENT",
+					 "`user_id` int(10) unsigned DEFAULT NULL COMMENT '用户id'",
+					 "`checkin_time` int(10) unsigned DEFAULT NULL COMMENT '签到时间'",
+					 "`integral` int(10) unsigned DEFAULT NULL COMMENT '签到获取积分'",
+					 "`source` varchar(20) DEFAULT NULL COMMENT '签到来源'",
+					 "PRIMARY KEY (`id`)",
+					 "KEY `user_id` (`user_id`)",
+					 "KEY `checkin_time` (`checkin_time`)"
+        	);
+        	RC_Model::make()->create_table($table_name, $schemes);
+        }
+        
+        /* 催单提醒*/
+        $table_name = 'order_reminder';
+        if (!RC_Model::make()->table_exists($table_name)) {
+        	$schemes = array(
+        			 "`id` int(11) unsigned NOT NULL AUTO_INCREMENT",
+					 "`order_id` int(11) NOT NULL",
+					 "`message` varchar(255) DEFAULT NULL",
+					 "`status` varchar(100) DEFAULT NULL",
+					 "`create_time` int(10) NOT NULL",
+					 "`confirm_time` int(10) NOT NULL",
+					 "PRIMARY KEY (`id`)"
+        	);
+        	RC_Model::make()->create_table($table_name, $schemes);
+        }
+        
+        /*摇一摇活动表*/
+        $table_name = 'mobile_activity';
+        if (!RC_Model::make()->table_exists($table_name)) {
+        	$schemes = array(
+        			"`activity_id` int(10)  NOT NULL AUTO_INCREMENT",
+        			"`activity_name` varchar(20) NOT NULL DEFAULT '' COMMENT '活动名称'",
+        			"`activity_group` tinyint(4) NOT NULL DEFAULT '0' COMMENT '活动组（1、摇一摇）'",
+        			"`activity_desc` text NOT NULL COMMENT '活动规则描述'",
+        			"`activity_object` int(10) unsigned NOT NULL COMMENT '活动对象（app，pc，touch等）'",
+        			"`limit_num` tinyint(4) NOT NULL DEFAULT '0' COMMENT '活动限制次数（0为不限制）'",
+        			"`limit_time` int(10) NOT NULL DEFAULT '0' COMMENT '多少时间内活动限制（0为在活动时间内，否则多少时间内限制，单位：分钟）'",
+        			"`start_time` int(10) unsigned DEFAULT NULL COMMENT '活动开始时间'",
+        			"`end_time` int(10) unsigned DEFAULT NULL COMMENT '活动结束时间'",
+        			"`add_time` int(10) unsigned DEFAULT NULL COMMENT '创建时间'",
+        			"`enabled` tinyint(4) DEFAULT NULL COMMENT '是否使用，1开启，0禁用'",
+        			"PRIMARY KEY (`activity_id`)",
+        			"KEY `activity_group` (`activity_group`)"
+        	);
+        	RC_Model::make()->create_table($table_name, $schemes);
+        }
+        
+        /*活动日志表*/
+        $table_name = 'mobile_activity_log';
+        if (!RC_Model::make()->table_exists($table_name)) {
+        	$schemes = array(
+        		  "`id` int(10) unsigned NOT NULL AUTO_INCREMENT",
+				  "`activity_id` int(10) unsigned NOT NULL COMMENT '活动id'",
+				  "`user_id` int(10) unsigned NOT NULL COMMENT '会员id'",
+				  "`username` varchar(25) NOT NULL COMMENT '会员名称'",
+				  "`prize_id` int(10) unsigned NOT NULL COMMENT '奖品池id'",
+				  "`prize_name` varchar(30) NOT NULL COMMENT '奖品名称'",
+				  "`issue_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '发放状态，0未发放，1发放'",
+				  "`issue_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '（奖品）发放时间'",
+				  "`issue_extend` text COMMENT '需线下延期发放的扩展信息（序列化）'",
+				  "`add_time` int(10) unsigned DEFAULT NULL COMMENT '抽奖时间'",
+				  "`source` varchar(20) DEFAULT NULL COMMENT '来源（app，touch，pc等）'",
+				  "PRIMARY KEY (`id`)",
+				  "KEY `activity_id` (`activity_id`)",
+				  "KEY `prize_id` (`prize_id`)",
+				  "KEY `user_id` (`user_id`)"
+        	);
+        	RC_Model::make()->create_table($table_name, $schemes);
+        }
+        
+        /*活动奖品表*/
+        $table_name = 'mobile_activity_prize';
+        if (!RC_Model::make()->table_exists($table_name)) {
+        	$schemes = array(
+        		  "`prize_id` int(10) unsigned NOT NULL AUTO_INCREMENT",
+				  "`activity_id` int(10) unsigned NOT NULL COMMENT '活动id'",
+				  "`prize_level` tinyint(4) unsigned DEFAULT '0' COMMENT '奖项等级（从0开始，0为大奖，依此类推）'",
+				  "`prize_name` varchar(30) NOT NULL DEFAULT '' COMMENT '奖品名称'",
+				  "`prize_type` int(10) unsigned NOT NULL COMMENT '奖品类型'",
+				  "`prize_value` varchar(30) NOT NULL DEFAULT '' COMMENT '对应奖品信息（id或数量）'",
+				  "`prize_number` int(10) NOT NULL DEFAULT '0' COMMENT '奖品数量（goods与nothing设置无效）'",
+				  "`prize_prob` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '奖品数量（概率，总共100%）'",
+				  "PRIMARY KEY (`prize_id`)",
+				  "KEY `activity_id` (`activity_id`)"
+        	);
+        	RC_Model::make()->create_table($table_name, $schemes);
+        }
+        
         RC_Loader::load_app_class('mobile_method', 'mobile');
         if (!ecjia::config(mobile_method::STORAGEKEY_discover_data, ecjia::CONFIG_CHECK)) {
             ecjia_config::instance()->insert_config('hidden', mobile_method::STORAGEKEY_discover_data, serialize(array()), array('type' => 'hidden'));
@@ -199,6 +292,56 @@ class mobile_installer  extends ecjia_installer {
         }
         if (!ecjia::config('mobile_app_icon', ecjia::CONFIG_CHECK)) {
         	ecjia_config::instance()->insert_config('hidden', 'mobile_app_icon', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('checkin_award_open', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'checkin_award_open', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('checkin_award_type', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'checkin_award_type', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('checkin_award', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'checkin_award', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('checkin_extra_day', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'checkin_extra_day', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('checkin_extra_award', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'checkin_extra_award', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('comment_award_open', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'comment_award_open', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('comment_award', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'comment_award', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('comment_award_rules', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'comment_award_rules', '', array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('order_reminder_type', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'order_reminder_type', 0, array('type' => 'hidden'));
+        }
+        
+        if (!ecjia::config('order_reminder_value', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'order_reminder_value', '', array('type' => 'hidden'));
+        }
+        
+        /* 推荐说明*/
+        if (!ecjia::config('recommend_notice', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'recommend_notice', '', array('type' => 'hidden'));
+        }
+        
+        /* 推荐分享说明*/
+        if (!ecjia::config('share_notice', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'share_notice', '', array('type' => 'hidden'));
         }
         
         return true;

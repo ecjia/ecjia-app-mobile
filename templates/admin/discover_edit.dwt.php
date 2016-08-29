@@ -22,43 +22,43 @@
 		<form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data" >
 			<fieldset>
 				<div class="control-group formSep">
-						{if $rt.img_src eq ''}
-							<label class="control-label">{lang key='mobile::mobile.upload_img'}</label>
-							<div class="controls">
-								<div class="fileupload fileupload-new" data-provides="fileupload">
-									<input type="hidden" name="{$var.code}" />
-									<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px; line-height: 50px;"></div>
-									<span class="btn btn-file">
-										<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
-										<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
-										<input type='file' name='img_file_src' size="35" />
-									</span>
-									<a class="btn fileupload-exists" data-dismiss="fileupload" href="#">{lang key='system::system.drop'}</a>
-									<span class="input-must">{lang key='system::system.require_field'}</span>
-									<br />
-									<span class="help-block">{lang key='mobile::mobile.discover_img_notice'}</span>
-								</div>
+					{if $rt.img_src eq ''}
+						<label class="control-label">{lang key='mobile::mobile.upload_img'}</label>
+						<div class="controls">
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<input type="hidden" name="{$var.code}" />
+								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px; line-height: 50px;"></div>
+								<span class="btn btn-file">
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
+									<input type='file' name='img_file_src' size="35" />
+								</span>
+								<a class="btn fileupload-exists" data-dismiss="fileupload" href="#">{lang key='system::system.drop'}</a>
+								<span class="input-must">{lang key='system::system.require_field'}</span>
+								<br />
+								<span class="help-block">{lang key='mobile::mobile.discover_img_notice'}</span>
 							</div>
-						{else}
-							<label class="control-label">{lang key='mobile::mobile.preview_img'}</label>
-							<div class="controls">
-								<div class="fileupload fileupload-new" data-provides="fileupload">
-									<img class="w120 h120"  class="img-polaroid" src="{RC_Upload::upload_url()}/{$rt.img_src}"><br><br>
-									{lang key='mobile::mobile.file_address'}{$rt.img_src}<br><br>
-									<input type="hidden" name="{$var.code}" />
-									<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px; line-height: 50px;"></div>
-									<span class="btn btn-file">
-										<span class="fileupload-new">{lang key='mobile::mobile.change_image'}</span>
-										<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
-										<input type='file' name='img_file_src' size="35" />
-									</span>
-									<a class="btn fileupload-exists" data-dismiss="fileupload" href="#">{lang key='system::system.drop'}</a>
-									<input type="hidden" name="{$var.code}" />
-									<input type="hidden" name="{$rt.img_src}" />
-									 <input name="img_src" value="{$rt.img_src}" class="hide">
-								</div>
+						</div>
+					{else}
+						<label class="control-label">{lang key='mobile::mobile.preview_img'}</label>
+						<div class="controls">
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<img class="w120 h120"  class="img-polaroid" src="{RC_Upload::upload_url()}/{$rt.img_src}"><br><br>
+								{lang key='mobile::mobile.file_address'}{$rt.img_src}<br><br>
+								<input type="hidden" name="{$var.code}" />
+								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px; line-height: 50px;"></div>
+								<span class="btn btn-file">
+									<span class="fileupload-new">{lang key='mobile::mobile.change_image'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
+									<input type='file' name='img_file_src' size="35" />
+								</span>
+								<a class="btn fileupload-exists" data-dismiss="fileupload" href="#">{lang key='system::system.drop'}</a>
+								<input type="hidden" name="{$var.code}" />
+								<input type="hidden" name="{$rt.img_src}" />
+								 <input name="img_src" value="{$rt.img_src}" class="hide">
 							</div>
-						{/if}
+						</div>
+					{/if}
 				</div>
 
 				<div class="control-group formSep">
