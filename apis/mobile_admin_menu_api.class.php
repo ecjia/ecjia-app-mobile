@@ -13,7 +13,7 @@ class mobile_admin_menu_api extends Component_Event_Api {
         $submenus = array(
             ecjia_admin::make_admin_menu('01_mobile_list', RC_Lang::get('mobile::mobile.shorcut'), RC_Uri::url('mobile/admin_shortcut/init'), 1)->add_purview('shortcut_manage'),
         	ecjia_admin::make_admin_menu('02_cycleimage_list', RC_Lang::get('mobile::mobile.mobile_cycleimage'), RC_Uri::url('mobile/admin_cycleimage_phone/init'), 2)->add_purview('cycleimage_manage'),
-        	ecjia_admin::make_admin_menu('03_mobile_list', RC_Lang::get('mobile::mobile.ipad_cycleimage'), RC_Uri::url('mobile/admin_cycleimage/init'), 3)->add_purview('cycleimage_manage'),
+//         	ecjia_admin::make_admin_menu('03_mobile_list', RC_Lang::get('mobile::mobile.ipad_cycleimage'), RC_Uri::url('mobile/admin_cycleimage/init'), 3)->add_purview('cycleimage_manage'),
         	ecjia_admin::make_admin_menu('04_discover_list', RC_Lang::get('mobile::mobile.discover'), RC_Uri::url('mobile/admin_discover/init'), 4)->add_purview('discover_manage'),
         	ecjia_admin::make_admin_menu('05_device_list', RC_Lang::get('mobile::mobile.mobile_device'), RC_Uri::url('mobile/admin_device/init'), 5)->add_purview('device_manage'),
         	ecjia_admin::make_admin_menu('06_mobile_news', RC_Lang::get('mobile::mobile.mobile_news'), RC_Uri::url('mobile/admin_mobile_news/init'), 6)->add_purview('mobile_news_manage'),
