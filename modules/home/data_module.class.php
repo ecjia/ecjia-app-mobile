@@ -9,8 +9,8 @@ class data_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();	
     	
-		$device = $this->requestdata('device', array());
-		$location = $this->requestdata('location',array()); 
+		$device 	= $this->requestdata('device', array());
+		$location	= $this->requestdata('location',array()); 
 // 		$location = array(
 // 				'latitude'	=> '31.235450744628906',
 // 				'longitude' => '121.41641998291016',
@@ -36,7 +36,7 @@ class data_module extends api_front implements api_interface {
 			//流程逻辑开始
 			// runloop 流
 			$response = array();
-
+			$response['device'] = $device; 
 			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
 			RC_Cache::app_cache_set($cache_key, $response, 'mobile', 60);
 		}
@@ -47,7 +47,7 @@ class data_module extends api_front implements api_interface {
 
 function cycleimage_data($response, $request) {
 	$mobile_cycleimage = RC_Loader::load_app_class('mobile_method', 'mobile');
-	$device = $this->requestdata('device', array());
+	$device = $response['device'];
 	
 	if (isset($device['client']) && $device['client'] == 'ipad') {
 		$cycleimageDatas = $mobile_cycleimage->cycleimage_data(true);
@@ -469,8 +469,6 @@ function seller_recommend_data($response, $request) {
 		
 		if (!empty ($result)) {
 			$goods_db = RC_Loader::load_app_model('goods_model', 'goods');
-			$warehouse_goodsdb = RC_Loader::load_app_model('warehouse_goods_model', 'seller');
-			$warehouse_areagoodsdb = RC_Loader::load_app_model('warehouse_area_goods_model', 'seller');
 			RC_Loader::load_app_func('common', 'goods');
 			RC_Loader::load_app_func('goods', 'goods');
 			$mobilebuy_db = RC_Loader::load_app_model('goods_activity_model', 'goods');
@@ -487,18 +485,7 @@ function seller_recommend_data($response, $request) {
 				$goods_list = array();
 				if (!empty ($goods_result)) {
 					foreach ($goods_result as $v) {
-						//仓库价格
-						if ($v['model_price'] == 1) {
-							$price = $warehouse_goodsdb->where(array('goods_id' => $v['goods_id']))->get_field('warehouse_price');
-							$v['shop_price'] = empty($price) ? $v['shop_price'] : $price;
-							$v['promote_price'] = $warehouse_goodsdb->where(array('goods_id' => $v['goods_id']))->get_field('warehouse_promote_price');
-						}
-						//区域价格
-						if ($v['model_price'] == 2) {
-							$price = $warehouse_areagoodsdb->where(array('goods_id' => $v['goods_id']))->get_field('region_price');
-							$v['shop_price'] = empty($price) ? $v['shop_price'] : $price;
-							$v['promote_price'] = $warehouse_areagoodsdb->where(array('goods_id' => $v['goods_id']))->get_field('region_promote_price');
-						}
+						
 						/* 修正促销价格 */
 						if ($v ['promote_price'] > 0) {
 							$promote_price = bargain_price($v['promote_price'], $v['promote_start_date'], $v['promote_end_date']);
