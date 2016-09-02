@@ -5,9 +5,10 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author will.chen
  *
  */
-class discover_module implements ecjia_interface {
+class discover_module extends api_front implements api_interface {
 
-	public function run(ecjia_api & $api) {
+	    public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
+    	$this->authSession();
 		//检测是否有用户登陆状态
 
 		

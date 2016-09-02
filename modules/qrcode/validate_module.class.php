@@ -5,15 +5,15 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author will.chen
  *
  */
-class validate_module implements ecjia_interface {
+class validate_module extends api_front implements api_interface {
 
-	public function run(ecjia_api & $api) {
+	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
+    	$this->authSession();	
 		
 		$code = _POST('code');
 		if (empty($code)) {
 			EM_Api::outPut(101);
 		}
-		EM_Api::authSession(false);
 		
         if ($_SESSION['user_id'] > 0  || $_SESSION['admin_id'] > 0) {
         	$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');

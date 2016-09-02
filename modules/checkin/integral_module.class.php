@@ -5,11 +5,10 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author will.chen
  *
  */
-class integral_module implements ecjia_interface {
+class integral_module extends api_front implements api_interface {
 
-	public function run(ecjia_api & $api) {
-		
-		EM_Api::authSession();
+	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
+    	$this->authSession();	
 		
 		$db = RC_Loader::load_app_model('mobile_checkin_model', 'mobile');
 		/* 获取当天时间段*/

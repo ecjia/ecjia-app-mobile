@@ -5,11 +5,11 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author will.chen
  *
  */
-class bind_module implements ecjia_interface {
+class bind_module extends api_front implements api_interface {
 
-	public function run(ecjia_api & $api) {
-		
-		EM_Api::authSession();
+	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
+    	$this->authSession();
+    	
 		$code = _POST('code');
 		$device = _POST('device', array());
 		$type = _POST('type');

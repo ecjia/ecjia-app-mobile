@@ -5,10 +5,11 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author will.chen
  *
  */
-class create_module implements ecjia_interface {
+class create_module extends api_front implements api_interface {
 
-	public function run(ecjia_api & $api) {
-		
+	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
+    	$this->authSession();
+    	
 		$device = _POST('device', array());
 		if (empty($device['udid']) || empty($device['client']) || empty($device['code'])) {
 			EM_Api::outPut(101);

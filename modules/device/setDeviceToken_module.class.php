@@ -5,9 +5,9 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author royalwang
  *
  */
-class setDeviceToken_module implements ecjia_interface {
-
-	public function run(ecjia_api & $api) {
+class setDeviceToken_module extends api_front implements api_interface {
+    public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
+    	$this->authSession();	
 		
 		$device = _POST('device', array());
 		
