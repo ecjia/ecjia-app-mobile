@@ -5,12 +5,11 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author will
  *
  */
-class data_module implements ecjia_interface {
-	
-	public function run(ecjia_api & $api) {
-		
+class data_module extends api_admin implements api_interface {
+    public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
+    		
+		$this->authadminSession();
 		$ecjia = RC_Loader::load_app_class('api_admin', 'api');
-		$ecjia->authadminSession();
 		
 		$stats_db = RC_Loader::load_app_model('stats_model', 'stats');
 // 		$order_db = RC_Loader::load_app_model('order_info_model', 'orders');
