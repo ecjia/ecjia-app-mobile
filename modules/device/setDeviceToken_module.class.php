@@ -9,9 +9,9 @@ class setDeviceToken_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();	
 		
-		$device = _POST('device', array());
+		$device = $this->requestdata('device', array());
 		
-		$device['device_token'] = _POST('device_token');
+		$device['device_token'] = $this->requestdata('device_token');
 		
 		if (empty($device['udid']) || empty($device['client']) || empty($device['code']) || empty($device['device_token'])) {
 			EM_Api::outPut(101);

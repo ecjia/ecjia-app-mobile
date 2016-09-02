@@ -10,9 +10,9 @@ class bind_module extends api_front implements api_interface {
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();
     	
-		$code = _POST('code');
-		$device = _POST('device', array());
-		$type = _POST('type');
+		$code = $this->requestdata('code');
+		$device = $this->requestdata('device', array());
+		$type = $this->requestdata('type');
 		if (empty($code) || empty($type)) {
 			EM_Api::outPut(101);
 		}

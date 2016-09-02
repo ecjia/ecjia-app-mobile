@@ -10,7 +10,7 @@ class create_module extends api_front implements api_interface {
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();
     	
-		$device = _POST('device', array());
+		$device = $this->requestdata('device', array());
 		if (empty($device['udid']) || empty($device['client']) || empty($device['code'])) {
 			EM_Api::outPut(101);
 		}

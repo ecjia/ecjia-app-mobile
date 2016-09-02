@@ -10,7 +10,7 @@ class validate_module extends api_front implements api_interface {
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();	
 		
-		$code = _POST('code');
+		$code = $this->requestdata('code');
 		if (empty($code)) {
 			EM_Api::outPut(101);
 		}
@@ -30,7 +30,7 @@ class validate_module extends api_front implements api_interface {
         }
 		
 		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
-		$device = _POST('device', array());
+		$device = $this->requestdata('device', array());
 		$where = array(
 				'uuid'		 => $code,
 				'device_udid' => $device['udid'],
@@ -93,7 +93,7 @@ function user_login($uid) {
 	
 	//修正咨询信息
 	if($_SESSION['user_id'] > 0) {
-		$device = _POST('device', array());
+		$device = $this->requestdata('device', array());
 		$device_id = $device['udid'];
 		$device_client = $device['client'];
 		$db_term_relation = RC_Loader::load_model('term_relationship_model');
@@ -178,7 +178,7 @@ function admin_login($uid)
 	//修正关联设备号
 	$result = ecjia_app::validate_application('mobile');
 	if (!is_ecjia_error($result)) {
-		$device = _POST('device', array());
+		$device = $this->requestdata('device', array());
 		if (!empty($device['udid']) && !empty($device['client']) && !empty($device['code'])) {
 			$db_mobile_device = RC_Loader::load_app_model('mobile_device_model', 'mobile');
 			$device_data = array(

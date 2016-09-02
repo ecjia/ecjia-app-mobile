@@ -10,7 +10,7 @@ class signout_module extends api_front implements api_interface {
 	 public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();
     	
-		$code = _POST('code');
+		$code = $this->requestdata('code');
 		if (empty($code)) {
 			EM_Api::outPut(101);
 		}

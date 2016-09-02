@@ -9,8 +9,8 @@ class data_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();	
     	
-		$device = _POST('device', array());
-		$location = _POST('location'); 
+		$device = $this->requestdata('device', array());
+		$location = $this->requestdata('location',array()); 
 // 		$location = array(
 // 				'latitude'	=> '31.235450744628906',
 // 				'longitude' => '121.41641998291016',
@@ -47,7 +47,7 @@ class data_module extends api_front implements api_interface {
 
 function cycleimage_data($response, $request) {
 	$mobile_cycleimage = RC_Loader::load_app_class('mobile_method', 'mobile');
-	$device = _POST('device', array());
+	$device = $this->requestdata('device', array());
 	
 	if (isset($device['client']) && $device['client'] == 'ipad') {
 		$cycleimageDatas = $mobile_cycleimage->cycleimage_data(true);
@@ -175,7 +175,7 @@ function new_goods_data($response, $request) {
 }
 
 // function mobile_tv_adsense_data($response, $request) {
-// 	$device = _POST('device', array());
+// 	$device = $this->requestdata('device', array());
 // 	if (isset($device['code']) && $device['code'] == '1006') {
 // 		$mobile_tv_adsense_group = unserialize(ecjia::config('mobile_tv_adsense_group'));
 // 		if ($mobile_tv_adsense_group['big_group'] == '' || $mobile_tv_adsense_group['big_group'] == 0) {
