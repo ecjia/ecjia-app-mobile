@@ -7,7 +7,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
  */
 class toutiao_module extends api_front implements api_interface {
 
-	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
+	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();
 		
 		$db_mobile_toutiao = RC_Loader::load_app_model('mobile_toutiao_model', 'mobile');
@@ -21,12 +21,13 @@ class toutiao_module extends api_front implements api_interface {
 					'count' => 0,
 					'more'	=> 0,
 			);
-			EM_Api::outPut(array(), $pager);
+			return array('list' => array(), 'pager' => $pager);
 		}
 		
 		/* 获取数量 */
-		$size = EM_Api::$pagination['count'];
-		$page = EM_Api::$pagination['page'];
+		$size = $this->requestData('pagination.count', 10);
+        $page = $this->requestData( 'pagination.page', 1);
+		
 		
 		//实例化分页
 		$page_row = new ecjia_page($count, $size, 6, '', $page);
@@ -46,14 +47,13 @@ class toutiao_module extends api_front implements api_interface {
 			}
 		}
 		
-		
 		$pager = array(
 				"total" => $page_row->total_records,
 				"count" => $page_row->total_records,
 				"more"	=> $page_row->total_pages <= $page ? 0 : 1,
 		);
 		
-		EM_Api::outPut($list, $pager);
+		return array('list' => $list, 'pager' => $pager);
 		
 	}
 }

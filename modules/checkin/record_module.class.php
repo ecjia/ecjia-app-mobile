@@ -7,7 +7,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
  */
 class record_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
-    	$this->authSession();	
+    	$this->authSession();
     	
 		$filite_user = $this->requestdata('filite_user', 'current'); 
 		$checkin_award_open = intval(ecjia::config('checkin_award_open'));
@@ -141,7 +141,7 @@ class record_module extends api_front implements api_interface {
 			);
 		}
 		
-		EM_Api::outPut($checkin_data, $pager);
+		return array('data' => $checkin_data, 'pager' => $pager);
 	}
 }
 

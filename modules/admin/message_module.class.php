@@ -120,8 +120,7 @@ class message_module extends api_admin implements api_interface {
 				"more"	=> $page_row->total_pages <= $page ? 0 : 1,
 		);
 		
-		EM_Api::outPut($message_list, $pager);
-		
+		return array('data' => $message_list, 'pager' => $pager);
 	}
 	
 	

@@ -10,7 +10,6 @@ class discover_module extends api_front implements api_interface {
 	    public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();
 		//检测是否有用户登陆状态
-
 		
 		$mobile = RC_Loader::load_app_class('mobile_method','mobile');
 		$discover_data = array();
