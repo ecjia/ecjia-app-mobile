@@ -21,7 +21,7 @@ class toutiao_module extends api_front implements api_interface {
 					'count' => 0,
 					'more'	=> 0,
 			);
-			return array('list' => array(), 'pager' => $pager);
+			return array('data' => array(), 'pager' => $pager);
 		}
 		
 		/* 获取数量 */
@@ -53,7 +53,7 @@ class toutiao_module extends api_front implements api_interface {
 				"more"	=> $page_row->total_pages <= $page ? 0 : 1,
 		);
 		
-		return array('list' => $list, 'pager' => $pager);
+		return array('data' => $list, 'pager' => $pager);
 		
 	}
 }
