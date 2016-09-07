@@ -99,8 +99,8 @@ class record_module extends api_front implements api_interface {
 		} else {
 			$db_view = RC_Loader::load_app_model('mobile_checkin_viewmodel', 'mobile');
 			/* 获取数量 */
-			$size = EM_Api::$pagination['count'];
-			$page = EM_Api::$pagination['page'];
+			$size = $this->requestData('pagination.count', 15);
+			$page = $this->requestData('pagination.page', 1);
 			
 			$checkin_count = $db_view->join(null)->count();
 			//实例化分页

@@ -26,7 +26,7 @@ class toutiao_module extends api_front implements api_interface {
 		
 		/* 获取数量 */
 		$size = $this->requestData('pagination.count', 10);
-        $page = $this->requestData( 'pagination.page', 1);
+        $page = $this->requestData('pagination.page', 1);
 		
 		
 		//实例化分页

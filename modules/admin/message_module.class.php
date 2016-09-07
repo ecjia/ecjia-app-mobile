@@ -88,8 +88,9 @@ class message_module extends api_admin implements api_interface {
 		}
 		
 		/* 获取数量 */
-		$size = EM_Api::$pagination['count'];
-		$page = EM_Api::$pagination['page'];
+		$size = $this->requestData('pagination.count', 15);
+		$page = $this->requestData('pagination.page', 1);
+		
 		
 		//加载分页类
 		RC_Loader::load_sys_class('ecjia_page', false);
