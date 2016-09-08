@@ -368,13 +368,15 @@ return array(
 	
 	'mobile_config_manage'	=> 'Application Configuration Management',
 	'mobile_config_update'	=> 'Edit Application Configuration',
+	'mobile_config_delete'	=> 'Remove Application Configuration',
 	'mobile_app_manage'		=> 'Mobile Application Management',
 	'mobile_manage_add'		=> 'Add Mobile Application',
 	'mobile_manage_update'	=> 'Edit Mobile Application',
 	'mobile_manage_delete'	=> 'Remove Mobile App',
 	'mobile_toutiao_manage'	=> 'Mobile Headlines Management',
+	'mobile_toutiao_update'	=> 'Update Mobile Headlines',
 	'mobile_toutiao_delete'	=> 'Remove Mobile Headlines',
-	
+
 	'mobile_shortcut_display'	=> 'Shortcut menu display',
 	'mobile_shortcut_sort'		=> 'Shortcut menu sort',
 	'mobile_discover_display'	=> 'Treasure box display',
@@ -444,6 +446,7 @@ return array(
 	//摇一摇活动管理
 	'app_activity_list'			=> 'APP Activity List',
 	'activity_manage'			=> 'Activity Management',
+	'activity_delete'			=> 'Remove Management',
 	'edit_activity'				=> 'Edit Activity',
 	'activity_list'				=> 'Activity List',
 	'add_activity'				=> 'Add Activity',

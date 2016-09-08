@@ -63,7 +63,7 @@ class admin_discover extends ecjia_admin {
 	 * 添加及提交处理
 	 */
 	public function add() {
-		$this->admin_priv('discover_add',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('discover_update',ecjia::MSGTYPE_JSON);
 
 		if (empty($_POST['step'])) {
 			$url = isset($_GET['url']) ? trim($_GET['url']) : 'http://';

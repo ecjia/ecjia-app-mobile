@@ -24,7 +24,7 @@ class mobile_device_info_api extends Component_Event_Api {
 	    }
 	    
 	    if (!empty($user_id)) {
-	        $db = RC_Loader::load_app_model ('mobile_device_model', 'mobile');
+	        $db = RC_Model::model('mobile/mobile_device_model');
 	        return $db->order(array('id' => 'DESC'))->find(array('user_id' => $user_id, 'is_admin' => $is_admin,  'device_code' => $options['device_code']));
 	    }
         

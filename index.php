@@ -35,7 +35,7 @@ class index extends ecjia_front {
 		$this->assign('front_url', RC_App::apps_url('templates/front', __FILE__));
 		
 		$qrcode = $_GET['qrcode'];
-		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
+		$db = RC_Model::model('mobile/qrcode_validate_model');
 		
 		$info = $db->find(array('uuid' => $qrcode));
 		//判断前后台

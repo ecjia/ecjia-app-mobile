@@ -1,14 +1,12 @@
 <?php
-/**
- * 头条
- */
 defined('IN_ECJIA') or exit('No permission resources.');
+
 class admin_mobile_toutiao extends ecjia_admin {
 	private $db_mobile_toutiao;
 	public function __construct() {
 		parent::__construct();
 		/*加载所需数据模型*/
-		$this->db_mobile_toutiao = RC_Loader::load_app_model('mobile_toutiao_model', 'mobile');
+		$this->db_mobile_toutiao = RC_Model::model('mobile/mobile_toutiao_model');
 		
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
@@ -36,7 +34,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * 列表页
 	 */
 	public function init() {
-		$this->admin_priv('mobile_toutiao_manage');
+		$this->admin_priv('mobile_toutiao_manage', ecjia::MSGTYPE_JSON);
 		
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_headline')));
@@ -56,7 +54,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * 添加页
 	 */
 	public function add() {
-		$this->admin_priv('mobile_toutiao_manage');
+		$this->admin_priv('mobile_toutiao_update', ecjia::MSGTYPE_JSON);
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_headline')));
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.add_headline'));
@@ -70,7 +68,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * 处理添加
 	 */
 	public function insert() {
-		$this->admin_priv('mobile_toutiao_manage');
+		$this->admin_priv('mobile_toutiao_update',ecjia::MSGTYPE_JSON);
 		
 		if (empty($_POST['title'])) {
 			$this->showmessage(RC_Lang::get('mobile::mobile.headline_title_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -121,7 +119,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * 编辑页
 	 */
 	public function edit() {
-		$this->admin_priv('mobile_toutiao_manage');
+		$this->admin_priv('mobile_toutiao_update', ecjia::MSGTYPE_JSON);
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.edit_headline')));
 		
@@ -142,7 +140,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * 处理编辑
 	 */
 	public function update() {
-		$this->admin_priv('mobile_toutiao_manage');
+		$this->admin_priv('mobile_toutiao_update', ecjia::MSGTYPE_JSON);
 
 		if (empty($_POST['title'])) {
 			$this->showmessage(RC_Lang::get('mobile::mobile.headline_title_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -193,7 +191,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * 删除
 	 */
 	public function remove() {
-		$this->admin_priv('mobile_toutiao_delete');
+		$this->admin_priv('mobile_toutiao_delete', ecjia::MSGTYPE_JSON);
 		
 		$info = $this->db_mobile_toutiao->toutiao_find($_GET['id']);
 		$delete = $this->db_mobile_toutiao->toutiao_remove($_GET['id']);
@@ -212,7 +210,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * 删除图片
 	 */
 	public function remove_image() {
-		$this->admin_priv('mobile_toutiao_delete');
+		$this->admin_priv('mobile_toutiao_delete', ecjia::MSGTYPE_JSON);
 	
 		$info = $this->db_mobile_toutiao->toutiao_find($_GET['id']);
 		$data = array(
@@ -231,7 +229,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * 批量操作
 	 */
 	public function batch() {
-		$this->admin_priv('mobile_toutiao_delete');
+		$this->admin_priv('mobile_toutiao_delete', ecjia::MSGTYPE_JSON);
 		
 		if (isset($_POST['checkboxes'])) {
 			$idArr = explode(',' , $_POST['checkboxes']);
@@ -255,7 +253,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * @return array
 	 */
 	private function get_toutiao_list() {
-		$db_mobile_toutiao = RC_Loader::load_app_model('mobile_toutiao_model', 'mobile');
+		$db_mobile_toutiao = RC_Model::model('mobile/mobile_toutiao_model');
 		
 		$keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 		$where = '';

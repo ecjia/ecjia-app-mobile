@@ -15,7 +15,7 @@ class admin_config extends ecjia_admin {
 		assign_adminlog_content();
 	
 		$this->db_config = RC_Loader::load_model('shop_config_model'); 
-		$this->db_region = RC_Loader::load_app_model('region_model', 'shipping');
+		$this->db_region = RC_Model::model('shipping/region_model');
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('smoke');
@@ -178,7 +178,7 @@ class admin_config extends ecjia_admin {
 		
 		/* 评论送积分*/
 		$user_rank_list = array();
-		$db_user_rank = RC_Loader::load_app_model('user_rank_model', 'user');
+		$db_user_rank = RC_Model::model('user/user_rank_model');
 		$data = $db_user_rank->field('rank_id, rank_name')->select();
 		if (!empty($data)) {
 			$comment_award_rules = unserialize(ecjia::config('comment_award_rules'));
@@ -201,14 +201,13 @@ class admin_config extends ecjia_admin {
 		$this->assign('share_notice', $share_notice);
 		
 		/* 管理员信息*/
-		$admin_user_list = RC_Model::model('admin_user_model')->field(array('user_id', 'user_name'))->select();
+		$admin_user_list = RC_Model::model('user/admin_user_model')->field(array('user_id', 'user_name'))->select();
 		$this->assign('admin_user_list', $admin_user_list);
 		$order_reminder_type = ecjia::config('order_reminder_type', ecjia::CONFIG_CHECK) ? ecjia::config('order_reminder_type') : 0;
 		
 		$this->assign('order_reminder_type', $order_reminder_type);
 		$this->assign('order_reminder_value', ecjia::config('order_reminder_value'));
 		
-		$this->assign_lang();
 		$this->display('mobile_config.dwt');
 	}
 		
@@ -450,7 +449,7 @@ class admin_config extends ecjia_admin {
 	 * 删除上传文件
 	 */
 	public function del() {
-		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_config_delete', ecjia::MSGTYPE_JSON);
 		
 		$code     = trim($_GET['code']);
 		$img_name = $this->db_config->where(array('code'=>$code))->get_field('value');
@@ -463,8 +462,7 @@ class admin_config extends ecjia_admin {
 		$this->showmessage(RC_Lang::get('mobile::mobile.del_ok') , ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 	
-	public function search_article() 
-	{
+	public function search_article() {
 		$result = RC_Api::api('article', 'article_list', array('keywords' => $_POST['artile']));
 		$list = array();
 		if (!empty($result['arr'])) {

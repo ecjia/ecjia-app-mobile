@@ -56,7 +56,7 @@ class admin_mobile_activity extends ecjia_admin {
 	 *活动列表页面加载
 	*/
 	public function init () {
-		$this->admin_priv('mobile_activity_manage');
+		$this->admin_priv('mobile_activity_manage', ecjia::MSGTYPE_JSON);
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.activity_list')));
 		
@@ -74,7 +74,7 @@ class admin_mobile_activity extends ecjia_admin {
 	*添加活动
 	*/
     public function add() {
-		$this->admin_priv('mobile_activity_add');
+		$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_activity')));
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.add_activity'));
@@ -88,7 +88,8 @@ class admin_mobile_activity extends ecjia_admin {
      * 添加活动数据处理
     */
     public function insert() {
-    	$this->admin_priv('mobile_activity_add', ecjia::MSGTYPE_JSON);
+    	$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
+    	
 	   	$activity_name 		= empty($_POST['activity_name']) 	? 	'' 	: trim($_POST['activity_name']);
 	   	$activity_group 	= empty($_POST['activity_group']) 	? 	'1' : intval($_POST['activity_group']);
 	   	$activity_object 	= empty($_POST['activity_object']) 	? 	'1' : intval($_POST['activity_object']);
@@ -129,7 +130,8 @@ class admin_mobile_activity extends ecjia_admin {
      * 活动编辑页面
      */
 	public function edit() {
-	   	$this->admin_priv('mobile_activity_update');
+	   	$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
+	   	
 	   	$activity_id = !empty($_GET['id']) ? intval($_GET['id']) : $_GET['id'];
 	   
 	   	$activity_info = $this->db_activity->mobile_activity_find($activity_id);
@@ -154,6 +156,7 @@ class admin_mobile_activity extends ecjia_admin {
    */
 	public function update() {
 		$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
+		
 		$activity_name 	= empty($_POST['activity_name']) 	? 	'' 	: trim($_POST['activity_name']);
 		$activity_group = empty($_POST['activity_group']) 	? 	'1' : intval($_POST['activity_group']);
 		$activity_object= empty($_POST['activity_object']) 	? 	'1' : intval($_POST['activity_object']);
@@ -201,6 +204,7 @@ class admin_mobile_activity extends ecjia_admin {
     */
 	public function remove() {
 	   	$this->admin_priv('mobile_activity_delete', ecjia::MSGTYPE_JSON);
+	   	
 	   	if (!empty($_GET['id'])){
 	   		$id = intval($_GET['id']);
 	   		$activity_name = $this->db_activity->mobile_activity_field(array('activity_id' => $id), 'activity_name');
@@ -221,6 +225,7 @@ class admin_mobile_activity extends ecjia_admin {
 	 */
 	public function toggle_show() {
 	   	$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
+	   	
 	   	$activity_id  = intval($_POST['id']);
 		
 	   	$is_enabled = intval($_POST['val']);
@@ -264,7 +269,7 @@ class admin_mobile_activity extends ecjia_admin {
    * 活动记录列表
    */
    public function activity_record() {
-	   	$this->admin_priv('activity_record_manage');
+	   	$this->admin_priv('activity_record_manage', ecjia::MSGTYPE_JSON);
 	   	
 	   	$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.back_activity_list'), 'href' => RC_Uri::url('mobile/admin_mobile_activity/init')));
 	   	ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.view_activity_record')));
@@ -284,7 +289,7 @@ class admin_mobile_activity extends ecjia_admin {
 	 * 活动奖品池页面显示
 	 */
 	public function activity_prize() {
-		$this->admin_priv('mobile_activity_update');
+		$this->admin_priv('activity_record_manage',ecjia::MSGTYPE_JSON);
 		$id = intval($_GET['id']);
 
 		$prize_list = RC_Model::model('mobile/mobile_activity_prize_model')->activity_prize_select(array('activity_id' => $id), array('prize_level' => 'asc'));
@@ -306,6 +311,7 @@ class admin_mobile_activity extends ecjia_admin {
 	 */
 	public function activity_prize_edit() {
 		$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
+		
 		$prize_level		= $_POST['prize_level'];
 		$prize_name			= $_POST['prize_name'];
 		$prize_type			= $_POST['prize_type'];

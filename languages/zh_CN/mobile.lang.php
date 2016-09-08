@@ -367,10 +367,11 @@ return array(
 	'mobile_news_delete'=> '删除今日热点',
 	
 	'mobile_config_manage'	=> '应用配置管理',
-	'mobile_config_update'	=> '编辑应用配置',
+	'mobile_config_update'	=> '更新应用配置',
+	'mobile_config_delete'	=> '删除应用配置',
 	'mobile_app_manage'		=> '移动应用管理',
 	'mobile_manage_add'		=> '新增移动应用',
-	'mobile_manage_update'	=> '编辑移动应用',
+	'mobile_manage_update'	=> '更新移动应用',
 	'mobile_manage_delete'	=> '删除移动应用',
 	'mobile_toutiao_manage'	=> '今日头条管理',
 	'mobile_toutiao_delete'	=> '删除今日头条',
@@ -444,7 +445,8 @@ return array(
 	//摇一摇活动管理
 	'app_activity_list'			=> 'APP活动列表',
 	'activity_manage'			=> '活动管理',
-	'edit_activity'				=> '编辑活动',
+	'activity_delete'			=> '删除管理',
+	'edit_activity'				=> '更新活动',
 	'activity_list'				=> '活动列表',
 	'add_activity'				=> '添加活动',
 	'back_activity_list'		=> '返回活动列表',

@@ -22,7 +22,7 @@ class mobile_manage {
     
     protected function getMobileApp() {
         //查询数据库
-        $db_mobile_manage = RC_Loader::load_app_model('mobile_manage_model', 'mobile');
+        $db_mobile_manage = RC_Model::model('mobile/mobile_manage_model');
         $row = $db_mobile_manage->where(array('app_id' => $this->app_id))->find();
         if (empty($row)) {
             return new ecjia_error('mobile_manage_not_found_appid', '未识别的AppID');
@@ -72,7 +72,7 @@ class mobile_manage {
      * @param string $platform
      */
     public static function getMobileAppList($platform) {
-        $db_mobile_manage = RC_Loader::load_app_model('mobile_manage_model', 'mobile');
+        $db_mobile_manage = RC_Model::model('mobile/mobile_manage_model');
         $applist = $db_mobile_manage->where(array('platform' => $platform, 'status' => 1))->order('app_id ASC')->select();
         return $applist;
     }

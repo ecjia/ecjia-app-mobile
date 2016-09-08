@@ -12,7 +12,7 @@ class admin_mobile_manage extends ecjia_admin {
 	public function __construct() {
 		parent::__construct();
 		
-		$this->db_mobile_manage = RC_Loader::load_app_model('mobile_manage_model');
+		$this->db_mobile_manage = RC_Model::model('mobile/mobile_manage_model');
 		
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
@@ -59,7 +59,7 @@ class admin_mobile_manage extends ecjia_admin {
 	 * 添加移动应用配置
 	 */
 	public function add () {
-		$this->admin_priv('mobile_manage_add', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_manage_update', ecjia::MSGTYPE_JSON);
 		
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_mobile_app')));
 		
@@ -74,7 +74,7 @@ class admin_mobile_manage extends ecjia_admin {
 	}
 	
 	public function insert() {
-		$this->admin_priv('mobile_manage_add', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_manage_update', ecjia::MSGTYPE_JSON);
 		
 		$name 		= trim($_POST['name']);
 		$client 	= trim($_POST['client']);
@@ -200,7 +200,7 @@ class admin_mobile_manage extends ecjia_admin {
 	 * @return array
 	 */
 	private function get_mobile_manage_list() {
-		$db_mobile_manage = RC_Loader::load_app_model('mobile_manage_model');
+		$db_mobile_manage = RC_Model::model('mobile/mobile_manage_model');
 		
 		$count = $db_mobile_manage->mobile_manage_count();
 		$page = new ecjia_page ($count, 10, 5);

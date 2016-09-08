@@ -11,7 +11,7 @@ class admin_device extends ecjia_admin {
 		parent::__construct();
 
 		/* 数据模型加载 */
-		$this->db_device = RC_Loader::load_app_model('mobile_device_model');
+		$this->db_device = RC_Model::model('mobile/mobile_device_model');
 		
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
@@ -57,7 +57,7 @@ class admin_device extends ecjia_admin {
 	 * 移至回收站
 	 */
 	public function trash()  {
-		$this->admin_priv('device_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('device_delete', ecjia::MSGTYPE_JSON);
 	
 		$id = intval($_GET['id']);
 		$deviceval = intval($_GET['deviceval']);
@@ -257,7 +257,7 @@ class admin_device extends ecjia_admin {
 	 * @return  array
 	 */
 	private function get_device_list() {
-		$db_device = RC_Loader::load_app_model('mobile_device_model');
+		$db_device = RC_Model::model('mobile/mobile_device_model');
 		
 		$where = $filter = array();
 		$filter['keywords'] = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);

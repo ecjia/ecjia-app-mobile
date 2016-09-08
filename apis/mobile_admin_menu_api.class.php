@@ -17,7 +17,7 @@ class mobile_admin_menu_api extends Component_Event_Api {
         	ecjia_admin::make_admin_menu('04_mobile_news', RC_Lang::get('mobile::mobile.mobile_news'), RC_Uri::url('mobile/admin_mobile_news/init'), 4)->add_purview('mobile_news_manage'),
         	ecjia_admin::make_admin_menu('05_mobile_toutiao', RC_Lang::get('mobile::mobile.mobile_headline'), RC_Uri::url('mobile/admin_mobile_toutiao/init'), 5)->add_purview('mobile_news_manage'),
         	ecjia_admin::make_admin_menu('06_mobile_activity', RC_Lang::get('mobile::mobile.app_activity_list'), RC_Uri::url('mobile/admin_mobile_activity/init'), 6)->add_purview('mobile_activity_manage'),
-        	ecjia_admin::make_admin_menu('divider', '', '', 8)->add_purview('mobile_config_manage', 7),
+        	ecjia_admin::make_admin_menu('divider', '', '', 8)->add_purview('mobile_config_manage', 8),
         	ecjia_admin::make_admin_menu('07_config', RC_Lang::get('mobile::mobile.mobile_config'), RC_Uri::url('mobile/admin_config/init'), 8)->add_purview('mobile_config_manage'),
         	ecjia_admin::make_admin_menu('08_mobile_manage', RC_Lang::get('mobile::mobile.mobile_manage'), RC_Uri::url('mobile/admin_mobile_manage/init'), 9)->add_purview('mobile_push_config_manage')
         );

@@ -96,7 +96,7 @@ class admin_shortcut extends ecjia_admin {
 	 * 添加及提交处理
 	 */
 	public function add() {
-		$this->admin_priv('shortcut_add',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shortcut_update',ecjia::MSGTYPE_JSON);
 
 		if (empty($_POST['step'])) {
 			$url = isset($_GET['url']) ? trim($_GET['url']) : 'http://';
