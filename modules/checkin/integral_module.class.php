@@ -10,7 +10,7 @@ class integral_module extends api_front implements api_interface {
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();	
 		
-		$db = RC_Loader::load_app_model('mobile_checkin_model', 'mobile');
+		$db = RC_Model::model('mobile/mobile_checkin_model');
 		/* 获取当天时间段*/
 		$time = RC_Time::gmtime();
 		$date = RC_Time::local_date('Y-m-d', $time);

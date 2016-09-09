@@ -21,7 +21,7 @@ class create_module extends api_front implements api_interface {
 			$code .= $charset[rand(1, $charset_len)];
 		}
 		$is_admin = $device['code'] == '8001' ? 1 : 0;
-		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
+		$db = RC_Model::model('mobile/qrcode_validate_model');
 		$db->insert(array(
 				'user_id' => '',
 				'is_admin'   => $is_admin,

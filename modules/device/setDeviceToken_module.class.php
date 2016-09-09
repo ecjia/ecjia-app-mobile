@@ -17,7 +17,7 @@ class setDeviceToken_module extends api_front implements api_interface {
 			return new ecjia_error(101, '参数错误');
 		}
 		
-		$db_mobile_device = RC_Loader::load_app_model('mobile_device_model', 'mobile');
+		$db_mobile_device = RC_Model::model('mobile/mobile_device_model');
 		$device_data = array(
 				'device_udid'	=> $device['udid'],
 				'device_client'	=> $device['client'],

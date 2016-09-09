@@ -18,7 +18,7 @@ class bind_module extends api_front implements api_interface {
 		}
 		//判断是管理员还是普通用户
 		$is_admin = in_array($device['code'], array('8001', '5001', '5002', '2001', '2002')) ? 1 : 0;
-		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
+		$db = RC_Model::model('mobile/qrcode_validate_model');
 		$where = array(
 				'is_admin'   => $is_admin,
 				'uuid'		 => $code,

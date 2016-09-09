@@ -30,7 +30,7 @@ class data_module extends api_front implements api_interface {
 
 		$response = RC_Cache::app_cache_get($cache_key, 'mobile');
 		if (empty($response)) {
-			$db = RC_Loader::load_app_model('goods_model', 'goods');
+			$db = RC_Model::model('goods/goods_model');
 			RC_Loader::load_app_func('global', 'api');
 			
 			//流程逻辑开始
@@ -181,7 +181,7 @@ function new_goods_data($response, $request) {
 // 		if ($mobile_tv_adsense_group['big_group'] == '' || $mobile_tv_adsense_group['big_group'] == 0) {
 // 			$response['mobile_tv_big_adsense'] = array();
 // 		} else {
-// 			$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
+// 			$ad_view = RC_Model::model('adsense/ad_model');
 // 			$adsense = array(
 // 					'position_id'	=> $mobile_tv_adsense_group['big_group'],
 // 					'start_time'	=> array('elt' => RC_Time::gmtime()),
@@ -209,7 +209,7 @@ function new_goods_data($response, $request) {
 // 		if ($mobile_tv_adsense_group['small_group'] == '' || $mobile_tv_adsense_group['small_group'] == 0) {
 // 			$response['mobile_tv_small_adsense'] = array();
 // 		} else {
-// 			$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
+// 			$ad_view = RC_Model::model('adsense/ad_model');
 // 			$adsense = array(
 // 					'position_id'	=> $mobile_tv_adsense_group['small_group'],
 // 					'start_time'	=> array('elt' => RC_Time::gmtime()),
@@ -244,7 +244,7 @@ function mobile_home_adsense_group($response, $request) {
 	if (ecjia::config('mobile_home_adsense_group') == '' || ecjia::config('mobile_home_adsense_group') == 0) {
 		$response['adsense_group'] = array();
 	} else {
-		$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
+		$ad_view = RC_Model::model('adsense/ad_model');
 		$adsense_group = explode(',', ecjia::config('mobile_home_adsense_group'));
 		$mobile_home_adsense_group = array();
 		if (!empty($adsense_group)) {
@@ -316,7 +316,7 @@ function group_goods_data($response, $request) {
 			$groupwhere['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
-		$db_goods_activity = RC_Loader::load_app_model('goods_activity_viewmodel', 'goods');
+		$db_goods_activity = RC_Model::model('goods/goods_activity_viewmodel');
 		
 		$res = $db_goods_activity->field('ga.act_id, ga.goods_id, ga.goods_name, ga.start_time, ga.end_time, ext_info, shop_price, market_price, goods_brief, goods_thumb, goods_img, original_img')
 								 ->join(array('goods', 'seller_shopinfo'))
@@ -389,7 +389,7 @@ function mobilebuy_goods_data($response, $request) {
 			$mobilebuywhere['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
-		$db_goods_activity = RC_Loader::load_app_model('goods_activity_viewmodel', 'goods');
+		$db_goods_activity = RC_Model::model('goods/goods_activity_viewmodel');
 		$res = $db_goods_activity->field('ga.act_id, ga.goods_id, ga.goods_name, ga.start_time, ga.end_time, ext_info, shop_price, market_price, goods_brief, goods_thumb, goods_img, original_img')
 								 ->join(array('goods', 'seller_shopinfo'))
 								 ->where($mobilebuywhere)
@@ -438,7 +438,7 @@ function seller_recommend_data($response, $request) {
 	
 	if (!is_ecjia_error($result) && $is_active) {
 // 		$msi_dbview = RC_Loader::load_app_model('merchants_shop_information_viewmodel', 'seller');
-		$ssi_dbview = RC_Loader::load_app_model('seller_shopinfo_viewmodel', 'seller');
+		$ssi_dbview = RC_Model::model('seller/seller_shopinfo_viewmodel');
 		
 // 		$where['ssi.status'] = 1;
 // 		$where['msi.merchants_audit'] = 1;
@@ -468,10 +468,10 @@ function seller_recommend_data($response, $request) {
 		$list = array();
 		
 		if (!empty ($result)) {
-			$goods_db = RC_Loader::load_app_model('goods_model', 'goods');
+			$goods_db = RC_Model::model('goods/goods_model');
 			RC_Loader::load_app_func('common', 'goods');
 			RC_Loader::load_app_func('goods', 'goods');
-			$mobilebuy_db = RC_Loader::load_app_model('goods_activity_model', 'goods');
+			$mobilebuy_db = RC_Model::model('goods/goods_activity_model');
 			$v_where = array('is_on_sale' => 1, 'is_alone_sale' => 1, 'is_delete' => 0);
 			
 			foreach ($result as $key => $val) {
@@ -569,7 +569,7 @@ function topic_data($response, $request) {
 	if (ecjia::config('mobile_topic_adsense') == '' || ecjia::config('mobile_topic_adsense') == 0) {
 		$response['mobile_topic_adsense'] = array();
 	} else {
-		$ad_view = RC_Loader::load_app_model('ad_model', 'adsense');
+		$ad_view = RC_Model::model('adsense/ad_model');
 		$adsense = array(
 				'position_id'	=> ecjia::config('mobile_topic_adsense'),
 				'start_time'	=> array('elt' => RC_Time::gmtime()),
@@ -598,7 +598,7 @@ function topic_data($response, $request) {
 }
 
 function mobile_toutiao_data($response, $request) {
-	$db_toutiao = RC_Loader::load_app_model('mobile_toutiao_model', 'mobile');
+	$db_toutiao = RC_Model::model('mobile/mobile_toutiao_model');
 	$result = $db_toutiao->order(array('sort_order' => 'ASC' , 'id' => 'desc'))->limit(5)->select();
 	$mobile_toutiao_data = array();
 	if (!empty($result)) {

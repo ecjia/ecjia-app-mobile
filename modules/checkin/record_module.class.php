@@ -30,9 +30,9 @@ class record_module extends api_front implements api_interface {
 		
 		if ($filite_user == 'current') {
 // 			$_SESSION['user_id'] = 1;
-			EM_Api::authSession();
+			$this->authSession();
 			
-			$db = RC_Loader::load_app_model('mobile_checkin_model', 'mobile');
+			$db = RC_Model::model('mobile/mobile_checkin_model');
 			
 			$month = RC_Time::local_getdate();
 			// 创建本月开始时间
@@ -43,7 +43,7 @@ class record_module extends api_front implements api_interface {
 			$checkin_result = $db->where(array('user_id' => $_SESSION['user_id'], 'checkin_time >= "'.$month_start.'" and checkin_time <= "'.$month_end.'"'))->select();
 			$checkin_list = array();
 			if (!empty($checkin_result)) {
-				$db_user = RC_Loader::load_app_model('users_model', 'user');
+				$db_user = RC_Model::model('user/users_model');
 				$user_info = $db_user->field(array('user_name'))->find(array('user_id' => $_SESSION['user_id']));
 				$uid = sprintf("%09d", $_SESSION['user_id']);//格式化uid字串， d 表示把uid格式为9位数的整数，位数不够的填0
 				$dir1 = substr($uid, 0, 3);//把uid分段
@@ -97,7 +97,7 @@ class record_module extends api_front implements api_interface {
 					"more"	=> 0
 			);
 		} else {
-			$db_view = RC_Loader::load_app_model('mobile_checkin_viewmodel', 'mobile');
+			$db_view = RC_Model::model('mobile/mobile_checkin_viewmodel');
 			/* 获取数量 */
 			$size = $this->requestData('pagination.count', 15);
 			$page = $this->requestData('pagination.page', 1);

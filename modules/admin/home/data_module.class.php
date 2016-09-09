@@ -11,9 +11,9 @@ class data_module extends api_admin implements api_interface {
 		$this->authadminSession();
 		$ecjia = RC_Loader::load_app_class('api_admin', 'api');
 		
-		$stats_db = RC_Loader::load_app_model('stats_model', 'stats');
-// 		$order_db = RC_Loader::load_app_model('order_info_model', 'orders');
-		$db_orderinfo_view = RC_Loader::load_app_model('order_info_viewmodel', 'orders');
+		$stats_db = RC_Model::model('stats/stats_model');
+// 		$order_db = RC_Model::model('orders/order_info_model');
+		$db_orderinfo_view = RC_Model::model('orders/order_info_viewmodel');
 		
 		$db_orderinfo_view->view = array(
 				'order_info' => array(

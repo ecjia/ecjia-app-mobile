@@ -14,7 +14,7 @@ class signin_module extends api_front implements api_interface {
 		if (empty($code)) {
 			return new ecjia_error(101, '参数错误');
 		}
-		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
+		$db = RC_Model::model('mobile/qrcode_validate_model');
 		$where = array(
 				'session_id' => RC_Session::session_id(),
 				'uuid'		 => $code,

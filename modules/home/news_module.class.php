@@ -10,7 +10,7 @@ class news_module extends api_front implements api_interface {
 	 public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();
 		
-		$db_mobile_news = RC_Loader::load_app_model('mobile_news_model', 'mobile');
+		$db_mobile_news = RC_Model::model('mobile/mobile_news_model');
 		/* 查询今日热点总数*/
 		$count = $db_mobile_news->where(array('group_id' => 0, 'status' => 1))->count();
 		

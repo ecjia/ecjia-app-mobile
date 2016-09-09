@@ -14,9 +14,9 @@ class validate_module extends api_front implements api_interface {
 		if (empty($code)) {
 			return new ecjia_error(101, '参数错误');
 		}
+		$db = RC_Model::model('mobile/qrcode_validate_model');
 		
         if ($_SESSION['user_id'] > 0  || $_SESSION['admin_id'] > 0) {
-        	$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
         	$result = $db->find(array('uuid' => $code));
         	/* 已过期*/
 	        if ($result['status'] != 1) {
@@ -29,7 +29,6 @@ class validate_module extends api_front implements api_interface {
 			}
         }
 		
-		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
 		$device = $this->requestdata('device', array());
 		$where = array(
 				'uuid'		 => $code,
@@ -108,7 +107,7 @@ function user_login($uid) {
 		$db_term_relation->where(array('item_key2' => 'device_udid', 'item_value2' => $device_id))->update(array('item_key2' => '', 'item_value2' => ''));
 			
 		if(!empty($object_id)) {
-			$db = RC_Loader::load_app_model('feedback_model', 'feedback');
+			$db = RC_Model::model('feedback/feedback_model');
 			$db->where(array('msg_id' => $object_id, 'msg_area' => '4'))->update(array('user_id' => $_SESSION['user_id'], 'user_name' => $_SESSION['user_name']));
 			$db->where(array('parent_id' => $object_id, 'msg_area' => '4'))->update(array('user_id' => $_SESSION['user_id'], 'user_name' => $_SESSION['user_name']));
 		}
@@ -117,7 +116,7 @@ function user_login($uid) {
 		$result = ecjia_app::validate_application('mobile');
 		if (!is_ecjia_error($result)) {
 			if (!empty($device['udid']) && !empty($device['client']) && !empty($device['code'])) {
-				$db_mobile_device = RC_Loader::load_app_model('mobile_device_model', 'mobile');
+				$db_mobile_device = RC_Model::model('mobile/mobile_device_model');
 				$device_data = array(
 						'device_udid'	=> $device['udid'],
 						'device_client'	=> $device['client'],
@@ -180,7 +179,7 @@ function admin_login($uid)
 	if (!is_ecjia_error($result)) {
 		$device = $this->requestdata('device', array());
 		if (!empty($device['udid']) && !empty($device['client']) && !empty($device['code'])) {
-			$db_mobile_device = RC_Loader::load_app_model('mobile_device_model', 'mobile');
+			$db_mobile_device = RC_Model::model('mobile/mobile_device_model');
 			$device_data = array(
 					'device_udid'	=> $device['udid'],
 					'device_client'	=> $device['client'],
