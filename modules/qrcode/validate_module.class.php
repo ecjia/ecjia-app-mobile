@@ -12,7 +12,7 @@ class validate_module extends api_front implements api_interface {
 		
 		$code = $this->requestdata('code');
 		if (empty($code)) {
-			EM_Api::outPut(101);
+			return new ecjia_error(101, '参数错误');
 		}
 		
         if ($_SESSION['user_id'] > 0  || $_SESSION['admin_id'] > 0) {

@@ -12,7 +12,7 @@ class create_module extends api_front implements api_interface {
     	
 		$device = $this->requestdata('device', array());
 		if (empty($device['udid']) || empty($device['client']) || empty($device['code'])) {
-			EM_Api::outPut(101);
+			return new ecjia_error(101, '参数错误');
 		}
 		$charset 		= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 		$charset_len = strlen($charset)-1;

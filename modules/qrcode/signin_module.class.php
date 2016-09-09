@@ -12,7 +12,7 @@ class signin_module extends api_front implements api_interface {
     	
 		$code = $this->requestdata('code');
 		if (empty($code)) {
-			EM_Api::outPut(101);
+			return new ecjia_error(101, '参数错误');
 		}
 		$db = RC_Loader::load_app_model('qrcode_validate_model', 'mobile');
 		$where = array(
@@ -23,7 +23,7 @@ class signin_module extends api_front implements api_interface {
 		);
 		$result = $db->find($where);
 		if (empty($result)) {
-			return EM_Api::outPut(8);
+			return new ecjia_error(8, 'fail');
 		}
 		$result = $db->where($where)->update(array('status' => 2));
 		return array();

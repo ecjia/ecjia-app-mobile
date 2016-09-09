@@ -14,7 +14,7 @@ class bind_module extends api_front implements api_interface {
 		$device = $this->requestdata('device', array());
 		$type = $this->requestdata('type');
 		if (empty($code) || empty($type)) {
-			EM_Api::outPut(101);
+			return new ecjia_error(101, '参数错误');
 		}
 		//判断是管理员还是普通用户
 		$is_admin = in_array($device['code'], array('8001', '5001', '5002', '2001', '2002')) ? 1 : 0;
@@ -27,7 +27,7 @@ class bind_module extends api_front implements api_interface {
 		);
 		$result = $db->find($where);
 		if (empty($result)) {
-			return EM_Api::outPut(8);
+			return new ecjia_error(8, 'fail');
 		}
 		//判断是管理员还是普通用户
 		$user_id = $is_admin == 1 ? $_SESSION['admin_id'] : $_SESSION['user_id'];

@@ -14,7 +14,7 @@ class setDeviceToken_module extends api_front implements api_interface {
 		$device['device_token'] = $this->requestdata('device_token');
 		
 		if (empty($device['udid']) || empty($device['client']) || empty($device['code']) || empty($device['device_token'])) {
-			EM_Api::outPut(101);
+			return new ecjia_error(101, '参数错误');
 		}
 		
 		$db_mobile_device = RC_Loader::load_app_model('mobile_device_model', 'mobile');
