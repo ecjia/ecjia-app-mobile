@@ -20,6 +20,7 @@ class mobile_activity_model extends Component_Model_Model {
 	
 	public function activity_count($where) {
 		return $this->where($where)->count();
+// 		return RC_DB::table('mobile_activity')->where($where)->count();
 	}
 	
 	public function mobile_activity_manage($parameter) {

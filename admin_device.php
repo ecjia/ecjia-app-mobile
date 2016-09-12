@@ -64,6 +64,7 @@ class admin_device extends ecjia_admin {
 		$success = $this->db_device->device_update($id, array('in_status' => 1));
 		
 		$info = $this->db_device->device_find($id);
+		
 	    if ($info['device_client'] == 'android') {
             $info['device_client'] = 'Android';
         } elseif ($info['device_client'] == 'iphone') {
@@ -146,7 +147,9 @@ class admin_device extends ecjia_admin {
 		} else {
 			$this->admin_priv('device_update', ecjia::MSGTYPE_JSON);
 		}
-		$info = $this->db_device->device_select(array('id' => $_POST['id']), true);
+		$ids = $_POST['id'];
+		$ids = explode(',', $ids);
+		$info = $this->db_device->device_select($ids, true);
 		
 		foreach ($info as $k => $rows) {
 		    if ($rows['device_client'] == 'android') {
@@ -311,7 +314,7 @@ class admin_device extends ecjia_admin {
 	
 		$option = array('where' => $where, 'order' => 'id desc', 'limit' => $page->limit());
 		$data = $db_device->device_list($option);
-		
+// 		$data = RC_DB::table('mobile_device')->where('where', $where)->orderBy('id', 'desc')->take($page->limlit())->get();
 		$arr = array();
 		if (!empty($data)) {
 			foreach ($data as $rows) {

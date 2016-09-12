@@ -12,6 +12,7 @@ class admin_discover extends ecjia_admin {
 		parent::__construct();
 
 		$this->mobile = RC_Loader::load_app_class('mobile_method');
+		
 
 		if (!ecjia::config(mobile_method::STORAGEKEY_discover_data, ecjia::CONFIG_CHECK)) {
 			ecjia_config::instance()->insert_config('hidden', mobile_method::STORAGEKEY_discover_data, serialize(array()), array('type' => 'hidden'));

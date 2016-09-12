@@ -98,7 +98,6 @@ class admin_mobile_manage extends ecjia_admin {
 			'sort'			=> intval($_POST['sort']),
 		);
 		$id = $this->db_mobile_manage->mobile_manage($data);
-		
 		ecjia_admin::admin_log($data['app_name'], 'add', 'mobile_manage');
 		
 		$links[] = array('text' => RC_Lang::get('mobile::mobile.return_mobile_manage'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/init'));
@@ -206,6 +205,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$page = new ecjia_page ($count, 10, 5);
 		$option = array('limit' => $page->limit(), 'order' => array('sort' => 'desc'));
 		$mobile_manage = $db_mobile_manage->mobile_manage_list($option);
+// 		_dump($mobile_manage, 1);
 	
 		$mobile_client = array('iphone' => 'iPhone', 'ipad' => 'iPad', 'android' => 'Android');
 		if (!empty($mobile_manage)) {

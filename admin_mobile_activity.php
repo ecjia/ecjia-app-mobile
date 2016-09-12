@@ -102,6 +102,7 @@ class admin_mobile_activity extends ecjia_admin {
 	   
 	   	//查询活动是否重名
 	   	$is_only = $this->db_activity->activity_count(array('activity_name' => $activity_name));
+	   	_dump($is_only, 1);
 	   	if ($is_only > 0) {
 	   		$this->showmessage(RC_Lang::get('mobile::mobile.activity_exist'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 	   	}

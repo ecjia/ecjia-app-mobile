@@ -19,33 +19,55 @@ class mobile_device_model extends Component_Model_Model {
 		return $this->where($option['where'])->order($option['order'])->limit($option['limit'])->select();
 	}
 	
-	public function device_update($id, $data, $in=false) {
+	public function device_update($ids, $data=array(), $in=false) {
+// 		if ($in) {
+// 			return $this->in(array('id' => $id))->update($data);
+// 		}
+// 		return $this->where(array('id' => $id))->update($data);
+		$db_mobile_device = RC_DB::table('mobile_device');
 		if ($in) {
-			return $this->in(array('id' => $id))->update($data);
+			return $db_mobile_device->whereIn('id', $ids)->update($data);
 		}
-		return $this->where(array('id' => $id))->update($data);
+		$db_mobile_device->where('id', $ids)->update($data);
+		return true;
+		
 	}
+		
+		
 	
 	public function device_find($id, $field='*') {
-		return $this->where(array('id' => $id))->field($field)->find();
+// 		return $this->where(array('id' => $id))->field($field)->find();
+		return RC_DB::table('mobile_device')->where('id', $id)->first();
+		
+		
 	}
 	
 	public function device_delete($where, $in=false) {
+// 		if ($in) {
+// 			return $this->in($where)->delete();
+// 		}
+// 		return $this->where($where)->delete();
 		if ($in) {
-			return $this->in($where)->delete();
+			return RC_DB::table('mobile_device')->whereIn($where)->delete();
 		}
-		return $this->where($where)->delete();
+		return RC_DB::table('mobile_device')->where('id', $id)->delete();
 	}
 	
 	public function device_select($where, $in=false) {
-		if ($in) {
-			return $this->in($where)->select();
-		}
-		return $this->where($where)->select();
+		$db_mobile_device = RC_DB::table('mobile_device');
+
+				if ($in) {
+					$db_mobile_device->whereIn('id', $where);
+				} else {
+					$db_mobile_device->where('id', $where);
+				}
+		return $db_mobile_device->get();
+		
 	}
 	
 	public function device_count($where) {
 		return $this->where($where)->count();
+// 		return RC_DB::table('mobile_device')->where($where)->count();
 	}
 }
 
