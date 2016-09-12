@@ -11,25 +11,27 @@ class mobile_news_model extends Component_Model_Model {
 	}
 
 	public function mobile_news_manage($data, $where=array()) {
+		$db_mobile_news = RC_DB::table('mobile_news');
 		if (!empty($where)) {
-			return $this->where($where)->update($data);
+// 			return $this->where($where)->update($data);
+			foreach ($where as $k => $v) {
+				$db_mobile_news->where($k, $v);
+			}
+			return $db_mobile_news->update($data);
 		}
-		return $this->insert($data);
+// 		return $this->insert($data);
+		return RC_DB::table('mobile_news')->insertGetId($data);
 	}
 	
-	public function mobile_news_select($where=array(), $order=array()) {
-		if (!empty($order)) {
-			return $this->where($where)->order($order)->select();
+	public function mobile_news_field($where, $field) {
+		$db_mobile_news = RC_DB::table('mobile_news');
+// 		return $this->where($where)->get_field($field);
+		if (!empty($where)) {
+			foreach ($where as $k => $v) {
+				$db_mobile_news->where($k, $v);
+			}
 		}
-		return $this->where($where)->select();
-	}
-	
-	public function mobile_news_field($where, $field, $bool=false) {
-		return $this->where($where)->get_field($field, $bool);
-	}
-	
-	public function mobile_news_delete($where) {
-		return $this->where($where)->delete();
+		return $db_mobile_news->pluck($field);
 	}
 	
 	public function mobile_news_count($where) {
