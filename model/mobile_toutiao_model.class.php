@@ -9,40 +9,30 @@ class mobile_toutiao_model extends Component_Model_Model {
 		$this->table_name = 'mobile_toutiao';
 		parent::__construct();
 	}
-	
-	public function toutiao_count($where) {
-		return $this->where($where)->count();
-	}
-	
-	public function toutiao_list($option) {
-		return $this->where($option['where'])->order($option['order'])->limit($option['limit'])->select();
-	}
 
 	public function toutiao_manage($parameter) {
 		if (!isset($parameter['id'])) {
-			$id = $this->insert($parameter);
+			$id = RC_DB::table('mobile_toutiao')->insertGetId($parameter);
 		} else {
-			$where = array('id' => $parameter['id']);
-	
-			$this->where($where)->update($parameter);
+			RC_DB::table('mobile_toutiao')->where('id', $parameter['id'])->update($parameter);
 			$id = $parameter['id'];
 		}
 		return $id;
 	}
 	
 	public function toutiao_find($id) {
-		return $this->where(array('id' => $id))->find();
+		return RC_DB::table('mobile_toutiao')->where('id', $id)->first();
 	}
 	
 	public function toutiao_remove($id) {
-		return $this->where(array('id' => $id))->delete();
+		return RC_DB::table('mobile_toutiao')->where('id', $id)->delete();
 	}
 	
-	public function toutiao_batch($where, $type) {
+	public function toutiao_batch($ids, $type) {
 		if ($type == 'select') {
-			return $this->in($where)->select();
+			return RC_DB::table('mobile_toutiao')->whereIn('id', $ids)->get();
 		} elseif ($type == 'delete') {
-			return $this->in($where)->delete();
+			return RC_DB::table('mobile_toutiao')->whereIn('id', $ids)->delete();
 		}
 	}
 }

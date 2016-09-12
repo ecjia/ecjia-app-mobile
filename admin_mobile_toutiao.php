@@ -234,13 +234,13 @@ class admin_mobile_toutiao extends ecjia_admin {
 		if (isset($_POST['checkboxes'])) {
 			$idArr = explode(',' , $_POST['checkboxes']);
 			
-			$title_list = $this->db_mobile_toutiao->toutiao_batch(array('id' => $idArr), 'select');
+			$title_list = $this->db_mobile_toutiao->toutiao_batch($idArr, 'select');
 			$disk = RC_Filesystem::disk();
 			foreach ($title_list as $v) {
 				$disk->delete(RC_Upload::upload_path($v['image']));
 				ecjia_admin::admin_log($v['title'], 'batch_remove', 'mobile_toutiao');
 			}
-			$this->db_mobile_toutiao->toutiao_batch(array('id' => $idArr), 'delete');
+			$this->db_mobile_toutiao->toutiao_batch($idArr, 'delete');
 			
 			$this->showmessage(RC_Lang::get('mobile::mobile.drop_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/init')));
 		} else {
@@ -253,18 +253,16 @@ class admin_mobile_toutiao extends ecjia_admin {
 	 * @return array
 	 */
 	private function get_toutiao_list() {
-		$db_mobile_toutiao = RC_Model::model('mobile/mobile_toutiao_model');
+		$db_mobile_toutiao = RC_DB::table('mobile_toutiao');
 		
 		$keywords = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
-		$where = '';
 		if ($keywords) {
-			$where['title'] = array('like' => '%'.$keywords.'%');
+			$db_mobile_toutiao->where('title', 'like', '%'.mysql_like_quote($keywords).'%');
 		}
 	
-		$count = $db_mobile_toutiao->toutiao_count($where);
+		$count = $db_mobile_toutiao->count();
 		$page = new ecjia_page($count, 10, 5);
-		$option = array('where' => $where, 'order' => array('create_time' => 'desc'), 'limit' => $page->limit());
-		$rows = $db_mobile_toutiao->toutiao_list($option);
+		$rows = $db_mobile_toutiao->orderby('create_time', 'desc')->take(10)->skip($page->start_id-1)->get();
 		
 		if (!empty($rows)) {
 			foreach ($rows as $key => $val) {
