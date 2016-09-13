@@ -167,7 +167,7 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$info = $this->db_mobile_manage->mobile_manage_find(intval($_GET['id']));
 		
-		$this->db_mobile_manage->delete(array('app_id' => intval($_GET['id'])));
+		RC_DB::table('mobile_manage')->where('app_id', intval($_GET['id']))->delete();
 		
 		ecjia_admin::admin_log($info['app_name'], 'remove', 'mobile_manage');
 		$this->showmessage(RC_Lang::get('mobile::mobile.remove_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/init')));
@@ -205,8 +205,6 @@ class admin_mobile_manage extends ecjia_admin {
 		$page = new ecjia_page ($count, 10, 5);
 		$option = array('limit' => $page->limit(), 'order' => array('sort' => 'desc'));
 		$mobile_manage = $db_mobile_manage->mobile_manage_list($option);
-// 		_dump($mobile_manage, 1);
-	
 		$mobile_client = array('iphone' => 'iPhone', 'ipad' => 'iPad', 'android' => 'Android');
 		if (!empty($mobile_manage)) {
 			foreach ($mobile_manage as $key => $val) {

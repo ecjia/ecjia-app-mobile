@@ -273,7 +273,7 @@ class admin_device extends ecjia_admin {
 		if ($filter['deviceval'] == 0) {
 			$where['in_status'] = 0;
 		}
-	
+		
 		$android = 'android';
 		if ($filter['deviceval'] == 1) {
 			$where[] ="device_client = '" .$android. "' and device_code != 8001 and in_status = 0";
@@ -314,7 +314,6 @@ class admin_device extends ecjia_admin {
 	
 		$option = array('where' => $where, 'order' => 'id desc', 'limit' => $page->limit());
 		$data = $db_device->device_list($option);
-// 		$data = RC_DB::table('mobile_device')->where('where', $where)->orderBy('id', 'desc')->take($page->limlit())->get();
 		$arr = array();
 		if (!empty($data)) {
 			foreach ($data as $rows) {

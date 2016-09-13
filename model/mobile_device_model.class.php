@@ -20,10 +20,6 @@ class mobile_device_model extends Component_Model_Model {
 	}
 	
 	public function device_update($ids, $data=array(), $in=false) {
-// 		if ($in) {
-// 			return $this->in(array('id' => $id))->update($data);
-// 		}
-// 		return $this->where(array('id' => $id))->update($data);
 		$db_mobile_device = RC_DB::table('mobile_device');
 		if ($in) {
 			return $db_mobile_device->whereIn('id', $ids)->update($data);
@@ -36,17 +32,12 @@ class mobile_device_model extends Component_Model_Model {
 		
 	
 	public function device_find($id, $field='*') {
-// 		return $this->where(array('id' => $id))->field($field)->find();
 		return RC_DB::table('mobile_device')->where('id', $id)->first();
 		
 		
 	}
 	
 	public function device_delete($where, $in=false) {
-// 		if ($in) {
-// 			return $this->in($where)->delete();
-// 		}
-// 		return $this->where($where)->delete();
 		if ($in) {
 			return RC_DB::table('mobile_device')->whereIn($where)->delete();
 		}
