@@ -66,7 +66,9 @@ class admin_config extends ecjia_admin {
 		
 		$mobile_recommend_city = explode(',', ecjia::config('mobile_recommend_city'));
 		$regions = array ();
-		$region_data = $this->db_region->where(array('region_id' => $mobile_recommend_city ))->select();
+//		$region_data = $this->db_region->where(array('region_id' => $mobile_recommend_city ))->select();
+		$region_data = RC_DB::table('region')->whereIn('region_id', $mobile_recommend_city)->get();
+
 		if (!empty($region_data)) {
 			foreach ( $region_data as $key => $val ) {
 				if ( empty($val['region_name']) ) {
@@ -141,7 +143,9 @@ class admin_config extends ecjia_admin {
 	  	
 	  	
 	  	$this->assign('mobile_recommend_city', $regions);
-	  	$this->assign('countries', $this->db_region->get_regions());
+//	  	$this->assign('countries', $this->db_region->get_regions());
+	  	$this->assign('countries', $this->get_regions());
+
 	  	$this->assign('ad_position_list', $ad_position_list['arr']);
 		$this->assign('form_action', RC_Uri::url('mobile/admin_config/update'));
 		
@@ -201,7 +205,8 @@ class admin_config extends ecjia_admin {
 		$this->assign('share_notice', $share_notice);
 		
 		/* 管理员信息*/
-		$admin_user_list = RC_Model::model('user/admin_user_model')->field(array('user_id', 'user_name'))->select();
+//		$admin_user_list = RC_Model::model('user/admin_user_model')->field(array('user_id', 'user_name'))->select();
+		$admin_user_list = RC_DB::table('admin_user')->select('user_id', 'user_name')->get();
 		$this->assign('admin_user_list', $admin_user_list);
 		$order_reminder_type = ecjia::config('order_reminder_type', ecjia::CONFIG_CHECK) ? ecjia::config('order_reminder_type') : 0;
 		
@@ -452,7 +457,9 @@ class admin_config extends ecjia_admin {
 		$this->admin_priv('mobile_config_delete', ecjia::MSGTYPE_JSON);
 		
 		$code     = trim($_GET['code']);
-		$img_name = $this->db_config->where(array('code'=>$code))->get_field('value');
+//		$img_name = $this->db_config->where(array('code'=>$code))->get_field('value');
+		$img_name = RC_DB::table('shop_config')->where('code', $code)->pluck('value');
+
 // 		@unlink(RC_Upload::upload_path() . $img_name);
 		$disk = RC_Filesystem::disk();
 		$disk->delete(RC_Upload::upload_path() . $img_name);
@@ -474,6 +481,10 @@ class admin_config extends ecjia_admin {
 			}
 		}
 		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $list));
+	}
+
+	private function get_regions($type = 0, $parent = 0) {
+		return RC_DB::table('region')->where('region_type', $type)->where('parent_id', $parent)->select('region_id', 'region_name')->get();
 	}
 }
 
