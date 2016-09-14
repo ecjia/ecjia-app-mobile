@@ -18,7 +18,7 @@ function assign_adminlog_content() {
 	ecjia_admin_log::instance()->add_object('mobile_news', RC_Lang::get('mobile::mobile.mobile_news'));
 	ecjia_admin_log::instance()->add_object('mobile_manage', RC_Lang::get('mobile::mobile.mobile_app_manage'));
 	ecjia_admin_log::instance()->add_object('mobile_toutiao', RC_Lang::get('mobile::mobile.mobile_headline'));
-	ecjia_admin_log::instance()->add_object('mobile_activity', '活动');
+	ecjia_admin_log::instance()->add_object('mobile_activity', RC_Lang::get('mobile::mobile.activity'));
 }
 
 //end

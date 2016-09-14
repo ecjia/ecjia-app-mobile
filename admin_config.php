@@ -7,15 +7,12 @@
 defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_config extends ecjia_admin {
-	private $db_config;
-	private $db_region;
 	public function __construct() {
 		parent::__construct();
+		
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
 	
-		$this->db_config = RC_Loader::load_model('shop_config_model'); 
-		$this->db_region = RC_Model::model('shipping/region_model');
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('smoke');
@@ -207,6 +204,7 @@ class admin_config extends ecjia_admin {
 		/* 管理员信息*/
 //		$admin_user_list = RC_Model::model('user/admin_user_model')->field(array('user_id', 'user_name'))->select();
 		$admin_user_list = RC_DB::table('admin_user')->select('user_id', 'user_name')->get();
+		
 		$this->assign('admin_user_list', $admin_user_list);
 		$order_reminder_type = ecjia::config('order_reminder_type', ecjia::CONFIG_CHECK) ? ecjia::config('order_reminder_type') : 0;
 		
@@ -457,7 +455,7 @@ class admin_config extends ecjia_admin {
 		$this->admin_priv('mobile_config_delete', ecjia::MSGTYPE_JSON);
 		
 		$code     = trim($_GET['code']);
-//		$img_name = $this->db_config->where(array('code'=>$code))->get_field('value');
+//		$img_name = $this->db_config->where(array('code' => $code))->get_field('value');
 		$img_name = RC_DB::table('shop_config')->where('code', $code)->pluck('value');
 
 // 		@unlink(RC_Upload::upload_path() . $img_name);

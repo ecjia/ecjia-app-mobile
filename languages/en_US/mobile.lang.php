@@ -507,6 +507,8 @@ return array(
 	'draw_time'					=> 'Lottery time',
 	'unreleased'				=> 'Unissued',
 	'issued'					=> 'Already issued',
+	'unknown_appid'				=> 'Unrecognized AppID',
+	'activity'					=> 'Activity',
 );
 
 // end

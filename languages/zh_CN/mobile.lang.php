@@ -374,6 +374,7 @@ return array(
 	'mobile_manage_update'	=> '更新移动应用',
 	'mobile_manage_delete'	=> '删除移动应用',
 	'mobile_toutiao_manage'	=> '今日头条管理',
+	'mobile_toutiao_update'	=> '更新今日头条',
 	'mobile_toutiao_delete'	=> '删除今日头条',
 	
 	'mobile_shortcut_display'	=> '快捷菜单是否显示',
@@ -506,6 +507,8 @@ return array(
 	'draw_time'					=> '抽奖时间',
 	'unreleased'				=> '未发放',
 	'issued'					=> '已发放',
+	'unknown_appid'				=> '未识别的AppID',
+	'activity'					=> '活动',
 );		
 
 // end
