@@ -26,22 +26,17 @@ class mobile_device_model extends Component_Model_Model {
 		}
 		$db_mobile_device->where('id', $ids)->update($data);
 		return true;
-		
 	}
 		
-		
-	
 	public function device_find($id, $field='*') {
 		return RC_DB::table('mobile_device')->where('id', $id)->first();
-		
-		
 	}
 	
-	public function device_delete($where, $in=false) {
+	public function device_delete($ids, $in=false) {
 		if ($in) {
-			return RC_DB::table('mobile_device')->whereIn($where)->delete();
+			return RC_DB::table('mobile_device')->whereIn('id', $ids)->delete();
 		}
-		return RC_DB::table('mobile_device')->where('id', $id)->delete();
+		return RC_DB::table('mobile_device')->whereIn('id', $ids)->delete();
 	}
 	
 	public function device_select($where, $in=false) {
@@ -58,7 +53,6 @@ class mobile_device_model extends Component_Model_Model {
 	
 	public function device_count($where) {
 		return $this->where($where)->count();
-// 		return RC_DB::table('mobile_device')->where($where)->count();
 	}
 }
 
