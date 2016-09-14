@@ -10,7 +10,7 @@ class validate_module extends api_front implements api_interface {
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();	
 		
-		$code = $this->requestdata('code');
+		$code = $this->requestData('code');
 		if (empty($code)) {
 			return new ecjia_error(101, '参数错误');
 		}
@@ -29,7 +29,7 @@ class validate_module extends api_front implements api_interface {
 			}
         }
 		
-		$device = $this->requestdata('device', array());
+		$device = $this->requestData('device', array());
 		$where = array(
 				'uuid'		 => $code,
 				'device_udid' => $device['udid'],
@@ -92,7 +92,7 @@ function user_login($uid) {
 	
 	//修正咨询信息
 	if($_SESSION['user_id'] > 0) {
-		$device = $this->requestdata('device', array());
+		$device = $this->requestData('device', array());
 		$device_id = $device['udid'];
 		$device_client = $device['client'];
 		$db_term_relation = RC_Loader::load_model('term_relationship_model');
@@ -177,7 +177,7 @@ function admin_login($uid)
 	//修正关联设备号
 	$result = ecjia_app::validate_application('mobile');
 	if (!is_ecjia_error($result)) {
-		$device = $this->requestdata('device', array());
+		$device = $this->requestData('device', array());
 		if (!empty($device['udid']) && !empty($device['client']) && !empty($device['code'])) {
 			$db_mobile_device = RC_Model::model('mobile/mobile_device_model');
 			$device_data = array(

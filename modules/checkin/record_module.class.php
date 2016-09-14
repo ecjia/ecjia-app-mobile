@@ -9,7 +9,7 @@ class record_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();
     	
-		$filite_user = $this->requestdata('filite_user', 'current'); 
+		$filite_user = $this->requestData('filite_user', 'current'); 
 		$checkin_award_open = intval(ecjia::config('checkin_award_open'));
 		$checkin_data = array(
 				'checkin_award_open'	=> $checkin_award_open,

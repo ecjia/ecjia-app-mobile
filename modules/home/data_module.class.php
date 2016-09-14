@@ -9,8 +9,8 @@ class data_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();
     	
-		$device 	= $this->requestdata('device', array());
-		$location	= $this->requestdata('location',array()); 
+		$device 	= $this->requestData('device', array());
+		$location	= $this->requestData('location',array()); 
 // 		$location = array(
 // 				'latitude'	=> '31.235450744628906',
 // 				'longitude' => '121.41641998291016',
@@ -175,7 +175,7 @@ function new_goods_data($response, $request) {
 }
 
 // function mobile_tv_adsense_data($response, $request) {
-// 	$device = $this->requestdata('device', array());
+// 	$device = $this->requestData('device', array());
 // 	if (isset($device['code']) && $device['code'] == '1006') {
 // 		$mobile_tv_adsense_group = unserialize(ecjia::config('mobile_tv_adsense_group'));
 // 		if ($mobile_tv_adsense_group['big_group'] == '' || $mobile_tv_adsense_group['big_group'] == 0) {

@@ -10,9 +10,9 @@ class bind_module extends api_front implements api_interface {
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();
     	
-		$code = $this->requestdata('code');
-		$device = $this->requestdata('device', array());
-		$type = $this->requestdata('type');
+		$code = $this->requestData('code');
+		$device = $this->requestData('device', array());
+		$type = $this->requestData('type');
 		if (empty($code) || empty($type)) {
 			return new ecjia_error(101, '参数错误');
 		}

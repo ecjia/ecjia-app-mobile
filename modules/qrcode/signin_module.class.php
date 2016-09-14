@@ -10,7 +10,7 @@ class signin_module extends api_front implements api_interface {
 	 public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();
     	
-		$code = $this->requestdata('code');
+		$code = $this->requestData('code');
 		if (empty($code)) {
 			return new ecjia_error(101, '参数错误');
 		}

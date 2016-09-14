@@ -10,7 +10,7 @@ class create_module extends api_front implements api_interface {
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();
     	
-		$device = $this->requestdata('device', array());
+		$device = $this->requestData('device', array());
 		if (empty($device['udid']) || empty($device['client']) || empty($device['code'])) {
 			return new ecjia_error(101, '参数错误');
 		}
