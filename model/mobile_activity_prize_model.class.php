@@ -10,10 +10,6 @@ class mobile_activity_prize_model extends Component_Model_Model {
 		parent::__construct();
 	}
 	
-	public function activity_prize_select($where=array(), $order=array()) {
-		return $this->where($where)->order($order)->select();
-	}
-	
 	public function activity_prize_field($where, $field, $bool=false) {
 		return $this->where($where)->get_field($field, $bool);
 	}

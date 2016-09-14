@@ -143,14 +143,16 @@ class admin_mobile_activity extends ecjia_admin {
 	   	
 	   	$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.back_activity_list'), 'href' => RC_Uri::url('mobile/admin_mobile_activity/init')));
 	   	ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.edit_activity')));
+
 	   	$this->assign('ur_here', RC_Lang::get('mobile::mobile.edit_activity'));
 	   	$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_activity/update'));
+
 	   	//设置选中状态,并分配标签导航
 	   	$this->assign('action',	ROUTE_A);
 	   	
 	   	$this->tags['edit']['active'] = 1;
 	   	$this->assign('tags', $this->tags);
-	   	$this->assign('activity_info',$activity_info);
+	   	$this->assign('activity_info', $activity_info);
 	   	$this->display('activity_edit.dwt');
 	}
    
@@ -172,10 +174,10 @@ class admin_mobile_activity extends ecjia_admin {
 		$id 			= empty($_POST['id']) 				? 	'0' : intval($_POST['id']);
 		
 		/*判断活动是否重名*/   
-	   	$is_only = $this->db_activity->activity_count(array('activity_name' => $activity_name,'activity_id' => array('neq' => $id)));
+	   	$is_only = $this->db_activity->activity_count(array('activity_name' => $activity_name, 'activity_id' => array('neq' => $id)));
 
 		if ($is_only > 0) {
-	   		$this->showmessage(RC_Lang::get('mobile::mobile.activity_exist'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+	   		$this->showmessage(RC_Lang::get('mobile::mobile.activity_exist'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 	   	}
 	   	
 	   	$data = array(
@@ -196,9 +198,9 @@ class admin_mobile_activity extends ecjia_admin {
 
 	   	if ($updated){
 	   		ecjia_admin::admin_log($activity_name, 'edit', 'mobile_activity');
-	   		$this->showmessage(RC_Lang::get('mobile::mobile.edit_success'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_activity/edit',array('id' => $id))));
+	   		$this->showmessage(RC_Lang::get('mobile::mobile.edit_success'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_activity/edit', array('id' => $id))));
 	   	} else {
-	   		$this->showmessage(RC_Lang::get('mobile::mobile.edit_fail'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR,array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_activity/edit',array('id' => $id))));
+	   		$this->showmessage(RC_Lang::get('mobile::mobile.edit_fail'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_activity/edit', array('id' => $id))));
 	   	}
 	   	
 	}
@@ -211,10 +213,10 @@ class admin_mobile_activity extends ecjia_admin {
 	   	
 	   	if (!empty($_GET['id'])){
 	   		$id = intval($_GET['id']);
-//	   		$activity_name = $this->db_activity->mobile_activity_field(array('activity_id' => $id), 'activity_name');
 	   		$activity_name = $this->db_activity->mobile_activity_field($id, 'activity_name');
-//			$res = $this->db_activity->mobile_activity_remove(array('activity_id' => $id));
+	   		
 			$res = $this->db_activity->mobile_activity_remove($id);
+
 			if ($res){
 	   			ecjia_admin::admin_log($activity_name, 'remove', 'mobile_activity');
 	   			$this->showmessage(RC_Lang::get('mobile::mobile.del_success'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_activity/init')));
@@ -232,9 +234,9 @@ class admin_mobile_activity extends ecjia_admin {
 	public function toggle_show() {
 	   	$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
 	   	
-	   	$activity_id  = intval($_POST['id']);
-		
+	   	$activity_id = intval($_POST['id']);
 	   	$is_enabled = intval($_POST['val']);
+	   	
 	   	$data = array(
 	   		'activity_id' 	=> $activity_id,
 	   		'enabled' 		=> $is_enabled
@@ -252,23 +254,19 @@ class admin_mobile_activity extends ecjia_admin {
 	   
 	   	$activity_name = trim($_POST['value']);
 	   	$id	= intval($_POST['pk']);
-//	   	$old_activity_name = $this->db_activity->mobile_activity_field(array('activity_id' => $id), 'activity_name');
-	   	$old_activity_name = $this->db_activity->mobile_activity_field($id, 'activity_name');
+	   	
 		if (!empty($activity_name)) {
-	   		if ($activity_name != $old_activity_name) {
-	   			if ($this->db_activity->activity_count(array('activity_name' => $activity_name)) == 0) {
-	   				$data = array(
-	   					'activity_id' 	=> $id,
-	   					'activity_name' => $activity_name
-	   				);
-//	   				$this->db_activity->mobile_activity_manage(array('activity_name' => $activity_name));
-	   				$this->db_activity->mobile_activity_manage($data);
+   			if ($this->db_activity->activity_count(array('activity_name' => $activity_name, 'activity_id' => array('neq' =>  $id))) == 0) {
+   				$data = array(
+   					'activity_id' 	=> $id,
+   					'activity_name' => $activity_name
+   				);
+   				$this->db_activity->mobile_activity_manage($data);
 
-	   				$this->showmessage(RC_Lang::get('mobile::mobile.edit_name_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
-	   			} else {
-	   				$this->showmessage(RC_Lang::get('mobile::mobile.activity_exist'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-	   			}
-	   		}
+   				$this->showmessage(RC_Lang::get('mobile::mobile.edit_name_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+   			} else {
+   				$this->showmessage(RC_Lang::get('mobile::mobile.activity_exist'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+   			}
 	   	} else {
 	   		$this->showmessage(RC_Lang::get('mobile::mobile.fill_activity_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 	   	}
@@ -301,11 +299,12 @@ class admin_mobile_activity extends ecjia_admin {
 		$this->admin_priv('activity_record_manage',ecjia::MSGTYPE_JSON);
 		$id = intval($_GET['id']);
 
-		$prize_list = RC_Model::model('mobile/mobile_activity_prize_model')->activity_prize_select(array('activity_id' => $id), array('prize_level' => 'asc'));
-		
+		$prize_list = RC_DB::table('mobile_activity_prize')->where('activity_id', $id)->orderby('prize_level', 'asc')->get();
 		$this->assign('prize_list', $prize_list);
-		$bonus_list = RC_Model::model('mobile/mobile_bonus_type_model')->bonus_type_select(array(), array('type_id', 'type_name'));
+		
+		$bonus_list = RC_DB::table('bonus_type')->select('type_id', 'type_name')->get();
 		$this->assign('bonus_list', $bonus_list);
+		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.prize_pool'));
 		$this->assign('id', $id);
 		$this->assign('action_link', array('href' => RC_Uri::url('mobile/admin_mobile_activity/init'), 'text' => RC_Lang::get('mobile::mobile.back_activity_list')));
@@ -360,7 +359,6 @@ class admin_mobile_activity extends ecjia_admin {
 			$i++;
 		}
 		
-		
 		$this->showmessage(RC_Lang::get('mobile::mobile.edit_prize_pool_succss'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 	
@@ -369,22 +367,18 @@ class admin_mobile_activity extends ecjia_admin {
 	 * @return array
 	 */
 	private function get_activity_list() {
-		$db_activity = RC_Model::model('mobile/mobile_activity_model');
+		$db_activity = RC_DB::table('mobile_activity');
 		/* 过滤条件 */
 		$filter['keywords'] = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
 	
 		$where = array();
 		if (!empty($filter['keywords'])) {
-			$where['activity_name'] = array('like' => '%'.$filter['keywords'].'%');
+			$db_activity->where('activity_name', 'like', '%'.$filter['keywords'].'%');
 		}
-		$filter['record_count'] = $db_activity->activity_count($where);
-
+		$filter['record_count'] = $db_activity->count();
 		$page = new ecjia_page($filter['record_count'], 15, 5);
+		$res = $db_activity->orderBy('add_time', 'desc')->take(15)->skip($page->start_id-1)->get();
 		
-//		$option = array('where' => $where, 'order' => 'add_time desc', 'limit' => $page->limit());
-		$option = array('where' => $where, 'add_time' => 'desc', 'take' => 15, 'skip' => $page->start_id-1);
-		$res = $db_activity->activity_list($option);
-
 		if (!empty($res)) {
 			foreach ($res as $key => $val) {
 				$res[$key]['start_time']  	= RC_Time::local_date('Y-m-d H:i:s', $res[$key]['start_time']);
@@ -399,19 +393,14 @@ class admin_mobile_activity extends ecjia_admin {
 	 * @return array
 	 */
 	private function get_activity_record_list() {
-		$db_activity_log = RC_Model::model('mobile/mobile_activity_log_model');
+		$db_activity_log = RC_DB::table('mobile_activity_log');
 		
 		$activity_id = empty($_GET['id']) ? '0' : $_GET['id'] ;
-		$where = array();
-		$where['activity_id'] = $activity_id;
-//		$count = $db_activity_log->activity_log_count($where);
-		$count = $db_activity_log->activity_log_count($activity_id);
-
-		//实例化分页
+		$db_activity_log->where('activity_id', $activity_id);
+		
+		$count = $db_activity_log->count();
 		$page = new ecjia_page($count, 15, 5);
-//		$option = array('where' => $where, 'order' => 'add_time desc', 'limit' => $page->limit());
-//		$res = $db_activity_log->activity_record_list($option);
-		$res = RC_DB::table('mobile_activity_log')->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id-1)->get();
+		$res = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id-1)->get();
 
 		if (!empty($res)) {
 			foreach ($res as $key => $val) {
@@ -419,7 +408,7 @@ class admin_mobile_activity extends ecjia_admin {
 				$res[$key]['add_time']    	= RC_Time::local_date('Y-m-d H:i:s', $res[$key]['add_time']);
 			}
 		}
-		return array('item' => $res, 'page' => $page->show(), 'desc' => $page->page_desc(),'current_page'=>$page->current_page);
+		return array('item' => $res, 'page' => $page->show(), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);
 	}
 }
 
