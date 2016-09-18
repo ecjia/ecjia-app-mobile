@@ -111,7 +111,7 @@ class admin_device extends ecjia_admin {
 	 * 删除移动设备
 	 */
 	public function remove()  {
-		$this->admin_priv('device_delete',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('device_delete', ecjia::MSGTYPE_JSON);
 		
 		$id = intval($_GET['id']);
 		$deviceval = intval($_GET['deviceval']);
@@ -125,7 +125,7 @@ class admin_device extends ecjia_admin {
             $info['device_client'] = 'iPad';
         }
 		
-		$success = $this->db_device->device_delete(array('id' => $id));
+		$success = $this->db_device->device_delete($id);
 		ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.device_type_is'), $info['device_client']).'，'.sprintf(RC_Lang::get('mobile::mobile.device_name_is'), $info['device_name']), 'remove', 'mobile_device');
 		
 		if ($success){
@@ -141,6 +141,7 @@ class admin_device extends ecjia_admin {
 	public function batch(){
 		$action    = trim ($_GET['sel_action']);
 		$deviceval = intval($_GET['deviceval']);
+		
 		if ($action == 'del') {
 			$this->admin_priv('device_delete', ecjia::MSGTYPE_JSON);
 		} else {
@@ -149,6 +150,7 @@ class admin_device extends ecjia_admin {
 		$ids = $_POST['id'];
 		$ids = explode(',', $ids);
 		$info = $this->db_device->device_select($ids, true);
+		
 		foreach ($info as $k => $rows) {
 		    if ($rows['device_client'] == 'android') {
                 $info[$k]['device_client'] = 'Android';
@@ -164,7 +166,6 @@ class admin_device extends ecjia_admin {
 				$data = array(
 					'in_status' => 1
 				);
-				$ids = explode(',', $_POST['id']);
 				$this->db_device->device_update($ids, $data, true);
 				
 				foreach ($info as $v) {
@@ -176,7 +177,7 @@ class admin_device extends ecjia_admin {
 				$data = array(
 					'in_status' => 0
 				);
-				$this->db_device->device_update($_POST['id'], $data, true);
+				$this->db_device->device_update($ids, $data, true);
 				
 				foreach ($info as $v) {
 					ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.device_type_is'), $v['device_client']).'，'.sprintf(RC_Lang::get('mobile::mobile.device_name_is'), $v['device_name']), 'batch_restore', 'mobile_device');
@@ -184,7 +185,6 @@ class admin_device extends ecjia_admin {
 				break;
 					
 			case 'del':
-				$ids = explode(',', $_POST['id']);
 				$this->db_device->device_delete($ids, true);
 				foreach ($info as $v) {
 					ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.device_type_is'), $v['device_client']).'，'.sprintf(RC_Lang::get('mobile::mobile.device_name_is'), $v['device_name']), 'batch_remove', 'mobile_device');
@@ -228,7 +228,7 @@ class admin_device extends ecjia_admin {
 	 * 编辑设备别名
 	 */
 	public function edit_device_alias() {
-		$this->admin_priv('device_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('device_update',ecjia::MSGTYPE_JSON);
 	
 		$id = intval($_POST['pk']);
 		$device_alias = !empty($_POST['value']) ? trim($_POST['value']) : '';
@@ -261,63 +261,26 @@ class admin_device extends ecjia_admin {
 	 */
 	private function get_device_list() {
 		$db_device = RC_Model::model('mobile/mobile_device_model');
+		$device_db = RC_DB::table('mobile_device');
 		
 		$where = $filter = array();
-		$filter['keywords'] = empty($_GET['keywords']) ? '' : trim($_GET['keywords']);
-		$filter['deviceval']= empty($_GET['deviceval']) ? 0 : intval($_GET['deviceval']);
-		$db_mobile_device = RC_DB::table('mobile_device');
-		
+		$filter['keywords'] 	= empty($_GET['keywords']) 	? '' 	: trim($_GET['keywords']);
+		$filter['deviceval']	= empty($_GET['deviceval']) ? 0 	: intval($_GET['deviceval']);
+	
 		if ($filter['keywords']) {
-// 			$where[]= "device_name LIKE '%" . mysql_like_quote($filter['keywords']) . "%'";
-			$db_mobile_device->where('device_name', 'like', '%'. mysql_like_quote($filter['keywords']) .'%');
-		}
-	
-		if ($filter['deviceval'] == 0) {
-// 			$where['in_status'] = 0;
-			$db_mobile_device->where('in_status', 0);
+			$where[]= "device_name LIKE '%" . mysql_like_quote($filter['keywords']) . "%'";
+			$device_db->where('device_name', 'like', '%' . mysql_like_quote($filter['keywords']) . '%');
 		}
 		
-		$android = 'android';
-		if ($filter['deviceval'] == 1) {
-// 			$where[] ="device_client = '" .$android. "' and device_code != 8001 and in_status = 0";
-			$db_mobile_device
-			->where('device_client', $android)
-			->where('device_code', '!=', 8001)
-			->where('in_status', 0);
-		}
-	
-		$iphone = 'iphone';
-		if ($filter['deviceval'] == 2) {
-// 			$where[] = "device_client = '" .$iphone. "' and in_status = 0";
-			$db_mobile_device
-			->where('device_client', $phone)
-			->where('in_status', 0);
-		}
-	
-		$ipad = 'ipad';
-		if ($filter['deviceval'] == 3) {
-// 			$where[] = "device_client = '" .$ipad. "' and in_status = 0";
-			$db_mobile_device
-			->where('device_client', $ipad)
-			->where('in_status', 0);
-		}
-	
-		$cashier = 'android';
-		if ($filter['deviceval'] == 4) {
-// 			$where[] = "device_client = '" .$cashier. "' and device_code = 8001 and in_status = 0";
-			$db_mobile_device
-			->where('device_client', $cashier)
-			->where('device_code', 8001)
-			->where('in_status', 0);
-		}
-	
-		if ($filter['deviceval'] == 5) {
-// 			$where['in_status'] = 1;
-			$db_mobile_device->where('in_status', 1);
-		}
-	
-		$field = "SUM(IF(in_status=0,1,0)) AS count, SUM(IF(device_client='android' and device_code !='8001' and in_status = 0,1,0)) AS android, SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone, SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad, SUM(IF(device_client='android' and device_code='8001' and in_status = 0,1,0)) AS cashier, SUM(IF(in_status = 1,1,0)) AS trashed";
-		$msg_count = $db_device->device_find(array('neq' => 0), $field);
+		$msg_count = $device_db
+			->selectRaw("SUM(IF(in_status=0,1,0)) AS count,
+				SUM(IF(device_client='android' and device_code !='8001' and in_status = 0,1,0)) AS android,
+				SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone,
+				SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad,
+				SUM(IF(device_client='android' and device_code='8001' and in_status = 0,1,0)) AS cashier,
+				SUM(IF(in_status = 1,1,0)) AS trashed")
+			->first();
+		
 		$msg_count = array(
 			'count'		=> empty($msg_count['count']) 	? 0 : $msg_count['count'],
 			'android'	=> empty($msg_count['android']) ? 0 : $msg_count['android'],
@@ -327,12 +290,50 @@ class admin_device extends ecjia_admin {
 			'trashed'	=> empty($msg_count['trashed']) ? 0 : $msg_count['trashed']
 		);
 	
-		$count = $db_device->device_count($where);
-		_dump($count, 1);
+		$android = 'android';
+		if ($filter['deviceval'] == 1) {
+			$where[] ="device_client = '" .$android. "' and device_code != 8001 and in_status = 0";
+			$device_db->where('device_client', $android)->where('device_code', '!=', 8001)->where('in_status', 0);
+		}
+	
+		$iphone = 'iphone';
+		if ($filter['deviceval'] == 2) {
+			$where[] = "device_client = '" .$iphone. "' and in_status = 0";
+			$device_db->where('device_client', $iphone)->where('in_status', 0);
+		}
+	
+		$ipad = 'ipad';
+		if ($filter['deviceval'] == 3) {
+			$where[] = "device_client = '" .$ipad. "' and in_status = 0";
+			$device_db->where('device_client', $ipad)->where('in_status', 0);
+		}
+	
+		$cashier = 'android';
+		if ($filter['deviceval'] == 4) {
+			$where[] = "device_client = '" .$cashier. "' and device_code = 8001 and in_status = 0";
+			$device_db->where('device_client', $cashier)->where('device_code', 8001)->where('in_status', 0);
+		}
+		
+		if ($filter['deviceval'] == 0) {
+			$where['in_status'] = 0;
+			$device_db->where('in_status', 0);
+		}
+		
+		if ($filter['deviceval'] == 5) {
+			$where['in_status'] = 1;
+			$device_db->where('in_status', 1);
+		}
+// 		$field = "SUM(IF(in_status=0,1,0)) AS count, SUM(IF(device_client='android' and device_code !='8001' and in_status = 0,1,0)) AS android, SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone, SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad, SUM(IF(device_client='android' and device_code='8001' and in_status = 0,1,0)) AS cashier, SUM(IF(in_status = 1,1,0)) AS trashed";
+// 		$msg_count = $db_device->field($field)->find();
+		
+// 		$count = $db_device->device_count($where);
+		$count = $device_db->count('id');
 		$page = new ecjia_page($count, 10, 5);
 	
-		$option = array('where' => $where, 'order' => 'id desc', 'limit' => $page->limit());
-		$data = $db_device->device_list($option);
+// 		$option = array('where' => $where, 'order' => 'id desc', 'limit' => $page->limit());
+// 		$data = $db_device->device_list($option);
+		$data = $device_db->select('*')->orderby('id', 'desc')->take(10)->skip($page->start_id-1)->get();
+		
 		$arr = array();
 		if (!empty($data)) {
 			foreach ($data as $rows) {

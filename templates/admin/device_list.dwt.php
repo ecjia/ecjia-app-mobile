@@ -61,10 +61,10 @@
 				<thead>
 					<tr>
 						<th class="table_checkbox"><input type="checkbox" name="select_rows" data-toggle="selectall" data-children=".checkbox"/></th>
-						<th class="w80">{lang key='mobile::mobile.device_type'}</th>
-						<th class="w300">{lang key='mobile::mobile.device_name'}</th>
-						<th>{lang key='mobile::mobile.device_os'}</th>
-						<th>{lang key='mobile::mobile.location'}</th>
+						<th class="w130">{lang key='mobile::mobile.device_type'}</th>
+						<th>{lang key='mobile::mobile.device_name'}</th>
+						<th class="w150">{lang key='mobile::mobile.device_os'}</th>
+						<th class="w150">{lang key='mobile::mobile.location'}</th>
 						<th class="w150">{lang key='mobile::mobile.add_time'}</th>
 					</tr>
 				</thead>
