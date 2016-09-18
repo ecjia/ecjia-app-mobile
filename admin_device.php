@@ -260,7 +260,7 @@ class admin_device extends ecjia_admin {
 	 * @return  array
 	 */
 	private function get_device_list() {
-		$db_device = RC_Model::model('mobile/mobile_device_model');
+// 		$db_device = RC_Model::model('mobile/mobile_device_model');
 		$device_db = RC_DB::table('mobile_device');
 		
 		$where = $filter = array();
@@ -268,7 +268,7 @@ class admin_device extends ecjia_admin {
 		$filter['deviceval']	= empty($_GET['deviceval']) ? 0 	: intval($_GET['deviceval']);
 	
 		if ($filter['keywords']) {
-			$where[]= "device_name LIKE '%" . mysql_like_quote($filter['keywords']) . "%'";
+// 			$where[]= "device_name LIKE '%" . mysql_like_quote($filter['keywords']) . "%'";
 			$device_db->where('device_name', 'like', '%' . mysql_like_quote($filter['keywords']) . '%');
 		}
 		
@@ -292,35 +292,35 @@ class admin_device extends ecjia_admin {
 	
 		$android = 'android';
 		if ($filter['deviceval'] == 1) {
-			$where[] ="device_client = '" .$android. "' and device_code != 8001 and in_status = 0";
+// 			$where[] ="device_client = '" .$android. "' and device_code != 8001 and in_status = 0";
 			$device_db->where('device_client', $android)->where('device_code', '!=', 8001)->where('in_status', 0);
 		}
 	
 		$iphone = 'iphone';
 		if ($filter['deviceval'] == 2) {
-			$where[] = "device_client = '" .$iphone. "' and in_status = 0";
+// 			$where[] = "device_client = '" .$iphone. "' and in_status = 0";
 			$device_db->where('device_client', $iphone)->where('in_status', 0);
 		}
 	
 		$ipad = 'ipad';
 		if ($filter['deviceval'] == 3) {
-			$where[] = "device_client = '" .$ipad. "' and in_status = 0";
+// 			$where[] = "device_client = '" .$ipad. "' and in_status = 0";
 			$device_db->where('device_client', $ipad)->where('in_status', 0);
 		}
 	
 		$cashier = 'android';
 		if ($filter['deviceval'] == 4) {
-			$where[] = "device_client = '" .$cashier. "' and device_code = 8001 and in_status = 0";
+// 			$where[] = "device_client = '" .$cashier. "' and device_code = 8001 and in_status = 0";
 			$device_db->where('device_client', $cashier)->where('device_code', 8001)->where('in_status', 0);
 		}
 		
 		if ($filter['deviceval'] == 0) {
-			$where['in_status'] = 0;
+// 			$where['in_status'] = 0;
 			$device_db->where('in_status', 0);
 		}
 		
 		if ($filter['deviceval'] == 5) {
-			$where['in_status'] = 1;
+// 			$where['in_status'] = 1;
 			$device_db->where('in_status', 1);
 		}
 // 		$field = "SUM(IF(in_status=0,1,0)) AS count, SUM(IF(device_client='android' and device_code !='8001' and in_status = 0,1,0)) AS android, SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone, SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad, SUM(IF(device_client='android' and device_code='8001' and in_status = 0,1,0)) AS cashier, SUM(IF(in_status = 1,1,0)) AS trashed";
