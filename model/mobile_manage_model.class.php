@@ -15,23 +15,19 @@ class mobile_manage_model extends Component_Model_Model {
 		if (!isset($parameter['app_id'])) {
 			$id = $db_mobile_manage->insertGetid($parameter);
 		} else {
-			$where = array('app_id' => $parameter['app_id']);
-			$db_mobile_manage->where($where)->update($parameter);
+			$db_mobile_manage->where(app_id, $parameter['app_id'])->update($parameter);
+			
 			$id = $parameter['app_id'];
 		}
 		return $id;
 	}
 	
 	public function mobile_manage_find($id) {
-		RC_DB::table('mobile_manage')->where('app_id', $id)->select();
+		return RC_DB::table('mobile_manage')->where('app_id', $id)->first();
 	}
 	
 	public function mobile_manage_count() {
 		return RC_DB::table('mobile_manage')->count();
-	}
-	
-	public function mobile_manage_list($option) {
-		return RC_DB::table('mobile_manage')->take(10)->orderBy('sort', 'desc')->get();
 	}
 }
 

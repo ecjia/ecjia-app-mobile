@@ -42,8 +42,8 @@ class mobile_activity_model extends Component_Model_Model {
 		return RC_DB::table('mobile_activity')->where('activity_id', $id)->first();
 	}
 	
-	public function mobile_activity_field($where, $field) {
-		return RC_DB::table('mobile_activity')->where('activity_id', $where)->pluck($field);
+	public function mobile_activity_field($id, $field) {
+		return RC_DB::table('mobile_activity')->where('activity_id', $id)->pluck($field);
 	}
 	
 	public function mobile_activity_remove($id) {

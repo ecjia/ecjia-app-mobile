@@ -132,6 +132,7 @@ class admin_mobile_manage extends ecjia_admin {
 	 */
 	public function update() {
 		$this->admin_priv('mobile_manage_update', ecjia::MSGTYPE_JSON);
+		
 		$name 		= trim($_POST['name']);
 		$client 	= trim($_POST['client']);
 		$bundleid 	= trim($_POST['bundleid']);
@@ -199,22 +200,21 @@ class admin_mobile_manage extends ecjia_admin {
 	 * @return array
 	 */
 	private function get_mobile_manage_list() {
-		$db_mobile_manage = RC_Model::model('mobile/mobile_manage_model');
+		$db_mobile_manage = RC_DB::table('mobile_manage');
 		
-		$count = $db_mobile_manage->mobile_manage_count();
+		$count = $db_mobile_manage->count();
 		$page = new ecjia_page ($count, 10, 5);
 		
-		$option = array('limit' => $page->limit(), 'order' => array('sort' => 'desc'));
-		$mobile_manage = $db_mobile_manage->mobile_manage_list($option);
+		$mobile_manage_list = $db_mobile_manage->orderby('sort', 'desc')->take(10)->skip($page->start_id-1)->get();
 		
 		$mobile_client = array('iphone' => 'iPhone', 'ipad' => 'iPad', 'android' => 'Android');
-		if (!empty($mobile_manage)) {
-			foreach ($mobile_manage as $key => $val) {
-				$mobile_manage[$key]['device_client'] 	= $mobile_client[$val['device_client']];
-				$mobile_manage[$key]['add_time'] 		= RC_Time::local_date(ecjia::config('date_format'), $val['add_time']);
+		if (!empty($mobile_manage_list)) {
+			foreach ($mobile_manage_list as $key => $val) {
+				$mobile_manage_list[$key]['device_client'] 	= $mobile_client[$val['device_client']];
+				$mobile_manage_list[$key]['add_time'] 		= RC_Time::local_date(ecjia::config('date_format'), $val['add_time']);
 			}
 		}
-		return array('item' => $mobile_manage, 'page' => $page->show(5), 'desc' => $page->page_desc());
+		return array('item' => $mobile_manage_list, 'page' => $page->show(5), 'desc' => $page->page_desc());
 	}
 }
 
