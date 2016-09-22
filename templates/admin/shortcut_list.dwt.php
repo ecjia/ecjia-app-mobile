@@ -23,7 +23,7 @@
 				<tr>
 					<th class="w180">{lang key='mobile::mobile.shortcut_icon'}</th>
 					<th>{lang key='mobile::mobile.shortcut_link'}</th>
-					<th>{lang key='mobile::mobile.is_show'}</th>
+					<th class="w110">{lang key='mobile::mobile.is_show'}</th>
 					<th class="w100">{lang key='mobile::mobile.sort_order'}</th>
 				</tr>
 			</thead>

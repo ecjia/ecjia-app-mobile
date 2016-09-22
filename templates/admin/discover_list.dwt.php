@@ -24,7 +24,7 @@
 				<tr>
 					<th class="w180">{lang key='mobile::mobile.discover_icon'}</th>
 					<th>{lang key='mobile::mobile.discover_url'}</th>
-					<th>{lang key='mobile::mobile.is_show'}</th>
+					<th class="w110">{lang key='mobile::mobile.is_show'}</th>
 					<th class="w100">{lang key='mobile::mobile.sort_order'}</th>
 				</tr>
 			</thead>
