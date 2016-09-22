@@ -19,7 +19,7 @@ class data_module extends api_front implements api_interface {
 		$request = null;
 		if (is_array($location) && isset($location['latitude']) && isset($location['longitude'])) {
 			$request = array('location' => $location);
-			$geohash = RC_Loader::load_app_class('geohash', 'shipping');
+			$geohash = RC_Loader::load_app_class('geohash', 'store');
 			$geohash_code = $geohash->encode($location['latitude'] , $location['longitude']);
 			$geohash_code = substr($geohash_code, 0, 5);
 			$request['geohash_code'] = $geohash_code;
