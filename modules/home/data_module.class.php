@@ -391,7 +391,7 @@ function seller_recommend_data($response, $request) {
 			$where['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
-		$field ='ssi.id as seller_id, ssi.shop_name as seller_name, ssi.*, sc.cat_name, count(cs.seller_id) as follower, SUM(IF(cs.user_id = '.$user_id.',1,0)) as is_follower';
+		$field ='ssi.id as store_id, ssi.merchants_name as merchants_name, ssi.*, sc.cat_name, count(cs.store_id) as follower, SUM(IF(cs.user_id = '.$user_id.',1,0)) as is_follower';
 // 		$result = $msi_dbview->join(array('category', 'seller_shopinfo', 'collect_store'))
 		$result = $ssi_dbview->join(array('seller_category', 'collect_store'))
 								->field($field)
@@ -411,7 +411,7 @@ function seller_recommend_data($response, $request) {
 			
 			foreach ($result as $key => $val) {
 // 				$v_where['user_id'] = $val['user_id'];
-				$v_where['seller_id'] = $val['seller_id'];
+				$v_where['store_id'] = $val['store_id'];
 				if(ecjia::config('review_goods') == 1){
 					$v_where['review_status'] = array('gt' => 2);
 				}
@@ -480,8 +480,8 @@ function seller_recommend_data($response, $request) {
 		
 		
 				$list[] = array(
-						'id'				=> $val['seller_id'],
-						'seller_name'		=> $val['seller_name'],
+						'id'				=> $val['store_id'],
+						'seller_name'		=> $val['merchants_name'],
 						'seller_category'	=> $val['cat_name'],
 						'seller_logo'		=> empty($val['shop_logo']) ?  '' : RC_Upload::upload_url().'/'.$val['shop_logo'],
 						'seller_goods'		=> $goods_list,
