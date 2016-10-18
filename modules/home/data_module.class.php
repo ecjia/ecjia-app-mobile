@@ -235,7 +235,7 @@ function group_goods_data($response, $request) {
 		$groupwhere['g.is_on_sale'] = 1;
     	$groupwhere['g.is_alone_sale'] = 1;
 		/* 判断是否是多商户*/
-		$is_seller = ecjia_app::validate_application('seller');
+		$is_seller = ecjia_app::validate_application('store');
 		if (!is_ecjia_error($is_seller)) {
 			if (ecjia::config('review_goods')) {
 				$groupwhere['g.review_status'] = array('gt' => 2);
@@ -254,7 +254,7 @@ function group_goods_data($response, $request) {
 		$db_goods_activity = RC_Model::model('goods/goods_activity_viewmodel');
 		
 		$res = $db_goods_activity->field('ga.act_id, ga.goods_id, ga.goods_name, ga.start_time, ga.end_time, ext_info, shop_price, market_price, goods_brief, goods_thumb, goods_img, original_img')
-								 ->join(array('goods', 'seller_shopinfo'))
+								 ->join(array('goods', 'store_franchisee'))
 								 ->where($groupwhere)
 								 ->limit(4)
 								 ->order(array('ga.act_id' => 'desc'))
@@ -326,7 +326,7 @@ function mobilebuy_goods_data($response, $request) {
 		
 		$db_goods_activity = RC_Model::model('goods/goods_activity_viewmodel');
 		$res = $db_goods_activity->field('ga.act_id, ga.goods_id, ga.goods_name, ga.start_time, ga.end_time, ext_info, shop_price, market_price, goods_brief, goods_thumb, goods_img, original_img')
-								 ->join(array('goods', 'seller_shopinfo'))
+								 ->join(array('goods', 'store_franchisee'))
 								 ->where($mobilebuywhere)
 								 ->order(array('act_id' => 'DESC'))
 								 ->limit(4)->select();
@@ -373,7 +373,8 @@ function seller_recommend_data($response, $request) {
 	
 	if (!is_ecjia_error($result) && $is_active) {
 // 		$msi_dbview = RC_Loader::load_app_model('merchants_shop_information_viewmodel', 'seller');
-		$ssi_dbview = RC_Model::model('seller/seller_shopinfo_viewmodel');
+		//$ssi_dbview = RC_Model::model('seller/seller_shopinfo_viewmodel');
+		$ssi_dbview = RC_Model::model('store/store_franchisee_viewmodel');
 		
 // 		$where['ssi.status'] = 1;
 // 		$where['msi.merchants_audit'] = 1;
@@ -391,9 +392,9 @@ function seller_recommend_data($response, $request) {
 			$where['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
-		$field ='ssi.id as store_id, ssi.merchants_name as merchants_name, ssi.*, sc.cat_name, count(cs.store_id) as follower, SUM(IF(cs.user_id = '.$user_id.',1,0)) as is_follower';
+		$field ='ssi.store_id as store_id, ssi.*, sc.cat_name, count(cs.store_id) as follower';
 // 		$result = $msi_dbview->join(array('category', 'seller_shopinfo', 'collect_store'))
-		$result = $ssi_dbview->join(array('seller_category', 'collect_store'))
+		$result = $ssi_dbview->join(array('store_category', 'collect_store'))
 								->field($field)
 								->where($where)
 								->limit(6)
@@ -480,14 +481,17 @@ function seller_recommend_data($response, $request) {
 		
 		
 				$list[] = array(
-						'id'				=> $val['store_id'],
-						'seller_name'		=> $val['merchants_name'],
+						'id'				=> $val['store_id'],//后期要删除
+						'seller_name'		=> $val['merchants_name'],//后期要删除
 						'seller_category'	=> $val['cat_name'],
 						'seller_logo'		=> empty($val['shop_logo']) ?  '' : RC_Upload::upload_url().'/'.$val['shop_logo'],
 						'seller_goods'		=> $goods_list,
 						'follower'			=> $val['follower'],
 						'is_follower'		=> $val['is_follower'],
 						'goods_count'		=> $goods_count,
+						/*新增店铺返回字段*/
+						'store_id'			=> $val['store_id'],
+						'merchants_name'	=> $val['merchants_name'],
 				);
 		
 			}
