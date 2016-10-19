@@ -368,7 +368,7 @@ function mobilebuy_goods_data($response, $request) {
 }
 
 function seller_recommend_data($response, $request) {
-	$result = ecjia_app::validate_application('seller');
+	$result = ecjia_app::validate_application('store');
 	$is_active = ecjia_app::is_active('ecjia.seller');
 	
 	if (!is_ecjia_error($result) && $is_active) {
@@ -376,9 +376,9 @@ function seller_recommend_data($response, $request) {
 		//$ssi_dbview = RC_Model::model('seller/seller_shopinfo_viewmodel');
 		$ssi_dbview = RC_Model::model('store/store_franchisee_viewmodel');
 		
-// 		$where['ssi.status'] = 1;
+		$where['ssi.status'] = 1;
 // 		$where['msi.merchants_audit'] = 1;
-		$order_by = array('follower' => 'DESC', 'ssi.id' => 'DESC');
+		$order_by = array('follower' => 'DESC', /* 'ssi.store_id' => 'DESC' */);
 		
 		$user_id = $_SESSION['user_id'];
 		$user_id = empty($user_id) ? 0 : $user_id;
@@ -392,17 +392,17 @@ function seller_recommend_data($response, $request) {
 			$where['geohash'] = array('like' => "%".$request['geohash_code']."%");
 		}
 		
-		$field ='ssi.store_id as store_id, ssi.*, sc.cat_name, count(cs.store_id) as follower';
+		$field =' ssi.*, sc.cat_name, count(cs.store_id) as follower';
 // 		$result = $msi_dbview->join(array('category', 'seller_shopinfo', 'collect_store'))
 		$result = $ssi_dbview->join(array('store_category', 'collect_store'))
 								->field($field)
 								->where($where)
 								->limit(6)
-								->group('ssi.id')
+								->group('ssi.store_id')
 								->order($order_by)
 								->select();
 		$list = array();
-		
+
 		if (!empty ($result)) {
 			$goods_db = RC_Model::model('goods/goods_model');
 			RC_Loader::load_app_func('common', 'goods');
