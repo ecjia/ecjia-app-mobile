@@ -45,18 +45,11 @@ class data_module extends api_admin implements api_interface {
 		$fields = "COUNT(*) AS order_count, SUM(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount";
 		
 		$where = array();
-		if ($_SESSION['ru_id'] > 0) {
+		if ($_SESSION['store_id'] > 0) {
 			/*入驻商*/
-			$where['ru_id'] = $_SESSION['ru_id'];
-			$where[] = 'oii.order_id is null';
-		} else {
-			$result = ecjia_app::validate_application('seller');
-			if (!is_ecjia_error($result)) {
-				/*自营*/
-				$where['oi.main_order_id'] = 0;
-			}
-		}
-		if ($_SESSION['ru_id'] > 0) {
+			$where['store_id'] = $_SESSION['store_id'];
+		} 
+		if ($_SESSION['store_id'] > 0) {
 			$order_count = $db_orderinfo_view->field('oi.order_id')->where(array_merge(array('oi.add_time' => array('gt' => $today_time)), $where))->group('oi.order_id')->select();
 			
 			$order_data_today['order_count'] = count($order_count);
@@ -109,7 +102,7 @@ class data_module extends api_admin implements api_interface {
 		
 		$unpaid_where = $order_query->order_await_pay('oi.');
 		$await_ship_where = $order_query->order_await_ship('oi.');
-		if ($_SESSION['ru_id'] > 0) {
+		if ($_SESSION['store_id'] > 0) {
 			$await_ship_orders_result = $db_orderinfo_view->field('oi.order_id')->where(array_merge($await_ship_where, $where))->group('oi.order_id')->select('oi.order_id');;
 			$unpaid_orders_result = $db_orderinfo_view->field('oi.order_id')->where(array_merge($unpaid_where, $where))->group('oi.order_id')->select('oi.order_id');
 			$await_ship_orders = count($await_ship_orders_result);
