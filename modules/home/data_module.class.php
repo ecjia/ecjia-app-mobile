@@ -475,10 +475,10 @@ function seller_recommend_data($response, $request) {
 						);
 					}
 				}
-				if(substr($val['shop_logo'], 0, 1) == '.') {
-					$val['shop_logo'] = str_replace('../', '/', $val['shop_logo']);
-				}
-		
+				//if(substr($val['shop_logo'], 0, 1) == '.') {
+				//	$val['shop_logo'] = str_replace('../', '/', $val['shop_logo']);
+				//}
+				$val['shop_logo'] = RC_DB::table('merchants_config')->where(RC_DB::raw('store_id'), $val['store_id'])->where(RC_DB::raw('code'), 'shop_logo')->pluck('value');
 		
 				$list[] = array(
 						'id'				=> $val['store_id'],//后期要删除
