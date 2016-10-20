@@ -9,13 +9,14 @@ class data_module extends api_admin implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     		
 		$this->authadminSession();
-		$ecjia = RC_Loader::load_app_class('api_admin', 'api');
+		if ($_SESSION['admin_id'] <= 0 && $_SESSION['staff_id'] <= 0) {
+		    return new ecjia_error(100, 'Invalid session');
+		}
 		
 		$stats_db = RC_Model::model('stats/stats_model');
-// 		$order_db = RC_Model::model('orders/order_info_model');
 		$db_orderinfo_view = RC_Model::model('orders/order_info_viewmodel');
 		
-		$db_orderinfo_view->view = array(
+		/* $db_orderinfo_view->view = array(
 				'order_info' => array(
 						'type'	=> Component_Model_View::TYPE_LEFT_JOIN,
 						'alias'	=> 'oii',
@@ -26,7 +27,7 @@ class data_module extends api_admin implements api_interface {
 						'alias'	=> 'og',
 						'on'	=> 'oi.order_id = og.order_id'
 				)
-		);
+		); */
 		
 		
 		$today = RC_Time::local_getdate();
@@ -47,13 +48,13 @@ class data_module extends api_admin implements api_interface {
 		$where = array();
 		if ($_SESSION['store_id'] > 0) {
 			/*入驻商*/
-			$where['store_id'] = $_SESSION['store_id'];
+			$where['oi.store_id'] = $_SESSION['store_id'];
 		} 
 		if ($_SESSION['store_id'] > 0) {
 			$order_count = $db_orderinfo_view->field('oi.order_id')->where(array_merge(array('oi.add_time' => array('gt' => $today_time)), $where))->group('oi.order_id')->select();
 			
 			$order_data_today['order_count'] = count($order_count);
-			$order_amount_result = $db_orderinfo_view->field('(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('gt' => $today_time)), $where))->group('og.order_id')->select();
+			$order_amount_result = $db_orderinfo_view->field('(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('gt' => $today_time)), $where))->group('g.order_id')->select();
 			$order_amount = 0;
 			
 			if (!empty($order_amount_result)) {
@@ -66,7 +67,7 @@ class data_module extends api_admin implements api_interface {
 			
 			$yersterday_order_count = $db_orderinfo_view->field('oi.order_id')->where(array_merge(array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->group('oi.order_id')->select();
 			$order_data_yesterday['order_count'] = count($yersterday_order_count);
-			$yersterday_order_amount_result = $db_orderinfo_view->field('(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->group('og.order_id')->select();
+			$yersterday_order_amount_result = $db_orderinfo_view->field('(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->group('g.order_id')->select();
 			
 			$yersterday_order_amount = 0;
 				
