@@ -369,9 +369,7 @@ function mobilebuy_goods_data($response, $request) {
 
 function seller_recommend_data($response, $request) {
 	$result = ecjia_app::validate_application('store');
-	$is_active = ecjia_app::is_active('ecjia.seller');
-	
-	if (!is_ecjia_error($result) && $is_active) {
+	if (!is_ecjia_error($result)) {
 // 		$msi_dbview = RC_Loader::load_app_model('merchants_shop_information_viewmodel', 'seller');
 		//$ssi_dbview = RC_Model::model('seller/seller_shopinfo_viewmodel');
 		$ssi_dbview = RC_Model::model('store/store_franchisee_viewmodel');
@@ -484,7 +482,7 @@ function seller_recommend_data($response, $request) {
 						'id'				=> $val['store_id'],//后期要删除
 						'seller_name'		=> $val['merchants_name'],//后期要删除
 						'seller_category'	=> $val['cat_name'],
-						'seller_logo'		=> empty($val['shop_logo']) ?  '' : RC_Upload::upload_url().'/'.$val['shop_logo'],
+						'seller_logo'		=> empty($val['shop_logo']) ?  '' : RC_Upload::upload_url($val['shop_logo']),
 						'seller_goods'		=> $goods_list,
 						'follower'			=> $val['follower'],
 						'is_follower'		=> $val['is_follower'],
@@ -500,7 +498,7 @@ function seller_recommend_data($response, $request) {
 		$response['seller_recommend'] = $list;
 		return $response;
 	} else {
-		return $response;
+		return $response['seller_recommend'] = array();
 	}
 }
 
