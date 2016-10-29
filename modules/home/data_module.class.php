@@ -191,7 +191,7 @@ function mobile_home_adsense_group($response, $request) {
 				} else {
 					continue;
 				}
-				$mobile_home_adsense_group[$i]['title'] = $adsense_info['position_name'];
+				$mobile_home_adsense_group[$i]['title'] = $adsense_info['position_desc'];
 				$adsense = array(
 						'position_id'	=> $val,
 						'start_time'	=> array('elt' => RC_Time::gmtime()),
