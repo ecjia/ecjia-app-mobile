@@ -45,7 +45,7 @@ class admin_config extends ecjia_admin {
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
 		
-		$ad_position_list = RC_Api::api('adsense', 'adsense_position_list');
+		$ad_position_list = RC_Api::api('adsense', 'adsense_position_list', array('page_size' => 1000));
 		
 		$mobile_home_adsense_group = $adsense_group = array();
 		if (ecjia::config('mobile_home_adsense_group', ecjia::CONFIG_EXISTS)) {
