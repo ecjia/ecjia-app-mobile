@@ -23,10 +23,10 @@
 			<div class="tabbable tabs-left">
 				<ul class="nav nav-tabs tab_merchants_nav">
 					<li class="active"><a href="#tab1" data-toggle="tab">{lang key='mobile::mobile.basic_info'}</a></li>
-					<li><a href="#touch" data-toggle="tab">{lang key='mobile::mobile.touch_set'}</a></li>
+					{if 0}<li><a href="#touch" data-toggle="tab">{lang key='mobile::mobile.touch_set'}</a></li>{/if}
 					<li><a href="#load_app" data-toggle="tab">{lang key='mobile::mobile.download_url'}</a></li>
 					<li><a href="#adsense" data-toggle="tab">{lang key='mobile::mobile.adsense_set'}</a></li>
-					<li><a href="#tv_adsense" data-toggle="tab">TV广告位设置</a></li>
+					{if 0}<li><a href="#tv_adsense" data-toggle="tab">TV广告位设置</a></li>{/if}
 					<li><a href="#mobile_login" data-toggle="tab">{lang key='mobile::mobile.mobile_login'}</a></li>
 					<li><a href="#hot_city" data-toggle="tab">{lang key='mobile::mobile.hot_city_set'}</a></li>
 					<li><a href="#message_notice" data-toggle="tab">{lang key='mobile::mobile.message_notice'}</a></li>
@@ -96,7 +96,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="tab-pane" id="touch">
+					{if 0}<div class="tab-pane" id="touch">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.is_open_config'}</label>
 							<div class="controls">
@@ -127,7 +127,7 @@
 								<input type='text' name='shop_touch_url' value='{$shop_touch_url}'>
 							</div>
 						</div>
-					</div>
+					</div>{/if}
 					<div class="tab-pane" id="load_app">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.iphone_qr_code'}</label>
@@ -369,7 +369,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="tab-pane" id="tv_adsense">
+					{if 0}<div class="tab-pane" id="tv_adsense">
 						<div class="control-group formSep edit-page">
 							<label class="control-label">TV首页广告位</label>
 							<div class="controls">
@@ -413,7 +413,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div>{/if}
 					<div class="tab-pane" id="mobile_login">
 						<h3 class="heading">{lang key='mobile::mobile.mobile_login_set'}</h3>
 						<div class="control-group formSep">
