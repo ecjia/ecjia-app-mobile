@@ -177,6 +177,8 @@
 								<input type='text' name='shop_android_download' value='{$shop_android_download}'>
 							</div>
 						</div>
+						
+						<!-- 
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.ipad_qr_code'}</label>
 							<div class="controls">
@@ -199,6 +201,8 @@
 								<input type='text' name='shop_ipad_download' value='{$shop_ipad_download}'>
 							</div>
 						</div>
+						 -->
+						 
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.shopkeeper_urlscheme'}</label>
 							<div class="controls">
