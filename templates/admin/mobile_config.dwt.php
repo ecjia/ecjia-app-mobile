@@ -30,7 +30,7 @@
 					<li><a href="#mobile_login" data-toggle="tab">{lang key='mobile::mobile.mobile_login'}</a></li>
 					<li><a href="#hot_city" data-toggle="tab">{lang key='mobile::mobile.hot_city_set'}</a></li>
 					<li><a href="#message_notice" data-toggle="tab">{lang key='mobile::mobile.message_notice'}</a></li>
-					<li><a href="#integral_manage" data-toggle="tab">{lang key='mobile::mobile.integral_manage'}</a></li>
+<!-- 					<li><a href="#integral_manage" data-toggle="tab">{lang key='mobile::mobile.integral_manage'}</a></li> -->
 				</ul>
 				<div class="tab-content tab_merchants">
 					<div class="tab-pane active" id="tab1">
@@ -96,7 +96,9 @@
 							</div>
 						</div>
 					</div>
-					{if 0}<div class="tab-pane" id="touch">
+					
+					{if 0}
+					<div class="tab-pane" id="touch">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.is_open_config'}</label>
 							<div class="controls">
@@ -127,7 +129,9 @@
 								<input type='text' name='shop_touch_url' value='{$shop_touch_url}'>
 							</div>
 						</div>
-					</div>{/if}
+					</div>
+					{/if}
+					
 					<div class="tab-pane" id="load_app">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.iphone_qr_code'}</label>
@@ -208,6 +212,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<div class="tab-pane" id="adsense">
 						<div class="control-group formSep edit-page">
 							<label class="control-label">{lang key='mobile::mobile.mobile_launch_adsense'}</label>
@@ -252,14 +257,16 @@
 								</div>
 							</div>
 						</div>
+						
+						<!-- 
 						<div class="control-group formSep edit-page">
 							<label class="control-label">{lang key='mobile::mobile.launch_topic_set'}</label>
 							<div class="controls">
 								<select name='mobile_topic_adsense'>
 									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
-									<!-- {foreach from=$ad_position_list item=list} -->
+										{foreach from=$ad_position_list item=list}
 										<option value="{$list.position_id}" {if $list.position_id eq $mobile_topic_adsense}selected{/if}>{$list.position_name}</option>
-									<!-- {/foreach} -->
+										{/foreach}
 								</select>
 								<span class="help-block">{lang key='mobile::mobile.topic_adsense_help'}</span>
 							</div>
@@ -269,9 +276,9 @@
 							<div class="controls">
 								<select name='mobile_tv_big_adsense'>
 									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
-									<!-- {foreach from=$ad_position_list item=list} -->
+										{foreach from=$ad_position_list item=list}
 										<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_big_adsense}selected{/if}>{$list.position_name}</option>
-									<!-- {/foreach} -->
+										{/foreach}
 								</select>
 								<span class="help-block">{lang key='mobile::mobile.tv_ad_help'}</span>
 							</div>
@@ -281,14 +288,16 @@
 							<div class="controls">
 								<select name='mobile_tv_small_adsense'>
 									<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
-									<!-- {foreach from=$ad_position_list item=list} -->
+										{foreach from=$ad_position_list item=list}
 										<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_small_adsense}selected{/if}>{$list.position_name}</option>
-									<!-- {/foreach} -->
+										{/foreach}
 								</select>
 								<span class="help-block">{lang key='mobile::mobile.tv_ad_help'}</span>
 							</div>
 						</div>
+						 -->
 					</div>
+					
 					<div class="tab-pane" id="mobile_login">
 						<h3 class="heading">{lang key='mobile::mobile.mobile_login_set'}</h3>
 						<div class="control-group formSep">
@@ -329,6 +338,8 @@
 								</div>
 							</div>
 						</div>
+						
+						<!--
 						<h3 class="heading">{lang key='mobile::mobile.pad_login_set'}</h3>
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.pad_login_fgcolor'}</label>
@@ -368,8 +379,12 @@
 								</div>
 							</div>
 						</div>
+						-->
+						
 					</div>
-					{if 0}<div class="tab-pane" id="tv_adsense">
+					
+					{if 0}
+					<div class="tab-pane" id="tv_adsense">
 						<div class="control-group formSep edit-page">
 							<label class="control-label">TV首页广告位</label>
 							<div class="controls">
@@ -413,7 +428,9 @@
 								</div>
 							</div>
 						</div>
-					</div>{/if}
+					</div>
+					{/if}
+					
 					<div class="tab-pane" id="mobile_login">
 						<h3 class="heading">{lang key='mobile::mobile.mobile_login_set'}</h3>
 						<div class="control-group formSep">
@@ -568,6 +585,8 @@
 							</div>
 						</div>
 					</div>
+					
+					<!-- 
 					<div class="tab-pane" id="integral_manage">
 						<h3 class="heading">{lang key='mobile::mobile.sign_points'}</h3>
 						<div class="control-group formSep">
@@ -626,20 +645,22 @@
 								<strong>{lang key='mobile::mobile.comment_get_award'}</strong>
 							</label>
 						</div>
-						<!-- {foreach from=$user_rank_list item=item} -->
+						{foreach from=$user_rank_list item=item}
 						<div class="control-group">
 							<label class="control-label">{t}{$item.rank_name}：{/t}</label>
 							<div class="controls">
 								<input type='text' name="comment_award_rules[{$item.rank_id}]" value="{$item.comment_award}">
 							</div>
 						</div>
-						<!-- {/foreach} -->
+						{/foreach}
 						<div class="control-group">
 							<div class="controls">
 								<span class="help-block">{lang key='mobile::mobile.comment_award_rules'}</span>
 							</div>
 						</div>
 					</div>
+					-->
+					 
 					<div class="control-group">
 						<div class="controls">
 							<input type="submit" value="{lang key='system::system.button_submit'}" class="btn btn-gebo" />

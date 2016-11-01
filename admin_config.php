@@ -135,8 +135,8 @@ class admin_config extends ecjia_admin {
 	  	$this->assign('mobile_tv_home_adsense_group', $mobile_tv_home_adsense_group);
 	  	
 	  	$mobile_tv_adsense_group = unserialize(ecjia::config('mobile_tv_adsense_group'));
-	  	$this->assign('mobile_tv_big_adsense', $mobile_tv_adsense_group['big_group']);
-	  	$this->assign('mobile_tv_small_adsense', $mobile_tv_adsense_group['small_group']);
+// 	  	$this->assign('mobile_tv_big_adsense', $mobile_tv_adsense_group['big_group']);
+// 	  	$this->assign('mobile_tv_small_adsense', $mobile_tv_adsense_group['small_group']);
 	  	
 	  	
 	  	$this->assign('mobile_recommend_city', $regions);
@@ -146,8 +146,8 @@ class admin_config extends ecjia_admin {
 	  	$this->assign('ad_position_list', $ad_position_list['arr']);
 		$this->assign('form_action', RC_Uri::url('mobile/admin_config/update'));
 		
-		$this->assign('mobile_pad_login_fgcolor', ecjia::config('mobile_pad_login_fgcolor'));
-		$this->assign('mobile_pad_login_bgcolor', ecjia::config('mobile_pad_login_bgcolor'));
+// 		$this->assign('mobile_pad_login_fgcolor', ecjia::config('mobile_pad_login_fgcolor'));
+// 		$this->assign('mobile_pad_login_bgcolor', ecjia::config('mobile_pad_login_bgcolor'));
 		$this->assign('mobile_pad_login_bgimage', $mobile_pad_login_bgimage);
 		$this->assign('mobile_phone_login_fgcolor', ecjia::config('mobile_phone_login_fgcolor'));
 		$this->assign('mobile_phone_login_bgcolor', ecjia::config('mobile_phone_login_bgcolor'));
@@ -163,13 +163,13 @@ class admin_config extends ecjia_admin {
 		$this->assign('wap_config', ecjia::config('wap_config'));
 		
 		$this->assign('mobile_feedback_autoreply', ecjia::config('mobile_feedback_autoreply'));
-		$this->assign('mobile_topic_adsense', ecjia::config('mobile_topic_adsense'));
+// 		$this->assign('mobile_topic_adsense', ecjia::config('mobile_topic_adsense'));
 		$this->assign('mobile_shopkeeper_urlscheme', ecjia::config('mobile_shopkeeper_urlscheme'));
 		$this->assign('mobile_shop_urlscheme', ecjia::config('mobile_shop_urlscheme'));
 		
 		
 		/* 签到送积分*/
-		$this->assign('checkin_award_open', ecjia::config('checkin_award_open'));
+// 		$this->assign('checkin_award_open', ecjia::config('checkin_award_open'));
 		$this->assign('checkin_award', ecjia::config('checkin_award'));
 		$checkin_extra_award = ecjia::config('checkin_extra_award');
 		$checkin_extra_award = unserialize($checkin_extra_award);
@@ -220,17 +220,17 @@ class admin_config extends ecjia_admin {
 	public function update() {
 		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
 		
-		$mobile_tv_big_adsense 			= !empty($_POST['mobile_tv_big_adsense']) 		? $_POST['mobile_tv_big_adsense'] 				: '';
-		$mobile_tv_small_adsense 		= !empty($_POST['mobile_tv_small_adsense']) 	? $_POST['mobile_tv_small_adsense'] 			: '';
+// 		$mobile_tv_big_adsense 			= !empty($_POST['mobile_tv_big_adsense']) 		? $_POST['mobile_tv_big_adsense'] 				: '';
+// 		$mobile_tv_small_adsense 		= !empty($_POST['mobile_tv_small_adsense']) 	? $_POST['mobile_tv_small_adsense'] 			: '';
 		$mobile_launch_adsense 			= !empty($_POST['mobile_launch_adsense']) 		? $_POST['mobile_launch_adsense'] 				: '';
 		$regions 						= isset($_POST['regions']) 						? $_POST['regions'] 							: '';
-		$mobile_pad_login_fgcolor 		= !empty($_POST['mobile_pad_login_fgcolor']) 	? trim($_POST['mobile_pad_login_fgcolor']) 		: '';
-		$mobile_pad_login_bgcolor 		= !empty($_POST['mobile_pad_login_bgcolor']) 	? trim($_POST['mobile_pad_login_bgcolor']) 		: '';
+// 		$mobile_pad_login_fgcolor 		= !empty($_POST['mobile_pad_login_fgcolor']) 	? trim($_POST['mobile_pad_login_fgcolor']) 		: '';
+// 		$mobile_pad_login_bgcolor 		= !empty($_POST['mobile_pad_login_bgcolor']) 	? trim($_POST['mobile_pad_login_bgcolor']) 		: '';
 		$mobile_phone_login_fgcolor 	= !empty($_POST['mobile_phone_login_fgcolor']) 	? trim($_POST['mobile_phone_login_fgcolor']) 	: '';
 		$mobile_phone_login_bgcolor 	= !empty($_POST['mobile_phone_login_bgcolor']) 	? trim($_POST['mobile_phone_login_bgcolor']) 	: '';
 		$bonus_readme 					= !empty($_POST['bonus_readme']) 				? $_POST['bonus_readme'] 						: '';
 		$mobile_feedback_autoreply 		= !empty($_POST['mobile_feedback_autoreply']) 	? trim($_POST['mobile_feedback_autoreply']) 	: '';
-		$mobile_topic_adsense 			= !empty($_POST['mobile_topic_adsense']) 		? $_POST['mobile_topic_adsense'] 				: '';
+// 		$mobile_topic_adsense 			= !empty($_POST['mobile_topic_adsense']) 		? $_POST['mobile_topic_adsense'] 				: '';
 		$mobile_shopkeeper_urlscheme 	= !empty($_POST['mobile_shopkeeper_urlscheme']) ? trim($_POST['mobile_shopkeeper_urlscheme']) 	: '';
 		$mobile_shop_urlscheme 			= !empty($_POST['mobile_shop_urlscheme']) 		? trim($_POST['mobile_shop_urlscheme']) 		: '';
 		$adsense_group 					= !empty($_POST['mobile_home_adsense_group']) 	? $_POST['mobile_home_adsense_group'] 			: '';
@@ -318,17 +318,17 @@ class admin_config extends ecjia_admin {
 			}
 		}
 		
-		if (isset($_FILES['mobile_pad_login_bgimage'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
-			$upload->add_filename_callback(function () { return 'mobile_pad_login_bgimage';});
+// 		if (isset($_FILES['mobile_pad_login_bgimage'])) {
+// 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+// 			$upload->add_filename_callback(function () { return 'mobile_pad_login_bgimage';});
 			
-			$mobile_pad_login_bgimage_info = $upload->upload($_FILES['mobile_pad_login_bgimage']);
-			/* 判断是否上传成功 */
-			if (!empty($mobile_pad_login_bgimage_info)) {
-				$mobile_pad_login_bgimage = $upload->get_position($mobile_pad_login_bgimage_info);
-				ecjia_config::instance()->write_config('mobile_pad_login_bgimage', $mobile_pad_login_bgimage);
-			}
-		}
+// 			$mobile_pad_login_bgimage_info = $upload->upload($_FILES['mobile_pad_login_bgimage']);
+// 			/* 判断是否上传成功 */
+// 			if (!empty($mobile_pad_login_bgimage_info)) {
+// 				$mobile_pad_login_bgimage = $upload->get_position($mobile_pad_login_bgimage_info);
+// 				ecjia_config::instance()->write_config('mobile_pad_login_bgimage', $mobile_pad_login_bgimage);
+// 			}
+// 		}
 		
 		if (isset($_FILES['mobile_phone_login_bgimage'])) {
 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
@@ -367,20 +367,20 @@ class admin_config extends ecjia_admin {
 		}
 		ecjia_config::instance()->write_config('mobile_home_adsense_group', $mobile_home_adsense_group);
 		
-		$mobile_tv_adsense_group = array('big_group' => $mobile_tv_big_adsense, 'small_group' => $mobile_tv_small_adsense);
+// 		$mobile_tv_adsense_group = array('big_group' => $mobile_tv_big_adsense, 'small_group' => $mobile_tv_small_adsense);
 		ecjia_config::instance()->write_config('mobile_tv_adsense_group', serialize($mobile_tv_adsense_group));
 		ecjia_config::instance()->write_config('mobile_launch_adsense', $mobile_launch_adsense);
 		ecjia_config::instance()->write_config('mobile_recommend_city', $mobile_recommend_city);
 		
-		ecjia_config::instance()->write_config('mobile_pad_login_fgcolor', $mobile_pad_login_fgcolor);
-		ecjia_config::instance()->write_config('mobile_pad_login_bgcolor', $mobile_pad_login_bgcolor);
+// 		ecjia_config::instance()->write_config('mobile_pad_login_fgcolor', $mobile_pad_login_fgcolor);
+// 		ecjia_config::instance()->write_config('mobile_pad_login_bgcolor', $mobile_pad_login_bgcolor);
 		ecjia_config::instance()->write_config('mobile_phone_login_fgcolor', $mobile_phone_login_fgcolor);
 		ecjia_config::instance()->write_config('mobile_phone_login_bgcolor', $mobile_phone_login_bgcolor);
 		ecjia_config::instance()->write_config('mobile_feedback_autoreply', $mobile_feedback_autoreply);
 		
 		$bonus_readme_url = RC_Uri::url('article/mobile/info', 'id='.$bonus_readme);
 		ecjia_config::instance()->write_config('bonus_readme_url', $bonus_readme_url);
-		ecjia_config::instance()->write_config('mobile_topic_adsense', $mobile_topic_adsense);
+// 		ecjia_config::instance()->write_config('mobile_topic_adsense', $mobile_topic_adsense);
 		ecjia_config::instance()->write_config('mobile_shopkeeper_urlscheme', $mobile_shopkeeper_urlscheme);
 		ecjia_config::instance()->write_config('mobile_shop_urlscheme', $mobile_shop_urlscheme);
 		ecjia_config::instance()->write_config('shop_app_description', $shop_app_description);
@@ -392,40 +392,41 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('wap_config', $wap_config);
 		
 		/* 签到送活动*/
-		$checkin_award_open = isset($_POST['checkin_award_open']) ? intval($_POST['checkin_award_open']) : 0;
-		$checkin_award_type = isset($_POST['checkin_award_type']) ? trim($_POST['checkin_award_type']) : 'integral';
-		$checkin_award = !empty($_POST['checkin_award']) ? intval($_POST['checkin_award']) : 0;
-		$checkin_extra_day = !empty($_POST['checkin_extra_day']) ? intval($_POST['checkin_extra_day']) : 0;
-		$checkin_extra_award = !empty($_POST['checkin_extra_award']) ? intval($_POST['checkin_extra_award']) : 0;
+// 		$checkin_award_open = isset($_POST['checkin_award_open']) ? intval($_POST['checkin_award_open']) : 0;
+// 		$checkin_award_type = isset($_POST['checkin_award_type']) ? trim($_POST['checkin_award_type']) : 'integral';
+// 		$checkin_award = !empty($_POST['checkin_award']) ? intval($_POST['checkin_award']) : 0;
+// 		$checkin_extra_day = !empty($_POST['checkin_extra_day']) ? intval($_POST['checkin_extra_day']) : 0;
+// 		$checkin_extra_award = !empty($_POST['checkin_extra_award']) ? intval($_POST['checkin_extra_award']) : 0;
 // 		if ($checkin_extra_day > 0 ) {
-			$checkin_extra_award_value = serialize(array('day' => $checkin_extra_day, 'extra_award' => $checkin_extra_award));
+// 			$checkin_extra_award_value = serialize(array('day' => $checkin_extra_day, 'extra_award' => $checkin_extra_award));
 // 		}
 		
-		ecjia_config::instance()->write_config('checkin_award_open', $checkin_award_open);
-		ecjia_config::instance()->write_config('checkin_award_type', $checkin_award_type);
-		ecjia_config::instance()->write_config('checkin_award', $checkin_award);
-		ecjia_config::instance()->write_config('checkin_extra_award', $checkin_extra_award_value);
+// 		ecjia_config::instance()->write_config('checkin_award_open', $checkin_award_open);
+// 		ecjia_config::instance()->write_config('checkin_award_type', $checkin_award_type);
+// 		ecjia_config::instance()->write_config('checkin_award', $checkin_award);
+// 		ecjia_config::instance()->write_config('checkin_extra_award', $checkin_extra_award_value);
 		
 		/* 评论送活动*/
-		$comment_award_open = isset($_POST['comment_award_open']) ? intval($_POST['comment_award_open']) : 0;
-		$comment_award = isset($_POST['comment_award']) ? intval($_POST['comment_award']) : 0;
-		ecjia_config::instance()->write_config('comment_award_open', $comment_award_open);
-		ecjia_config::instance()->write_config('comment_award', $comment_award);
+// 		$comment_award_open = isset($_POST['comment_award_open']) ? intval($_POST['comment_award_open']) : 0;
+// 		$comment_award = isset($_POST['comment_award']) ? intval($_POST['comment_award']) : 0;
+// 		ecjia_config::instance()->write_config('comment_award_open', $comment_award_open);
+// 		ecjia_config::instance()->write_config('comment_award', $comment_award);
 		
 		
-		$comment_award_rules = '';
-		if (isset($_POST['comment_award_rules'])) {
-			foreach ($_POST['comment_award_rules'] as $key => $val) {
-				if (empty($val)) {
-					continue;
-				}
-				$comment_award_rules[$key] = intval($val);
-			}
-			if (!empty($comment_award_rules)) {
-				$comment_award_rules = serialize($comment_award_rules);
-			}
-		}
-		ecjia_config::instance()->write_config('comment_award_rules', $comment_award_rules);
+// 		$comment_award_rules = '';
+// 		if (isset($_POST['comment_award_rules'])) {
+// 			foreach ($_POST['comment_award_rules'] as $key => $val) {
+// 				if (empty($val)) {
+// 					continue;
+// 				}
+// 				$comment_award_rules[$key] = intval($val);
+// 			}
+// 			if (!empty($comment_award_rules)) {
+// 				$comment_award_rules = serialize($comment_award_rules);
+// 			}
+// 		}
+// 		ecjia_config::instance()->write_config('comment_award_rules', $comment_award_rules);
+
 		$order_reminder_type = intval($_POST['order_reminder_type']);
 		ecjia_config::instance()->write_config('order_reminder_type', $order_reminder_type);
 		if ($order_reminder_type == 1) {
