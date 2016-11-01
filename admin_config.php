@@ -156,7 +156,7 @@ class admin_config extends ecjia_admin {
 		$this->assign('shop_app_description', ecjia::config('shop_app_description'));
 		$this->assign('shop_iphone_download', ecjia::config('shop_iphone_download'));
 		$this->assign('shop_android_download', ecjia::config('shop_android_download'));
-		$this->assign('shop_ipad_download', ecjia::config('shop_ipad_download'));
+// 		$this->assign('shop_ipad_download', ecjia::config('shop_ipad_download'));
 		$this->assign('shop_touch_url', ecjia::config('shop_touch_url'));
 		$this->assign('shop_pc_url', ecjia::config('shop_pc_url'));
 		$this->assign('wap_logo', $wap_logo);
@@ -238,7 +238,7 @@ class admin_config extends ecjia_admin {
 		$shop_app_description 			= !empty($_POST['shop_app_description']) 	? trim($_POST['shop_app_description']) 	: '';
 		$shop_iphone_download 			= !empty($_POST['shop_iphone_download']) 	? trim($_POST['shop_iphone_download']) 	: '';
 		$shop_android_download 			= !empty($_POST['shop_android_download']) 	? trim($_POST['shop_android_download']) : '';
-		$shop_ipad_download 			= !empty($_POST['shop_ipad_download']) 		? trim($_POST['shop_ipad_download']) 	: '';
+// 		$shop_ipad_download 			= !empty($_POST['shop_ipad_download']) 		? trim($_POST['shop_ipad_download']) 	: '';
 		$shop_pc_url 					= !empty($_POST['shop_pc_url']) 			? trim($_POST['shop_pc_url']) 			: '';
 		$shop_touch_url 				= !empty($_POST['shop_touch_url']) 			? trim($_POST['shop_touch_url']) 		: '';
 		$wap_config 					= isset($_POST['wap_config']) ? 1 : 0;
@@ -303,20 +303,20 @@ class admin_config extends ecjia_admin {
 			}
 		}
 		/* ipad二维码上传*/
-		if (isset($_FILES['mobile_ipad_qr_code'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
-			$upload->add_filename_callback(function () { return 'mobile_ipad_qr_code';});
+// 		if (isset($_FILES['mobile_ipad_qr_code'])) {
+// 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+// 			$upload->add_filename_callback(function () { return 'mobile_ipad_qr_code';});
 			
-			$image_info = $upload->upload($_FILES['mobile_ipad_qr_code']);
-			/* 判断是否上传成功 */
-			if (!empty($image_info)) {
-				$mobile_ipad_qr_code = $upload->get_position($image_info);
-				$data =  array(
-					'value'  => $mobile_ipad_qr_code
-				);
-				ecjia_config::instance()->write_config('mobile_ipad_qr_code', $mobile_ipad_qr_code);
-			}
-		}
+// 			$image_info = $upload->upload($_FILES['mobile_ipad_qr_code']);
+// 			/* 判断是否上传成功 */
+// 			if (!empty($image_info)) {
+// 				$mobile_ipad_qr_code = $upload->get_position($image_info);
+// 				$data =  array(
+// 					'value'  => $mobile_ipad_qr_code
+// 				);
+// 				ecjia_config::instance()->write_config('mobile_ipad_qr_code', $mobile_ipad_qr_code);
+// 			}
+// 		}
 		
 // 		if (isset($_FILES['mobile_pad_login_bgimage'])) {
 // 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
@@ -386,7 +386,7 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('shop_app_description', $shop_app_description);
 		ecjia_config::instance()->write_config('shop_iphone_download', $shop_iphone_download);
 		ecjia_config::instance()->write_config('shop_android_download', $shop_android_download);
-		ecjia_config::instance()->write_config('shop_ipad_download', $shop_ipad_download);
+// 		ecjia_config::instance()->write_config('shop_ipad_download', $shop_ipad_download);
 		ecjia_config::instance()->write_config('shop_pc_url', $shop_pc_url);
 		ecjia_config::instance()->write_config('shop_touch_url', $shop_touch_url);
 		ecjia_config::instance()->write_config('wap_config', $wap_config);
