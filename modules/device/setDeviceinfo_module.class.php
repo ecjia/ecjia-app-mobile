@@ -19,7 +19,7 @@ class setDeviceinfo_module extends api_front implements api_interface {
 		$province		= $this->requestData('province');
 		$city			= $this->requestData('city');
 		
-		if (empty($device['udid']) || empty($device['client']) || empty($device['code']) || empty($device['device_token'])) {
+		if (empty($device['udid']) || empty($device['client']) || empty($device['code'])) {
 			return new ecjia_error( 'invalid_parameter', RC_Lang::get ('system::system.invalid_parameter' ));
 		}
 		
