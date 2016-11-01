@@ -26,12 +26,15 @@ class mobile_installer extends ecjia_installer {
                 "`device_alias` varchar(30) DEFAULT NULL",
                 "`device_token` char(64) DEFAULT NULL",
                 "`device_os` varchar(30) DEFAULT NULL",
+            	"`device_type` varchar(30) DEFAULT NULL",
                 "`user_id` int(9) NOT NULL DEFAULT '0'",
                 "`is_admin` tinyint(1) NOT NULL DEFAULT '0'",
                 "`location_province` varchar(20) DEFAULT NULL",
                 "`location_city` varchar(20) DEFAULT NULL",
+            	"`visit_times` int(10) NOT NULL",
                 "`in_status` tinyint(1) NOT NULL",
                 "`add_time` int(10) NOT NULL",
+            	"`update_time` int(10) NOT NULL",
                 "PRIMARY KEY (`id`)",
                 "UNIQUE KEY `device_udid` (`device_udid`,`device_client`,`device_code`)"
             );
