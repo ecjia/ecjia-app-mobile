@@ -21,58 +21,60 @@ return array(
 	'message_notice'	=> 'Message notification',
 	'integral_manage'	=> 'Integration setup',
 	'label_mobile_logo'	=> 'Mobile application logo:',
+	'mobile_app_name'	=> 'Mobile application name:',
+	'mobile_app_version'=> 'Mobile application version:',
 	'no_image'			=> 'No picture',
 	'browse'			=> 'Browse',
 	'modify'			=> 'Modify',
 	'drop_confirm'		=> 'Are you sure you want to delete this file?',
-	
+
 	'shop_app_description'	=> 'Mobile application brief:',
 	'label_bonus_readme'	=> 'Instructions for use in red envelopes:',
 	'pls_select'			=> 'Please select...',
 	'search'				=> 'Search',
 	'search_notice'			=> 'Please choose an article, as your red envelope instructions.',
-		
+
 	'mobile_feedback_autoreply'	=> 'Advisory default settings:',
 	'shop_pc_url'				=> 'PC mall address:',
 	'is_open_config'			=> 'Whether to open mobile shop:',
 	'wap_Logo'					=> 'Mobile shop logo:',
 	'shop_touch_url'			=> 'Mobile shop address:',
-		
+
 	'iphone_qr_code'			=> 'iPhone download dimensional code:',
 	'shop_iphone_download'		=> 'iPhone download address:',
 	'android_qr_code'			=> 'Android download dimensional code:',
 	'shop_android_download'		=> 'Android download address:',
 	'ipad_qr_code'				=> 'iPad download dimensional code:',
 	'shop_ipad_download'		=> 'iPad download address:',
-	
+
 	'shopkeeper_urlscheme'		=> 'Shopkeeper UrlScheme settings:',
 	'shop_urlscheme'			=> 'Shopping mall UrlScheme settings:',
-	
+
 	'mobile_launch_adsense'		=> 'Mobile start page advertising chart:',
 	'launch_adsense_notice'		=> 'Please select the advertised position to display.',
 	'launch_adsense_group'		=> 'Mobile home advertising group:',
 	'filter_app_name'			=> 'Screen search application name',
 	'filter_adsense_name'		=> 'Filter search to the name of the ad bit',
-	
+
 	'no_content'				=> 'No content',
 	'selected_ad_position'		=> 'Selected ad bit',
 	'launch_topic_set'			=> 'Home theme class settings:',
 	'topic_adsense_help'		=> 'Please select the ad bit, used to display the contents of the home page',
-	
+
 	'tv_big_ad_group'			=> 'Home big picture TV ad groups:',
 	'tv_small_ad_group'			=> 'TV home thumbnail ad groups:',
 	'tv_ad_help'				=> 'Please select the desired display advertising',
-	
+
 	'mobile_login_set'			=> 'Mobile terminal login page settings',
 	'mobile_login_fgcolor'		=> 'Phone logs in foreground page:',
 	'mobile_login_bgcolor'		=> 'Mobile client login page background color:',
 	'mobile_login_bgimage'		=> 'Mobile client login page background image:',
-	
+
 	'pad_login_set'				=> 'Pad login page settings',
 	'pad_login_fgcolor'			=> 'Pad foreground logon page:',
 	'pad_login_bgcolor'			=> 'Pad login page background color:',
 	'pad_login_bgimage'			=> 'Pad login page background image:',
-	
+
 	'selected_area'				=> 'Selected popular cities:',
 	'hot_city'					=> 'Select popular cities:',
 	'search_country_name'		=> 'Search country name',
@@ -81,14 +83,14 @@ return array(
 	'select_province_first'		=> 'Please select the name of the province...',
 	'search_city_name'			=> 'Search city / region name',
 	'select_city_first'			=> 'Please select the city / district name...',
-	
+
 	'remind_seller_ship'		=> 'To remind the seller to ship:',
 	'message_notice'			=> 'SMS notification',
 	'push_notice'				=> 'Push notification',
 	'not_notice'				=> 'Not remind',
 	'order_remind_by_message'	=> 'Administrator phone number',
 	'order_remind_by_push'		=> 'Push Manager',
-	
+
 	'sign_points'				=> 'Get sign points',
 	'is_open_sign_points'		=> 'Get sign is turned points:',
 	'checkin_award_type'		=> 'Sign send type:',
@@ -96,11 +98,11 @@ return array(
 	'checkin_award'				=> 'Get sign credit:',
 	'checkin_extra_day'			=> 'Continuous attendance days:',
 	'checkin_extra_award'		=> 'Get continuous sign credit:',
-	
+
 	'comment_integral'			=> 'Comments get points',
 	'comment_award_open'		=> 'Whether to open a comment to send points:',
 	'comment_once_award'		=> 'Comment on a single award:',
-	
+
 	'user_rank'					=> 'membership level',
 	'comment_get_award'			=> 'After evaluation of available incentives',
 	'comment_award_rules'		=> 'This rule is not set to zero or not fill otherwise have been subject to the rule!',
@@ -114,11 +116,11 @@ return array(
 	'link_url_empty'		=> 'Please fill in the link address',
 	'edit_cycleimage'		=> 'Edit Carousel Figure',
 	'cycleimage_empty'		=> 'Carousel figure is not specified',
-	
+
 	'add_cycleimage_success'	=> 'Add carousel figure success',
 	'edit_cycleimage_success'	=> 'Edit carousel figure success',
 	'drop_cycleimage_success'	=> 'Delete carousel figure success',
-	
+
 	'format_error'			=> 'Input format is not correct',
 	'order_sort_ok'			=> 'Edit sort success',
 	'display_cycleimage'	=> 'Carousel figure display',
@@ -137,10 +139,10 @@ return array(
 	'label_img_text'		=> 'Description:',
 	'label_img_sort'		=> 'Sort:',
 	'update'				=> 'Update',
-	
+
 	//iPad轮播图
 	'ipad_cycleimage'	=> 'iPad Carousel Figure',
-	
+
 	//移动设备
 	'mobile_device_manage'	=> 'Mobile Device',
 	'mobile_device_list'	=> 'Mobile Device list',
@@ -150,7 +152,7 @@ return array(
 	'trash_fail'			=> 'Failed to move to recycle bin',
 	'restore_success'		=> 'Restore success',
 	'restore_fail'			=> 'Restore failed',
-	
+
 	'view_device_info'		=> 'View Mobile Device Information',
 	'edit_device_alias_ok'	=> 'Edit device alias success',
 	'edit_device_alias_fail'=> 'Edit device alias failed',
@@ -173,19 +175,19 @@ return array(
 	'restore_device'		=> 'Restore device',
 	'delete_forever'		=> 'Delete',
 	'move_to_recyclebin'	=> 'Move to trash',
-	
+
 	'device_name_keywords_empty' => 'Please enter device name keywords',
-	
+
 	'device_type'	=> 'Device type',
 	'device_name'	=> 'Device name',
 	'device_os'		=> 'Operating system',
 	'location'		=> 'Position',
 	'add_time'		=> 'Add time',
-	
+
 	'restore_decice_confirm'	=> 'Are you sure you want to restore this device?',
 	'remove_decice_confirm'		=> 'Are you sure you want to delete this device?',
 	'trash_decice_confirm'		=> 'Are you sure you want to move this device to the recycle bin?',
-	
+
 	'device_info'		=> 'Mobile Device Information',
 	'label_user_id'		=> 'User ID:',
 	'no'				=> 'No',
@@ -203,7 +205,7 @@ return array(
 	'label_location'	=> 'Position:',
 	'label_device_token'=> 'DeviceToken:',
 	'edit_device_alias'	=> 'Edit device alias',
-	
+
 	//百宝箱
 	'discover'				=> 'Treasure Box',
 	'discover_list'			=> 'Treasure Box List',
@@ -226,7 +228,7 @@ return array(
 	'discover_url'			=> 'Picture link',
 	'is_show'				=> 'Whether display',
 	'drop_discover_confirm'	=> 'Are you sure you want to delete this treasure box?',
-	
+
 	//客户端管理
 	'mobile_manage'			=> 'Client Management',
 	'return_mobile_manage'	=> 'Return to client management',
@@ -237,7 +239,7 @@ return array(
 	'edit_mobile_app_ok'	=> 'Editor client application success',
 	'remove_mobile_app_ok'	=> 'Remove client application success',
 	'drop_mobile_confirm'	=> 'Are you sure you want to remove the client application?',
-	
+
 	'app_id'		=> 'ID',
 	'app_name'		=> 'Name',
 	'package_name'	=> 'Application package name',
@@ -255,7 +257,7 @@ return array(
 	'label_platform'	=> 'Service platform:',
 	'label_app_name'	=> 'Application name:',
 	'label_package_name'=> 'Application package name:',
-	
+
 	//今日热点
 	'mobile_news'			=> 'Mobile News',
 	'mobile_news_list'		=> 'Mobile News List',
@@ -281,7 +283,7 @@ return array(
 	'title'					=> 'Title',
 	'issue'					=> 'Release',
 	'cancel_issue'			=> 'Cancel release',
-	
+
 	//今日头条
 	'mobile_headline'		=> 'Mobile Headline',
 	'mobile_headline_list'	=> 'Mobile Headline List',
@@ -308,18 +310,18 @@ return array(
 	'label_headline_url'	=> 'Headline links:',
 	'label_is_open'			=> 'Whether to open:',
 	'label_create_time'		=> 'Create time:',
-	
+
 	'batch_drop_confirm'		=> 'Are you sure you want to batch delete the selected headlines?',
 	'pls_select_option'			=> 'Please select the item you want to operate!',
 	'headline_keywords_empty' 	=> 'Please enter a headline keyword',
 	'drop_headline_confirm'		=> 'Are you sure you want to delete this headline?',
-		
+
 	'image'				=> 'Image',
 	'headline_title'	=> 'Headline title',
 	'tag'				=> 'Label',
 	'headline_content'	=> 'Content headlines',
 	'headline_url'		=> 'Headline links',
-	
+
 	//快捷菜单
 	'shorcut'				=> 'Shortcut Menu',
 	'shorcut_list'			=> 'Shortcut Menu List',
@@ -332,18 +334,18 @@ return array(
 	'edit_shortcut_success'	=> 'Edit shortcut menu success',
 	'no_appointed_shortcut'	=> 'Not specified shortcut menu',
 	'drop_shortcut_success'	=> 'Remove shortcut menu success',
-	
+
 	'display_shortcut'		=> 'Display shortcut menu %s',
 	'hide_shortcut'			=> 'Hide shortcut menu %s',
 	'shortcut_icon'			=> 'Menu icon',
 	'shortcut_link'			=> 'Menu link',
 	'drop_shortcut_confirm'	=> 'Are you sure you want to delete the menu?',
 	'shortcut_img_notice'	=> 'Standard width of this picture is the shortcut menu: 120px Standard height: 120px.',
-	
+
 	'label_shortcut_link'	=> 'Menu link:',
 	'label_shortcut_text'	=> 'Description:',
 	'label_shortcut_order'	=> 'Sort:',
-	
+
 	'mobile_app'		=> 'Mobile Applications',
 	'shortcut'			=> 'Shortcut Menu',
 	'mobile_device'		=> 'Mobile Device',
@@ -365,7 +367,7 @@ return array(
 	'mobile_news_add'	=> 'Add Mobile News',
 	'mobile_news_update'=> 'Edit Mobile News',
 	'mobile_news_delete'=> 'Remove Mobile News',
-	
+
 	'mobile_config_manage'	=> 'Application Configuration Management',
 	'mobile_config_update'	=> 'Edit Application Configuration',
 	'mobile_config_delete'	=> 'Remove Application Configuration',
@@ -383,7 +385,7 @@ return array(
 	'mobile_discover_sort'		=> 'Treasure sort',
 	'cycleimage'				=> 'Carousel figure',
 	'cashdesk'				    => 'Cashdesk',
-	
+
 	'open_app_function'		=> 'Open app function',
 	'open_discover'			=> 'Open discovery:',
 	'open_qrcode'			=> 'Open QR code scanning:',
@@ -405,11 +407,11 @@ return array(
 	'open_user_account'		=> 'Open account balance:',
 	'open_user_password'	=> 'Open modify password:',
 	'open_user_center'		=> 'Open user center:',
-	
+
 	'is_category_id'		=> ' is category of ID',
 	'is_goods_id'			=> ' is the goods of ID',
 	'is_order_id'			=> ' is the order of ID',
-	
+
 	'js_lang' => array(
 		'ok'				=> 'OK',
 		'cancel'			=> 'Cancel',
@@ -442,7 +444,7 @@ return array(
 		'title'					=> 'title',
 		'title_required'		=> 'Please enter the headline title!',
 	),
-	
+
 	//摇一摇活动管理
 	'app_activity_list'			=> 'APP Activity List',
 	'activity_manage'			=> 'Activity Management',

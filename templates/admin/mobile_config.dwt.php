@@ -35,6 +35,12 @@
 				<div class="tab-content tab_merchants">
 					<div class="tab-pane active" id="tab1">
 						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_app_name'}</label>
+							<div class="controls">
+								<input type="text" name="mobile_app_name" value="{$mobile_app_name}">
+							</div>
+						</div>
+						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.label_mobile_logo'}</label>
 							<div class="controls">
 								<div class="fileupload {if $mobile_app_icon}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
@@ -51,9 +57,15 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_app_version'}</label>
+							<div class="controls">
+								<input type="text" name="mobile_app_version" value="{$mobile_app_version}">
+							</div>
+						</div>
+						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.shop_app_description'}</label>
 							<div class="controls">
-								<input type='text' name='shop_app_description' value='{$shop_app_description}'>
+								<textarea class="span12 h100" name='shop_app_description'>{$shop_app_description}</textarea>
 							</div>
 						</div>
 						<div class="control-group formSep">
@@ -96,7 +108,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					{if 0}
 					<div class="tab-pane" id="touch">
 						<div class="control-group formSep">
@@ -131,54 +143,54 @@
 						</div>
 					</div>
 					{/if}
-					
+
 					<div class="tab-pane" id="load_app">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.iphone_qr_code'}</label>
 							<div class="controls">
-								<div class="fileupload {if $mobile_iphone_qr_code}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+								<div class="fileupload {if $mobile_iphone_qrcode}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_iphone_qr_code}" alt="{lang key='mobile::mobile.no_image'}" />
+										<img src="{$mobile_iphone_qrcode}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
 									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
 									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
-									<input type="file" name="mobile_iphone_qr_code"/>
+									<input type="file" name="mobile_iphone_qrcode"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_iphone_qr_code')}" {if $mobile_iphone_qr_code}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_iphone_qrcode')}" {if $mobile_iphone_qrcode}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.shop_iphone_download'}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_iphone_download'}</label>
 							<div class="controls">
-								<input type='text' name='shop_iphone_download' value='{$shop_iphone_download}'>
+								<input type='text' name='mobile_iphone_download' value='{$mobile_iphone_download}'>
 							</div>
 						</div>
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.android_qr_code'}</label>
 							<div class="controls">
-								<div class="fileupload {if $mobile_android_qr_code}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+								<div class="fileupload {if $mobile_android_qrcode}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
 									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_android_qr_code}" alt="{lang key='mobile::mobile.no_image'}" />
+										<img src="{$mobile_android_qrcode}" alt="{lang key='mobile::mobile.no_image'}" />
 									</div>
 									<span class="btn btn-file">
 									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
 									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
-									<input type="file" name="mobile_android_qr_code"/>
+									<input type="file" name="mobile_android_qrcode"/>
 									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_android_qr_code')}" {if $mobile_android_qr_code}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_android_qrcode')}" {if $mobile_android_qrcode}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 								</div>
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.shop_android_download'}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_android_download'}</label>
 							<div class="controls">
-								<input type='text' name='shop_android_download' value='{$shop_android_download}'>
+								<input type='text' name='mobile_android_download' value='{$mobile_android_download}'>
 							</div>
 						</div>
-						
-						<!-- 
+
+						<!--
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.ipad_qr_code'}</label>
 							<div class="controls">
@@ -202,7 +214,7 @@
 							</div>
 						</div>
 						 -->
-						 
+
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.shopkeeper_urlscheme'}</label>
 							<div class="controls">
@@ -216,7 +228,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="tab-pane" id="adsense">
 						<div class="control-group formSep edit-page">
 							<label class="control-label">{lang key='mobile::mobile.mobile_launch_adsense'}</label>
@@ -261,8 +273,8 @@
 								</div>
 							</div>
 						</div>
-						
-						<!-- 
+
+						<!--
 						<div class="control-group formSep edit-page">
 							<label class="control-label">{lang key='mobile::mobile.launch_topic_set'}</label>
 							<div class="controls">
@@ -301,7 +313,7 @@
 						</div>
 						 -->
 					</div>
-					
+
 					<div class="tab-pane" id="mobile_login">
 						<h3 class="heading">{lang key='mobile::mobile.mobile_login_set'}</h3>
 						<div class="control-group formSep">
@@ -342,7 +354,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<!--
 						<h3 class="heading">{lang key='mobile::mobile.pad_login_set'}</h3>
 						<div class="control-group formSep">
@@ -384,9 +396,9 @@
 							</div>
 						</div>
 						-->
-						
+
 					</div>
-					
+
 					{if 0}
 					<div class="tab-pane" id="tv_adsense">
 						<div class="control-group formSep edit-page">
@@ -434,7 +446,7 @@
 						</div>
 					</div>
 					{/if}
-					
+
 					<div class="tab-pane" id="mobile_login">
 						<h3 class="heading">{lang key='mobile::mobile.mobile_login_set'}</h3>
 						<div class="control-group formSep">
@@ -515,7 +527,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="tab-pane" id="hot_city">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.selected_area'}</label>
@@ -570,7 +582,7 @@
 								<input type='radio' name='order_reminder_type' value='0' {if $order_reminder_type eq 0}checked='checked'{/if} />{lang key='mobile::mobile.not_notice'}
 							</div>
 						</div>
-						
+
 						<div class="control-group formSep order_reminder_2 {if $order_reminder_type eq '0' || $order_reminder_type eq '1'}ecjiaf-dn{/if}">
 							<label class="control-label order_reminder_2">{lang key='mobile::mobile.order_remind_by_message'}</label>
 							<div class="controls chk_radio order_reminder_2">
@@ -589,8 +601,8 @@
 							</div>
 						</div>
 					</div>
-					
-					<!-- 
+
+					<!--
 					<div class="tab-pane" id="integral_manage">
 						<h3 class="heading">{lang key='mobile::mobile.sign_points'}</h3>
 						<div class="control-group formSep">
@@ -642,7 +654,7 @@
 								<input type='text' name='comment_award' value='{$comment_award}'>
 							</div>
 						</div>
-						
+
 						<div class="control-group">
 							<label class="control-label"><strong>{lang key='mobile::mobile.user_rank'}</strong></label>
 							<label class="control-label">
@@ -664,7 +676,7 @@
 						</div>
 					</div>
 					-->
-					 
+
 					<div class="control-group">
 						<div class="controls">
 							<input type="submit" value="{lang key='system::system.button_submit'}" class="btn btn-gebo" />

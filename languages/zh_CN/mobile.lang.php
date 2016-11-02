@@ -21,58 +21,60 @@ return array(
 	'message_notice'	=> '消息提醒',
 	'integral_manage'	=> '积分设置',
 	'label_mobile_logo'	=> '移动应用Logo：',
+	'mobile_app_name'	=> '移动应用名称：',
+	'mobile_app_version' => '移动应用版本号：',
 	'no_image'			=> '暂无图片',
 	'browse'			=> '浏览',
 	'modify'			=> '修改',
 	'drop_confirm'		=> '您确定要删除此文件吗？',
-	
+
 	'shop_app_description'	=> '移动应用简介：',
 	'label_bonus_readme'	=> '红包使用说明：',
 	'pls_select'			=> '请选择...',
 	'search'				=> '搜索',
 	'search_notice'			=> '请选择一篇文章，作为您的红包使用说明',
-		
+
 	'mobile_feedback_autoreply'	=> '咨询默认回复设置：',
 	'shop_pc_url'				=> 'PC商城地址：',
 	'is_open_config'			=> '是否开启微商城：',
 	'wap_Logo'					=> '微商城 Logo：',
 	'shop_touch_url'			=> '微商城地址：',
-		
+
 	'iphone_qr_code'			=> 'iPhone下载二维码：',
-	'shop_iphone_download'		=> 'iPhone下载地址：',
+	'mobile_iphone_download'	=> 'iPhone下载地址：',
 	'android_qr_code'			=> 'Android下载二维码：',
-	'shop_android_download'		=> 'Android下载地址：',
+	'mobile_android_download'	=> 'Android下载地址：',
 	'ipad_qr_code'				=> 'iPad下载二维码：',
 	'shop_ipad_download'		=> 'iPad下载地址：',
-	
+
 	'shopkeeper_urlscheme'		=> '掌柜UrlScheme设置：',
 	'shop_urlscheme'			=> '商城UrlScheme设置：',
-	
+
 	'mobile_launch_adsense'		=> '移动启动页广告图：',
 	'launch_adsense_notice'		=> '请选择所需展示的广告位。',
 	'launch_adsense_group'		=> '移动首页广告组：',
 	'filter_app_name'			=> '筛选搜索到的应用名称',
 	'filter_adsense_name'		=> '筛选搜索到的广告位名称',
-	
+
 	'no_content'				=> '暂无内容',
 	'selected_ad_position'		=> '所选广告位',
 	'launch_topic_set'			=> '首页主题类设置：',
 	'topic_adsense_help'		=> '请选择广告位，用来显示首页主题类内容',
-	
+
 	'tv_big_ad_group'			=> 'TV首页大图广告组：',
 	'tv_small_ad_group'			=> 'TV首页小图广告组：',
 	'tv_ad_help'				=> '请选择所需展示的广告位',
-	
+
 	'mobile_login_set'			=> '手机端登录页设置',
 	'mobile_login_fgcolor'		=> '手机端登录页前景色：',
 	'mobile_login_bgcolor'		=> '手机端登录页背景色：',
 	'mobile_login_bgimage'		=> '手机端登录页背景图片：',
-	
+
 	'pad_login_set'				=> 'Pad登录页设置',
 	'pad_login_fgcolor'			=> 'Pad登录页前景色：',
 	'pad_login_bgcolor'			=> 'Pad登录页背景色：',
 	'pad_login_bgimage'			=> 'Pad登录页背景图片：',
-	
+
 	'selected_area'				=> '已选择的热门城市：',
 	'hot_city'					=> '请选择热门城市：',
 	'search_country_name'		=> '搜索的国家名称',
@@ -81,14 +83,14 @@ return array(
 	'select_province_first'		=> '请先选择省份名称...',
 	'search_city_name'			=> '搜索的市/区名称',
 	'select_city_first'			=> '请先选择市/区名称...',
-	
+
 	'remind_seller_ship'		=> '提醒卖家发货：',
 	'message_notice'			=> '短信提醒',
 	'push_notice'				=> '推送提醒',
 	'not_notice'				=> '不提醒',
 	'order_remind_by_message'	=> '管理员手机号',
 	'order_remind_by_push'		=> '推送管理员',
-	
+
 	'sign_points'				=> '签到送积分',
 	'is_open_sign_points'		=> '是否开启签到送积分：',
 	'checkin_award_type'		=> '签到送类型：',
@@ -96,15 +98,15 @@ return array(
 	'checkin_award'				=> '签到送额度：',
 	'checkin_extra_day'			=> '连续签到天数：',
 	'checkin_extra_award'		=> '连续签到送额度：',
-	
+
 	'comment_integral'			=> '评论送积分',
 	'comment_award_open'		=> '是否开启评论送积分：',
 	'comment_once_award'		=> '评论一次可获得的奖励：',
-	
+
 	'user_rank'					=> '会员等级',
 	'comment_get_award'			=> '评价后可获得奖励',
 	'comment_award_rules'		=> '不用此规则则设置为0或不填，否则已该规则为准！',
-	
+
 	//手机端轮播图
 	'mobile_cycleimage'		=> '手机端轮播图',
 	'cycleimage_list'		=> '轮播图列表',
@@ -114,16 +116,16 @@ return array(
 	'link_url_empty'		=> '请填写链接地址',
 	'edit_cycleimage'		=> '编辑轮播图',
 	'cycleimage_empty'		=> '没有指定轮播图',
-	
+
 	'add_cycleimage_success'	=> '添加轮播图成功',
 	'edit_cycleimage_success'	=> '编辑轮播图成功',
 	'drop_cycleimage_success'	=> '删除轮播图成功',
-	
+
 	'format_error'			=> '输入格式不正确',
 	'order_sort_ok'			=> '编辑排序成功',
 	'display_cycleimage'	=> '显示轮播图 %s',
 	'hide_cycleimage'		=> '隐藏轮播图 %s',
-	'change_success'		=> '切换是否显示成功',	
+	'change_success'		=> '切换是否显示成功',
 	'thumbnail'				=> '缩略图',
 	'img_url'				=> '图片链接',
 	'sort_order'			=> '排序',
@@ -137,10 +139,10 @@ return array(
 	'label_img_text'		=> '图片说明：',
 	'label_img_sort'		=> '图片排序：',
 	'update'				=> '更新',
-	
+
 	//iPad轮播图
 	'ipad_cycleimage'	=> 'iPad端轮播图',
-	
+
 	//移动设备
 	'mobile_device_manage' 	=> '移动设备管理',
 	'mobile_device_list'	=> '移动设备列表',
@@ -150,7 +152,7 @@ return array(
 	'trash_fail'			=> '移至回收站失败',
 	'restore_success'		=> '还原成功',
 	'restore_fail'			=> '还原失败',
-	
+
 	'view_device_info'		=> '查看移动设备信息',
 	'edit_device_alias_ok'	=> '编辑设备别名成功',
 	'edit_device_alias_fail'=> '编辑设备别名失败',
@@ -173,19 +175,19 @@ return array(
 	'restore_device'		=> '还原设备',
 	'delete_forever'		=> '永久删除',
 	'move_to_recyclebin'	=> '移至回收站',
-	
+
 	'device_name_keywords_empty'	=> '请输入设备名称关键字',
-	
+
 	'device_type'	=> '设备类型',
 	'device_name'	=> '设备名称',
 	'device_os'		=> '操作系统',
 	'location'		=> '位置',
-	'add_time'		=> '添加时间',	
-	
+	'add_time'		=> '添加时间',
+
 	'restore_decice_confirm'	=> '您确定要还原此设备吗？',
 	'remove_decice_confirm'		=> '您确定要删除此设备吗？',
 	'trash_decice_confirm'		=> '您确定要将此设备移至回收站吗？',
-	
+
 	'device_info'		=> '移动设备信息',
 	'label_user_id'		=> '用户ID：',
 	'no'				=> '暂无',
@@ -203,7 +205,7 @@ return array(
 	'label_location'	=> '位置：',
 	'label_device_token'=> 'DeviceToken：',
 	'edit_device_alias'	=> '编辑设备别名',
-	
+
 	//百宝箱
 	'discover'				=> '百宝箱',
 	'discover_list'			=> '百宝箱列表',
@@ -226,7 +228,7 @@ return array(
 	'discover_url'			=> '百宝箱链接',
 	'is_show'				=> '是否显示',
 	'drop_discover_confirm'	=> '您确定要删除该百宝箱吗？',
-	
+
 	//客户端管理
 	'mobile_manage'			=> '客户端管理',
 	'return_mobile_manage'	=> '返回客户端管理',
@@ -237,7 +239,7 @@ return array(
 	'edit_mobile_app_ok'	=> '编辑客户端应用成功',
 	'remove_mobile_app_ok'	=> '删除客户端应用成功',
 	'drop_mobile_confirm'	=> '您确定要删除该客户端吗？',
-	
+
 	'app_id'		=> '应用ID',
 	'app_name'		=> '应用名称',
 	'package_name'	=> '应用包名',
@@ -255,7 +257,7 @@ return array(
 	'label_platform'	=> '服务平台：',
 	'label_app_name'	=> '应用名称：',
 	'label_package_name'=> '应用包名：',
-		
+
 	//今日热点
 	'mobile_news'			=> '今日热点',
 	'mobile_news_list'		=> '今日热点列表',
@@ -281,7 +283,7 @@ return array(
 	'title'					=> '标题',
 	'issue'					=> '发布',
 	'cancel_issue'			=> '取消发布',
-	
+
 	//今日头条
 	'mobile_headline'		=> '今日头条',
 	'mobile_headline_list'	=> '今日头条列表',
@@ -308,18 +310,18 @@ return array(
 	'label_headline_url'	=> '头条链接：',
 	'label_is_open'			=> '是否开启：',
 	'label_create_time'		=> '创建时间：',
-	
+
 	'batch_drop_confirm'		=> '您确定要批量删除选中的头条吗？',
 	'pls_select_option'			=> '请先选择要操作的项！',
 	'headline_keywords_empty' 	=> '请输入头条标题关键字',
 	'drop_headline_confirm'		=> '您确定要删除该头条吗？',
-			
+
 	'image'				=> '图片',
 	'headline_title'	=> '头条标题',
 	'tag'				=> '标签',
 	'headline_content'	=> '头条内容',
 	'headline_url'		=> '头条链接',
-	
+
 	//快捷菜单
 	'shorcut'				=> '快捷菜单',
 	'shorcut_list'			=> '快捷菜单列表',
@@ -332,18 +334,18 @@ return array(
 	'edit_shortcut_success'	=> '编辑快捷菜单成功',
 	'no_appointed_shortcut'	=> '没有指定的快捷菜单！',
 	'drop_shortcut_success'	=> '删除快捷菜单成功',
-	
+
 	'display_shortcut'		=> '显示快捷菜单 %s',
 	'hide_shortcut'			=> '隐藏快捷菜单 %s',
 	'shortcut_icon'			=> '菜单图标',
 	'shortcut_link'			=> '菜单链接',
 	'drop_shortcut_confirm'	=> '您确定要删除该菜单吗？',
 	'shortcut_img_notice'	=> '此快捷菜单的图片标准宽度为：120px 标准高度为：120px',
-	
+
 	'label_shortcut_link'	=> '菜单链接：',
 	'label_shortcut_text'	=> '菜单说明：',
 	'label_shortcut_order'	=> '菜单排序：',
-	
+
 	'mobile_app'		=> '移动应用',
 	'shortcut'			=> '快捷菜单',
 	'mobile_device'		=> '移动设备',
@@ -365,7 +367,7 @@ return array(
 	'mobile_news_add'	=> '新增今日热点',
 	'mobile_news_update'=> '编辑今日热点',
 	'mobile_news_delete'=> '删除今日热点',
-	
+
 	'mobile_config_manage'	=> '应用配置管理',
 	'mobile_config_update'	=> '更新应用配置',
 	'mobile_config_delete'	=> '删除应用配置',
@@ -376,14 +378,14 @@ return array(
 	'mobile_toutiao_manage'	=> '今日头条管理',
 	'mobile_toutiao_update'	=> '更新今日头条',
 	'mobile_toutiao_delete'	=> '删除今日头条',
-	
+
 	'mobile_shortcut_display'	=> '快捷菜单是否显示',
 	'mobile_shortcut_sort'		=> '快捷菜单排序',
 	'mobile_discover_display'	=> '百宝箱是否显示',
 	'mobile_discover_sort'		=> '百宝箱排序',
 	'cycleimage'				=> '轮播图',
 	'cashdesk'				    => '收银台',
-	
+
 	'open_app_function'		=> '打开应用功能',
 	'open_discover'			=> '打开发现：',
 	'open_qrcode'			=> '打开二维码扫描：',
@@ -405,11 +407,11 @@ return array(
 	'open_user_account'		=> '打开账户余额：',
 	'open_user_password'	=> '打开修改密码：',
 	'open_user_center'		=> '打开用户中心：',
-	
+
 	'is_category_id'		=> '是分类的ID',
 	'is_goods_id'			=> '是商品的ID',
 	'is_order_id'			=> '是订单的ID',
-		
+
 	'js_lang' => array(
 		'ok'					=> '确定',
 		'cancel'				=> '取消',
@@ -428,7 +430,7 @@ return array(
 		'appkey_required'		=> '请填写AppKey！',
 		'appsecret_required'	=> '请填写AppSecret！',
 		'platform_required'		=> '请选择服务平台！',
-		
+
 		'not_set_parameter'		=> 'clone-obj方法未设置data-parent参数。',
 		'operate_miss_parameter'=> '批量操作缺少参数！',
 		'most_eight'			=> '今日热点最多只能添加8条',
@@ -442,7 +444,7 @@ return array(
 		'title'					=> '标题',
 		'title_required'		=> '请输入新闻标题！',
 	),
-	
+
 	//摇一摇活动管理
 	'app_activity_list'			=> 'APP活动列表',
 	'activity_manage'			=> '活动管理',
@@ -509,6 +511,6 @@ return array(
 	'issued'					=> '已发放',
 	'unknown_appid'				=> '未识别的AppID',
 	'activity'					=> '活动',
-);		
+);
 
 // end
