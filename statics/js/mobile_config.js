@@ -29,8 +29,9 @@
                 }
             });
             app.config.order_reminder();
+			app.config.fileupload();
         },
-        
+
         order_reminder: function () {
             $("input[name='order_reminder_type']").on('change', function () {
                 var order_reminder_type = $(this).val();
@@ -46,7 +47,7 @@
                 }
             });
         },
-        
+
         set_conf: function () {
             var $this = $("form[name='theForm']");
             var option = {
@@ -67,7 +68,7 @@
             var options = $.extend(ecjia.admin.defaultOptions.validate, option);
             $this.validate(options);
         },
-        
+
         choose_area: function () {
             $('.select_hot_city').on('click', function (e) {
                 e.preventDefault();
@@ -97,14 +98,14 @@
                     /* 如果有返回参数，则赋值并触发下一级别的选中 */
                     if (data.regions) {
                         for (var i = 0; i <= data.regions.length - 1; i++) {
-                            html += '<li class="ms-elem-selectable select_hot_city" data-val="' + data.regions[i].region_id + '"><span>' + 
+                            html += '<li class="ms-elem-selectable select_hot_city" data-val="' + data.regions[i].region_id + '"><span>' +
                             	data.regions[i].region_name + '</span>';
                             if ($next_attr == 'selCities') {
                                 html += '<span class="edit-list"><a href="javascript:;">' + js_lang.add + '</a></span>';
                             }
                             html += '</li>';
                         };
- 
+
                         $next.html(html);
                         app.config.quick_search();
                         $('.select_hot_city').unbind("click");
@@ -122,7 +123,7 @@
                 }, 'json');
             });
         },
-        
+
         quick_search: function () {
             var opt = {
                 onAfter: function () {
@@ -145,7 +146,7 @@
             $('#selCities').quicksearch($('.selCities .ms-elem-selectable'), opt);
             $('#selDistricts').quicksearch($('.selDistricts .ms-elem-selectable'), opt);
         },
-        
+
         selected_area: function () {
             $('.ms-elem-selectable .edit-list a').on('click', function (e) {
                 e.preventDefault();
@@ -173,7 +174,7 @@
                 }
             });
         },
-        
+
         search_article: function () {
             $('.article_search').on('click', function (e) {
                 e.preventDefault();
@@ -192,7 +193,7 @@
                 });
             });
         },
-        
+
         artilce_list: function (data) {
             $('.artilce_list').html('');
             if (data.content.length > 0) {
@@ -205,7 +206,7 @@
             }
             $('.artilce_list').trigger("liszt:updated").trigger("change");
         },
-        
+
         add_adsense_group: function () {
             $('.select_adsense_group li').on('click', function () {
                 var $this = $(this),
@@ -243,7 +244,7 @@
                 });
             });
         },
-        
+
         del_adsense_group: function () {
             $('.ms-elem-selection').each(function (index) {
                 var $this = $(this);
@@ -253,7 +254,7 @@
                     }
                 });
             });
- 
+
             //给右侧元素添加点击事件
             $('.nav-list-content .ms-elem-selection').on('dblclick', function () {
                 var $this = $(this);
@@ -266,7 +267,7 @@
             }).find('i.del').on('click', function () {
                 $(this).parents('li').trigger('dblclick');
             });
- 
+
             $('.tv-ms-elem-selection').each(function (index) {
                 var $this = $(this);
                 $('.tv-nav-list-ready li').each(function (i) {
@@ -275,7 +276,7 @@
                     }
                 });
             });
- 
+
             //给右侧元素添加点击事件
             $('.tv-nav-list-content .tv-ms-elem-selection').on('dblclick', function () {
                 var $this = $(this);
@@ -289,8 +290,12 @@
                 $(this).parents('li').trigger('dblclick');
             });
         },
+
+		fileupload : function (){
+			
+		}
     }
-    
+
 })(ecjia.admin, jQuery);
- 
+
 // end

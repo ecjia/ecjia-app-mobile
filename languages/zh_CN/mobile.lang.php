@@ -20,6 +20,7 @@ return array(
 	'hot_city_set'		=> '热门城市配置',
 	'message_notice'	=> '消息提醒',
 	'integral_manage'	=> '积分设置',
+	'app_screenshots'	=> '应用截图',
 	'label_mobile_logo'	=> '移动应用Logo：',
 	'mobile_app_name'	=> '移动应用名称：',
 	'mobile_app_version' => '移动应用版本号：',
@@ -511,6 +512,11 @@ return array(
 	'issued'					=> '已发放',
 	'unknown_appid'				=> '未识别的AppID',
 	'activity'					=> '活动',
+
+	// 应用截图
+	'mobile_app_preview1'		=> '应用预览图1：',
+	'mobile_app_preview2'		=> '应用预览图2：',
+	'mobile_app_screenshots'	=> '应用截图：',
 );
 
 // end

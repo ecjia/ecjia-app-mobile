@@ -30,6 +30,7 @@
 					<li><a href="#mobile_login" data-toggle="tab">{lang key='mobile::mobile.mobile_login'}</a></li>
 					<li><a href="#hot_city" data-toggle="tab">{lang key='mobile::mobile.hot_city_set'}</a></li>
 					<li><a href="#message_notice" data-toggle="tab">{lang key='mobile::mobile.message_notice'}</a></li>
+					<li><a href="#app_screenshots" data-toggle="tab">{lang key='mobile::mobile.app_screenshots'}</a></li>
 <!-- 					<li><a href="#integral_manage" data-toggle="tab">{lang key='mobile::mobile.integral_manage'}</a></li> -->
 				</ul>
 				<div class="tab-content tab_merchants">
@@ -600,6 +601,57 @@
 								</select>
 							</div>
 						</div>
+					</div>
+
+					<div class="tab-pane edit-page" id="app_screenshots">
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_app_name'}</label>
+							<div class="controls l_h30">
+								<span class="span6">{$mobile_app_name}</span>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_app_preview1'}</label>
+							<div class="controls">
+								<div class="fileupload {if $mobile_app_preview1}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
+										<img src="{$mobile_app_preview1}" alt="{lang key='mobile::mobile.no_image'}" />
+									</div>
+									<span class="btn btn-file">
+									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
+									<input type="file" name="mobile_app_preview1"/>
+									</span>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_pad_login_bgimage')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+								</div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_app_preview2'}</label>
+							<div class="controls">
+								<div class="fileupload {if $mobile_app_preview2}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
+										<img src="{$mobile_app_preview2}" alt="{lang key='mobile::mobile.no_image'}" />
+									</div>
+									<span class="btn btn-file">
+										<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+										<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
+										<input type="file" name="mobile_app_preview2"/>
+									</span>
+									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_pad_login_bgimage')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_app_screenshots'}</label>
+							<div class="controls">
+								<ul>
+									<li>
+										<label for=""></label>
+									</li>
+								</ul>
+							</div>
+						</div> -->
 					</div>
 
 					<!--

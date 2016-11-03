@@ -213,8 +213,36 @@ class admin_config extends ecjia_admin {
 		$this->assign('order_reminder_type', $order_reminder_type);
 		$this->assign('order_reminder_value', ecjia::config('order_reminder_value'));
 
+		// 应用截图
+		$mobile_app_preview_temp = ecjia::config('mobile_app_preview');
+		$mobile_app_preview = unserialize($mobile_app_preview_temp);
+		if(!empty($mobile_app_preview[0])){
+			$mobile_app_preview1 = RC_Upload::upload_url().'/'.$mobile_app_preview[0];
+		}
+		if(!empty($mobile_app_preview[1])){
+			$mobile_app_preview2 = RC_Upload::upload_url().'/'.$mobile_app_preview[0];
+		}
+		// _dump($mobile_app_preview,1);
+		$this->assign('mobile_app_preview1', $mobile_app_preview1);
+		$this->assign('mobile_app_preview2', $mobile_app_preview2);
+		$this->assign('dropper_action', RC_Uri::url('mobile/admin_config/insert'));
 		$this->display('mobile_config.dwt');
 	}
+
+	/**
+	* 应用截图
+	*/
+	public function insert(){
+		if (isset($_FILES['img_url'])) {
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function($file, $filename) { return true; });
+			$image_info = $upload->upload($_FILES['img_url']);
+			if (!empty($image_info)) {
+				$mobile_app_preview2 = $upload->get_position($image_info);
+			}
+		}
+	}
+
 
 	/**
 	 * 处理移动应用配置
@@ -278,7 +306,7 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('mobile_tv_home_adsense', intval($_POST['mobile_tv_home_adsense']));
 		/* iphone二维码上传*/
 		if (isset($_FILES['mobile_iphone_qrcode'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
 			$upload->add_filename_callback(function () { return 'mobile_iphone_qrcode';});
 
 			$image_info = $upload->upload($_FILES['mobile_iphone_qrcode']);
@@ -293,7 +321,7 @@ class admin_config extends ecjia_admin {
 		}
 		/* android二维码上传*/
 		if (isset($_FILES['mobile_android_qrcode'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
 			$upload->add_filename_callback(function () { return 'mobile_android_qrcode';});
 
 			$image_info = $upload->upload($_FILES['mobile_android_qrcode']);
@@ -335,7 +363,7 @@ class admin_config extends ecjia_admin {
 // 		}
 
 		if (isset($_FILES['mobile_phone_login_bgimage'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
 			$upload->add_filename_callback(function () { return 'mobile_phone_login_bgimage';});
 
 			$mobile_phone_login_bgimage_info = $upload->upload($_FILES['mobile_phone_login_bgimage']);
@@ -348,7 +376,7 @@ class admin_config extends ecjia_admin {
 
 		/* 上传app logo图标*/
 		if (isset($_FILES['mobile_app_icon'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
 			$upload->add_filename_callback(function () { return 'mobile_app_icon';});
 
 			$mobile_app_icon_info = $upload->upload($_FILES['mobile_app_icon']);
@@ -360,7 +388,7 @@ class admin_config extends ecjia_admin {
 
 		/* 上传touch logo图标*/
 		if (isset($_FILES['wap_logo'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
 			$upload->add_filename_callback(function () { return 'wap_logo';});
 
 			$wap_logo = $upload->upload($_FILES['wap_logo']);
@@ -369,6 +397,33 @@ class admin_config extends ecjia_admin {
 				ecjia_config::instance()->write_config('wap_logo', $wap_logo_icon);
 			}
 		}
+
+		/* 应用截图1 */
+		if (!empty($_FILES['mobile_app_preview1'])) {
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'mobile_app_preview1';});
+			$mobile_app_preview1 = $upload->upload($_FILES['mobile_app_preview1']);
+			if (!empty($mobile_app_preview1)) {
+				$mobile_app_preview1 = $upload->get_position($mobile_app_preview1);
+			}
+		}
+
+		/* 应用截图2 */
+		if (!empty($_FILES['mobile_app_preview2'])) {
+			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
+			$upload->add_filename_callback(function () { return 'mobile_app_preview2';});
+			$mobile_app_preview2 = $upload->upload($_FILES['mobile_app_preview2']);
+			if (!empty($mobile_app_preview2)) {
+				$mobile_app_preview2 = $upload->get_position($mobile_app_preview2);
+			}
+		}
+
+		if(!empty($mobile_app_preview1) || !empty($mobile_app_preview2)){
+			$mobile_app_preview_temp = array($mobile_app_preview1, $mobile_app_preview2);
+			$mobile_app_preview = serialize($mobile_app_preview_temp);
+			ecjia_config::instance()->write_config('mobile_app_preview', $mobile_app_preview);
+		}
+
 		ecjia_config::instance()->write_config('mobile_home_adsense_group', $mobile_home_adsense_group);
 
 // 		$mobile_tv_adsense_group = array('big_group' => $mobile_tv_big_adsense, 'small_group' => $mobile_tv_small_adsense);
