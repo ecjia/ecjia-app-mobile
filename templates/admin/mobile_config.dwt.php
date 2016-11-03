@@ -64,9 +64,9 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.shop_app_description'}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_app_description'}</label>
 							<div class="controls">
-								<textarea class="span12 h100" name='shop_app_description'>{$shop_app_description}</textarea>
+								<textarea class="span12 h100" name='mobile_app_description'>{$mobile_app_description}</textarea>
 							</div>
 						</div>
 						<div class="control-group formSep">

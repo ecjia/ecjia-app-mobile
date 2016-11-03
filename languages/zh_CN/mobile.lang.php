@@ -29,7 +29,7 @@ return array(
 	'modify'			=> '修改',
 	'drop_confirm'		=> '您确定要删除此文件吗？',
 
-	'shop_app_description'	=> '移动应用简介：',
+	'mobile_app_description'=> '移动应用简介：',
 	'label_bonus_readme'	=> '红包使用说明：',
 	'pls_select'			=> '请选择...',
 	'search'				=> '搜索',

@@ -153,7 +153,7 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_phone_login_bgcolor', ecjia::config('mobile_phone_login_bgcolor'));
 		$this->assign('mobile_phone_login_bgimage', $mobile_phone_login_bgimage);
 
-		$this->assign('shop_app_description', ecjia::config('shop_app_description'));
+		$this->assign('mobile_app_description', ecjia::config('mobile_app_description'));
 		$this->assign('mobile_app_name',      ecjia::config('mobile_app_name'));
 		$this->assign('mobile_app_version',   ecjia::config('mobile_app_version'));
 		$this->assign('mobile_iphone_download', ecjia::config('mobile_iphone_download'));
@@ -265,7 +265,7 @@ class admin_config extends ecjia_admin {
 		$mobile_shop_urlscheme 			= !empty($_POST['mobile_shop_urlscheme']) 		? trim($_POST['mobile_shop_urlscheme']) 		: '';
 		$adsense_group 					= !empty($_POST['mobile_home_adsense_group']) 	? $_POST['mobile_home_adsense_group'] 			: '';
 
-		$shop_app_description 			= !empty($_POST['shop_app_description']) 	? trim($_POST['shop_app_description']) 	: '';
+		$mobile_app_description 		= !empty($_POST['mobile_app_description']) 	? trim($_POST['mobile_app_description']) 	: '';
 		$mobile_app_name 				= !empty($_POST['mobile_app_name']) 		? trim($_POST['mobile_app_name']) 		: '';
 		$mobile_app_version 			= !empty($_POST['mobile_app_version']) 		? trim($_POST['mobile_app_version']) 	: '';
 		$mobile_iphone_download 		= !empty($_POST['mobile_iphone_download']) 	? trim($_POST['mobile_iphone_download']): '';
@@ -442,7 +442,7 @@ class admin_config extends ecjia_admin {
 // 		ecjia_config::instance()->write_config('mobile_topic_adsense', $mobile_topic_adsense);
 		ecjia_config::instance()->write_config('mobile_shopkeeper_urlscheme', $mobile_shopkeeper_urlscheme);
 		ecjia_config::instance()->write_config('mobile_shop_urlscheme', $mobile_shop_urlscheme);
-		ecjia_config::instance()->write_config('shop_app_description', $shop_app_description);
+		ecjia_config::instance()->write_config('mobile_app_description', $mobile_app_description);
 		ecjia_config::instance()->write_config('mobile_app_name', 		$mobile_app_name);
 		ecjia_config::instance()->write_config('mobile_app_version', 	$mobile_app_version);
 		ecjia_config::instance()->write_config('mobile_iphone_download', $mobile_iphone_download);
