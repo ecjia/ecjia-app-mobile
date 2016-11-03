@@ -126,6 +126,9 @@ function promote_goods_data($response, $request) {
 					'market_price'	=> $val['market_price'],
 					'shop_price'	=> $val['shop_price'],
 					'promote_price'	=> $val['promote_price'],
+			        'unformatted_promote_price' => $val['unformatted_promote_price'],
+    			    'promote_start_date' => $val['promote_start_date'],
+    			    'promote_end_date' => $val['promote_end_date'],
 					'img' => array(
 							'small' => $val['goods_thumb'],
 							'thumb' => $val['goods_img'],
