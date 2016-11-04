@@ -517,6 +517,7 @@ return array(
 	'mobile_app_preview1'		=> '应用预览图1：',
 	'mobile_app_preview2'		=> '应用预览图2：',
 	'mobile_app_screenshots'	=> '应用截图：',
+    'drop_screenshots_confirm'  => '您确定要删除这张应用截图吗？',
 );
 
 // end
