@@ -642,16 +642,43 @@
 								</div>
 							</div>
 						</div>
-						<!-- <div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.mobile_app_screenshots'}</label>
-							<div class="controls">
-								<ul>
-									<li>
-										<label for=""></label>
-									</li>
-								</ul>
-							</div>
-						</div> -->
+					    <div class="control-group formSep">
+							<!-- <label class="control-label">{lang key='mobile::mobile.mobile_app_screenshots'}</label> -->
+
+                            <div class="row-fluid mobile-fileupload" data-action="{url path='mobile/admin_config/insert'}" data-remove="{url path='mobile/admin_config/drop_image'}"></div>
+                            <div class="row-fluid {if !$img_list} hide{/if}" style="margin-top:30px;">
+                            	<div class="span12">
+                            		<h3 class="heading m_b10">{lang key='mobile::mobile.mobile_app_screenshots'}<small>{lang key='goods::goods.goods_photo_notice'}</small></h3>
+                            		<div class="m_b20"><span class="help-inline">{lang key='goods::goods.goods_photo_help'}</span></div>
+                            		<div class="wmk_grid ecj-wookmark wookmark_list">
+                            			<ul class="wookmark-goods-photo move-mod nomove">
+                            				<!-- {foreach from=$img_list item=img} -->
+                            				<li class="thumbnail move-mod-group">
+                            					<div class="attachment-preview">
+                            						<div class="ecj-thumbnail">
+                            							<div class="centered">
+                            								<a class="bd" title="{$img.img_desc}">
+                            									<img data-original="{$img.sort}" src="{$img.img_url}" alt="" />
+                            								</a>
+                            							</div>
+                            						</div>
+                            					</div>
+                            					<p>
+                            						<a href="javascript:;" title="{lang key='goods::goods.cancel'}" data-toggle="sort-cancel" style="display:none;"><i class="fontello-icon-cancel"></i></a>
+                            						<a href="javascript:;" title="{lang key='goods::goods.save'}" data-toggle="sort-ok" data-imgid="{$img.id}" data-saveurl="{url path='mobile/admin_config/update_image_desc'}" style="display:none;"><i class="fontello-icon-ok"></i></a>
+                            						<a class="ajaxremove" data-imgid="{$img.id}" data-toggle="ajaxremove" data-msg="{lang key='mobile::mobile.drop_screenshots_confirm'}" href='{url path="mobile/admin_config/drop_image" args="id={$img.id}"}' title="{lang key='system::system.remove'}"><i class="icon-trash"></i></a>
+                            						<a class="move-mod-head" href="javascript:void(0)" title="{lang key='goods::goods.move'}"><i class="icon-move"></i></a>
+                            						<a href="javascript:;" title="{lang key='system::system.edit'}" data-toggle="edit"><i class="icon-pencil"></i></a>
+                            						<span class="edit_title">{if $img.img_desc}{$img.img_desc}{else}{lang key='goods::goods.no_title'}{/if}</span>
+                            					</p>
+                            				</li>
+                            				<!-- {/foreach} -->
+                            			</ul>
+                            		</div>
+                            	</div>
+                            	<a class="btn btn-info save-sort" data-sorturl="{url path='mobile/admin_config/sort_image'}">{lang key='goods::goods.save_sort'}</a>
+                            </div>
+						</div>
 					</div>
 
 					<!--

@@ -32,6 +32,9 @@ class admin_config extends ecjia_admin {
 
 		RC_Script::enqueue_script('mobile_config', RC_App::apps_url('statics/js/mobile_config.js', __FILE__), array(), false, false);
 		RC_Script::localize_script('mobile_config', 'js_lang', RC_Lang::get('mobile::mobile.js_lang'));
+
+        RC_Script::enqueue_script('jquery-dropper', RC_Uri::admin_url() . '/statics/lib/dropper-upload/jquery.fs.dropper.js', array(), false, true);
+        RC_Style::enqueue_style('dropper', RC_Uri::admin_url('/statics/lib/dropper-upload/jquery.fs.dropper.css'));
 	}
 
 
@@ -220,29 +223,95 @@ class admin_config extends ecjia_admin {
 			$mobile_app_preview1 = RC_Upload::upload_url().'/'.$mobile_app_preview[0];
 		}
 		if(!empty($mobile_app_preview[1])){
-			$mobile_app_preview2 = RC_Upload::upload_url().'/'.$mobile_app_preview[0];
+			$mobile_app_preview2 = RC_Upload::upload_url().'/'.$mobile_app_preview[1];
 		}
-		// _dump($mobile_app_preview,1);
+
+        $img_list = RC_DB::table('screenshots')
+        ->orderBy('sort','asc')
+        ->get();
+        foreach($img_list as $key => $val){
+            $img_list[$key]['img_url'] = !empty($val['img_url'])? RC_Upload::upload_url().'/'.$val['img_url'] : '';
+        }
+        $this->assign('img_list',            $img_list);
 		$this->assign('mobile_app_preview1', $mobile_app_preview1);
 		$this->assign('mobile_app_preview2', $mobile_app_preview2);
 		$this->assign('dropper_action', RC_Uri::url('mobile/admin_config/insert'));
 		$this->display('mobile_config.dwt');
 	}
 
-	/**
-	* 应用截图
+    /**
+     * 上传应用图片的方法
+     */
+    public function insert() {
+        $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+        $upload = RC_Upload::uploader('image', array('save_path' => 'data/screenshots', 'auto_sub_dirs' => true));
+
+        if (!$upload->check_upload_file($_FILES['img_url'])) {
+            $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        $count = RC_DB::table('screenshots')->where('app_code', '=', 'cityo2o')->count();
+        if($count < 10){
+            $image_info = $upload->upload($_FILES['img_url']);
+            if (empty($image_info)) {
+                $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            }else{
+                $img = $upload->get_position($image_info);
+            }
+            $data = array(
+                'img_desc'  => $image_info['name'],
+                'img_url'   => $img,
+                'app_code'  =>'cityo2o',
+            );
+            RC_DB::table('screenshots')->insert($data);
+            $url = RC_Uri::url('mobile/admin_config/init');
+            $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
+        }else{
+            $this->showmessage('应用截图最多只能添加10张', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+
+    }
+
+    /**
+	* 相册图片排序
 	*/
-	public function insert(){
-		if (isset($_FILES['img_url'])) {
-			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'auto_sub_dirs' => false));
-			$upload->add_filename_callback(function($file, $filename) { return true; });
-			$image_info = $upload->upload($_FILES['img_url']);
-			if (!empty($image_info)) {
-				$mobile_app_preview2 = $upload->get_position($image_info);
-			}
+	public function sort_image() {
+        $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+		$sort = $_GET['info'];
+		foreach ($sort as $k => $v) {
+            $data['sort'] = $k + 1;
+			RC_DB::table('screenshots')->where('id', $v['img_id'])->where('app_code', '=', 'cityo2o')->update($data);
 		}
+		$this->showmessage(RC_Lang::get('goods::goods.save_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
+    /**
+	* 修改相册图片描述
+	*/
+	public function update_image_desc() {
+        $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+		$id = $_GET['id'];
+		$val = $_GET['val'];
+		RC_DB::table('screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->update(array('img_desc' => $val));
+		$this->showmessage(RC_Lang::get('goods::goods.edit_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+	}
+
+    /**
+	* 删除图片
+	*/
+	public function drop_image() {
+		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+		$id = empty($_GET['id']) ? 0 : intval($_GET['id']);
+
+		/* 删除图片文件 */
+		$row = RC_DB::table('screenshots')->select('img_url')->where('id', $id)->first();
+
+		if (!empty($row['img_url'])) {
+			RC_Filesystem::disk()->delete(RC_Upload::upload_url($row['img_url']));
+		}
+		/* 删除数据 */
+		RC_DB::table('screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->delete();
+		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+	}
 
 	/**
 	 * 处理移动应用配置

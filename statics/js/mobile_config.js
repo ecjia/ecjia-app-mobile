@@ -10,6 +10,24 @@
             app.config.search_article();
             app.config.add_adsense_group();
             app.config.del_adsense_group();
+
+            $( ".wookmark_list img" ).disableSelection();
+
+			$('.move-mod').sortable({
+				distance: 0,
+				revert: false, //缓冲效果
+				handle: '.move-mod-head',
+				placeholder: 'ui-sortable-placeholder thumbnail',
+				activate: function(event, ui) {
+					$('.wookmark-goods-photo').append(ui.helper);
+				},
+				stop: function(event, ui) {
+				},
+				sort: function(event, ui) {
+				}
+			});
+
+
             $('#info-toggle-button').toggleButtons({
                 style: {
                     enabled: "info",
@@ -30,7 +48,62 @@
             });
             app.config.order_reminder();
 			app.config.fileupload();
+			app.config.save_sort();
+			app.config.edit_title();
+			app.config.sort_ok();
         },
+
+        edit_title: function () {
+            $('[data-toggle="edit"]').on('click', function (e) {
+                e.preventDefault();
+                var $this = $(this),
+                    value = $(this).parent().find('.edit_title').text();
+
+                $this.parent('p').find('.edit_title').html('<input class="edit-inline" type="text" value="' + value + '" />').find('.edit-inline').focus().select();
+                $this.parent('p').find('.ajaxremove , .move-mod-head, [data-toggle="edit"]').css('display', 'none');
+                $this.parent('p').find('[data-toggle="sort-cancel"] , [data-toggle="sort-ok"]').css('display', 'block');
+            });
+        },
+        sort_ok : function() {
+			$('[data-toggle="sort-ok"]').on('click', function(e) {
+				e.preventDefault();
+				var $this 	= $(this),
+					url 	= $this.attr('data-saveurl'),
+					id 		= $this.attr('data-imgid'),
+					val 	= $this.parent().find('.edit-inline').val(),
+					info 	= {id : id, val : val};
+
+				$.get(url, info, function(data) {
+					$this.parent().find('.edit_title').html(val);
+					$this.parent('p').find('.ajaxremove , .move-mod-head , [data-toggle="edit"]').css('display', 'inline-block');
+					$this.parent('p').find('[data-toggle="sort-cancel"] , [data-toggle="sort-ok"]').css('display', 'none');
+					ecjia.admin.showmessage(data);
+				});
+			});
+		},
+
+        save_sort : function() {
+			$('.save-sort').on('click', function(e) {
+				e.preventDefault();
+				var info = {},
+					info_str = '{info : [',
+					sort_url = $(this).attr('data-sorturl');
+
+				$('.wookmark-goods-photo li').each(function(i) {
+					var $this = $(this);
+
+					info_str +=
+					i+1 == $('.wookmark-goods-photo li').length ?
+					'{img_id : ' + $this.find('[data-toggle="ajaxremove"]').attr('data-imgid') + '},':
+					'{img_id : ' + $this.find('[data-toggle="ajaxremove"]').attr('data-imgid') + ',},';
+				});
+				info_str += ']}';
+				info = eval('(' + info_str + ')');
+				$.get(sort_url, info, function(data) {
+					ecjia.admin.showmessage(data);
+				})
+			});
+		},
 
         order_reminder: function () {
             $("input[name='order_reminder_type']").on('change', function () {
@@ -292,7 +365,18 @@
         },
 
 		fileupload : function (){
-			
+            var action = $(".mobile-fileupload").attr('data-action');
+			$(".mobile-fileupload").dropper({
+				action 			: action,
+				label 			: '将应用图片拖动至此处上传',
+				maxQueue		: 2,
+				maxSize 		: 5242880, // 5 mb
+				height 			: 150,
+				postKey			: "img_url",
+				successaa_upload: function(data) {
+					ecjia.admin.showmessage(data);
+				}
+			});
 		}
     }
 
