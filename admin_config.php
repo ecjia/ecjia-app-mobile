@@ -230,7 +230,7 @@ class admin_config extends ecjia_admin {
         ->orderBy('sort','asc')
         ->get();
         foreach($img_list as $key => $val){
-            $img_list[$key]['app_screenshots'] = !empty($val['app_screenshots'])? RC_Upload::upload_url().'/'.$val['app_screenshots'] : '';
+            $img_list[$key]['img_url'] = !empty($val['img_url'])? RC_Upload::upload_url().'/'.$val['img_url'] : '';
         }
         $this->assign('img_list',            $img_list);
 		$this->assign('mobile_app_preview1', $mobile_app_preview1);
@@ -244,12 +244,12 @@ class admin_config extends ecjia_admin {
      */
     public function insert() {
         $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
-        $upload = RC_Upload::uploader('image', array('save_path' => 'data/assets/screenshots', 'auto_sub_dirs' => true));
+        $upload = RC_Upload::uploader('image', array('save_path' => 'data/screenshots', 'auto_sub_dirs' => true));
 
         if (!$upload->check_upload_file($_FILES['img_url'])) {
             $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        $count = RC_DB::table('screenshots')->count();
+        $count = RC_DB::table('screenshots')->where('app_code', '=', 'cityo2o')->count();
         if($count < 10){
             $image_info = $upload->upload($_FILES['img_url']);
             if (empty($image_info)) {
@@ -258,8 +258,9 @@ class admin_config extends ecjia_admin {
                 $img = $upload->get_position($image_info);
             }
             $data = array(
-                'img_desc' => $image_info['name'],
-                'app_screenshots' => $img,
+                'img_desc'  => $image_info['name'],
+                'img_url'   => $img,
+                'app_code'  =>'cityo2o',
             );
             RC_DB::table('screenshots')->insert($data);
             $url = RC_Uri::url('mobile/admin_config/init');
@@ -278,7 +279,7 @@ class admin_config extends ecjia_admin {
 		$sort = $_GET['info'];
 		foreach ($sort as $k => $v) {
             $data['sort'] = $k + 1;
-			RC_DB::table('screenshots')->where('id', $v['img_id'])->update($data);
+			RC_DB::table('screenshots')->where('id', $v['img_id'])->where('app_code', '=', 'cityo2o')->update($data);
 		}
 		$this->showmessage(RC_Lang::get('goods::goods.save_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
@@ -290,7 +291,7 @@ class admin_config extends ecjia_admin {
         $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
 		$id = $_GET['id'];
 		$val = $_GET['val'];
-		RC_DB::table('screenshots')->where('id', $id)->update(array('img_desc' => $val));
+		RC_DB::table('screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->update(array('img_desc' => $val));
 		$this->showmessage(RC_Lang::get('goods::goods.edit_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
@@ -302,13 +303,13 @@ class admin_config extends ecjia_admin {
 		$id = empty($_GET['id']) ? 0 : intval($_GET['id']);
 
 		/* 删除图片文件 */
-		$row = RC_DB::table('screenshots')->select('app_screenshots')->where('id', $id)->first();
+		$row = RC_DB::table('screenshots')->select('img_url')->where('id', $id)->first();
 
-		if (!empty($row['app_screenshots'])) {
-			RC_Filesystem::disk()->delete(RC_Upload::upload_url($row['app_screenshots']));
+		if (!empty($row['img_url'])) {
+			RC_Filesystem::disk()->delete(RC_Upload::upload_url($row['img_url']));
 		}
 		/* 删除数据 */
-		RC_DB::table('screenshots')->where('id', $id)->delete();
+		RC_DB::table('screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->delete();
 		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 

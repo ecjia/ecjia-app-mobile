@@ -658,7 +658,7 @@
                             						<div class="ecj-thumbnail">
                             							<div class="centered">
                             								<a class="bd" title="{$img.img_desc}">
-                            									<img data-original="{$img.sort}" src="{$img.app_screenshots}" alt="" />
+                            									<img data-original="{$img.sort}" src="{$img.img_url}" alt="" />
                             								</a>
                             							</div>
                             						</div>
