@@ -438,6 +438,7 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('mobile_feedback_autoreply', $mobile_feedback_autoreply);
 
 		$bonus_readme_url = RC_Uri::url('article/mobile/info', 'id='.$bonus_readme);
+		$bonus_readme_url = str_replace(RC_Uri::site_url(), '', $bonus_readme_url);
 		ecjia_config::instance()->write_config('bonus_readme_url', $bonus_readme_url);
 // 		ecjia_config::instance()->write_config('mobile_topic_adsense', $mobile_topic_adsense);
 		ecjia_config::instance()->write_config('mobile_shopkeeper_urlscheme', $mobile_shopkeeper_urlscheme);
