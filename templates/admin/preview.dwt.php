@@ -39,7 +39,7 @@
 							</tr>
 							<tr>
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_os'}</strong></div></td>
-								<td>{$device.device_os}</td>
+								<td>{$device.device_type}	{$device.device_os}</td>
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_udid'}</strong></div></td>
 								<td>{$device.device_udid}</td>
 							</tr>
@@ -55,7 +55,13 @@
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_add_time'}</strong></div></td>
 								<td>{$device.add_time}</td>
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_location'}</strong></div></td>
-								<td>{$device.location_province}</td>
+								<td>{$device.location_province}/{$device.location_city}</td>
+							</tr>
+							<tr>
+								<td><div align="right"><strong>{lang key='mobile::mobile.label_update_time'}</strong></div></td>
+								<td>{$device.update_time}</td>
+								<td><div align="right"><strong>{lang key='mobile::mobile.visit_times'}</strong></div></td>
+								<td>{$device.visit_times}</td>
 							</tr>
 							<tr>
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_token'}</strong></div></td>

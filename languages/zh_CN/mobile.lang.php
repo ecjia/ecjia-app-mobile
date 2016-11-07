@@ -203,6 +203,8 @@ return array(
 	'enabled'			=> '有效',
 	'disable'			=> '无效',
 	'label_add_time'	=> '添加时间：',
+	'label_update_time'	=> '更新时间：',
+	'visit_times'		=> '访问次数：',
 	'label_location'	=> '位置：',
 	'label_device_token'=> 'DeviceToken：',
 	'edit_device_alias'	=> '编辑设备别名',

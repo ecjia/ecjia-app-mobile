@@ -95,8 +95,8 @@
 						{$val.device_udid}
 						<!-- {/if} -->
 					</td>
-					<td>{$val.device_os}</td>
-					<td>{$val.location_province}</td>
+					<td>{$val.device_type}	{$val.device_os}</td>
+					<td>{$val.location_province}/{$val.location_city}</td>
 					<td>{$val.add_time}</td>
 				</tr>
 				<!--  {foreachelse} -->
