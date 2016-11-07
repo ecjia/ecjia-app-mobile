@@ -29,7 +29,7 @@
 						<tbody class="first-td-no-leftbd">
 							<tr>
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_user_id'}</strong></div></td>
-								<td colspan="3">{if $device.user_id eq 0}{lang key='mobile::mobile.no'}{else}{$device.user_id}{/if}&nbsp;&nbsp;&nbsp;{if $device.is_admin eq 0}【{lang key='mobile::mobile.not_admin'}】{else}【{lang key='mobile::mobile.is_admin'}】{/if}</td>
+								<td colspan="3">{if $device.user_id eq 0}{lang key='mobile::mobile.no'}{else}{$device.user_id}{/if}&nbsp;&nbsp;&nbsp;{if $device.user_type neq 'admin'}【{lang key='mobile::mobile.not_admin'}】{else}【{lang key='mobile::mobile.is_admin'}】{/if}</td>
 							</tr>
 							<tr>
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_type'}</strong></div></td>
@@ -39,7 +39,7 @@
 							</tr>
 							<tr>
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_os'}</strong></div></td>
-								<td>{$device.device_type}	{$device.device_os}</td>
+								<td><!-- {if $device.device_type} -->{$device.device_type}（{$device.device_os}）<!-- {/if} --></td>
 								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_udid'}</strong></div></td>
 								<td>{$device.device_udid}</td>
 							</tr>

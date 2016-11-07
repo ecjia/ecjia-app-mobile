@@ -63,7 +63,7 @@
 						<th class="table_checkbox"><input type="checkbox" name="select_rows" data-toggle="selectall" data-children=".checkbox"/></th>
 						<th class="w130">{lang key='mobile::mobile.device_type'}</th>
 						<th>{lang key='mobile::mobile.device_name'}</th>
-						<th class="w150">{lang key='mobile::mobile.device_os'}</th>
+						<th class="w200">{lang key='mobile::mobile.device_os'}</th>
 						<th class="w150">{lang key='mobile::mobile.location'}</th>
 						<th class="w150">{lang key='mobile::mobile.add_time'}</th>
 					</tr>
@@ -95,7 +95,7 @@
 						{$val.device_udid}
 						<!-- {/if} -->
 					</td>
-					<td>{$val.device_type}	{$val.device_os}</td>
+					<td><!-- {if $val.device_type} -->{$val.device_type}（{$val.device_os}）<!-- {/if} --></td>
 					<td>{$val.location_province}/{$val.location_city}</td>
 					<td>{$val.add_time}</td>
 				</tr>
