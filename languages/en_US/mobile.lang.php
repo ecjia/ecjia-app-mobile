@@ -23,6 +23,7 @@ return array(
 	'label_mobile_logo'	=> 'Mobile application logo:',
 	'mobile_app_name'	=> 'Mobile application name:',
 	'mobile_app_version'=> 'Mobile application version:',
+	'mobile_app_video' 	=> 'Mobile application video:',
 	'no_image'			=> 'No picture',
 	'browse'			=> 'Browse',
 	'modify'			=> 'Modify',

@@ -157,8 +157,9 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_phone_login_bgimage', $mobile_phone_login_bgimage);
 
 		$this->assign('mobile_app_description', ecjia::config('mobile_app_description'));
-		$this->assign('mobile_app_name',      ecjia::config('mobile_app_name'));
-		$this->assign('mobile_app_version',   ecjia::config('mobile_app_version'));
+		$this->assign('mobile_app_name',      	ecjia::config('mobile_app_name'));
+		$this->assign('mobile_app_version',   	ecjia::config('mobile_app_version'));
+		$this->assign('mobile_app_video',   	ecjia::config('mobile_app_video'));
 		$this->assign('mobile_iphone_download', ecjia::config('mobile_iphone_download'));
 		$this->assign('mobile_android_download', ecjia::config('mobile_android_download'));
 // 		$this->assign('shop_ipad_download', ecjia::config('shop_ipad_download'));
@@ -337,6 +338,7 @@ class admin_config extends ecjia_admin {
 		$mobile_app_description 		= !empty($_POST['mobile_app_description']) 	? trim($_POST['mobile_app_description']) 	: '';
 		$mobile_app_name 				= !empty($_POST['mobile_app_name']) 		? trim($_POST['mobile_app_name']) 		: '';
 		$mobile_app_version 			= !empty($_POST['mobile_app_version']) 		? trim($_POST['mobile_app_version']) 	: '';
+		$mobile_app_video 				= !empty($_POST['mobile_app_video']) 		? trim($_POST['mobile_app_video']) 		: '';
 		$mobile_iphone_download 		= !empty($_POST['mobile_iphone_download']) 	? trim($_POST['mobile_iphone_download']): '';
 		$mobile_android_download 		= !empty($_POST['mobile_android_download']) ? trim($_POST['mobile_android_download']) : '';
 // 		$shop_ipad_download 			= !empty($_POST['shop_ipad_download']) 		? trim($_POST['shop_ipad_download']) 	: '';
@@ -515,6 +517,7 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('mobile_app_description', $mobile_app_description);
 		ecjia_config::instance()->write_config('mobile_app_name', 		$mobile_app_name);
 		ecjia_config::instance()->write_config('mobile_app_version', 	$mobile_app_version);
+		ecjia_config::instance()->write_config('mobile_app_video', 		$mobile_app_video);
 		ecjia_config::instance()->write_config('mobile_iphone_download', $mobile_iphone_download);
 		ecjia_config::instance()->write_config('mobile_android_download', $mobile_android_download);
 // 		ecjia_config::instance()->write_config('shop_ipad_download', $shop_ipad_download);

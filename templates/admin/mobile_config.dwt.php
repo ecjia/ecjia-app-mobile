@@ -70,6 +70,12 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
+							<label class="control-label">{lang key='mobile::mobile.mobile_app_video'}</label>
+							<div class="controls">
+								<input type="text" name="mobile_app_video" value="{$mobile_app_video}" />
+							</div>
+						</div>
+						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.label_bonus_readme'}</label>
 							<div class="controls">
 								<select name='bonus_readme' class="artilce_list">

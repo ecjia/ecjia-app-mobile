@@ -24,6 +24,7 @@ return array(
 	'label_mobile_logo'	=> '移动应用Logo：',
 	'mobile_app_name'	=> '移动应用名称：',
 	'mobile_app_version' => '移动应用版本号：',
+	'mobile_app_video' 	=> '移动应用视频地址：',
 	'no_image'			=> '暂无图片',
 	'browse'			=> '浏览',
 	'modify'			=> '修改',
