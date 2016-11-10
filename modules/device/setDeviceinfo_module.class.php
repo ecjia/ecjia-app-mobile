@@ -17,6 +17,7 @@ class setDeviceinfo_module extends api_front implements api_interface {
 		$device_type	= $this->requestData('device_type');
 		$province		= $this->requestData('province');
 		$city			= $this->requestData('city');
+		$user_type		= $this->requestData('user_type', 'user');
 		
 		if (empty($device['udid']) || empty($device['client']) || empty($device['code'])) {
 			return new ecjia_error( 'invalid_parameter', RC_Lang::get ('system::system.invalid_parameter' ));
@@ -26,7 +27,8 @@ class setDeviceinfo_module extends api_front implements api_interface {
 		$device_data = array(
 				'device_udid'	=> $device['udid'],
 				'device_client'	=> $device['client'],
-				'device_code'	=> $device['code']
+				'device_code'	=> $device['code'],
+				'user_type'		=> $user_type,
 		);
 		$row = $db_mobile_device->find($device_data);
 		

@@ -12,6 +12,7 @@ class setDeviceToken_module extends api_front implements api_interface {
 		$device = $this->device;
 		
 		$device['device_token'] = $this->requestData('device_token');
+		$user_type		= $this->requestData('user_type', 'user');
 		
 		if (empty($device['udid']) || empty($device['client']) || empty($device['code']) || empty($device['device_token'])) {
 			return new ecjia_error(101, '参数错误');
@@ -21,7 +22,8 @@ class setDeviceToken_module extends api_front implements api_interface {
 		$device_data = array(
 				'device_udid'	=> $device['udid'],
 				'device_client'	=> $device['client'],
-				'device_code'	=> $device['code']
+				'device_code'	=> $device['code'],
+				'user_type'		=> $user_type,
 		);
 		$row = $db_mobile_device->find($device_data);
 		
