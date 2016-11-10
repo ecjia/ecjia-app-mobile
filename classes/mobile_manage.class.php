@@ -51,6 +51,13 @@ class mobile_manage {
         return $this->row['device_client'];
     }
     
+    public function getCode() {
+    	if (is_ecjia_error($this->row)) {
+    		return $this->row;
+    	}
+    	return $this->row['device_code'];
+    }
+    
     /**
      * 获取当前帐号的状态
      * @return unknown|boolean

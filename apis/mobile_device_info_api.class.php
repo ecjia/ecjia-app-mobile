@@ -24,10 +24,16 @@ class mobile_device_info_api extends Component_Event_Api {
 	    }
 	    
 	    if (!empty($user_id)) {
+	    	$db = RC_DB::table('mobile_device');
 // 	        $db = RC_Model::model('mobile/mobile_device_model');
 // 	        return $db->order(array('id' => 'DESC'))->find(array('user_id' => $user_id, 'is_admin' => $is_admin,  'device_code' => $options['device_code']));
+	        $db->where('user_id', $user_id)->where('user_type', $user_type);
+	        if (isset($options['device_code']) && !empty($options['device_code'])) {
+	        	$db->where('device_code', $options['device_code']);
+	        }
 	        
-	        return RC_DB::table('mobile_device')->where('user_id', $user_id)->where('user_type', $user_type)->where('device_code', $options['device_code'])->orderBy('id', 'desc')->first();
+	        $db->orderBy('id', 'desc');
+	        return $db->get();
 	    }
         
 	}
