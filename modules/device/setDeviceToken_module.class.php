@@ -9,7 +9,7 @@ class setDeviceToken_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();	
 		
-		$device = $this->requestData('device', array());
+		$device = $this->device;
 		
 		$device['device_token'] = $this->requestData('device_token');
 		
