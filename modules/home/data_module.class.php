@@ -9,7 +9,7 @@ class data_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();
     	
-		$device 	= $this->requestData('device', array());
+		$device		  = $this->device;
 		$location	= $this->requestData('location',array()); 
 // 		$location = array(
 // 				'latitude'	=> '31.235450744628906',

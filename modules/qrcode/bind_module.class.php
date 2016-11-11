@@ -11,7 +11,8 @@ class bind_module extends api_front implements api_interface {
     	$this->authSession();
     	
 		$code = $this->requestData('code');
-		$device = $this->requestData('device', array());
+
+		$device		  = $this->device;
 		$type = $this->requestData('type');
 		if (empty($code) || empty($type)) {
 			return new ecjia_error(101, '参数错误');

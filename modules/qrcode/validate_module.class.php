@@ -29,7 +29,7 @@ class validate_module extends api_front implements api_interface {
 			}
         }
 		
-		$device = $this->requestData('device', array());
+		$device		  = $this->device;
 		$where = array(
 				'uuid'		 => $code,
 				'device_udid' => $device['udid'],
