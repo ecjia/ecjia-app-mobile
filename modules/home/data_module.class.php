@@ -23,6 +23,7 @@ class data_module extends api_front implements api_interface {
 			$geohash_code = $geohash->encode($location['latitude'] , $location['longitude']);
 			$geohash_code = substr($geohash_code, 0, 5);
 			$request['geohash_code'] = $geohash_code;
+			$request['store_id_group'] = RC_Api::api('store', 'neighbors_store_id', array('geohash' => $geohash_code));
 		}
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
@@ -113,7 +114,8 @@ function promote_goods_data($response, $request) {
 			'sort'	=> $order_sort,
 			'page'	=> 1,
 			'size'	=> 6,
-			'location' => $request['location']
+			'location'	=> $request['location'],
+			'store_id'	=> $request['store_id_group'],
 	);
 	$result = RC_Api::api('goods', 'goods_list', $filter);
 	
@@ -151,7 +153,8 @@ function new_goods_data($response, $request) {
 			'sort'	=> $order_sort,
 			'page'	=> 1,
 			'size'	=> 6,
-			'location' => $request['location']
+			'location'	=> $request['location'],
+			'store_id'	=> $request['store_id_group'],
 	);
 	$result = RC_Api::api('goods', 'goods_list', $filter);
 	
