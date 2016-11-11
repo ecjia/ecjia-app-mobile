@@ -29,7 +29,7 @@ class data_module extends api_front implements api_interface {
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
 		$cache_key = 'api_home_data_'.$_SESSION['user_rank'].'_'.ecjia::config('lang').'_'.$device['code'].'_'.$geohash_code;
 
-		$response = RC_Cache::app_cache_get($cache_key, 'mobile');
+		$response = RC_Cache::app_cache_get($cache_key, 'mobile');$response=null;
 		if (empty($response)) {
 			$db = RC_Model::model('goods/goods_model');
 			RC_Loader::load_app_func('global', 'api');
@@ -37,7 +37,6 @@ class data_module extends api_front implements api_interface {
 			//流程逻辑开始
 			// runloop 流
 			$response = array();
-			$response['device'] = $device; 
 			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
 			RC_Cache::app_cache_set($cache_key, $response, 'mobile', 60);
 		}
@@ -47,14 +46,10 @@ class data_module extends api_front implements api_interface {
 }
 
 function cycleimage_data($response, $request) {
-	$mobile_cycleimage = RC_Loader::load_app_class('mobile_method', 'mobile');
-	$device = $response['device'];
 	
-	if (isset($device['client']) && $device['client'] == 'ipad') {
-		$cycleimageDatas = $mobile_cycleimage->cycleimage_data(true);
-	} else {
-		$cycleimageDatas = $mobile_cycleimage->cycleimage_phone_data(true);
-	}
+	$mobile_cycleimage = RC_Loader::load_app_class('cycleimage_method', 'cycleimage');
+	
+	$cycleimageDatas = $mobile_cycleimage->player_data(true);
 	
 	$player_data = array();
 	foreach ($cycleimageDatas as $val) {
@@ -73,13 +68,7 @@ function cycleimage_data($response, $request) {
 	if (count($player_data) > 5) {
 		$player_data = array_slice($player_data, 0, 5);
 	}
-	
-	/* url解析判断规律   适用于2.8以及以前，之后是否废弃需确认*/
-// 	foreach ($player_data as $key => $val) {
-// 		$action_info = api_get_url($val['url']);
-// 		$player_data[$key]['action'] = $action_info['action'];
-// 		$player_data[$key]['action_id'] = $action_info['action_id'];
-// 	}
+
 	
 	$response['player'] = $player_data;
 	
