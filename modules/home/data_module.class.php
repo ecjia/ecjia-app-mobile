@@ -8,8 +8,8 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class data_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();
-    	
 		$device		  = $this->device;
+
 		$location	= $this->requestData('location',array()); 
 // 		$location = array(
 // 				'latitude'	=> '31.235450744628906',
@@ -23,6 +23,11 @@ class data_module extends api_front implements api_interface {
 			$geohash_code = $geohash->encode($location['latitude'] , $location['longitude']);
 			$geohash_code = substr($geohash_code, 0, 5);
 			$request['geohash_code'] = $geohash_code;
+			$request['store_id_group'] = RC_Api::api('store', 'neighbors_store_id', array('geohash' => $geohash_code));
+			
+			if (empty($request['store_id_group'])) {
+				$request['store_id_group'] = array(0);
+			}
 		}
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
@@ -36,7 +41,6 @@ class data_module extends api_front implements api_interface {
 			//流程逻辑开始
 			// runloop 流
 			$response = array();
-			$response['device'] = $device; 
 			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
 			RC_Cache::app_cache_set($cache_key, $response, 'mobile', 60);
 		}
@@ -46,14 +50,10 @@ class data_module extends api_front implements api_interface {
 }
 
 function cycleimage_data($response, $request) {
-	$mobile_cycleimage = RC_Loader::load_app_class('mobile_method', 'mobile');
-	$device = $response['device'];
 	
-	if (isset($device['client']) && $device['client'] == 'ipad') {
-		$cycleimageDatas = $mobile_cycleimage->cycleimage_data(true);
-	} else {
-		$cycleimageDatas = $mobile_cycleimage->cycleimage_phone_data(true);
-	}
+	$mobile_cycleimage = RC_Loader::load_app_class('cycleimage_method', 'cycleimage');
+	
+	$cycleimageDatas = $mobile_cycleimage->player_data(true);
 	
 	$player_data = array();
 	foreach ($cycleimageDatas as $val) {
@@ -72,13 +72,7 @@ function cycleimage_data($response, $request) {
 	if (count($player_data) > 5) {
 		$player_data = array_slice($player_data, 0, 5);
 	}
-	
-	/* url解析判断规律   适用于2.8以及以前，之后是否废弃需确认*/
-// 	foreach ($player_data as $key => $val) {
-// 		$action_info = api_get_url($val['url']);
-// 		$player_data[$key]['action'] = $action_info['action'];
-// 		$player_data[$key]['action_id'] = $action_info['action_id'];
-// 	}
+
 	
 	$response['player'] = $player_data;
 	
@@ -113,7 +107,8 @@ function promote_goods_data($response, $request) {
 			'sort'	=> $order_sort,
 			'page'	=> 1,
 			'size'	=> 6,
-			'location' => $request['location']
+			'location'	=> $request['location'],
+			'store_id'	=> $request['store_id_group'],
 	);
 	$result = RC_Api::api('goods', 'goods_list', $filter);
 	
@@ -151,7 +146,8 @@ function new_goods_data($response, $request) {
 			'sort'	=> $order_sort,
 			'page'	=> 1,
 			'size'	=> 6,
-			'location' => $request['location']
+			'location'	=> $request['location'],
+			'store_id'	=> $request['store_id_group'],
 	);
 	$result = RC_Api::api('goods', 'goods_list', $filter);
 	
