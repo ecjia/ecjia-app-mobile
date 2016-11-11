@@ -9,7 +9,7 @@ class data_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();
     	
-		$device 	= $this->requestData('device', array());
+		$device 	= $this->device;
 		$location	= $this->requestData('location',array()); 
 // 		$location = array(
 // 				'latitude'	=> '31.235450744628906',
@@ -24,12 +24,16 @@ class data_module extends api_front implements api_interface {
 			$geohash_code = substr($geohash_code, 0, 5);
 			$request['geohash_code'] = $geohash_code;
 			$request['store_id_group'] = RC_Api::api('store', 'neighbors_store_id', array('geohash' => $geohash_code));
+			
+			if (empty($request['store_id_group'])) {
+				$request['store_id_group'] = array(0);
+			}
 		}
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
 		$cache_key = 'api_home_data_'.$_SESSION['user_rank'].'_'.ecjia::config('lang').'_'.$device['code'].'_'.$geohash_code;
 
-		$response = RC_Cache::app_cache_get($cache_key, 'mobile');$response=null;
+		$response = RC_Cache::app_cache_get($cache_key, 'mobile');
 		if (empty($response)) {
 			$db = RC_Model::model('goods/goods_model');
 			RC_Loader::load_app_func('global', 'api');
