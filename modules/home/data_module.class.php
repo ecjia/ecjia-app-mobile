@@ -414,7 +414,7 @@ function seller_recommend_data($response, $request) {
 				if(ecjia::config('review_goods') == 1){
 					$v_where['review_status'] = array('gt' => 2);
 				}
-				$goods_result = $goods_db->where($v_where)->limit(3)->order(array('g.sort_order' => 'asc', 'goods_id' => 'desc'))->select();
+				$goods_result = $goods_db->where($v_where)->limit(3)->order(array('sort_order' => 'asc', 'goods_id' => 'desc'))->select();
 				$goods_count = $goods_db->where($v_where)->count();
 				$goods_list = array();
 				if (!empty ($goods_result)) {
