@@ -101,7 +101,7 @@ function mobile_menu_data($response, $request) {
 
 function promote_goods_data($response, $request) {
 	$promote_goods_data = array();
-	$order_sort = array('sort_order' => 'ASC', 'goods_id' => 'DESC');
+	$order_sort = array('g.sort_order' => 'ASC', 'goods_id' => 'DESC');
 	$filter = array(
 			'intro'	=> 'promotion',
 			'sort'	=> $order_sort,
@@ -140,7 +140,7 @@ function promote_goods_data($response, $request) {
 function new_goods_data($response, $request) {
 	$new_goods_data = array();
 
-	$order_sort = array('sort_order' => 'ASC', 'goods_id' => 'DESC');
+	$order_sort = array('g.sort_order' => 'ASC', 'goods_id' => 'DESC');
 	$filter = array(
 			'intro'	=> 'new',
 			'sort'	=> $order_sort,
@@ -414,7 +414,7 @@ function seller_recommend_data($response, $request) {
 				if(ecjia::config('review_goods') == 1){
 					$v_where['review_status'] = array('gt' => 2);
 				}
-				$goods_result = $goods_db->where($v_where)->limit(3)->order(array('sort_order' => 'asc', 'goods_id' => 'desc'))->select();
+				$goods_result = $goods_db->where($v_where)->limit(3)->order(array('g.sort_order' => 'asc', 'goods_id' => 'desc'))->select();
 				$goods_count = $goods_db->where($v_where)->count();
 				$goods_list = array();
 				if (!empty ($goods_result)) {
