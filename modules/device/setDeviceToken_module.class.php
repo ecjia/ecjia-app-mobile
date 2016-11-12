@@ -36,6 +36,7 @@ class setDeviceToken_module extends api_front implements api_interface {
 			$data = array();
 			if (!empty($device['device_token'])) {
 				$data['device_token'] = $device['device_token'];
+				$data['update_time']  = RC_Time::gmtime();
 			}
 			$db_mobile_device->where($device_data)->update($data);
 		}
