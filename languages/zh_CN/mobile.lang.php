@@ -37,6 +37,7 @@ return array(
 	'search_notice'			=> '请选择一篇文章，作为您的红包使用说明',
 
 	'mobile_feedback_autoreply'	=> '咨询默认回复设置：',
+	'mobile_share_link'			=> '分享连接：',
 	'shop_pc_url'				=> 'PC商城地址：',
 	'is_open_config'			=> '是否开启微商城：',
 	'wap_Logo'					=> '微商城 Logo：',

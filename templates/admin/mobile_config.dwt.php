@@ -103,15 +103,9 @@
 							</div>
 						</div>
 						<div class="control-group formSep">
-							<label class="control-label">{t}邀请说明：{/t}</label>
+							<label class="control-label">{lang key='mobile::mobile.mobile_share_link'}</label>
 							<div class="controls">
-								<textarea class="span12 h100" name="recommend_notice" cols="40" rows="3">{$recommend_notice}</textarea>
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{t}分享说明：{/t}</label>
-							<div class="controls">
-								<textarea class="span12 h100" name="share_notice" cols="40" rows="3">{$share_notice}</textarea>
+								<input type='text' name='mobile_share_link' value='{$mobile_share_link}'>
 							</div>
 						</div>
 					</div>

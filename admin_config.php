@@ -200,12 +200,8 @@ class admin_config extends ecjia_admin {
 		$this->assign('user_rank_list', $user_rank_list);
 		$this->assign('comment_award_open', ecjia::config('comment_award_open'));
 		$this->assign('comment_award', ecjia::config('comment_award'));
-
-		/* 推荐分成说明设置*/
-		$recommend_notice			= ecjia::config('recommend_notice');
-		$share_notice				= ecjia::config('share_notice');
-		$this->assign('recommend_notice', $recommend_notice);
-		$this->assign('share_notice', $share_notice);
+		/*分享链接*/
+		$this->assign('mobile_share_link', ecjia::config('mobile_share_link'));
 
 		/* 管理员信息*/
 //		$admin_user_list = RC_Model::model('user/admin_user_model')->field(array('user_id', 'user_name'))->select();
@@ -571,12 +567,9 @@ class admin_config extends ecjia_admin {
 			$order_reminder_value = '';
 		}
 		ecjia_config::instance()->write_config('order_reminder_value', $order_reminder_value);
-
-		/*推荐*/
-		$recommend_notice			= $_POST['recommend_notice'];
-		$share_notice				= $_POST['share_notice'];
-		ecjia_config::instance()->write_config('recommend_notice', $recommend_notice);
-		ecjia_config::instance()->write_config('share_notice', $share_notice);
+		/*分享链接*/
+		$mobile_share_link	= trim($_POST['mobile_share_link']);
+		ecjia_config::instance()->write_config('mobile_share_link', $mobile_share_link);
 
 		ecjia_admin::admin_log(RC_Lang::get('mobile::mobile.mobile_config_set'), 'setup', 'mobile_config');
 		$this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/init')));

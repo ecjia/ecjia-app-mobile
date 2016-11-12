@@ -337,14 +337,9 @@ class mobile_installer extends ecjia_installer {
         	ecjia_config::instance()->insert_config('hidden', 'order_reminder_value', '', array('type' => 'hidden'));
         }
         
-        /* 推荐说明*/
-        if (!ecjia::config('recommend_notice', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'recommend_notice', '', array('type' => 'hidden'));
-        }
-        
-        /* 推荐分享说明*/
-        if (!ecjia::config('share_notice', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'share_notice', '', array('type' => 'hidden'));
+		/*分享链接*/   
+    	if (!ecjia::config('mobile_share_link', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('hidden', 'mobile_share_link', '', array('type' => 'hidden'));
         }
         
         return true;
@@ -443,7 +438,10 @@ class mobile_installer extends ecjia_installer {
         if (ecjia::config('mobile_app_icon', ecjia::CONFIG_CHECK)) {
         	ecjia_config::instance()->delete_config('mobile_app_icon');
         }
-        
+        /*分享链接*/
+        if (ecjia::config('mobile_share_link', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->delete_config('mobile_share_link');
+        }
         return true;
     }
     
