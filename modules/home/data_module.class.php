@@ -211,7 +211,7 @@ function mobile_home_adsense_group($response, $request) {
 					} else {
 						continue;
 					}
-					$mobile_adsense_group[$key]['title'] = $adsense_info['position_desc'];
+					$mobile_adsense_group[]['title'] = $adsense_info['position_desc'];
 					$adsense = array(
 							'position_id'	=> $val,
 							'start_time'	=> array('elt' => RC_Time::gmtime()),
@@ -225,7 +225,7 @@ function mobile_home_adsense_group($response, $request) {
 							if (substr($v['ad_code'], 0, 4) != 'http') {
 								$v['ad_code'] = RC_Upload::upload_url($v['ad_code']);
 							}
-							$mobile_adsense_group[$key]['adsense'][] = array(
+							$mobile_adsense_group[]['adsense'][] = array(
 									'image'	=> $v['ad_code'],
 									'text'	=> $v['ad_name'],
 									'url'	=> $v['ad_link'],
