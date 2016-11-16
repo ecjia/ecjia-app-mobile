@@ -194,47 +194,12 @@ function mobile_home_adsense_group($response, $request) {
 	if (ecjia::config('mobile_home_adsense_group') == '' || ecjia::config('mobile_home_adsense_group') == 0) {
 		$response['adsense_group'] = array();
 	} else {
-		
 		$adsense_group = explode(',', ecjia::config('mobile_home_adsense_group'));
 		$mobile_home_adsense_group = array();
 		if (!empty($adsense_group)) {
-			$ad_view = RC_Model::model('adsense/ad_model');
-			$adsense_postion_db = RC_Model::model('mobile/orm_ad_position_model');
-			
 			foreach ($adsense_group as $key => $val) {
-				$cache_key = sprintf('%X', crc32('adsense_position-'. $val));
-				$mobile_adsense_group = $adsense_postion_db->get_cache_item($cache_key);
-				if (empty($mobile_adsense_group)) {
-				    $mobile_adsense_group = array();
-					$adsense = RC_Api::api('adsense', 'adsense_position_list', array('position_id' => $val));
-					if (!empty($adsense['arr'])) {
-						$adsense_info = $adsense['arr'][0];
-					} else {
-						continue;
-					}
-					$mobile_adsense_group['title'] = $adsense_info['position_desc'];
-					$adsense = array(
-							'position_id'	=> $val,
-							'start_time'	=> array('elt' => RC_Time::gmtime()),
-							'end_time'		=> array('egt' => RC_Time::gmtime()),
-							'enabled'		=> 1,
-					);
+				$mobile_adsense_group = RC_Api::api('adsense', 'adsense_list', array('position_id' => $val));
 					
-					$adsense_result = $ad_view->where($adsense)->order('ad_id')->limit(4)->select();
-					if (!empty($adsense_result)) {
-						foreach ($adsense_result as $v) {
-							if (substr($v['ad_code'], 0, 4) != 'http') {
-								$v['ad_code'] = RC_Upload::upload_url($v['ad_code']);
-							}
-							$mobile_adsense_group['adsense'][] = array(
-									'image'	=> $v['ad_code'],
-									'text'	=> $v['ad_name'],
-									'url'	=> $v['ad_link'],
-							);
-						}
-					}
-					$adsense_postion_db->set_cache_item($cache_key, $mobile_adsense_group);
-				}
 				$mobile_home_adsense_group[] = $mobile_adsense_group;
 			}
 		}
