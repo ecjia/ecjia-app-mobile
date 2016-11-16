@@ -8,7 +8,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class data_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	
-		$device		  = $this->device;
+		$device		= $this->device;
 
 		$location	= $this->requestData('location',array());
 
