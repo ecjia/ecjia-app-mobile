@@ -101,42 +101,32 @@ function promote_goods_data($response, $request) {
 			'sort'	=> $order_sort,
 			'page'	=> 1,
 			'size'	=> 6,
-			'location'	=> $request['location'],
-			'store_id'	=> $request['store_id_group'],
+			'geohash' => $request['geohash_code'],
 	);
-	$goods_db = RC_Model::model('mobile/orm_goods_model');
-	$key = 'goods_list-' . $_SESSION['user_rank'] .'-'. $filter['intro'] .'-sort_order-asc-goods_id-desc-'.$filter['page'].'-'.$filter['size'].'-'.$request['geohash_code'];
-	/* 储存商品列表缓存key*/
-	$cache_key = $goods_db->create_cache_key_array($key);
-	
-	$promote_goods_data = $goods_db->get_cache_item($cache_key);
-	
-	if (empty($promote_goods_data)) {
-		$result = RC_Api::api('goods', 'goods_list', $filter);
-		if ( !empty($result['list']) ) {
-			foreach ( $result['list'] as $key => $val ) {
-				$promote_goods_data[] = array(
-						'id'		=> intval($val['goods_id']),
-						'goods_id'	=> intval($val['goods_id']),           //多商铺中不用，后期删除
-						'name'		=> $val['goods_name'],
-						'market_price'	=> $val['market_price'],
-						'shop_price'	=> $val['shop_price'],
-						'promote_price'	=> $val['promote_price'],
-						'manage_mode'   => $val['manage_mode'],
-						'unformatted_promote_price' => $val['unformatted_promote_price'],
-						'promote_start_date' => $val['promote_start_date'],
-						'promote_end_date' => $val['promote_end_date'],
-						'img' => array(
-								'small' => $val['goods_thumb'],
-								'thumb' => $val['goods_img'],
-								'url'	=> $val['original_img'],
-						)
-				);
-			}
+
+	$result = RC_Api::api('goods', 'goods_list', $filter);
+	if ( !empty($result['list']) ) {
+		foreach ( $result['list'] as $key => $val ) {
+			$promote_goods_data[] = array(
+					'id'		=> intval($val['goods_id']),
+					'goods_id'	=> intval($val['goods_id']),           //多商铺中不用，后期删除
+					'name'		=> $val['goods_name'],
+					'market_price'	=> $val['market_price'],
+					'shop_price'	=> $val['shop_price'],
+					'promote_price'	=> $val['promote_price'],
+					'manage_mode'   => $val['manage_mode'],
+					'unformatted_promote_price' => $val['unformatted_promote_price'],
+					'promote_start_date' => $val['promote_start_date'],
+					'promote_end_date' => $val['promote_end_date'],
+					'img' => array(
+							'small' => $val['goods_thumb'],
+							'thumb' => $val['goods_img'],
+							'url'	=> $val['original_img'],
+					)
+			);
 		}
-		
-		$goods_db->set_cache_item($cache_key, $promote_goods_data);
 	}
+	
 	$response['promote_goods'] = $promote_goods_data;
 	return $response;
 }
@@ -150,40 +140,28 @@ function new_goods_data($response, $request) {
 			'sort'	=> $order_sort,
 			'page'	=> 1,
 			'size'	=> 6,
-			'location'	=> $request['location'],
-			'store_id'	=> $request['store_id_group'],
+			'geohash' => $request['geohash_code'],
 	);
 	
-	$goods_db = RC_Model::model('mobile/orm_goods_model');
-	$key = 'goods_list-' . $_SESSION['user_rank'] .'-'. $filter['intro'] .'-sort_order-asc-goods_id-desc-'.$filter['page'].'-'.$filter['size'].'-'.$request['geohash_code'];
-	/* 储存商品列表缓存key*/
-	$cache_key = $goods_db->create_cache_key_array($key);
-	
-	$new_goods_data = $goods_db->get_cache_item($cache_key);
-	
-	if (empty($new_goods_data)) {
-		$result = RC_Api::api('goods', 'goods_list', $filter);
-		if ( !empty($result['list']) ) {
-			foreach ( $result['list'] as $key => $val ) {
-				$new_goods_data[] = array(
-						'id'            => intval($val['goods_id']),
-						'goods_id'      => intval($val['goods_id']),           //多商铺中不用，后期删除
-						'name'          => $val['goods_name'],
-						'manage_mode'   => $val['manage_mode'],
-						'market_price'	=> $val['market_price'],
-						'shop_price'	=> $val['shop_price'],
-						'promote_price'	=> $val['promote_price'],
-						'img'           => array(
-								'small' => $val['goods_thumb'],
-								'thumb' => $val['goods_img'],
-								'url'	=> $val['original_img'],
-						)
-				);
-			}
+	$result = RC_Api::api('goods', 'goods_list', $filter);
+	if ( !empty($result['list']) ) {
+		foreach ( $result['list'] as $key => $val ) {
+			$new_goods_data[] = array(
+					'id'            => intval($val['goods_id']),
+					'goods_id'      => intval($val['goods_id']),           //多商铺中不用，后期删除
+					'name'          => $val['goods_name'],
+					'manage_mode'   => $val['manage_mode'],
+					'market_price'	=> $val['market_price'],
+					'shop_price'	=> $val['shop_price'],
+					'promote_price'	=> $val['promote_price'],
+					'img'           => array(
+							'small' => $val['goods_thumb'],
+							'thumb' => $val['goods_img'],
+							'url'	=> $val['original_img'],
+					)
+			);
 		}
-		$goods_db->set_cache_item($cache_key, $new_goods_data);
 	}
-	
 
 	$response['new_goods'] = $new_goods_data;
 	return $response;
