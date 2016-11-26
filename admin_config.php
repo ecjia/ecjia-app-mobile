@@ -250,7 +250,7 @@ class admin_config extends ecjia_admin {
         if (!$upload->check_upload_file($_FILES['img_url'])) {
             $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        $count = RC_DB::table('screenshots')->where('app_code', '=', 'cityo2o')->count();
+        $count = RC_DB::table('mobile_screenshots')->where('app_code', '=', 'cityo2o')->count();
         if($count < 10){
             $image_info = $upload->upload($_FILES['img_url']);
             if (empty($image_info)) {
@@ -263,7 +263,7 @@ class admin_config extends ecjia_admin {
                 'img_url'   => $img,
                 'app_code'  =>'cityo2o',
             );
-            RC_DB::table('screenshots')->insert($data);
+            RC_DB::table('mobile_screenshots')->insert($data);
             $url = RC_Uri::url('mobile/admin_config/init');
             $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
         }else{
