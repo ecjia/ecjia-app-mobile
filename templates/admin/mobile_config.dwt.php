@@ -22,94 +22,88 @@
 		<div class="span12">
 			<div class="tabbable tabs-left">
 				<ul class="nav nav-tabs tab_merchants_nav">
-					<li class="active"><a href="#tab1" data-toggle="tab">{lang key='mobile::mobile.basic_info'}</a></li>
-					{if 0}<li><a href="#touch" data-toggle="tab">{lang key='mobile::mobile.touch_set'}</a></li>{/if}
-					<li><a href="#load_app" data-toggle="tab">{lang key='mobile::mobile.download_url'}</a></li>
-					<li><a href="#adsense" data-toggle="tab">{lang key='mobile::mobile.adsense_set'}</a></li>
-					{if 0}<li><a href="#tv_adsense" data-toggle="tab">TV广告位设置</a></li>{/if}
-					<li><a href="#mobile_login" data-toggle="tab">{lang key='mobile::mobile.mobile_login'}</a></li>
-					<li><a href="#hot_city" data-toggle="tab">{lang key='mobile::mobile.hot_city_set'}</a></li>
-					<li><a href="#message_notice" data-toggle="tab">{lang key='mobile::mobile.message_notice'}</a></li>
-					<li><a href="#app_screenshots" data-toggle="tab">{lang key='mobile::mobile.app_screenshots'}</a></li>
-<!-- 					<li><a href="#integral_manage" data-toggle="tab">{lang key='mobile::mobile.integral_manage'}</a></li> -->
-				</ul>
+					<!-- {foreach from=$group_code item=group name="bar_group"} -->
+						<li><a class="list-group-item data-pjax {if $code eq $group.code}llv-active{/if}" href='{url path="mobile/admin_config/init&code={$group.code}"}'>{$group.name}</a></li>
+					<!-- {/foreach} -->
+				</ul>			
 				<div class="tab-content tab_merchants">
-					<div class="tab-pane active" id="tab1">
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.mobile_app_name'}</label>
-							<div class="controls">
-								<input type="text" name="mobile_app_name" value="{$mobile_app_name}">
+					<!-- {if $code eq basic_info} -->
+						<div class="tab-pane active" id="tab1">
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.mobile_app_name'}</label>
+								<div class="controls">
+									<input type="text" name="mobile_app_name" value="{$mobile_app_name}">
+								</div>
 							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.label_mobile_logo'}</label>
-							<div class="controls">
-								<div class="fileupload {if $mobile_app_icon}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
-									<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-										<img src="{$mobile_app_icon}" alt="{lang key='mobile::mobile.no_image'}" />
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.label_mobile_logo'}</label>
+								<div class="controls">
+									<div class="fileupload {if $mobile_app_icon}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+										<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
+											<img src="{$mobile_app_icon}" alt="{lang key='mobile::mobile.no_image'}" />
+										</div>
+										<span class="btn btn-file">
+										<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+										<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
+										<input type="file" name="mobile_app_icon"/>
+										</span>
+										<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_app_icon')}" {if $mobile_app_icon}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 									</div>
-									<span class="btn btn-file">
-									<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
-									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
-									<input type="file" name="mobile_app_icon"/>
-									</span>
-									<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_app_icon')}" {if $mobile_app_icon}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+								</div>
+							</div>
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.mobile_app_version'}</label>
+								<div class="controls">
+									<input type="text" name="mobile_app_version" value="{$mobile_app_version}">
+								</div>
+							</div>
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.mobile_app_description'}</label>
+								<div class="controls">
+									<textarea class="span12 h100" name='mobile_app_description'>{$mobile_app_description}</textarea>
+								</div>
+							</div>
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.mobile_app_video'}</label>
+								<div class="controls">
+									<input type="text" name="mobile_app_video" value="{$mobile_app_video}" />
+								</div>
+							</div>
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.label_bonus_readme'}</label>
+								<div class="controls">
+									<select name='bonus_readme' class="artilce_list">
+										<!-- {if !$bonus_readme.title} -->
+											<option value='-1'>{lang key='mobile::mobile.pls_select'}</option>
+										<!-- {else} -->
+											<option value="{$bonus_readme.id}">{$bonus_readme.title}</option>
+										<!-- {/if} -->
+									</select>
+									<input type='text' name='article_search' class='m_l5 keywords'/>
+									<input type='button' class='btn article_search' value="{lang key='mobile::mobile.search'}" data-url="{url path='mobile/admin_config/search_article'}"/>
+									<span class="help-block">{lang key='mobile::mobile.search_notice'}</span>
+								</div>
+							</div>
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.mobile_feedback_autoreply'}</label>
+								<div class="controls">
+									<input type='text' name='mobile_feedback_autoreply' value='{$mobile_feedback_autoreply}'>
+								</div>
+							</div>
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.shop_pc_url'}</label>
+								<div class="controls">
+									<input type='text' name='shop_pc_url' value='{$shop_pc_url}'>
+								</div>
+							</div>
+							<div class="control-group formSep">
+								<label class="control-label">{lang key='mobile::mobile.mobile_share_link'}</label>
+								<div class="controls">
+									<input type='text' name='mobile_share_link' value='{$mobile_share_link}'>
 								</div>
 							</div>
 						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.mobile_app_version'}</label>
-							<div class="controls">
-								<input type="text" name="mobile_app_version" value="{$mobile_app_version}">
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.mobile_app_description'}</label>
-							<div class="controls">
-								<textarea class="span12 h100" name='mobile_app_description'>{$mobile_app_description}</textarea>
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.mobile_app_video'}</label>
-							<div class="controls">
-								<input type="text" name="mobile_app_video" value="{$mobile_app_video}" />
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.label_bonus_readme'}</label>
-							<div class="controls">
-								<select name='bonus_readme' class="artilce_list">
-									<!-- {if !$bonus_readme.title} -->
-										<option value='-1'>{lang key='mobile::mobile.pls_select'}</option>
-									<!-- {else} -->
-										<option value="{$bonus_readme.id}">{$bonus_readme.title}</option>
-									<!-- {/if} -->
-								</select>
-								<input type='text' name='article_search' class='m_l5 keywords'/>
-								<input type='button' class='btn article_search' value="{lang key='mobile::mobile.search'}" data-url="{url path='mobile/admin_config/search_article'}"/>
-								<span class="help-block">{lang key='mobile::mobile.search_notice'}</span>
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.mobile_feedback_autoreply'}</label>
-							<div class="controls">
-								<input type='text' name='mobile_feedback_autoreply' value='{$mobile_feedback_autoreply}'>
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.shop_pc_url'}</label>
-							<div class="controls">
-								<input type='text' name='shop_pc_url' value='{$shop_pc_url}'>
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<label class="control-label">{lang key='mobile::mobile.mobile_share_link'}</label>
-							<div class="controls">
-								<input type='text' name='mobile_share_link' value='{$mobile_share_link}'>
-							</div>
-						</div>
-					</div>
-
+					<!-- {/if} -->
 					{if 0}
 					<div class="tab-pane" id="touch">
 						<div class="control-group formSep">
@@ -144,8 +138,8 @@
 						</div>
 					</div>
 					{/if}
-
-					<div class="tab-pane" id="load_app">
+					<!-- {if $code eq 'app_download_url'} -->
+					<div class="tab-pane active" id="load_app">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.iphone_qr_code'}</label>
 							<div class="controls">
@@ -229,8 +223,9 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="tab-pane" id="adsense">
+					<!-- {/if} -->
+					<!--{if $code eq 'mobile_adsense_set'}-->
+					<div class="tab-pane active" id="adsense">
 						<div class="control-group formSep edit-page">
 							<label class="control-label">{lang key='mobile::mobile.mobile_launch_adsense'}</label>
 							<div class="controls">
@@ -314,8 +309,9 @@
 						</div>
 						 -->
 					</div>
-
-					<div class="tab-pane" id="mobile_login">
+					<!-- {/if} -->
+					{if $code eq 'login_color_set'}
+					<div class="tab-pane active" id="mobile_login">
 						<h3 class="heading">{lang key='mobile::mobile.mobile_login_set'}</h3>
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.mobile_login_fgcolor'}</label>
@@ -399,7 +395,7 @@
 						-->
 
 					</div>
-
+					{/if}
 					{if 0}
 					<div class="tab-pane" id="tv_adsense">
 						<div class="control-group formSep edit-page">
@@ -528,8 +524,8 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="tab-pane" id="hot_city">
+					{if $code eq 'populor_city_set'}
+					<div class="tab-pane active" id="hot_city">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.selected_area'}</label>
 							<div class="controls selected_area chk_radio">
@@ -574,7 +570,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="tab-pane edit-page" id="message_notice">
+					{/if}
+					{if $code eq 'sms_remind'}
+					<div class="tab-pane edit-page active" id="message_notice">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.remind_seller_ship'}</label>
 							<div class="controls chk_radio">
@@ -602,8 +600,9 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="tab-pane edit-page" id="app_screenshots">
+					{/if}
+					{if $code eq 'app_screenshots'}
+					<div class="tab-pane edit-page active" id="app_screenshots">
 						<div class="control-group formSep">
 							<label class="control-label">{lang key='mobile::mobile.mobile_app_name'}</label>
 							<div class="controls l_h30">
@@ -680,7 +679,7 @@
                             </div>
 						</div>
 					</div>
-
+					{/if}
 					<!--
 					<div class="tab-pane" id="integral_manage">
 						<h3 class="heading">{lang key='mobile::mobile.sign_points'}</h3>
@@ -758,6 +757,7 @@
 
 					<div class="control-group">
 						<div class="controls">
+							<input type="hidden" name="code" value="{$code}"/>
 							<input type="submit" value="{lang key='system::system.button_submit'}" class="btn btn-gebo" />
 						</div>
 					</div>

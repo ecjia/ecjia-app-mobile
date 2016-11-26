@@ -35,6 +35,7 @@ class admin_config extends ecjia_admin {
 
         RC_Script::enqueue_script('jquery-dropper', RC_Uri::admin_url() . '/statics/lib/dropper-upload/jquery.fs.dropper.js', array(), false, true);
         RC_Style::enqueue_style('dropper', RC_Uri::admin_url('/statics/lib/dropper-upload/jquery.fs.dropper.css'));
+        RC_Style::enqueue_style('mobile_config', RC_App::apps_url('statics/css/mobile_config.css', __FILE__));
 	}
 
 
@@ -43,11 +44,14 @@ class admin_config extends ecjia_admin {
 	 */
 	public function init () {
 	    $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
-
+		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
-
+		//加载应用配置中的code
+		$group_code = RC_Loader::load_app_config('group_code', 'mobile');
+		$this->assign('group_code',$group_code);
+		$this->assign('code', empty($_GET['code']) ? 'basic_info' : trim($_GET['code']));
 		$ad_position_list = RC_Api::api('adsense', 'adsense_position_list', array('page_size' => 1000));
 
 		$mobile_home_adsense_group = $adsense_group = array();
@@ -315,7 +319,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function update() {
 		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
-
+		$code = $_POST['code'];
 // 		$mobile_tv_big_adsense 			= !empty($_POST['mobile_tv_big_adsense']) 		? $_POST['mobile_tv_big_adsense'] 				: '';
 // 		$mobile_tv_small_adsense 		= !empty($_POST['mobile_tv_small_adsense']) 	? $_POST['mobile_tv_small_adsense'] 			: '';
 		$mobile_launch_adsense 			= !empty($_POST['mobile_launch_adsense']) 		? $_POST['mobile_launch_adsense'] 				: '';
@@ -572,7 +576,7 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('mobile_share_link', $mobile_share_link);
 
 		ecjia_admin::admin_log(RC_Lang::get('mobile::mobile.mobile_config_set'), 'setup', 'mobile_config');
-		$this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/init')));
+		$this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/init',array('code'=>$code))));
 
 	}
 
