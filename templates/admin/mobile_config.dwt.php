@@ -9,7 +9,7 @@
 
 <!-- {block name="admin_config_form"} -->
 <div class="row-fluid edit-page">
-    <div class="span9">
+    <div class="row-fluid">
         <form class="form-horizontal" action="{$form_action}" name="theForm" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<!-- {if $code eq basic_info} -->
