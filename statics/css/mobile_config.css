@@ -13,11 +13,23 @@
 	margin-right:0px;
 }
 
-
 .wookmark_list .ui-sortable-placeholder{
     height: 190px;
 }
 
+.list-group-info, .list-group-title {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    color: #555;
+}
+.list-group-title {
+    font-weight: 400;
+    font-size: 15px;
+    background: #f9f9f9;
+    border-radius: 4px; 
+}
 .list-group-item {
     position: relative;
     display: block;

@@ -19,18 +19,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 				'name' => '移动广告位设置',
 			),
 			array(
-				'code' => 'login_color_set',
-				'name' => '登录页色值设置',
-			),
-			array(
-				'code' => 'populor_city_set',
-				'name' => '热门城市设置',
-			),
-			array(
-				'code' => 'sms_remind',
-				'name' => '短信提醒',
-			),
-			array(
 				'code' => 'app_screenshots',
 				'name' => '应用截图',
 			),
