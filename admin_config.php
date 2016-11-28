@@ -237,6 +237,7 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_app_preview1', $mobile_app_preview1);
 		$this->assign('mobile_app_preview2', $mobile_app_preview2);
 		$this->assign('dropper_action', RC_Uri::url('mobile/admin_config/insert'));
+		$this->assign('current_code', trim($_GET['code']));
 		$this->display('mobile_config.dwt');
 	}
 

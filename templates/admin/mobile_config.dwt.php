@@ -1,5 +1,5 @@
 <?php defined('IN_ECJIA') or exit('No permission resources.');?>
-<!-- {extends file="ecjia.dwt.php"} -->
+<!-- {extends file="admin_shop_config.dwt.php"} -->
 
 <!-- {block name="footer"} -->
 <script type="text/javascript">
@@ -7,18 +7,8 @@
 </script>
 <!-- {/block} -->
 
-<!-- {block name="main_content"} -->
-<div class="row-fluid">
-	 <div class="span3">
-        <div class="list-group">
-            <span class="list-group-title"><i class="fontello-icon-cog"></i>应用配置</span>
-            <div style="margin-top:10px;">
-	            <!-- {foreach from=$group_code item=group name="bar_group"} -->
-					<a class="list-group-item data-pjax {if $code eq $group.code}llv-active{/if}" href='{url path="mobile/admin_config/init&code={$group.code}"}'>{$group.name}</a>
-				<!-- {/foreach} -->
-			</div>
-        </div>
-    </div>
+<!-- {block name="admin_config_form"} -->
+<div class="row-fluid edit-page">
 	<div class="span9">
         <!-- {block name="admin_config_form"} -->
 		<form class="form-horizontal" action="{$form_action}" name="theForm" method="post" enctype="multipart/form-data">
