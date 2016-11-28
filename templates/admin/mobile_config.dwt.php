@@ -8,7 +8,7 @@
 <!-- {/block} -->
 
 <!-- {block name="admin_config_form"} -->
-<div class="row-fluid edit-page">
+<div class="row-fluid">
     <div class="row-fluid">
         <form class="form-horizontal" action="{$form_action}" name="theForm" method="post" enctype="multipart/form-data">
 			<fieldset>
@@ -218,7 +218,7 @@
 				<!-- 热门城市end -->
 				<!-- 短信提醒start -->
 					<h3 class="heading">短信提醒</h3>
-					<div class="control-group formSep">
+					<div class="control-group formSep edit-page">
 						<label class="control-label">{lang key='mobile::mobile.remind_seller_ship'}</label>
 						<div class="controls chk_radio">
 							<input type='radio' name='order_reminder_type' value='2' {if $order_reminder_type eq 2}checked='checked'{/if} />{lang key='mobile::mobile.message_notice'}
