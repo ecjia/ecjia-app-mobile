@@ -53,6 +53,7 @@ class admin_config extends ecjia_admin {
 		$this->assign('group_code',$group_code);
 		$code = empty($_GET['code']) ? 'basic_info' : trim($_GET['code']);
 		$this->assign('code', $code);
+		
 		$ad_position_list = RC_Api::api('adsense', 'adsense_position_list', array('page_size' => 1000));
 
 		$mobile_home_adsense_group = $adsense_group = array();
@@ -179,7 +180,7 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_android_download', ecjia::config('mobile_android_download'));
 // 		$this->assign('shop_ipad_download', ecjia::config('shop_ipad_download'));
 		$this->assign('shop_touch_url', ecjia::config('shop_touch_url'));
-		$this->assign('shop_pc_url', ecjia::config('shop_pc_url'));
+		$this->assign('shop_pc_url', ecjia::config('mobile_pc_url'));
 		$this->assign('wap_logo', $wap_logo);
 		$this->assign('wap_config', ecjia::config('wap_config'));
 
@@ -361,7 +362,7 @@ class admin_config extends ecjia_admin {
 		$bonus_readme_url = str_replace(RC_Uri::site_url(), '', $bonus_readme_url);
 		ecjia_config::instance()->write_config('bonus_readme_url', $bonus_readme_url);
 		ecjia_config::instance()->write_config('mobile_feedback_autoreply', $mobile_feedback_autoreply);
-		ecjia_config::instance()->write_config('shop_pc_url', $shop_pc_url);
+		ecjia_config::instance()->write_config('mobile_pc_url', $shop_pc_url);
 		ecjia_config::instance()->write_config('mobile_share_link', $mobile_share_link);//分享链接
 		
 		/*手机端登录页设置处理*/
