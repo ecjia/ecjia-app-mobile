@@ -348,7 +348,7 @@
 					<div class="control-group formSep">
 						<label class="control-label">{lang key='mobile::mobile.launch_adsense_group'}</label>
 						<div class="controls control-group draggable">
-							<div class="ms-container span6" id="ms-custom-navigation">
+							<div class="ms-container span9" id="ms-custom-navigation">
 								<div class="ms-selectable">
 									<div class="search-header">
 										<input class="span12" id="ms-search" type="text" placeholder="{lang key='mobile::mobile.filter_app_name'}" autocomplete="off">
