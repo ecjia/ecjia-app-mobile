@@ -238,7 +238,7 @@ class admin_config extends ecjia_admin {
 			$mobile_app_preview2 = RC_Upload::upload_url().'/'.$mobile_app_preview[1];
 		}
 
-        $img_list = RC_DB::table('screenshots')
+        $img_list = RC_DB::table('mobile_screenshots')
         ->orderBy('sort','asc')
         ->get();
         foreach($img_list as $key => $val){
@@ -292,7 +292,7 @@ class admin_config extends ecjia_admin {
 		$sort = $_GET['info'];
 		foreach ($sort as $k => $v) {
             $data['sort'] = $k + 1;
-			RC_DB::table('screenshots')->where('id', $v['img_id'])->where('app_code', '=', 'cityo2o')->update($data);
+			RC_DB::table('mobile_screenshots')->where('id', $v['img_id'])->where('app_code', '=', 'cityo2o')->update($data);
 		}
 		$this->showmessage(RC_Lang::get('goods::goods.save_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
@@ -304,7 +304,7 @@ class admin_config extends ecjia_admin {
         $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
 		$id = $_GET['id'];
 		$val = $_GET['val'];
-		RC_DB::table('screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->update(array('img_desc' => $val));
+		RC_DB::table('mobile_screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->update(array('img_desc' => $val));
 		$this->showmessage(RC_Lang::get('goods::goods.edit_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
@@ -316,13 +316,13 @@ class admin_config extends ecjia_admin {
 		$id = empty($_GET['id']) ? 0 : intval($_GET['id']);
 
 		/* 删除图片文件 */
-		$row = RC_DB::table('screenshots')->select('img_url')->where('id', $id)->first();
+		$row = RC_DB::table('mobile_screenshots')->select('img_url')->where('id', $id)->first();
 
 		if (!empty($row['img_url'])) {
 			RC_Filesystem::disk()->delete(RC_Upload::upload_url($row['img_url']));
 		}
 		/* 删除数据 */
-		RC_DB::table('screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->delete();
+		RC_DB::table('mobile_screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->delete();
 		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
