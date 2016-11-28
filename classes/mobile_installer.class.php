@@ -228,118 +228,122 @@ class mobile_installer extends ecjia_installer {
         }
         
         RC_Loader::load_app_class('mobile_method', 'mobile');
+        if (!ecjia_config::instance()->check_group('mobile')) {
+            ecjia_config::instance()->add_group('mobile', 10);
+        }
+        
         if (!ecjia::config(mobile_method::STORAGEKEY_discover_data, ecjia::CONFIG_CHECK)) {
-            ecjia_config::instance()->insert_config('hidden', mobile_method::STORAGEKEY_discover_data, serialize(array()), array('type' => 'hidden'));
+            ecjia_config::instance()->insert_config('mobile', mobile_method::STORAGEKEY_discover_data, serialize(array()), array('type' => 'hidden'));
         }
         if (!ecjia::config(mobile_method::STORAGEKEY_shortcut_data, ecjia::CONFIG_CHECK)) {
-            ecjia_config::instance()->insert_config('hidden', mobile_method::STORAGEKEY_shortcut_data, serialize(array()), array('type' => 'hidden'));
+            ecjia_config::instance()->insert_config('mobile', mobile_method::STORAGEKEY_shortcut_data, serialize(array()), array('type' => 'hidden'));
         }
         if (!ecjia::config(mobile_method::STORAGEKEY_cycleimage_data, ecjia::CONFIG_CHECK)) {
-            ecjia_config::instance()->insert_config('hidden', mobile_method::STORAGEKEY_cycleimage_data, serialize(array()), array('type' => 'hidden'));
+            ecjia_config::instance()->insert_config('mobile', mobile_method::STORAGEKEY_cycleimage_data, serialize(array()), array('type' => 'hidden'));
         }
-        
         if (!ecjia::config(mobile_method::STORAGEKEY_cycleimage_phone_data, ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', mobile_method::STORAGEKEY_cycleimage_phone_data, serialize(array()), array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', mobile_method::STORAGEKEY_cycleimage_phone_data, serialize(array()), array('type' => 'hidden'));
         }
-        
-        if (!ecjia::config('mobile_iphone_qr_code', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_iphone_qr_code', '', array('type' => 'hidden'));
+        //应用二维码图片
+        if (!ecjia::config('mobile_iphone_qrcode', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_iphone_qrcode', '', array('type' => 'file', 'store_dir' => 'data/assets/'));
         }
-        if (!ecjia::config('mobile_ipad_qr_code', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_ipad_qr_code', '', array('type' => 'hidden'));
+        if (!ecjia::config('mobile_ipad_qrcode', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_ipad_qrcode', '', array('type' => 'file', 'store_dir' => 'data/assets/'));
         }
-        if (!ecjia::config('mobile_android_qr_code', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_android_qr_code', '', array('type' => 'hidden'));
+        if (!ecjia::config('mobile_android_qrcode', ecjia::CONFIG_CHECK)) {
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_android_qrcode', '', array('type' => 'file', 'store_dir' => 'data/assets/'));
         }
         
         if (!ecjia::config('mobile_launch_adsense', ecjia::CONFIG_CHECK)) {
-            ecjia_config::instance()->insert_config('hidden', 'mobile_launch_adsense', '', array('type' => 'hidden'));
+            ecjia_config::instance()->insert_config('mobile', 'mobile_launch_adsense', '', array('type' => 'manual'));
         }
         if (!ecjia::config('mobile_tv_adsense_group', ecjia::CONFIG_CHECK)) {
-            ecjia_config::instance()->insert_config('hidden', 'mobile_tv_adsense_group', '', array('type' => 'hidden'));
+            ecjia_config::instance()->insert_config('mobile', 'mobile_tv_adsense_group', '', array('type' => 'manual'));
         }
         if (!ecjia::config('mobile_home_adsense_group', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_home_adsense_group', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_home_adsense_group', '', array('type' => 'manual'));
         }
         if (!ecjia::config('mobile_recommend_city', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_recommend_city', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_recommend_city', '', array('type' => 'manual'));
         }
         /* pad 登录页颜色设置*/
         if (!ecjia::config('mobile_pad_login_fgcolor', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_pad_login_fgcolor', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_pad_login_fgcolor', '', array('type' => 'color'));
         }
         if (!ecjia::config('mobile_pad_login_bgcolor', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_pad_login_bgcolor', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_pad_login_bgcolor', '', array('type' => 'color'));
         }
         if (!ecjia::config('mobile_pad_login_bgimage', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_pad_login_bgimage', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_pad_login_bgimage', '', array('type' => 'file', 'store_dir' => 'data/assets/'));
         }
         /* 手机  登录页颜色设置*/
         if (!ecjia::config('mobile_phone_login_fgcolor', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_phone_login_fgcolor', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_phone_login_fgcolor', '', array('type' => 'color'));
         }
         if (!ecjia::config('mobile_phone_login_bgcolor', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_phone_login_bgcolor', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_phone_login_bgcolor', '', array('type' => 'color'));
         }
         if (!ecjia::config('mobile_phone_login_bgimage', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_phone_login_bgimage', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_phone_login_bgimage', '', array('type' => 'file', 'store_dir' => 'data/assets/'));
         }
+        
         if (!ecjia::config('bonus_readme_url', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'bonus_readme_url', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'bonus_readme_url', '', array('type' => 'text'));
         }
         if (!ecjia::config('mobile_feedback_autoreply', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_feedback_autoreply', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_feedback_autoreply', '', array('type' => 'textarea'));
         }
         if (!ecjia::config('mobile_topic_adsense', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_topic_adsense', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_topic_adsense', '', array('type' => 'manual'));
         }
         if (!ecjia::config('mobile_app_icon', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_app_icon', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_app_icon', '', array('type' => 'file', 'store_dir' => 'data/assets/'));
         }
         
         if (!ecjia::config('checkin_award_open', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'checkin_award_open', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'checkin_award_open', '', array('type' => 'hidden'));
         }
         
         if (!ecjia::config('checkin_award_type', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'checkin_award_type', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'checkin_award_type', '', array('type' => 'hidden'));
         }
         
         if (!ecjia::config('checkin_award', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'checkin_award', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'checkin_award', '', array('type' => 'hidden'));
         }
         
         if (!ecjia::config('checkin_extra_day', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'checkin_extra_day', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'checkin_extra_day', '', array('type' => 'hidden'));
         }
         
         if (!ecjia::config('checkin_extra_award', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'checkin_extra_award', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'checkin_extra_award', '', array('type' => 'hidden'));
         }
         
         if (!ecjia::config('comment_award_open', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'comment_award_open', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'comment_award_open', '', array('type' => 'hidden'));
         }
         
         if (!ecjia::config('comment_award', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'comment_award', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'comment_award', '', array('type' => 'hidden'));
         }
         
         if (!ecjia::config('comment_award_rules', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'comment_award_rules', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'comment_award_rules', '', array('type' => 'hidden'));
         }
         
         if (!ecjia::config('order_reminder_type', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'order_reminder_type', 0, array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'order_reminder_type', 0, array('type' => 'select'));
         }
         
         if (!ecjia::config('order_reminder_value', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'order_reminder_value', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'order_reminder_value', '', array('type' => 'hidden'));
         }
         
 		/*分享链接*/   
     	if (!ecjia::config('mobile_share_link', ecjia::CONFIG_CHECK)) {
-        	ecjia_config::instance()->insert_config('hidden', 'mobile_share_link', '', array('type' => 'hidden'));
+        	ecjia_config::instance()->insert_config('mobile', 'mobile_share_link', '', array('type' => 'text'));
         }
         
         return true;
@@ -373,6 +377,10 @@ class mobile_installer extends ecjia_installer {
         }
         
         RC_Loader::load_app_class('mobile_method', 'mobile');
+        if (ecjia_config::instance()->check_group('mobile')) {
+            ecjia_config::instance()->delete_group('mobile');
+        }
+        
         if (ecjia::config(mobile_method::STORAGEKEY_discover_data, ecjia::CONFIG_CHECK)) {
             ecjia_config::instance()->delete_config(mobile_method::STORAGEKEY_discover_data);
         }
@@ -383,13 +391,13 @@ class mobile_installer extends ecjia_installer {
             ecjia_config::instance()->delete_config(mobile_method::STORAGEKEY_cycleimage_data);
         }
         
-        if (ecjia::config('mobile_iphone_qr_code', ecjia::CONFIG_CHECK)) {
+        if (ecjia::config('mobile_iphone_qrcode', ecjia::CONFIG_CHECK)) {
         	ecjia_config::instance()->delete_config('mobile_iphone_qr_code');
         }
-        if (ecjia::config('mobile_ipad_qr_code', ecjia::CONFIG_CHECK)) {
+        if (ecjia::config('mobile_ipad_qrcode', ecjia::CONFIG_CHECK)) {
         	ecjia_config::instance()->delete_config('mobile_ipad_qr_code');
         }
-        if (ecjia::config('mobile_android_qr_code', ecjia::CONFIG_CHECK)) {
+        if (ecjia::config('mobile_android_qrcode', ecjia::CONFIG_CHECK)) {
         	ecjia_config::instance()->delete_config('mobile_android_qr_code');
         }
         if (ecjia::config('mobile_launch_adsense', ecjia::CONFIG_CHECK)) {
