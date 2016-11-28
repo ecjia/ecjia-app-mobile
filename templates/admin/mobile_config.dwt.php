@@ -7,11 +7,10 @@
 </script>
 <!-- {/block} -->
 
-
 <!-- {block name="admin_config_form"} -->
-<form class="form-horizontal" action="{$form_action}" name="theForm" method="post" enctype="multipart/form-data">
-	<div class="row-fluid edit-page">
-		<div class="span9">
+<div class="row-fluid edit-page">
+    <div class="span9">
+        <form class="form-horizontal" action="{$form_action}" name="theForm" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<!-- {if $code eq basic_info} -->
 					<h3 class="heading">基本信息</h3>
@@ -580,7 +579,7 @@
 						</div>
 					</div>
 			</fieldset>
-		</div>
-	</div>
-</form>
+        </form>
+    </div>
+</div>
 <!-- {/block} -->
