@@ -71,7 +71,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 		$this->admin_priv('mobile_toutiao_update',ecjia::MSGTYPE_JSON);
 		
 		if (empty($_POST['title'])) {
-			$this->showmessage(RC_Lang::get('mobile::mobile.headline_title_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.headline_title_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
 		if (!empty($_FILES['image']['name'])) {
@@ -80,10 +80,10 @@ class admin_mobile_toutiao extends ecjia_admin {
 			if (!empty($info)) {
 				$src = $upload->get_position($info);
 			} else {
-				$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 		} else {
-			$this->showmessage(RC_Lang::get('mobile::mobile.upload_headline_img'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.upload_headline_img'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
 		if (strstr($_POST['content_url'], "http://") || strstr($_POST['content_url'], "https://") || strstr($_POST['content_url'], "ecjiaopen://")) {
@@ -109,9 +109,9 @@ class admin_mobile_toutiao extends ecjia_admin {
 		$links[] = array('text' => RC_Lang::get('mobile::mobile.return_headline_list'), 'href' => RC_Uri::url('mobile/admin_mobile_toutiao/init'));
 		$links[] = array('text' => RC_Lang::get('mobile::mobile.continue_add_headline'), 'href' => RC_Uri::url('mobile/admin_mobile_toutiao/add'));
 		if ($id) {
-			$this->showmessage(RC_Lang::get('mobile::mobile.add_headline_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/edit', array('id' => $id))));
+			return $this->showmessage(RC_Lang::get('mobile::mobile.add_headline_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/edit', array('id' => $id))));
 		} else {
-			$this->showmessage(RC_Lang::get('mobile::mobile.add_headline_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.add_headline_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 
@@ -143,7 +143,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 		$this->admin_priv('mobile_toutiao_update', ecjia::MSGTYPE_JSON);
 
 		if (empty($_POST['title'])) {
-			$this->showmessage(RC_Lang::get('mobile::mobile.headline_title_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.headline_title_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
 		if (strstr($_POST['content_url'], "http://") || strstr($_POST['content_url'], "https://")  || strstr($_POST['content_url'], "ecjiaopen://")) {
@@ -174,16 +174,16 @@ class admin_mobile_toutiao extends ecjia_admin {
 				$info = $this->db_mobile_toutiao->toutiao_find($_POST['id']);
 				$upload->remove($info['image']);
 			} else {
-				$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 		}
 		
 		$update = $this->db_mobile_toutiao->toutiao_manage($data);
 		ecjia_admin::admin_log($_POST['title'], 'edit', 'mobile_toutiao');
 		if ($update) {
-			$this->showmessage(RC_Lang::get('mobile::mobile.edit_headline_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/edit', array('id' => $_POST['id']))));
+			return $this->showmessage(RC_Lang::get('mobile::mobile.edit_headline_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/edit', array('id' => $_POST['id']))));
 		} else {
-			$this->showmessage(RC_Lang::get('mobile::mobile.edit_headline_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.edit_headline_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 
@@ -200,9 +200,9 @@ class admin_mobile_toutiao extends ecjia_admin {
 		$disk->delete(RC_Upload::upload_path($info['image']));
  		ecjia_admin::admin_log($info['title'], 'remove', 'mobile_toutiao');
  		if ($delete) {
- 			$this->showmessage(RC_Lang::get('mobile::mobile.drop_headline_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+ 			return $this->showmessage(RC_Lang::get('mobile::mobile.drop_headline_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
  		} else {
- 			$this->showmessage(RC_Lang::get('mobile::mobile.drop_headline_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+ 			return $this->showmessage(RC_Lang::get('mobile::mobile.drop_headline_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
  		}
 	}
 	
@@ -222,7 +222,7 @@ class admin_mobile_toutiao extends ecjia_admin {
 		$disk = RC_Filesystem::disk();
 		$disk->delete(RC_Upload::upload_path($info['image']));
 		
-		$this->showmessage(RC_Lang::get('mobile::mobile.drop_image_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		return $this->showmessage(RC_Lang::get('mobile::mobile.drop_image_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 	
 	/**
@@ -242,9 +242,9 @@ class admin_mobile_toutiao extends ecjia_admin {
 			}
 			$this->db_mobile_toutiao->toutiao_batch($idArr, 'delete');
 			
-			$this->showmessage(RC_Lang::get('mobile::mobile.drop_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/init')));
+			return $this->showmessage(RC_Lang::get('mobile::mobile.drop_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_toutiao/init')));
 		} else {
-			$this->showmessage(RC_Lang::get('mobile::mobile.pls_selece_option'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.pls_selece_option'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	

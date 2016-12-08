@@ -88,10 +88,10 @@ class admin_mobile_news extends ecjia_admin {
 					if (!empty($info)) {
 						$image_url = $upload->get_position($info);
 					} else {
-						$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+						return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
 				} else {
-					$this->showmessage(RC_Lang::get('mobile::mobile.upload_file_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					return $this->showmessage(RC_Lang::get('mobile::mobile.upload_file_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 
 				$data = array (
@@ -114,7 +114,7 @@ class admin_mobile_news extends ecjia_admin {
 		}
 
 		$links[] = array('text' => RC_Lang::get('mobile::mobile.return_mobile_news_list'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init'));
-		$this->showmessage(RC_Lang::get('mobile::mobile.add_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', 'id='.$group_id)));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.add_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', 'id='.$group_id)));
 	}
 
 	/**
@@ -188,7 +188,7 @@ class admin_mobile_news extends ecjia_admin {
 						$image_url 		= $upload->get_position($info);
 						$data['image'] 	= $image_url;
 					} else {
-						$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+						return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
 				}
 
@@ -203,7 +203,7 @@ class admin_mobile_news extends ecjia_admin {
 			}
 		}
 		$links[] = array('text' => RC_Lang::get('mobile::mobile.mobile_news_list'), 'href' => RC_Uri::url('mobile/admin_mobile_news/init'));
-		$this->showmessage(RC_Lang::get('mobile::mobile.edit_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', array('id' => $id))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.edit_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', array('id' => $id))));
 	}
 
 	/**
@@ -223,7 +223,7 @@ class admin_mobile_news extends ecjia_admin {
 		RC_DB::table('mobile_news')->where('id', $id)->orWhere('group_id', $id)->delete();
 
 		ecjia_admin::admin_log($title, 'remove', 'mobile_news');
-		$this->showmessage(RC_Lang::get('mobile::mobile.remove_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		return $this->showmessage(RC_Lang::get('mobile::mobile.remove_mobile_news_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
 	/**
@@ -233,7 +233,7 @@ class admin_mobile_news extends ecjia_admin {
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		$this->db_mobile_news->mobile_news_manage(array('status' => 1), array('id' => $id, 'group_id' => 0));
 		
-		$this->showmessage(RC_Lang::get('mobile::mobile.issue_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', array('id' => $id))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.issue_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', array('id' => $id))));
 	}
 
 	/**
@@ -243,7 +243,7 @@ class admin_mobile_news extends ecjia_admin {
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		$this->db_mobile_news->mobile_news_manage(array('status' => 0), array('id' => $id, 'group_id'=> 0));
 		
-		$this->showmessage(RC_Lang::get('mobile::mobile.cancel_issue_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', array('id' => $id))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.cancel_issue_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_news/edit', array('id' => $id))));
 	}
 	
 	/**

@@ -75,9 +75,9 @@ class admin_device extends ecjia_admin {
 		
 		ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.device_type_is'), $info['device_client']).'，'.sprintf(RC_Lang::get('mobile::mobile.device_name_is'), $info['device_name']), 'trash', 'mobile_device');
 		if ($success){
-			$this->showmessage(RC_Lang::get('mobile::mobile.trash_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
+			return $this->showmessage(RC_Lang::get('mobile::mobile.trash_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
 		} else {
-			$this->showmessage(RC_Lang::get('mobile::mobile.trash_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.trash_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	
@@ -101,9 +101,9 @@ class admin_device extends ecjia_admin {
 		
 		ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.device_type_is'), $info['device_client']).'，'.sprintf(RC_Lang::get('mobile::mobile.device_name_is'), $info['device_name']), 'restore', 'mobile_device');
 		if ($success){
-			$this->showmessage(RC_Lang::get('mobile::mobile.restore_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.restore_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		} else {
-			$this->showmessage(RC_Lang::get('mobile::mobile.restore_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.restore_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	
@@ -129,9 +129,9 @@ class admin_device extends ecjia_admin {
 		ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.device_type_is'), $info['device_client']).'，'.sprintf(RC_Lang::get('mobile::mobile.device_name_is'), $info['device_name']), 'remove', 'mobile_device');
 		
 		if ($success){
-			$this->showmessage(RC_Lang::get('mobile::mobile.del_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
+			return $this->showmessage(RC_Lang::get('mobile::mobile.del_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
 		} else {
-			$this->showmessage(RC_Lang::get('mobile::mobile.del_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.del_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	
@@ -194,7 +194,7 @@ class admin_device extends ecjia_admin {
 			default :
 				break;
 		}
-		$this->showmessage(RC_Lang::get('mobile::mobile.batch_handle_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.batch_handle_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
 	}
 	
 	/**
@@ -236,7 +236,7 @@ class admin_device extends ecjia_admin {
 		$device_alias = !empty($_POST['value']) ? trim($_POST['value']) : '';
 		
 		if (empty($device_alias)) {
-			$this->showmessage(RC_Lang::get('mobile::mobile.device_alias_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.device_alias_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
 		$query = $this->db_device->device_update($id, array('device_alias' => $device_alias));
@@ -250,9 +250,9 @@ class admin_device extends ecjia_admin {
 	            $info['device_client'] = 'iPad';
 	        }
 			ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.device_type_is'), $info['device_client']).'，'.sprintf(RC_Lang::get('mobile::mobile.device_name_is'), $info['device_udid']).'，'.sprintf(RC_Lang::get('mobile::mobile.edit_device_alias_as'), $device_alias), 'setup', 'mobile_device');
-			$this->showmessage(RC_Lang::get('mobile::mobile.edit_device_alias_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.edit_device_alias_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		} else {
-			$this->showmessage(RC_Lang::get('mobile::mobile.edit_device_alias_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.edit_device_alias_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	

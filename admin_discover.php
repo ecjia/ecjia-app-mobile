@@ -94,14 +94,14 @@ class admin_discover extends ecjia_admin {
 // 					$src = $info['savepath'] . '/' . $info['savename'];
 					$src = $upload->get_position($info);
 				} else {
-					$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 			} else {
-			    $this->showmessage(RC_Lang::get('mobile::mobile.upload_discover_icon'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			    return $this->showmessage(RC_Lang::get('mobile::mobile.upload_discover_icon'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 
 			if (empty($_POST['img_url'])) {
-				$this->showmessage(RC_Lang::get('mobile::mobile.link_url_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				return $this->showmessage(RC_Lang::get('mobile::mobile.link_url_empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 			if (!isset($_POST['img_display'])) {
 				$insert_arr = $this->mobile->shortcut_struct(array('src' => $src, 'url' => $_POST['img_url'], 'text' => $_POST['img_text'] ,'display' => 0,'sort' => $_POST['img_sort']));
@@ -119,7 +119,7 @@ class admin_discover extends ecjia_admin {
 			$links[] = array('text' => RC_Lang::get('mobile::mobile.return_discover_list'), 'href' => RC_Uri::url('mobile/admin_discover/init'));
 
 			ecjia_admin::admin_log($_POST['img_text'], 'add', 'mobile_discover');
-			$this->showmessage(RC_Lang::get('mobile::mobile.add_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_discover/add')));
+			return $this->showmessage(RC_Lang::get('mobile::mobile.add_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links , 'pjaxurl' => RC_Uri::url('mobile/admin_discover/add')));
 		}
 	}
 
@@ -166,12 +166,12 @@ class admin_discover extends ecjia_admin {
 					$src = $upload->get_position($info);
 					$upload->remove($rt['src']);
 				} else {
-					$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 			}
 			// 图片上传不能为空
 			elseif (empty($rt['src'])) {
-				$this->showmessage(RC_Lang::get('mobile::mobile.upload_discover_icon'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				return $this->showmessage(RC_Lang::get('mobile::mobile.upload_discover_icon'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			} else {
 			    $src = $rt['src'];
 			}
@@ -192,7 +192,7 @@ class admin_discover extends ecjia_admin {
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
 			ecjia_admin::admin_log($_POST['img_text'], 'edit', 'mobile_discover');
-		    $this->showmessage(RC_Lang::get('mobile::mobile.edit_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_discover/init')));
+		    return $this->showmessage(RC_Lang::get('mobile::mobile.edit_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_discover/init')));
 		}
 	}
 
@@ -208,7 +208,7 @@ class admin_discover extends ecjia_admin {
 			$rt = $flashdb[$id];
 		} else {
 			$links[] = array('text' => RC_Lang::get('mobile::mobile.discover_list'), 'href' => RC_Uri::url());
-			$this->showmessage(RC_Lang::get('mobile::mobile.no_appointed_discover'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $links));
+			return $this->showmessage(RC_Lang::get('mobile::mobile.no_appointed_discover'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $links));
 		}
 
 		if (strpos($rt['src'], 'http') === false) {
@@ -222,7 +222,7 @@ class admin_discover extends ecjia_admin {
 		ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
 		ecjia_admin::admin_log($rt['text'], 'remove', 'mobile_discover');
-		$this->showmessage(RC_Lang::get('mobile::mobile.drop_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		return $this->showmessage(RC_Lang::get('mobile::mobile.drop_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
 	/**
@@ -235,7 +235,7 @@ class admin_discover extends ecjia_admin {
 		$order = intval(trim($_POST['value']));
 
 		if (!is_numeric($order)) {
-			$this->showmessage(RC_Lang::get('mobile::mobile.format_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('mobile::mobile.format_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
 			$flashdb = $this->mobile->discover_data();
 			$flashdb[$id]['sort'] = $order;
@@ -244,7 +244,7 @@ class admin_discover extends ecjia_admin {
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
-			$this->showmessage(RC_Lang::get('mobile::mobile.order_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_discover/init')) );
+			return $this->showmessage(RC_Lang::get('mobile::mobile.order_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_discover/init')) );
 		}
 	}
 
@@ -270,7 +270,7 @@ class admin_discover extends ecjia_admin {
 		} else {
 			ecjia_admin::admin_log(sprintf(RC_Lang::get('mobile::mobile.hide_discover'), $text), 'setup', 'mobile_discover');
 		}
-		$this->showmessage(RC_Lang::get('mobile::mobile.edit_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content'=> $val, 'pjaxurl' => RC_uri::url('mobile/admin_discover/init')));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.edit_discover_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content'=> $val, 'pjaxurl' => RC_uri::url('mobile/admin_discover/init')));
 	}
 }
 

@@ -207,13 +207,13 @@ class admin_config extends ecjia_admin {
         $upload = RC_Upload::uploader('image', array('save_path' => 'data/screenshots', 'auto_sub_dirs' => true));
         $code = $_POST['code'];
         if (!$upload->check_upload_file($_FILES['img_url'])) {
-            $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         $count = RC_DB::table('mobile_screenshots')->where('app_code', '=', 'cityo2o')->count();
         if($count < 10){
             $image_info = $upload->upload($_FILES['img_url']);
             if (empty($image_info)) {
-                $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }else{
                 $img = $upload->get_position($image_info);
             }
@@ -224,9 +224,9 @@ class admin_config extends ecjia_admin {
             );
             RC_DB::table('mobile_screenshots')->insert($data);
             $url = RC_Uri::url('mobile/admin_config/init', array('code' => $code));
-            $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
+            return $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
         }else{
-            $this->showmessage('应用截图最多只能添加10张', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('应用截图最多只能添加10张', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
     }
@@ -241,7 +241,7 @@ class admin_config extends ecjia_admin {
             $data['sort'] = $k + 1;
 			RC_DB::table('mobile_screenshots')->where('id', $v['img_id'])->where('app_code', '=', 'cityo2o')->update($data);
 		}
-		$this->showmessage(RC_Lang::get('goods::goods.save_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		return $this->showmessage(RC_Lang::get('goods::goods.save_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
     /**
@@ -252,7 +252,7 @@ class admin_config extends ecjia_admin {
 		$id = $_GET['id'];
 		$val = $_GET['val'];
 		RC_DB::table('mobile_screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->update(array('img_desc' => $val));
-		$this->showmessage(RC_Lang::get('goods::goods.edit_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		return $this->showmessage(RC_Lang::get('goods::goods.edit_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
     /**
@@ -270,7 +270,7 @@ class admin_config extends ecjia_admin {
 		}
 		/* 删除数据 */
 		RC_DB::table('mobile_screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->delete();
-		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
 	/**
@@ -351,7 +351,7 @@ class admin_config extends ecjia_admin {
 		}
 		ecjia_config::instance()->write_config('order_reminder_value', $order_reminder_value);
 		ecjia_admin::admin_log(RC_Lang::get('mobile::mobile.mobile_config_set'), 'setup', 'mobile_config');
-		$this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/basic_info_init',array('code'=>$code))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/basic_info_init',array('code'=>$code))));
 	}
 	
 	
@@ -405,7 +405,7 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('mobile_shop_urlscheme', $mobile_shop_urlscheme);
 
 		ecjia_admin::admin_log(RC_Lang::get('mobile::mobile.mobile_config_set'), 'setup', 'mobile_config');
-		$this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/app_download_url',array('code'=>$code))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/app_download_url',array('code'=>$code))));
 	
 	}
 	
@@ -431,7 +431,7 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('mobile_launch_adsense', $mobile_launch_adsense);
 		ecjia_config::instance()->write_config('mobile_home_adsense_group', $mobile_home_adsense_group);
 		ecjia_admin::admin_log(RC_Lang::get('mobile::mobile.mobile_config_set'), 'setup', 'mobile_config');
-		$this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/mobile_adsense_set',array('code'=>$code))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/mobile_adsense_set',array('code'=>$code))));
 	
 	}
 
@@ -470,7 +470,7 @@ class admin_config extends ecjia_admin {
 		}
 		
 		ecjia_admin::admin_log(RC_Lang::get('mobile::mobile.mobile_config_set'), 'setup', 'mobile_config');
-		$this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/app_screenshots',array('code'=>$code))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/app_screenshots',array('code'=>$code))));
 	
 	}
 	
@@ -492,7 +492,7 @@ class admin_config extends ecjia_admin {
 
 		ecjia_admin::admin_log('', 'edit', 'mobile_config');
 		ecjia_config::instance()->write_config($code, '');
-		$this->showmessage(RC_Lang::get('mobile::mobile.del_ok') , ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		return $this->showmessage(RC_Lang::get('mobile::mobile.del_ok') , ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
 	public function search_article() {
@@ -506,7 +506,7 @@ class admin_config extends ecjia_admin {
 				);
 			}
 		}
-		$this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $list));
+		return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $list));
 	}
 
 	private function get_regions($type = 0, $parent = 0) {

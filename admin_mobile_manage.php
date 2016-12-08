@@ -103,7 +103,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$links[] = array('text' => RC_Lang::get('mobile::mobile.return_mobile_manage'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/init'));
 		$links[] = array('text' => RC_Lang::get('mobile::mobile.continueadd_mobile_app'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/add'));
 		
-		$this->showmessage(RC_Lang::get('mobile::mobile.add_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id' => $id))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.add_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id' => $id))));
 	}
 	
 	/**
@@ -157,7 +157,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->db_mobile_manage->mobile_manage($data);
 		ecjia_admin::admin_log($data['app_name'], 'edit', 'mobile_manage');
 		
-		$this->showmessage(RC_Lang::get('mobile::mobile.edit_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id' => $id))));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.edit_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id' => $id))));
 	}
 	
 	/**
@@ -171,7 +171,7 @@ class admin_mobile_manage extends ecjia_admin {
 		RC_DB::table('mobile_manage')->where('app_id', intval($_GET['id']))->delete();
 		
 		ecjia_admin::admin_log($info['app_name'], 'remove', 'mobile_manage');
-		$this->showmessage(RC_Lang::get('mobile::mobile.remove_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/init')));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.remove_mobile_app_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/init')));
 		
 	}
 	
@@ -192,7 +192,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->db_mobile_manage->mobile_manage($data);
 		
 		ecjia_admin::admin_log($info['app_name'], 'edit', 'mobile_manage');
-		$this->showmessage(RC_Lang::get('mobile::mobile.order_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_mobile_manage/init')));
+		return $this->showmessage(RC_Lang::get('mobile::mobile.order_sort_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('mobile/admin_mobile_manage/init')));
 	}
 	
 	/**
