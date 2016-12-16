@@ -51,7 +51,7 @@ class admin_config extends ecjia_admin {
 		$code = empty($_GET['code']) ? 'basic_info' : trim($_GET['code']);
 		$this->assign('code', $code);
 		
-		$mobile_app_icon = ecjia::config('shop_app_icon', ecjia::CONFIG_EXISTS) ? RC_Upload::upload_url() . '/' . ecjia::config('shop_app_icon') : '';
+		$mobile_app_icon = ecjia::config('mobile_app_icon', ecjia::CONFIG_EXISTS) ? RC_Upload::upload_url() . '/' . ecjia::config('mobile_app_icon') : '';
 		$this->assign('mobile_app_icon', $mobile_app_icon);
 		$this->assign('mobile_app_name',      	ecjia::config('mobile_app_name'));
 		$this->assign('mobile_app_version',   	ecjia::config('mobile_app_version'));
@@ -297,8 +297,9 @@ class admin_config extends ecjia_admin {
 			$mobile_app_icon_info = $upload->upload($_FILES['mobile_app_icon']);
 			if (!empty($mobile_app_icon_info)) {
 				$mobile_app_icon = $upload->get_position($mobile_app_icon_info);
-				ecjia_config::instance()->write_config('shop_app_icon', $mobile_app_icon);
+				ecjia_config::instance()->write_config('mobile_app_icon', $mobile_app_icon);
 			}
+			
 		}
 		ecjia_config::instance()->write_config('mobile_app_name', 		$mobile_app_name);
 		ecjia_config::instance()->write_config('mobile_app_version', 	$mobile_app_version);
