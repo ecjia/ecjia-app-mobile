@@ -16,10 +16,10 @@ class mobile extends ecjia_front {
 
         $this->assign('shop_url', RC_Uri::url('touch/index/init'));
         $this->assign('shop_app_icon', ecjia::config('shop_app_icon') ? RC_Upload::upload_url(ecjia::config('shop_app_icon')) : RC_Uri::admin_url('statics/images/nopic.png'));
-        $this->assign('shop_app_description', ecjia::config('shop_app_description') ? ecjia::config('shop_app_description') : '暂无手机应用描述');
-        $this->assign('shop_android_download', ecjia::config('shop_android_download'));
-        $this->assign('shop_iphone_download', ecjia::config('shop_iphone_download'));
-        $this->assign('shop_ipad_download', ecjia::config('shop_ipad_download'));
+        $this->assign('shop_app_description', ecjia::config('mobile_app_description') ? ecjia::config('mobile_app_description') : '暂无手机应用描述');
+        $this->assign('shop_android_download', ecjia::config('mobile_android_download'));
+        $this->assign('shop_iphone_download', ecjia::config('mobile_iphone_download'));
+        $this->assign('shop_ipad_download', ecjia::config('mobile_ipad_download'));
         
         $this->assign_lang();
         $this->display('download.dwt');
