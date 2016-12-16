@@ -12,7 +12,6 @@ class mobile extends ecjia_front {
 	
 	public function download() {
         $this->assign('page_title', ecjia::config('shop_name') . ' - 手机APP下载');
-//         $this->assign('theme_url', RC_Theme::get_template_directory_uri() . '/');
 
         $this->assign('shop_url', RC_Uri::url('touch/index/init'));
         $this->assign('shop_app_icon', ecjia::config('mobile_app_icon') ? RC_Upload::upload_url(ecjia::config('mobile_app_icon')) : RC_Uri::admin_url('statics/images/nopic.png'));
@@ -22,7 +21,11 @@ class mobile extends ecjia_front {
         $this->assign('shop_ipad_download', ecjia::config('mobile_ipad_download'));
         
         $this->assign_lang();
-        $this->display('download.dwt');
+        
+        
+        $this->display(
+        	RC_Package::package('app::mobile')->loadTemplate('front/download.dwt', true)
+        );
 
     }
 	

@@ -8,7 +8,7 @@
         body{margin:0;padding:0;background-color: #148ac3;font-family: "微软雅黑";}
         .pic{min-height: 250px;position: relative;}
         .pic .icon{position: absolute; width: 24%;top: 34%;left: 38%;}
-        .pic p{font-size: 1.4em;text-align: center;position: absolute;top:60%;width: 100%;}
+		.pic p{font-size: 1em;text-align: center;position: absolute;top: 60%;width: 90%;margin: 0 5%;}
         .btns{position: relative;}
         .btns a {height: 17%;left: 15.6%;position: absolute;width: 68.8%; margin-top: -2px;}
         .btns a.disabled {cursor: default;background: #148ac3;}
