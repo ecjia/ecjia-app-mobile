@@ -60,6 +60,24 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_feedback_autoreply', ecjia::config('mobile_feedback_autoreply'));
 		$this->assign('shop_pc_url', ecjia::config('mobile_pc_url'));
 		$this->assign('mobile_share_link', ecjia::config('mobile_share_link'));
+		/*红包使用说明*/
+		$bonus_readme_url = ecjia::config('bonus_readme_url');
+		$bonus_readme = array();
+		if (!empty($bonus_readme_url)) {
+			$bonus_readme_url = explode('?', $bonus_readme_url);
+			$parameter = explode('&', end($bonus_readme_url));
+			foreach($parameter as $val){
+				$tmp = explode('=',$val);
+				$data[$tmp[0]] = $tmp[1];
+			}
+			$article_info = RC_Api::api('article', 'article_info', array('id' => $data['id']));
+			if (!is_ecjia_error($article_info)) {
+				if (!empty($article_info)) {
+					$bonus_readme = array('id' => $data['id'], 'title' => $article_info['title']);
+				}
+			}
+		}
+		$this->assign('bonus_readme', $bonus_readme);
 		/*登录页设置*/
 		$this->assign('mobile_phone_login_fgcolor', ecjia::config('mobile_phone_login_fgcolor'));
 		$this->assign('mobile_phone_login_bgcolor', ecjia::config('mobile_phone_login_bgcolor'));
@@ -299,7 +317,6 @@ class admin_config extends ecjia_admin {
 				$mobile_app_icon = $upload->get_position($mobile_app_icon_info);
 				ecjia_config::instance()->write_config('mobile_app_icon', $mobile_app_icon);
 			}
-			
 		}
 		ecjia_config::instance()->write_config('mobile_app_name', 		$mobile_app_name);
 		ecjia_config::instance()->write_config('mobile_app_version', 	$mobile_app_version);
