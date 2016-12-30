@@ -127,48 +127,6 @@
 							</div>
 						</div>
 					</div>
-
-					<!--
-					<h3 class="heading">{lang key='mobile::mobile.pad_login_set'}</h3>
-					<div class="control-group formSep">
-						<label class="control-label">{lang key='mobile::mobile.pad_login_fgcolor'}</label>
-						<div class="controls">
-							<div class="input-append color" data-color="{$mobile_pad_login_fgcolor}">
-								<input class="w100" name="mobile_pad_login_fgcolor" type="text" value="{$mobile_pad_login_fgcolor}">
-								<span class="add-on">
-									<i class="dft_color" style='margin-top: 2px;'></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="control-group formSep">
-						<label class="control-label">{lang key='mobile::mobile.pad_login_bgcolor'}</label>
-						<div class="controls">
-							<div class="input-append color" data-color="{$mobile_pad_login_bgcolor}">
-								<input class="w100" name="mobile_pad_login_bgcolor" type="text" value="{$mobile_pad_login_bgcolor}">
-								<span class="add-on">
-									<i class="dft_color" style='margin-top: 2px;'></i>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="control-group formSep">
-						<label class="control-label">{lang key='mobile::mobile.pad_login_bgimage'}</label>
-						<div class="controls">
-							<div class="fileupload {if $mobile_pad_login_bgimage}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
-								<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-									<img src="{$mobile_pad_login_bgimage}" alt="{lang key='mobile::mobile.no_image'}" />
-								</div>
-								<span class="btn btn-file">
-								<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
-								<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
-								<input type="file" name="mobile_pad_login_bgimage"/>
-								</span>
-								<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_pad_login_bgimage')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
-							</div>
-						</div>
-					</div>
-					-->
 				<!-- 登录色值end -->
 				<!-- 热门城市start -->
 					<h3 class="heading">热门城市设置</h3>
@@ -293,31 +251,6 @@
 						</div>
 					</div>
 
-					<!--
-					<div class="control-group formSep">
-						<label class="control-label">{lang key='mobile::mobile.ipad_qr_code'}</label>
-						<div class="controls">
-							<div class="fileupload {if $mobile_ipad_qr_code}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
-								<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
-									<img src="{$mobile_ipad_qr_code}" alt="{lang key='mobile::mobile.no_image'}" />
-								</div>
-								<span class="btn btn-file">
-								<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
-								<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
-								<input type="file" name="mobile_ipad_qr_code"/>
-								</span>
-								<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_ipad_qr_code')}" {if $mobile_ipad_qr_code}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
-							</div>
-						</div>
-					</div>
-					<div class="control-group formSep">
-						<label class="control-label">{lang key='mobile::mobile.shop_ipad_download'}</label>
-						<div class="controls">
-							<input type='text' name='shop_ipad_download' value='{$shop_ipad_download}'>
-						</div>
-					</div>
-					 -->
-
 					<div class="control-group formSep">
 						<label class="control-label">{lang key='mobile::mobile.shopkeeper_urlscheme'}</label>
 						<div class="controls">
@@ -376,44 +309,6 @@
 							</div>
 						</div>
 					</div>
-					<!--
-					<div class="control-group formSep edit-page">
-						<label class="control-label">{lang key='mobile::mobile.launch_topic_set'}</label>
-						<div class="controls">
-							<select name='mobile_topic_adsense'>
-								<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
-									{foreach from=$ad_position_list item=list}
-									<option value="{$list.position_id}" {if $list.position_id eq $mobile_topic_adsense}selected{/if}>{$list.position_name}</option>
-									{/foreach}
-							</select>
-							<span class="help-block">{lang key='mobile::mobile.topic_adsense_help'}</span>
-						</div>
-					</div>
-					<div class="control-group formSep edit-page">
-						<label class="control-label">{lang key='mobile::mobile.tv_big_ad_group'}</label>
-						<div class="controls">
-							<select name='mobile_tv_big_adsense'>
-								<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
-									{foreach from=$ad_position_list item=list}
-									<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_big_adsense}selected{/if}>{$list.position_name}</option>
-									{/foreach}
-							</select>
-							<span class="help-block">{lang key='mobile::mobile.tv_ad_help'}</span>
-						</div>
-					</div>
-					<div class="control-group formSep edit-page">
-						<label class="control-label">{lang key='mobile::mobile.tv_small_ad_group'}</label>
-						<div class="controls">
-							<select name='mobile_tv_small_adsense'>
-								<option value='0'>{lang key='mobile::mobile.pls_select'}</option>
-									{foreach from=$ad_position_list item=list}
-									<option value="{$list.position_id}" {if $list.position_id eq $mobile_tv_small_adsense}selected{/if}>{$list.position_name}</option>
-									{/foreach}
-							</select>
-							<span class="help-block">{lang key='mobile::mobile.tv_ad_help'}</span>
-						</div>
-					</div>
-					 -->
 				<!-- {/if} -->
 				<!--{if $code eq 'app_screenshots'}-->
 				<h3 class="heading">应用截图</h3>

@@ -170,7 +170,6 @@ class admin_mobile_toutiao extends ecjia_admin {
 				$src = $upload->get_position($info);
 				$data['image'] = $src;
 				/* 获取旧的图片地址,并删除 */
-// 				$old_pic = $this->db_mobile_toutiao->where(array('id' => $_POST['id']))->get_field('image');
 				$info = $this->db_mobile_toutiao->toutiao_find($_POST['id']);
 				$upload->remove($info['image']);
 			} else {

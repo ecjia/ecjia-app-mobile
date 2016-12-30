@@ -16,7 +16,6 @@ class mobile_method  {
 	public function __construct() {
 		
 	}
-	
 	 
 	/**
 	 * 轮播广告图片数据
@@ -67,7 +66,6 @@ class mobile_method  {
 		}
 		return $playerdb;
 	}
-	
 	
 	/**
 	 * 移动端banner数据

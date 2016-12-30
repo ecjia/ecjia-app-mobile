@@ -5,8 +5,6 @@ use Royalcms\Component\Database\Eloquent\Model;
 class orm_ad_position_model extends Model {
 	protected $table = 'ad_position';
 	
-	
-	
 	/* 获取缓存数据*/
 	public function get_cache_item ($cache_key) 
 	{
@@ -18,7 +16,6 @@ class orm_ad_position_model extends Model {
 	{
 		return RC_Cache::app_cache_set($cache_key, $item, 'adsense', 10080);
 	}
-
 }
 
 // end

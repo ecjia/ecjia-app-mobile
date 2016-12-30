@@ -7,7 +7,6 @@ class mobile_message_model extends Component_Model_Model {
 		$this->table_name = 'mobile_message';
 		parent::__construct();
 	}
-
 }
 
 // end

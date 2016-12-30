@@ -54,7 +54,6 @@ class toutiao_module extends api_front implements api_interface {
 		);
 		
 		return array('data' => $list, 'pager' => $pager);
-		
 	}
 }
 

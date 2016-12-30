@@ -76,10 +76,6 @@
 				</div>
 				<div class="control-group formSep" >
 					<label class="control-label">{lang key='mobile::mobile.label_is_show'}</label>
-<!-- 					<div class="span8 chk_radio"> -->
-<!-- 						<input type="radio"  name="img_display" value="1" {if $rt.img_display eq 1}checked{/if}><span>{t}显示{/t}</span> -->
-<!-- 						<input type="radio"  name="img_display" value="0" {if $rt.img_display eq 0}checked{/if}><span>{t}不显示{/t}</span> -->
-<!-- 					</div> -->
 				   	<div class="controls">
 			            <div id="info-toggle-button">
 			                <input class="nouniform" name="img_display" type="checkbox"  {if $rt.img_display eq 1}checked="checked"{/if}  value="1"/>

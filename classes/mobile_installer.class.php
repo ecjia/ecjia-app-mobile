@@ -12,7 +12,6 @@ class mobile_installer extends ecjia_installer {
         parent::__construct($id);
     }
     
-    
     public function install() {
     	/* 设备信息*/
         $table_name = 'mobile_device';

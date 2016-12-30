@@ -16,20 +16,6 @@ class data_module extends api_admin implements api_interface {
 		$stats_db = RC_Model::model('stats/stats_model');
 		$db_orderinfo_view = RC_Model::model('orders/order_info_viewmodel');
 		
-		/* $db_orderinfo_view->view = array(
-				'order_info' => array(
-						'type'	=> Component_Model_View::TYPE_LEFT_JOIN,
-						'alias'	=> 'oii',
-						'on'	=> 'oi.order_id = oii.main_order_id'
-				),
-				'order_goods' => array(
-						'type'	=> Component_Model_View::TYPE_LEFT_JOIN,
-						'alias'	=> 'og',
-						'on'	=> 'oi.order_id = og.order_id'
-				)
-		); */
-		
-		
 		$today = RC_Time::local_getdate();
 		
 		$today_time = RC_Time::local_mktime(0, 0, 0, $today['mon'], $today['mday'], $today['year']);//今日开始时间
@@ -37,11 +23,8 @@ class data_module extends api_admin implements api_interface {
 		$yesterday_time = $today_time - 3600 * 24;//昨日开始时间
 		
 		/* 分组统计订单数和销售额：已发货时间为准 */
-// 		$order_count_where = array();
-// 		$order_count_where[] = "(oi.order_status = '" . OS_CONFIRMED . "' OR oi.order_status >= '" . OS_SPLITED . "')";
 		$order_amount_where = array();
 		$order_amount_where[] = "(oi.pay_status = '" . PS_PAYED . "' OR oi.pay_status = '" . PS_PAYING . "')";
-// 		$order_where[] = "(oi.shipping_status = '" . SS_SHIPPED . "' OR oi.shipping_status = '" . SS_RECEIVED . "')";
 		
 		$fields = "COUNT(*) AS order_count, SUM(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount";
 		
@@ -78,7 +61,6 @@ class data_module extends api_admin implements api_interface {
 			}
 			
 			$order_data_yesterday['order_amount'] = $yersterday_order_amount;
-// 			$order_data_yesterday = $db_orderinfo_view->field($fields)->where(array_merge($order_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->find();
 		} else {
 			$order_count = $db_orderinfo_view->join(null)->field('COUNT(oi.order_id) AS order_count')->where(array_merge(array('oi.add_time' => array('gt' => $today_time)), $where))->find();
 			
@@ -91,12 +73,6 @@ class data_module extends api_admin implements api_interface {
 			$order_data_yesterday['order_count'] = $yersterday_order_count['order_count'];
 			$yersterday_order_amount = $db_orderinfo_view->join(null)->field('SUM(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->find();
 			$order_data_yesterday['order_amount'] = $yersterday_order_amount['order_amount'];
-				
-// 			$order_data_yesterday['order_count'] = $db_orderinfo_view->join(null)->field('COUNT(oi.order_id) AS order_count')->where(array_merge(array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->find();
-// 			$order_data_yesterday['order_amount'] = $db_orderinfo_view->join(null)->field('SUM(oi.goods_amount + oi.shipping_fee + oi.insure_fee + oi.pay_fee + oi.pack_fee + oi.card_fee - oi.discount) AS order_amount')->where(array_merge($order_amount_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->get_field('order_amount');
-				
-// 			$order_data_today = $db_orderinfo_view->join(null)->field($fields)->where(array_merge($order_where, array('oi.add_time' => array('gt' => $today_time)), $where))->find();
-// 			$order_data_yesterday = $db_orderinfo_view->join(null)->field($fields)->where(array_merge($order_where, array('oi.add_time' => array('lt' => $today_time, 'gt' => $yesterday_time)), $where))->find();
 		}
 		
 		$order_query = RC_Loader::load_app_class('order_query', 'orders');
@@ -130,11 +106,6 @@ class data_module extends api_admin implements api_interface {
 					'label'	=> __('今日订单'),
 					'value'	=> intval($order_data_today['order_count']),
 				),
-// 				array(
-// 						'key'	=> 'unpaid_orders',
-// 						'label'	=> __('待付款订单'),
-// 						'value'	=> intval($unpaid_orders),
-// 				),
 				array(
 					'key'	=> 'today_total_visitors',
 					'label' => __('今日访客'),
@@ -155,19 +126,10 @@ class data_module extends api_admin implements api_interface {
 						'label' => __('昨日访客'),
 						'value' => $next_total_visitors,
 				),
-// 				array(
-// 						'key'	=> 'await_ship_orders',
-// 						'label'	=> __('待发货订单'),
-// 						'value'	=> intval($await_ship_orders),
-// 				),
 		);
 
-		
 		return $data;
 	}
-	
-	
 }
-
 
 // end

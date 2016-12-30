@@ -14,7 +14,6 @@ class integral_module extends api_front implements api_interface {
 		/* 获取当天时间段*/
 		$time = RC_Time::gmtime();
 		$date = RC_Time::local_date('Y-m-d', $time);
-// 		$date = '2016-04-08';$_SESSION['user_id'] =1;
 		$start_time = RC_Time::local_strtotime($date);
 		$end_time	= RC_Time::local_strtotime($date. ' 23:59:59');
 		
@@ -27,7 +26,6 @@ class integral_module extends api_front implements api_interface {
 			
 			$db->insert(array(
 					'user_id'		=> $_SESSION['user_id'],
-// 					'checkin_time'	=> $start_time,
 					'checkin_time'	=> $time,
 					'integral'		=> $integral,
 					'source'		=> 'ECJia_app'
@@ -49,7 +47,6 @@ class integral_module extends api_front implements api_interface {
 						$integral = $continuous_signin_integral;
 						$db->where(array(
 								'user_id'		=> $_SESSION['user_id'],
-// 								'checkin_time'	=> $start_time,
 			 					'checkin_time'	=> $time,
 								'source'		=> 'ECJia_app'
 						))->update(array('integral' => $integral));

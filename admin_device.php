@@ -262,7 +262,6 @@ class admin_device extends ecjia_admin {
 	 * @return  array
 	 */
 	private function get_device_list() {
-// 		$db_device = RC_Model::model('mobile/mobile_device_model');
 		$device_db = RC_DB::table('mobile_device');
 		
 		$where = $filter = array();

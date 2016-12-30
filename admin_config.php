@@ -1,9 +1,7 @@
 <?php
-
 /**
  * ECJIA移动应用配置模块
  */
-
 defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_config extends ecjia_admin {
@@ -246,7 +244,6 @@ class admin_config extends ecjia_admin {
         }else{
             return $this->showmessage('应用截图最多只能添加10张', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-
     }
 
     /**
@@ -501,10 +498,8 @@ class admin_config extends ecjia_admin {
 		$this->admin_priv('mobile_config_delete', ecjia::MSGTYPE_JSON);
 
 		$code     = trim($_GET['code']);
-//		$img_name = $this->db_config->where(array('code' => $code))->get_field('value');
 		$img_name = RC_DB::table('shop_config')->where('code', $code)->pluck('value');
 
-// 		@unlink(RC_Upload::upload_path() . $img_name);
 		$disk = RC_Filesystem::disk();
 		$disk->delete(RC_Upload::upload_path() . $img_name);
 

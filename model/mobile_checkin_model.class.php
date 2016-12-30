@@ -7,7 +7,6 @@ class mobile_checkin_model extends Component_Model_Model {
 		$this->table_name = 'mobile_checkin';
 		parent::__construct();
 	}
-
 }
 
 // end

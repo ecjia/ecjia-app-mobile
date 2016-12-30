@@ -1,9 +1,7 @@
 <?php
-
 /**
  * ECJIA移动应用配置模块
  */
-
 defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_mobile_manage extends ecjia_admin {

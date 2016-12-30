@@ -9,7 +9,6 @@ class mobile_activity_log_model extends Component_Model_Model {
 	}	
 	
 	public function activity_log_count($where) {
-//		return $this->where($where)->count();
 		return RC_DB::table('mobile_activity_log')->where('activity_id', $where)->count();
 	}
 	

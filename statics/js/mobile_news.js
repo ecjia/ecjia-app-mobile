@@ -3,7 +3,6 @@
     app.mobile_news = {
         info: function () {
             app.mobile_news.clone();
-            //          app.mobile_news.remove();
             app.mobile_news.edit_area();
             app.mobile_news.remove_area();
             app.mobile_news.form_submit();

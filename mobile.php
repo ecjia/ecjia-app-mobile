@@ -29,7 +29,6 @@ class mobile extends ecjia_front {
 
     }
 	
-	
 }
 
 // end

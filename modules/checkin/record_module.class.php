@@ -29,7 +29,6 @@ class record_module extends api_front implements api_interface {
 		}
 		
 		if ($filite_user == 'current') {
-// 			$_SESSION['user_id'] = 1;
 			$this->authSession();
 			
 			$db = RC_Model::model('mobile/mobile_checkin_model');

@@ -253,11 +253,6 @@ class admin_mobile_news extends ecjia_admin {
 	private function get_mobile_news_list() {
 		$db_mobile_news = RC_Model::model('mobile/mobile_news_model');
 		
-// 		$count = $db_mobile_news->mobile_news_count(array('group_id' => 0, 'type' => 'article'));
-// 		$page = new ecjia_page($count, 10, 5);
-// 		$option = array('where' => array('group_id' => 0, 'type' => 'article'), 'limit' => $page->limit(), 'order' => array('id' => 'asc'));
-// 		$result = $db_mobile_news->mobile_news_list($option);
-		
 		$db_mobile_news = RC_DB::table('mobile_news');
 		$db_mobile_news->where('group_id', 0)->where('type', 'article');
 		
@@ -284,9 +279,6 @@ class admin_mobile_news extends ecjia_admin {
 					'create_time' 	=> RC_Time::local_date(ecjia::config('time_format'), $val['create_time']),
 				);
 			
-// 				$options = array('where' => array('group_id' => $val['id'], 'type' => 'article'), 'limit' => null, 'order' => array('id' => 'asc'));
-// 				$child_result = $db_mobile_news->mobile_news_list($options);
-				
 				$child_result = $db_mobile_child->where('group_id', $val['id'])->where('type', 'article')->orderby('id', 'asc')->get();
 				
 				if (!empty($child_result)) {

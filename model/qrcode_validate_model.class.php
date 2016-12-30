@@ -7,7 +7,6 @@ class qrcode_validate_model extends Component_Model_Model {
 		$this->table_name = 'qrcode_validate';
 		parent::__construct();
 	}
-
 }
 
 // end

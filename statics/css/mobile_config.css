@@ -7,16 +7,13 @@
     width: 78%;
 	overflow:visible;
 }
-
 .tab_merchants_nav {
 	width: 19%;
 	margin-right:0px;
 }
-
 .wookmark_list .ui-sortable-placeholder{
     height: 190px;
 }
-
 .list-group-info, .list-group-title {
     position: relative;
     display: block;

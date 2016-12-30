@@ -47,10 +47,6 @@ class mobile_device_model extends Component_Model_Model {
 		}
 		return $db_mobile_device->get();
 	}
-	
-	public function device_count($where) {
-// 		return $this->where($where)->count();
-	}
 }
 
 // end

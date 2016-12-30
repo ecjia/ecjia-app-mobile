@@ -32,8 +32,6 @@
                         info += '<hr />';
                     }
                     if (data.flashtpl.code) {
-                        // info += '<p><b>名称：</b>' + data.flashtpl.Name + '</p>';
-                        //+ ' 版本：' + data.flashtpl.Version + ' <a href="' + data.flashtpl.AuthorURI + '">作者：' + data.flashtpl.Author + '</a>
                         info += '<p><b>' + js_lang.label_brief + '</b>' + data.flashtpl.Description + '</p>';
                     }
  

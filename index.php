@@ -14,16 +14,13 @@ class index extends ecjia_front {
 	{
 		$code = $_GET['qrcode'];
 		$value = RC_Uri::url('mobile/index/login', array('qrcode' => $code));
-// 		$value = base64_decode(htmlspecialchars($_GET['value']));
-// 		if($value){
-			// 二维码
-			// 纠错级别：L、M、Q、H
-			$errorCorrectionLevel = 'L';
-			// 点的大小：1到10
-			$matrixPointSize = 10;
-			RC_Loader::load_app_class('QRcode', 'touch');
-			$img = QRcode::png($value, false, $errorCorrectionLevel, $matrixPointSize, 2);
-// 		}
+		// 二维码
+		// 纠错级别：L、M、Q、H
+		$errorCorrectionLevel = 'L';
+		// 点的大小：1到10
+		$matrixPointSize = 10;
+		RC_Loader::load_app_class('QRcode', 'touch');
+		$img = QRcode::png($value, false, $errorCorrectionLevel, $matrixPointSize, 2);
 		echo $img;
 	}
 	

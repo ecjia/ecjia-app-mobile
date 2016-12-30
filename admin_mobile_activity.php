@@ -350,11 +350,6 @@ class admin_mobile_activity extends ecjia_admin {
 				'prize_number'	=> $prize_number[$i],
 				'prize_prob'	=> $prize_prob[$i]
 			);
-			//if (isset($prize_id[$i])) {
-			//	RC_Model::model('mobile/mobile_activity_prize_model')->activity_prize_manage($data, array('activity_id' => $activity_id, 'prize_id' => $prize_id[$i]));
-			//} else {
-			//	RC_Model::model('mobile/mobile_activity_prize_model')->activity_prize_manage($data);
-			//}
 			RC_DB::table('mobile_activity_prize')->insert($data);
 			$i++;
 		}

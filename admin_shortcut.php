@@ -125,7 +125,6 @@ class admin_shortcut extends ecjia_admin {
 				$upload = RC_Upload::uploader('image', array('save_path' => 'data/shortcut', 'auto_sub_dirs' => false));
 				$info = $upload->upload($_FILES['img_file_src']);
 				if (!empty($info)) {
-// 					$src = $info['savepath'] . '/' . $info['savename'];
 					$src = $upload->get_position($info);
 				} else {
 					return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -197,7 +196,6 @@ class admin_shortcut extends ecjia_admin {
 				$upload = RC_Upload::uploader('image', array('save_path' => 'data/shortcut', 'auto_sub_dirs' => false));
 				$info = $upload->upload($_FILES['img_file_src']);
 				if (!empty($info)) {
-// 					$src = $info['savepath'] . '/' . $info['savename'];
 					$src = $upload->get_position($info); 
 					$upload->remove($rt['src']);
 				} else {
@@ -250,7 +248,6 @@ class admin_shortcut extends ecjia_admin {
 		}
 
 		if (strpos($rt['src'], 'http') === false) {
-// 			@unlink(RC_Upload::upload_path() . $rt['src']);
 			$disk = RC_Filesystem::disk();
 			$disk->delete(RC_Upload::upload_path().$rt['src']);
 		}
@@ -299,7 +296,6 @@ class admin_shortcut extends ecjia_admin {
 		$flashdb[$id]['display'] = $val;
 		$text = $flashdb[$id]['text'];
 
-// 		$flashdb = $this->mobile->shortcut_sort($flashdb);
 		ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_shortcut_data, serialize($flashdb));
 
 		if ($val == 1) {
