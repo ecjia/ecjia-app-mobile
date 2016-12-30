@@ -373,8 +373,8 @@ function seller_recommend_data($response, $request) {
 
 // 		if (!empty ($result)) {
 // 			$goods_db = RC_Model::model('goods/goods_model');
-// 			RC_Loader::load_app_func('common', 'goods');
-// 			RC_Loader::load_app_func('goods', 'goods');
+// 			RC_Loader::load_app_func('global', 'goods');
+// 			RC_Loader::load_app_func('admin_goods', 'goods');
 // 			$mobilebuy_db = RC_Model::model('goods/goods_activity_model');
 // 			$v_where = array('is_on_sale' => 1, 'is_alone_sale' => 1, 'is_delete' => 0);
 
