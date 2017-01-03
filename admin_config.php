@@ -281,7 +281,7 @@ class admin_config extends ecjia_admin {
 		$row = RC_DB::table('mobile_screenshots')->select('img_url')->where('id', $id)->first();
 
 		if (!empty($row['img_url'])) {
-			RC_Filesystem::disk()->delete(RC_Upload::upload_url($row['img_url']));
+			RC_Filesystem::disk()->delete(RC_Upload::upload_path() . $row['img_url']);
 		}
 		/* 删除数据 */
 		RC_DB::table('mobile_screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->delete();
