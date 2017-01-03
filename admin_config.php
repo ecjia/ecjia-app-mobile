@@ -493,7 +493,6 @@ class admin_config extends ecjia_admin {
 		if (!empty($mobile_app_preview1) || !empty($mobile_app_preview2)) {
 			$mobile_app_preview_temp = array($mobile_app_preview1, $mobile_app_preview2);
 			$mobile_app_preview = serialize($mobile_app_preview_temp);
-			
 			ecjia_config::instance()->write_config('mobile_app_preview', $mobile_app_preview);
 		}
 		
@@ -508,15 +507,38 @@ class admin_config extends ecjia_admin {
 	 */
 	public function del() {
 		$this->admin_priv('mobile_config_delete', ecjia::MSGTYPE_JSON);
-
-		$code     = trim($_GET['code']);
-		$img_name = RC_DB::table('shop_config')->where('code', $code)->pluck('value');
-
 		$disk = RC_Filesystem::disk();
-		$disk->delete(RC_Upload::upload_path() . $img_name);
+		$code = trim($_GET['code']);
+		
+		if ($code == 'mobile_app_preview1' || $code == 'mobile_app_preview2') {
+			// 应用截图
+			$mobile_app_preview_temp = ecjia::config('mobile_app_preview');
+			$mobile_app_preview = unserialize($mobile_app_preview_temp);
 
-		ecjia_admin::admin_log('', 'edit', 'mobile_config');
-		ecjia_config::instance()->write_config($code, '');
+			if (!empty($mobile_app_preview[0])) {
+				$mobile_app_preview1 = $mobile_app_preview[0];
+			}
+			if (!empty($mobile_app_preview[1])) {
+				$mobile_app_preview2 = $mobile_app_preview[1];
+			}
+			
+			if ($code == 'mobile_app_preview1') {
+				$disk->delete(RC_Upload::upload_path() . $mobile_app_preview1);
+				$mobile_app_preview1 = '';
+			} elseif ($code == 'mobile_app_preview2') {
+				$disk->delete(RC_Upload::upload_path() . $mobile_app_preview2);
+				$mobile_app_preview2 = '';
+			}
+			$mobile_app_preview_temp = array($mobile_app_preview1, $mobile_app_preview2);
+			$mobile_app_preview = serialize($mobile_app_preview_temp);
+			
+			ecjia_config::instance()->write_config('mobile_app_preview', $mobile_app_preview);
+		} else {
+			$img_name = RC_DB::table('shop_config')->where('code', $code)->pluck('value');
+			$disk->delete(RC_Upload::upload_path() . $img_name);
+			ecjia_admin::admin_log('', 'edit', 'mobile_config');
+			ecjia_config::instance()->write_config($code, '');
+		}
 		return $this->showmessage(RC_Lang::get('mobile::mobile.del_ok') , ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 
