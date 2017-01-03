@@ -330,7 +330,7 @@
 								<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 								<input type="file" name="mobile_app_preview1"/>
 								</span>
-								<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_pad_login_bgimage')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+								<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_app_preview1')}" {if $mobile_app_preview1}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 							</div>
 						</div>
 					</div>
@@ -346,14 +346,12 @@
 									<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
 									<input type="file" name="mobile_app_preview2"/>
 								</span>
-								<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_pad_login_bgimage')}" {if $mobile_pad_login_bgimage}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+								<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_app_preview2')}" {if $mobile_app_preview2}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
 							</div>
 						</div>
 					</div>
 				    <div class="control-group formSep">
-						<!-- <label class="control-label">{lang key='mobile::mobile.mobile_app_screenshots'}</label> -->
-
-                        <div class="row-fluid mobile-fileupload" data-action="{url path='mobile/admin_config/insert'}" data-remove="{url path='mobile/admin_config/drop_image'}"></div>
+                        <div class="row-fluid mobile-fileupload" data-action="{url path='mobile/admin_config/insert'}&code={$code}" data-remove="{url path='mobile/admin_config/drop_image'}"></div>
                         <div class="row-fluid {if !$img_list} hide{/if}" style="margin-top:30px;">
                         	<div class="span12">
                         		<h3 class="heading m_b10">{lang key='mobile::mobile.mobile_app_screenshots'}<small>{lang key='goods::goods.goods_photo_notice'}</small></h3>
