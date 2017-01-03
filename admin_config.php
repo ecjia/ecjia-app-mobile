@@ -221,7 +221,7 @@ class admin_config extends ecjia_admin {
     public function insert() {
         $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
         $upload = RC_Upload::uploader('image', array('save_path' => 'data/screenshots', 'auto_sub_dirs' => true));
-        $code = $_POST['code'];
+        $code = !empty($_POST['code']) ? $_POST['code'] : $_GET['code'];
         if (!$upload->check_upload_file($_FILES['img_url'])) {
             return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
@@ -239,7 +239,7 @@ class admin_config extends ecjia_admin {
                 'app_code'  =>'cityo2o',
             );
             RC_DB::table('mobile_screenshots')->insert($data);
-            $url = RC_Uri::url('mobile/admin_config/init', array('code' => $code));
+            $url = RC_Uri::url('mobile/admin_config/app_screenshots', array('code' => $code));
             return $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
         }else{
             return $this->showmessage('应用截图最多只能添加10张', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -458,11 +458,22 @@ class admin_config extends ecjia_admin {
 		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
 		$code = $_POST['code'];
 		
+		// 应用截图
+		$mobile_app_preview_temp = ecjia::config('mobile_app_preview');
+		$mobile_app_preview = unserialize($mobile_app_preview_temp);
+		if (!empty($mobile_app_preview[0])) {
+			$mobile_app_preview1 = RC_Upload::upload_url().'/'.$mobile_app_preview[0];
+		}
+		if (!empty($mobile_app_preview[1])) {
+			$mobile_app_preview2 = RC_Upload::upload_url().'/'.$mobile_app_preview[1];
+		}
+		
 		/* 应用截图1 */
 		if (!empty($_FILES['mobile_app_preview1'])) {
 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
 			$upload->add_filename_callback(function () { return 'mobile_app_preview1';});
 			$mobile_app_preview1 = $upload->upload($_FILES['mobile_app_preview1']);
+			
 			if (!empty($mobile_app_preview1)) {
 				$mobile_app_preview1 = $upload->get_position($mobile_app_preview1);
 			}
@@ -473,20 +484,21 @@ class admin_config extends ecjia_admin {
 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
 			$upload->add_filename_callback(function () { return 'mobile_app_preview2';});
 			$mobile_app_preview2 = $upload->upload($_FILES['mobile_app_preview2']);
+			
 			if (!empty($mobile_app_preview2)) {
 				$mobile_app_preview2 = $upload->get_position($mobile_app_preview2);
 			}
 		}
 		
-		if(!empty($mobile_app_preview1) || !empty($mobile_app_preview2)){
+		if (!empty($mobile_app_preview1) || !empty($mobile_app_preview2)) {
 			$mobile_app_preview_temp = array($mobile_app_preview1, $mobile_app_preview2);
 			$mobile_app_preview = serialize($mobile_app_preview_temp);
+			
 			ecjia_config::instance()->write_config('mobile_app_preview', $mobile_app_preview);
 		}
 		
 		ecjia_admin::admin_log(RC_Lang::get('mobile::mobile.mobile_config_set'), 'setup', 'mobile_config');
-		return $this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/app_screenshots',array('code'=>$code))));
-	
+		return $this->showmessage(RC_Lang::get('mobile::mobile.update_config_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_config/app_screenshots', array('code' => $code))));
 	}
 	
 	
