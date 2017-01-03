@@ -68,7 +68,7 @@ class validate_module extends api_front implements api_interface {
 
 function user_login($uid) {
 	
-	RC_Loader::load_app_func('user','user');
+	RC_Loader::load_app_func('admin_user','user');
 	RC_Loader::load_app_func('cart','cart');
 	$user_info = EM_user_info($uid);
 	if (empty($user_info)) {
