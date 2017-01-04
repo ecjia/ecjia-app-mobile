@@ -1,10 +1,12 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 二维码登录验证
  * @author will.chen
  *
  */
+ 
 class validate_module extends api_front implements api_interface {
 
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
@@ -23,19 +25,18 @@ class validate_module extends api_front implements api_interface {
 				return array('code_status' => 104, 'message' => '二维码已过期！');
 			} else {
 				$device_name = array('8001' => '收银台', '1006' => 'TV');
-				
-				$message = ecjia::config('shop_name').$device_name[$result['device_code']].'请求登录，是否授权？';
+				$message     = ecjia::config('shop_name').$device_name[$result['device_code']].'请求登录，是否授权？';
 				return array('code_status' => 101, 'message' => $message);
 			}
         }
 		
-		$device		  = $this->device;
-		$where = array(
-				'uuid'		 => $code,
-				'device_udid' => $device['udid'],
+		$device	= $this->device;
+		$where  = array(
+				'uuid'		    => $code,
+				'device_udid'   => $device['udid'],
 				'device_client' => $device['client'],
 				'device_code'	=> $device['code'],
-				'expires_in' => array('gt' => RC_Time::gmtime()), 
+				'expires_in'    => array('gt' => RC_Time::gmtime()), 
 		);
 		$result = $db->find($where);
 		
@@ -53,7 +54,7 @@ class validate_module extends api_front implements api_interface {
 			/* 更改二维码状态：设为失效*/
 			$db->where($where)->update(array('status' => 3));
 			$userinfo['code_status'] = 102;
-			$userinfo['message'] = '';
+			$userinfo['message']     = '';
 			return $userinfo;
 		} elseif ($result['status'] == 0) {
 			return array('code_status' => 100, 'message' => '');
@@ -84,7 +85,7 @@ function user_login($uid) {
 					'uid' => $_SESSION['user_id']
 			),
 	
-			'user' => $user_info
+			'user'   => $user_info
 	);
 	define('SESS_ID', RC_Session::session_id());
 	update_user_info();
@@ -92,9 +93,9 @@ function user_login($uid) {
 	
 	//修正咨询信息
 	if($_SESSION['user_id'] > 0) {
-		$device = $this->requestData('device', array());
-		$device_id = $device['udid'];
-		$device_client = $device['client'];
+		$device           = $this->requestData('device', array());
+		$device_id        = $device['udid'];
+		$device_client    = $device['client'];
 		$db_term_relation = RC_Model::model('goods/term_relationship_model');
 			
 		$object_id = $db_term_relation->where(array(
@@ -132,7 +133,7 @@ function user_login($uid) {
 function admin_login($uid)
 {
 	$db_admin_user = RC_Loader::load_sys_model('admin_user_model');
-	$row = $db_admin_user->find(array('user_id' => $uid));
+	$row           = $db_admin_user->find(array('user_id' => $uid));
 	if (empty($row)) {
 		return array();
 	}
@@ -157,12 +158,12 @@ function admin_login($uid)
 	$db_admin_user->where(array('user_id' => $_SESSION['admin_id']))->update($data);
 
 	$userinfo = array(
-			'session' => array(
-				'sid' => RC_Session::session_id(),
-				'uid' => $_SESSION['admin_id']
+			'session'       => array(
+				'sid'       => RC_Session::session_id(),
+				'uid'       => $_SESSION['admin_id']
 			),
 	);
-	$role_db = RC_Loader::load_model('role_model');
+	$role_db   = RC_Loader::load_model('role_model');
 	$role_name = $role_db->where(array('role_id' => $row['role_id']))->get_field('role_name');
 	$userinfo['userinfo'] = array(
 			'id' 			=> $row['user_id'],
@@ -190,4 +191,5 @@ function admin_login($uid)
 	}
 	return $userinfo;
 }
+
 // end

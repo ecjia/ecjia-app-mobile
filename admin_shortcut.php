@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJia快捷菜单管理控制器
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_shortcut extends ecjia_admin {
 
@@ -99,9 +100,9 @@ class admin_shortcut extends ecjia_admin {
 		$this->admin_priv('shortcut_update',ecjia::MSGTYPE_JSON);
 
 		if (empty($_POST['step'])) {
-			$url = isset($_GET['url']) ? trim($_GET['url']) : 'http://';
-			$src = isset($_GET['src']) ? trim($_GET['src']) : '';
-			$sort = 0;
+			$url     = isset($_GET['url']) ? trim($_GET['url']) : 'http://';
+			$src     = isset($_GET['src']) ? trim($_GET['src']) : '';
+			$sort    = 0;
 			$display = 1;
 			$rt = array(
 				'img_src'	     => $src,
@@ -144,7 +145,7 @@ class admin_shortcut extends ecjia_admin {
 			$flashdb = $this->mobile->shortcut_data();
 			array_push($flashdb, $insert_arr);
 
-			$id = count($flashdb);
+			$id      = count($flashdb);
 			$flashdb = $this->mobile->shortcut_sort($flashdb);
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_shortcut_data, serialize($flashdb));
@@ -163,8 +164,8 @@ class admin_shortcut extends ecjia_admin {
 	public function edit() {
 		$this->admin_priv('shortcut_update',ecjia::MSGTYPE_JSON);
 
-		$id = intval($_REQUEST['id']); //取得id
-		$flashdb = $this->mobile->shortcut_data();
+		$id       = intval($_REQUEST['id']); //取得id
+		$flashdb  = $this->mobile->shortcut_data();
 		if (isset($flashdb[$id])) {
 			$rt = $flashdb[$id];
 		} else {
@@ -271,10 +272,10 @@ class admin_shortcut extends ecjia_admin {
 		if (!is_numeric($order)) {
 			return $this->showmessage(RC_Lang::get('mobile::mobile.format_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
-			$flashdb = $this->mobile->shortcut_data();
+			$flashdb              = $this->mobile->shortcut_data();
 			$flashdb[$id]['sort'] = $order;
 
-			$flashdb = $this->mobile->shortcut_sort($flashdb);
+			$flashdb              = $this->mobile->shortcut_sort($flashdb);
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_shortcut_data, serialize($flashdb));
 
@@ -288,10 +289,10 @@ class admin_shortcut extends ecjia_admin {
 	public function toggle_show() {
 		$this->admin_priv('shortcut_update',ecjia::MSGTYPE_JSON);
 
-		$id     = intval($_POST['id']);
-		$val    = intval($_POST['val']);
+		$id       = intval($_POST['id']);
+		$val      = intval($_POST['val']);
 
-		$flashdb = $this->mobile->shortcut_data();
+		$flashdb  = $this->mobile->shortcut_data();
 
 		$flashdb[$id]['display'] = $val;
 		$text = $flashdb[$id]['text'];

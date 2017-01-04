@@ -1,7 +1,10 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
 * 添加管理员记录日志操作对象
 */
+
 function assign_adminlog_content() {
 	ecjia_admin_log::instance()->add_object('mobile_shortcut', RC_Lang::get('mobile::mobile.shortcut'));
 	ecjia_admin_log::instance()->add_object('mobile_shortcut_display', RC_Lang::get('mobile::mobile.mobile_shortcut_display'));

@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJIA移动应用配置模块
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_mobile_manage extends ecjia_admin {
 	private $db_mobile_manage;
@@ -178,7 +179,7 @@ class admin_mobile_manage extends ecjia_admin {
 	 */
 	public function edit_sort() {
 		$this->admin_priv('mobile_manage_update', ecjia::MSGTYPE_JSON);
-		$id = intval($_POST['pk']);
+		$id         = intval($_POST['pk']);
 		$sort_order = intval($_POST['value']);
 		
 		$data = array(
@@ -201,7 +202,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$db_mobile_manage = RC_DB::table('mobile_manage');
 		
 		$count = $db_mobile_manage->count();
-		$page = new ecjia_page ($count, 10, 5);
+		$page  = new ecjia_page ($count, 10, 5);
 		
 		$mobile_manage_list = $db_mobile_manage->orderby('sort', 'desc')->take(10)->skip($page->start_id-1)->get();
 		

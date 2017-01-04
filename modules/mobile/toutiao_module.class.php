@@ -1,10 +1,12 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 今日头条
  * @author will.chen
  *
  */
+ 
 class toutiao_module extends api_front implements api_interface {
 
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
@@ -31,10 +33,9 @@ class toutiao_module extends api_front implements api_interface {
 		
 		//实例化分页
 		$page_row = new ecjia_page($count, $size, 6, '', $page);
+		$result   = $db_mobile_toutiao->where(array('status' => 1))->limit($page_row->limit())->order(array('sort_order' => 'asc', 'id' => 'desc'))->select();
 		
-		$result = $db_mobile_toutiao->where(array('status' => 1))->limit($page_row->limit())->order(array('sort_order' => 'asc', 'id' => 'desc'))->select();
-		
-		$list = array();
+		$list     = array();
 		if ( !empty ($result)) {
 			foreach ($result as $val) {
 				$list[] = array(
@@ -56,7 +57,5 @@ class toutiao_module extends api_front implements api_interface {
 		return array('data' => $list, 'pager' => $pager);
 	}
 }
-
-
 
 // end

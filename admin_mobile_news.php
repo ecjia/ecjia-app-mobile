@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJia今日热点管理控制器
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_mobile_news extends ecjia_admin {
 	private $db_mobile_news;
@@ -256,8 +257,8 @@ class admin_mobile_news extends ecjia_admin {
 		$db_mobile_news = RC_DB::table('mobile_news');
 		$db_mobile_news->where('group_id', 0)->where('type', 'article');
 		
-		$count = $db_mobile_news->count();
-		$page = new ecjia_page($count, 10, 5);
+		$count  = $db_mobile_news->count();
+		$page   = new ecjia_page($count, 10, 5);
 		$result = $db_mobile_news->orderby('id', 'asc')->take(10)->skip($page->start_id-1)->get();
 		
 	

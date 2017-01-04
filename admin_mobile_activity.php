@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 摇一摇活动管理控制器
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_mobile_activity extends ecjia_admin {
 	private $db_activity;
@@ -234,7 +235,7 @@ class admin_mobile_activity extends ecjia_admin {
 	   	$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
 	   	
 	   	$activity_id = intval($_POST['id']);
-	   	$is_enabled = intval($_POST['val']);
+	   	$is_enabled  = intval($_POST['val']);
 	   	
 	   	$data = array(
 	   		'activity_id' 	=> $activity_id,
@@ -252,7 +253,7 @@ class admin_mobile_activity extends ecjia_admin {
 	   	$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
 	   
 	   	$activity_name = trim($_POST['value']);
-	   	$id	= intval($_POST['pk']);
+	   	$id	           = intval($_POST['pk']);
 	   	
 		if (!empty($activity_name)) {
    			if ($this->db_activity->activity_count(array('activity_name' => $activity_name, 'activity_id' => array('neq' =>  $id))) == 0) {
@@ -394,8 +395,8 @@ class admin_mobile_activity extends ecjia_admin {
 		$db_activity_log->where('activity_id', $activity_id);
 		
 		$count = $db_activity_log->count();
-		$page = new ecjia_page($count, 15, 5);
-		$res = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id-1)->get();
+		$page  = new ecjia_page($count, 15, 5);
+		$res   = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id-1)->get();
 
 		if (!empty($res)) {
 			foreach ($res as $key => $val) {

@@ -1,10 +1,12 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 
  * @author chen
  *
  */
+ 
 class setDeviceinfo_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
 		
@@ -33,14 +35,14 @@ class setDeviceinfo_module extends api_front implements api_interface {
 		$row = $db_mobile_device->find($device_data);
 		
 		if (empty($row)) {
-			$device_data['add_time']		= RC_Time::gmtime();
-			$device_data['device_token']	= !empty($device['device_token']) ? $device['device_token'] : '';
-			$device_data['device_name']		= $device_name;
-			$device_data['device_os']		= $device_os;
-			$device_data['device_type']		= $device_type;
+			$device_data['add_time']		    = RC_Time::gmtime();
+			$device_data['device_token']	    = !empty($device['device_token']) ? $device['device_token'] : '';
+			$device_data['device_name']		    = $device_name;
+			$device_data['device_os']		    = $device_os;
+			$device_data['device_type']		    = $device_type;
 			$device_data['location_province']	= $province;
 			$device_data['location_city']		= $city;
-			$device_data['visit_times']		= 1;
+			$device_data['visit_times']		    = 1;
 			
 			$db_mobile_device->insert($device_data);
 		} else {

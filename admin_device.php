@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJIA 移动设备管理
 */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_device extends ecjia_admin {
 	private $db_device;
@@ -147,8 +148,8 @@ class admin_device extends ecjia_admin {
 		} else {
 			$this->admin_priv('device_update', ecjia::MSGTYPE_JSON);
 		}
-		$ids = $_POST['id'];
-		$ids = explode(',', $ids);
+		$ids  = $_POST['id'];
+		$ids  = explode(',', $ids);
 		$info = $this->db_device->device_select($ids, true);
 		
 		foreach ($info as $k => $rows) {
@@ -209,8 +210,8 @@ class admin_device extends ecjia_admin {
 		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.mobile_device_list'), 'href' => RC_Uri::url('mobile/admin_device/init')));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.view_device_info')));
 
-		$device = $this->db_device->device_find($id);
-		$device['add_time'] = RC_Time::local_date(ecjia::config('time_format'), $device['add_time']);
+		$device                = $this->db_device->device_find($id);
+		$device['add_time']    = RC_Time::local_date(ecjia::config('time_format'), $device['add_time']);
 		$device['update_time'] = RC_Time::local_date(ecjia::config('time_format'), $device['update_time']);
 		
 	    if ($device['device_client'] == 'android') {
@@ -232,7 +233,7 @@ class admin_device extends ecjia_admin {
 	public function edit_device_alias() {
 		$this->admin_priv('device_update',ecjia::MSGTYPE_JSON);
 	
-		$id = intval($_POST['pk']);
+		$id           = intval($_POST['pk']);
 		$device_alias = !empty($_POST['value']) ? trim($_POST['value']) : '';
 		
 		if (empty($device_alias)) {
@@ -340,4 +341,5 @@ class admin_device extends ecjia_admin {
 		return array('device_list' => $arr, 'filter' => $filter, 'page' => $page->show(5), 'desc' => $page->page_desc(), 'msg_count' => $msg_count);
 	}
 }
+
 // end

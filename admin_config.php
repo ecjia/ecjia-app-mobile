@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJIA移动应用配置模块
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_config extends ecjia_admin {
 	public function __construct() {
@@ -60,13 +61,13 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_share_link', ecjia::config('mobile_share_link'));
 		/*红包使用说明*/
 		$bonus_readme_url = ecjia::config('bonus_readme_url');
-		$bonus_readme = array();
+		$bonus_readme     = array();
 		if (!empty($bonus_readme_url)) {
 			$bonus_readme_url = explode('?', $bonus_readme_url);
-			$parameter = explode('&', end($bonus_readme_url));
+			$parameter        = explode('&', end($bonus_readme_url));
 			foreach($parameter as $val){
-				$tmp = explode('=',$val);
-				$data[$tmp[0]] = $tmp[1];
+				$tmp            = explode('=',$val);
+				$data[$tmp[0]]  = $tmp[1];
 			}
 			$article_info = RC_Api::api('article', 'article_info', array('id' => $data['id']));
 			if (!is_ecjia_error($article_info)) {
@@ -83,7 +84,7 @@ class admin_config extends ecjia_admin {
 		/*热门城市*/
 		$regions = array ();
 		$mobile_recommend_city = explode(',', ecjia::config('mobile_recommend_city'));
-		$region_data = RC_DB::table('region')->whereIn('region_id', $mobile_recommend_city)->get();		
+		$region_data           = RC_DB::table('region')->whereIn('region_id', $mobile_recommend_city)->get();		
 		if (!empty($region_data)) {
 			foreach ( $region_data as $key => $val ) {
 				if ( empty($val['region_name']) ) {
@@ -125,8 +126,8 @@ class admin_config extends ecjia_admin {
 		$code = empty($_GET['code']) ? 'basic_info' : trim($_GET['code']);
 		$this->assign('code', $code);
 	
-		$mobile_iphone_qrcode = ecjia::config('mobile_iphone_qrcode');
-		$mobile_iphone_qrcode = empty($mobile_iphone_qrcode) ? '' : RC_Upload::upload_url() .'/'.$mobile_iphone_qrcode;
+		$mobile_iphone_qrcode  = ecjia::config('mobile_iphone_qrcode');
+		$mobile_iphone_qrcode  = empty($mobile_iphone_qrcode) ? '' : RC_Upload::upload_url() .'/'.$mobile_iphone_qrcode;
 		$mobile_android_qrcode = ecjia::config('mobile_android_qrcode');
 		$mobile_android_qrcode = empty($mobile_android_qrcode) ? '' : RC_Upload::upload_url() .'/'.$mobile_android_qrcode;
 		
@@ -168,8 +169,8 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_app_preview2', $mobile_app_preview2);
 		
 		$img_list = RC_DB::table('mobile_screenshots')
-		->orderBy('sort','asc')
-		->get();
+            		->orderBy('sort','asc')
+            		->get();
 		foreach($img_list as $key => $val){
 			$img_list[$key]['img_url'] = !empty($val['img_url'])? RC_Upload::upload_url().'/'.$val['img_url'] : '';
 		}
@@ -460,7 +461,7 @@ class admin_config extends ecjia_admin {
 		
 		// 应用截图
 		$mobile_app_preview_temp = ecjia::config('mobile_app_preview');
-		$mobile_app_preview = unserialize($mobile_app_preview_temp);
+		$mobile_app_preview      = unserialize($mobile_app_preview_temp);
 		if (!empty($mobile_app_preview[0])) {
 			$mobile_app_preview1 = RC_Upload::upload_url().'/'.$mobile_app_preview[0];
 		}
@@ -492,7 +493,7 @@ class admin_config extends ecjia_admin {
 		
 		if (!empty($mobile_app_preview1) || !empty($mobile_app_preview2)) {
 			$mobile_app_preview_temp = array($mobile_app_preview1, $mobile_app_preview2);
-			$mobile_app_preview = serialize($mobile_app_preview_temp);
+			$mobile_app_preview      = serialize($mobile_app_preview_temp);
 			ecjia_config::instance()->write_config('mobile_app_preview', $mobile_app_preview);
 		}
 		
@@ -530,7 +531,7 @@ class admin_config extends ecjia_admin {
 				$mobile_app_preview2 = '';
 			}
 			$mobile_app_preview_temp = array($mobile_app_preview1, $mobile_app_preview2);
-			$mobile_app_preview = serialize($mobile_app_preview_temp);
+			$mobile_app_preview      = serialize($mobile_app_preview_temp);
 			
 			ecjia_config::instance()->write_config('mobile_app_preview', $mobile_app_preview);
 		} else {

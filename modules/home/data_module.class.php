@@ -1,10 +1,12 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 首页轮播图及推荐数据
  * @author royalwang
  *
  */
+ 
 class data_module extends api_front implements api_interface {
     public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	
@@ -14,12 +16,12 @@ class data_module extends api_front implements api_interface {
 
 		$request = null;
 		if (is_array($location) && isset($location['latitude']) && isset($location['longitude'])) {
-			$request = array('location' => $location);
-			$geohash = RC_Loader::load_app_class('geohash', 'store');
-			$geohash_code = $geohash->encode($location['latitude'] , $location['longitude']);
-			$geohash_code = substr($geohash_code, 0, 5);
-			$request['geohash_code'] = $geohash_code;
-			$request['store_id_group'] = RC_Api::api('store', 'neighbors_store_id', array('geohash' => $geohash_code));
+			$request                     = array('location' => $location);
+			$geohash                     = RC_Loader::load_app_class('geohash', 'store');
+			$geohash_code                = $geohash->encode($location['latitude'] , $location['longitude']);
+			$geohash_code                = substr($geohash_code, 0, 5);
+			$request['geohash_code']     = $geohash_code;
+			$request['store_id_group']   = RC_Api::api('store', 'neighbors_store_id', array('geohash' => $geohash_code));
 
 			if (empty($request['store_id_group'])) {
 				$request['store_id_group'] = array(0);
@@ -39,7 +41,7 @@ class data_module extends api_front implements api_interface {
 function cycleimage_data($response, $request) 
 {
 	$mobile_cycleimage = RC_Loader::load_app_class('cycleimage_method', 'cycleimage');
-	$cycleimageDatas = $mobile_cycleimage->player_data(true);
+	$cycleimageDatas   = $mobile_cycleimage->player_data(true);
 	$player_data = array();
 	foreach ($cycleimageDatas as $val) {
 		$player_data[] = array(
@@ -64,9 +66,9 @@ function cycleimage_data($response, $request)
 }
 
 function mobile_menu_data($response, $request) {
-	$mobile = RC_Loader::load_app_class('mobile_method','mobile');
-	$mobile_menu = array_merge($mobile->shortcut_data(true));
-	$mobile_menu_data = array();
+	$mobile            = RC_Loader::load_app_class('mobile_method','mobile');
+	$mobile_menu       = array_merge($mobile->shortcut_data(true));
+	$mobile_menu_data  = array();
 	if (!empty($mobile_menu)) {
 		foreach ($mobile_menu as $key => $val) {
 			if ($val['display'] == '1') {
@@ -86,12 +88,12 @@ function mobile_menu_data($response, $request) {
 function promote_goods_data($response, $request) {
 	
 	$promote_goods_data = array();
-	$order_sort = array('g.sort_order' => 'ASC', 'goods_id' => 'DESC');
+	$order_sort         = array('g.sort_order' => 'ASC', 'goods_id' => 'DESC');
 	$filter = array(
-			'intro'	=> 'promotion',
-			'sort'	=> $order_sort,
-			'page'	=> 1,
-			'size'	=> 6,
+			'intro'	  => 'promotion',
+			'sort'	  => $order_sort,
+			'page'	  => 1,
+			'size'	  => 6,
 			'geohash' => $request['geohash_code'],
 	);
 
@@ -99,20 +101,20 @@ function promote_goods_data($response, $request) {
 	if ( !empty($result['list']) ) {
 		foreach ( $result['list'] as $key => $val ) {
 			$promote_goods_data[] = array(
-					'id'		=> intval($val['goods_id']),
-					'goods_id'	=> intval($val['goods_id']),           //多商铺中不用，后期删除
-					'name'		=> $val['goods_name'],
-					'market_price'	=> $val['market_price'],
-					'shop_price'	=> $val['shop_price'],
-					'promote_price'	=> $val['promote_price'],
-					'manage_mode'   => $val['manage_mode'],
+					'id'		                => intval($val['goods_id']),
+					'goods_id'	                => intval($val['goods_id']),           //多商铺中不用，后期删除
+					'name'		                => $val['goods_name'],
+					'market_price'	            => $val['market_price'],
+					'shop_price'	            => $val['shop_price'],
+					'promote_price'	            => $val['promote_price'],
+					'manage_mode'               => $val['manage_mode'],
 					'unformatted_promote_price' => $val['unformatted_promote_price'],
-					'promote_start_date' => $val['promote_start_date'],
-					'promote_end_date' => $val['promote_end_date'],
-					'img' => array(
-							'small' => $val['goods_thumb'],
-							'thumb' => $val['goods_img'],
-							'url'	=> $val['original_img'],
+					'promote_start_date'        => $val['promote_start_date'],
+					'promote_end_date'          => $val['promote_end_date'],
+					'img'                       => array(
+            							'small' => $val['goods_thumb'],
+            							'thumb' => $val['goods_img'],
+            							'url'	=> $val['original_img'],
 					)
 			);
 		}
@@ -126,7 +128,7 @@ function new_goods_data($response, $request) {
 	$new_goods_data = array();
 
 	$order_sort = array('g.sort_order' => 'ASC', 'goods_id' => 'DESC');
-	$filter = array(
+	$filter     = array(
 			'intro'	=> 'new',
 			'sort'	=> $order_sort,
 			'page'	=> 1,

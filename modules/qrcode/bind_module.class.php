@@ -1,26 +1,27 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 二维码登录验证绑定
  * @author will.chen
  *
  */
+ 
 class bind_module extends api_front implements api_interface {
 
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {	
     	$this->authSession();
     	
-		$code = $this->requestData('code');
-
+		$code         = $this->requestData('code');
 		$device		  = $this->device;
-		$type = $this->requestData('type');
+		$type         = $this->requestData('type');
 		if (empty($code) || empty($type)) {
 			return new ecjia_error(101, '参数错误');
 		}
 		//判断是管理员还是普通用户
 		$is_admin = in_array($device['code'], array('8001', '5001', '5002', '2001', '2002')) ? 1 : 0;
-		$db = RC_Model::model('mobile/qrcode_validate_model');
-		$where = array(
+		$db       = RC_Model::model('mobile/qrcode_validate_model');
+		$where    = array(
 				'is_admin'   => $is_admin,
 				'uuid'		 => $code,
 				'status'	 => 1,

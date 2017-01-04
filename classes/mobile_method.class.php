@@ -1,17 +1,19 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 插件使用方法
  * @author royalwang
  *
  */
+ 
 class mobile_method  {
     
     //预设配置项存储key
-    const STORAGEKEY_shortcut_data   = 'mobile_shortcut_data';
-    const STORAGEKEY_discover_data   = 'mobile_discover_data';
-    const STORAGEKEY_cycleimage_data = 'mobile_cycleimage_data';
-    const STORAGEKEY_cycleimage_phone_data = 'mobile_cycleimage_phone_data';
+    const STORAGEKEY_shortcut_data          = 'mobile_shortcut_data';
+    const STORAGEKEY_discover_data          = 'mobile_discover_data';
+    const STORAGEKEY_cycleimage_data        = 'mobile_cycleimage_data';
+    const STORAGEKEY_cycleimage_phone_data  = 'mobile_cycleimage_phone_data';
 	
 	public function __construct() {
 		

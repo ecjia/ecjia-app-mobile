@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJia百宝箱管理控制器
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_discover extends ecjia_admin {
 	private $mobile;
@@ -89,7 +90,7 @@ class admin_discover extends ecjia_admin {
 
 			if (!empty($_FILES['img_file_src']['name'])) {
 				$upload = RC_Upload::uploader('image', array('save_path' => 'data/discover', 'auto_sub_dirs' => false));
-				$info = $upload->upload($_FILES['img_file_src']);
+				$info   = $upload->upload($_FILES['img_file_src']);
 				if (!empty($info)) {
 // 					$src = $info['savepath'] . '/' . $info['savename'];
 					$src = $upload->get_position($info);
@@ -111,7 +112,7 @@ class admin_discover extends ecjia_admin {
 			$flashdb = $this->mobile->discover_data();
 			array_push($flashdb, $insert_arr);
 
-			$id = count($flashdb);
+			$id      = count($flashdb);
 			$flashdb = $this->mobile->shortcut_sort($flashdb);
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
@@ -179,11 +180,11 @@ class admin_discover extends ecjia_admin {
 			$display = isset($_POST['img_display']) ? 1 : 0;
 			
        		$flashdb[$id] = array(
-       			'src'	=> $src,
-       			'url'	=> $_POST['img_url'],
+       			'src'	    => $src,
+       			'url'	    => $_POST['img_url'],
        			'display'	=> $display,
-       			'text'	=> $_POST['img_text'],
-       			'sort'	=> $_POST['img_sort']
+       			'text'	    => $_POST['img_text'],
+       			'sort'	    => $_POST['img_sort']
        		);
 
        		$flashdb[$id] = $this->mobile->shortcut_struct($flashdb[$id]);
@@ -237,10 +238,9 @@ class admin_discover extends ecjia_admin {
 		if (!is_numeric($order)) {
 			return $this->showmessage(RC_Lang::get('mobile::mobile.format_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
-			$flashdb = $this->mobile->discover_data();
+			$flashdb              = $this->mobile->discover_data();
 			$flashdb[$id]['sort'] = $order;
-
-			$flashdb = $this->mobile->shortcut_sort($flashdb);
+			$flashdb              = $this->mobile->shortcut_sort($flashdb);
 
 			ecjia_config::instance()->write_config(mobile_method::STORAGEKEY_discover_data, serialize($flashdb));
 
@@ -254,13 +254,13 @@ class admin_discover extends ecjia_admin {
 	public function toggle_show() {
 		$this->admin_priv('discover_update',ecjia::MSGTYPE_JSON);
 
-		$id     = intval($_POST['id']);
-		$val	= intval($_POST['val']);
+		$id      = intval($_POST['id']);
+		$val	 = intval($_POST['val']);
 
 		$flashdb = $this->mobile->discover_data();
 		
-		$flashdb[$id]['display'] = $val;
-		$text = $flashdb[$id]['text'];
+		$flashdb[$id]['display']  = $val;
+		$text                     = $flashdb[$id]['text'];
 
 // 		$flashdb = $this->mobile->shortcut_sort($flashdb);
 

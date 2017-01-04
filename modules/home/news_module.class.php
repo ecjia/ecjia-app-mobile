@@ -1,10 +1,12 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * news 今日热点
  * @author will.chen
  *
  */
+ 
 class news_module extends api_front implements api_interface {
 
 	 public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
@@ -42,10 +44,10 @@ class news_module extends api_front implements api_interface {
 					$image = empty($val['image']) ? '' : RC_Upload::upload_url(). '/' .$val['image'];
 				}
 				$list[$val['id']][] = array(
-						'id'		=> $val['id'],
-						'title'		=> $val['title'],
+						'id'		  => $val['id'],
+						'title'		  => $val['title'],
 						'description' => $val['description'],
-						'image'		=> $image,
+						'image'		  => $image,
 						'content_url' => $val['content_url'],
 						'create_time' => RC_Time::local_date(ecjia::config('time_format'), $val['create_time']),
 				);
@@ -59,10 +61,10 @@ class news_module extends api_front implements api_interface {
 							$child_image = empty($v['image']) ? '' : RC_Upload::upload_url(). '/' .$v['image'];
 						}
 						$list[$v['group_id']][] = array(
-								'id'		=> $v['id'],
-								'title'		=> $v['title'],
+								'id'		  => $v['id'],
+								'title'		  => $v['title'],
 								'description' => $v['description'],
-								'image'		=> $child_image,
+								'image'		  => $child_image,
 								'content_url' => $v['content_url'],
 								'create_time' => RC_Time::local_date(ecjia::config('time_format'), $v['create_time']),
 						);
@@ -82,7 +84,5 @@ class news_module extends api_front implements api_interface {
 		
 	}
 }
-
-
 
 // end

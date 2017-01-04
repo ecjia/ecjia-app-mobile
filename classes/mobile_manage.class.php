@@ -1,4 +1,5 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
 
 class mobile_manage {
     protected static $app_pools = array();
@@ -79,8 +80,8 @@ class mobile_manage {
      * @param string $platform
      */
     public static function getMobileAppList($platform) {
-        $db_mobile_manage = RC_Model::model('mobile/mobile_manage_model');
-        $applist = $db_mobile_manage->where(array('platform' => $platform, 'status' => 1))->order('app_id ASC')->select();
+        $db_mobile_manage   = RC_Model::model('mobile/mobile_manage_model');
+        $applist            = $db_mobile_manage->where(array('platform' => $platform, 'status' => 1))->order('app_id ASC')->select();
         return $applist;
     }
     

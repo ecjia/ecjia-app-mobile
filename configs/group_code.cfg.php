@@ -1,10 +1,10 @@
 <?php 
+defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
  * 移动应用配置
  */
 
-defined('IN_ECJIA') or exit('No permission resources.');
 	return array(
 			array(
 				'code' => 'basic_info',
@@ -22,6 +22,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 				'code' => 'app_screenshots',
 				'name' => '应用截图',
 			),
-	)
-;
+	);
+	
 //end
