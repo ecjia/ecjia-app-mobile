@@ -82,6 +82,12 @@
 						</div>
 					</div>
 					<div class="control-group formSep">
+						<label class="control-label">{lang key='mobile::mobile.mobile_touch_url'}</label>
+						<div class="controls">
+							<input type='text' name='mobile_touch_url' value='{$mobile_touch_url}'>
+						</div>
+					</div>
+					<div class="control-group formSep">
 						<label class="control-label">{lang key='mobile::mobile.mobile_share_link'}</label>
 						<div class="controls">
 							<input type='text' name='mobile_share_link' value='{$mobile_share_link}'>
@@ -248,6 +254,22 @@
 						<label class="control-label">{lang key='mobile::mobile.mobile_android_download'}</label>
 						<div class="controls">
 							<input type='text' name='mobile_android_download' value='{$mobile_android_download}'>
+						</div>
+					</div>
+					<div class="control-group formSep">
+						<label class="control-label">{lang key='mobile::mobile.mobile_touch_qrcode'}</label>
+						<div class="controls">
+							<div class="fileupload {if $mobile_touch_qrcode}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+								<div class="fileupload-preview thumbnail fileupload-exists" style="width: 50px; height: 50px; line-height: 50px;">
+									<img src="{$mobile_touch_qrcode}" alt="{lang key='mobile::mobile.no_image'}" />
+								</div>
+								<span class="btn btn-file">
+								<span class="fileupload-new">{lang key='mobile::mobile.browse'}</span>
+								<span class="fileupload-exists">{lang key='mobile::mobile.modify'}</span>
+								<input type="file" name="mobile_touch_qrcode"/>
+								</span>
+								<a class="btn fileupload-exists" data-toggle="removefile" data-msg="{lang key='mobile::mobile.drop_confirm'}" data-href="{RC_Uri::url('mobile/admin_config/del','code=mobile_touch_qrcode')}" {if $mobile_touch_qrcode}data-removefile="true"{/if}>{lang key='system::system.drop'}</a>
+							</div>
 						</div>
 					</div>
 

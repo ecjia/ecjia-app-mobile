@@ -39,6 +39,7 @@ return array(
 	'mobile_feedback_autoreply'	=> '咨询默认回复设置：',
 	'mobile_share_link'			=> '分享连接：',
 	'shop_pc_url'				=> 'PC商城地址：',
+    'mobile_touch_url'			=> 'WAP/H5商城地址：',
 	'is_open_config'			=> '是否开启微商城：',
 	'wap_Logo'					=> '微商城 Logo：',
 	'shop_touch_url'			=> '微商城地址：',
@@ -49,6 +50,7 @@ return array(
 	'mobile_android_download'	=> 'Android下载地址：',
 	'ipad_qr_code'				=> 'iPad下载二维码：',
 	'shop_ipad_download'		=> 'iPad下载地址：',
+    'mobile_touch_qrcode'       => 'WAP/H5访问二维码',
 
 	'shopkeeper_urlscheme'		=> '掌柜UrlScheme设置：',
 	'shop_urlscheme'			=> '商城UrlScheme设置：',

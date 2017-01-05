@@ -58,6 +58,7 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_app_video',   	ecjia::config('mobile_app_video'));
 		$this->assign('mobile_feedback_autoreply', ecjia::config('mobile_feedback_autoreply'));
 		$this->assign('shop_pc_url', ecjia::config('mobile_pc_url'));
+		$this->assign('mobile_touch_url', ecjia::config('mobile_touch_url'));
 		$this->assign('mobile_share_link', ecjia::config('mobile_share_link'));
 		/*红包使用说明*/
 		$bonus_readme_url = ecjia::config('bonus_readme_url');
@@ -130,9 +131,12 @@ class admin_config extends ecjia_admin {
 		$mobile_iphone_qrcode  = empty($mobile_iphone_qrcode) ? '' : RC_Upload::upload_url() .'/'.$mobile_iphone_qrcode;
 		$mobile_android_qrcode = ecjia::config('mobile_android_qrcode');
 		$mobile_android_qrcode = empty($mobile_android_qrcode) ? '' : RC_Upload::upload_url() .'/'.$mobile_android_qrcode;
+		$mobile_touch_qrcode = ecjia::config('mobile_touch_qrcode');
+		$mobile_touch_qrcode = empty($mobile_touch_qrcode) ? '' : RC_Upload::upload_url($mobile_touch_qrcode);
 		
 		$this->assign('mobile_iphone_qrcode', $mobile_iphone_qrcode);
 		$this->assign('mobile_android_qrcode', $mobile_android_qrcode);
+		$this->assign('mobile_touch_qrcode', $mobile_touch_qrcode);
 		$this->assign('mobile_iphone_download', ecjia::config('mobile_iphone_download'));
 		$this->assign('mobile_android_download', ecjia::config('mobile_android_download'));
 		$this->assign('mobile_shopkeeper_urlscheme', ecjia::config('mobile_shopkeeper_urlscheme'));
@@ -413,6 +417,23 @@ class admin_config extends ecjia_admin {
 			}
 		}
 		$mobile_android_download 		= !empty($_POST['mobile_android_download']) ? trim($_POST['mobile_android_download']) : '';
+		
+		/* touch二维码上传*/
+		if (isset($_FILES['mobile_touch_qrcode'])) {
+		    $upload = RC_Upload::uploader('image', array('save_path' => 'data/assets', 'replace' => true, 'auto_sub_dirs' => false));
+		    $upload->add_filename_callback(function () { return 'mobile_touch_qrcode';});
+		
+		    $image_info = $upload->upload($_FILES['mobile_touch_qrcode']);
+		    /* 判断是否上传成功 */
+		    if (!empty($image_info)) {
+		        $mobile_touch_qrcode = $upload->get_position($image_info);
+		        $data =  array(
+		            'value'  => $mobile_touch_qrcode
+		        );
+		        ecjia_config::instance()->write_config('mobile_touch_qrcode', $mobile_touch_qrcode);
+		    }
+		}
+		
 		$mobile_shopkeeper_urlscheme 	= !empty($_POST['mobile_shopkeeper_urlscheme']) ? trim($_POST['mobile_shopkeeper_urlscheme']) 	: '';
 		$mobile_shop_urlscheme 			= !empty($_POST['mobile_shop_urlscheme']) 		? trim($_POST['mobile_shop_urlscheme']) 		: '';
 		
