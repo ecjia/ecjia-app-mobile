@@ -308,6 +308,7 @@ class admin_config extends ecjia_admin {
 		$bonus_readme 					= !empty($_POST['bonus_readme']) 				? $_POST['bonus_readme'] 						: '';
 		$mobile_feedback_autoreply 		= !empty($_POST['mobile_feedback_autoreply']) 	? trim($_POST['mobile_feedback_autoreply']) 	: '';
 		$shop_pc_url 					= !empty($_POST['shop_pc_url']) 			? trim($_POST['shop_pc_url']) 			: '';
+		$mobile_touch_url 				= !empty($_POST['mobile_touch_url']) 		? trim($_POST['mobile_touch_url']) 		: '';
 		$mobile_share_link				= trim($_POST['mobile_share_link']);
 		/* 上传app logo图标*/
 		if (isset($_FILES['mobile_app_icon'])) {
@@ -329,6 +330,7 @@ class admin_config extends ecjia_admin {
 		ecjia_config::instance()->write_config('bonus_readme_url', $bonus_readme_url);
 		ecjia_config::instance()->write_config('mobile_feedback_autoreply', $mobile_feedback_autoreply);
 		ecjia_config::instance()->write_config('mobile_pc_url', $shop_pc_url);
+		ecjia_config::instance()->write_config('mobile_touch_url', $mobile_touch_url);
 		ecjia_config::instance()->write_config('mobile_share_link', $mobile_share_link);//分享链接
 		
 		/*手机端登录页设置处理*/
