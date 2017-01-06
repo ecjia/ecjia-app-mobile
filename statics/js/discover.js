@@ -81,7 +81,7 @@
                 //弹出对话框渲染
                 window.code = code;
                 if (t.parent().find(".flash-choose").hasClass("hidden")) {
-                    smoke.confirm("{/literal}{$lang.js_languages['setupConfirm']}{literal}", function (e) {
+                    smoke.confirm(js_lang.setupConfirm, function (e) {
                         if (e) {
                             $.get('index.php?m=cycleimage&c=admin&a=apply', 'code=' + code, function (response, status) {
                                 if (response.state == 'success') {
