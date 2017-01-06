@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 移动应用配置
  */
-
 	return array(
 			array(
 				'code' => 'basic_info',

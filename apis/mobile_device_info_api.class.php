@@ -4,9 +4,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 获取移动设置device info
  * @author royalwang
- *
  */
- 
 class mobile_device_info_api extends Component_Event_Api {
 	
     /**

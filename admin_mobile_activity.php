@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 摇一摇活动管理控制器
  */
-
 class admin_mobile_activity extends ecjia_admin {
 	private $db_activity;
 	
@@ -57,6 +56,7 @@ class admin_mobile_activity extends ecjia_admin {
 	*/
 	public function init () {
 		$this->admin_priv('mobile_activity_manage', ecjia::MSGTYPE_JSON);
+		
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.activity_list')));
 		
@@ -297,6 +297,7 @@ class admin_mobile_activity extends ecjia_admin {
 	 */
 	public function activity_prize() {
 		$this->admin_priv('activity_record_manage', ecjia::MSGTYPE_JSON);
+		
 		$id = intval($_GET['id']);
 
 		$prize_list = RC_DB::table('mobile_activity_prize')->where('activity_id', $id)->orderby('prize_level', 'asc')->get();

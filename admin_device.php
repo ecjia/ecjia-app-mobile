@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJIA 移动设备管理
 */
-
 class admin_device extends ecjia_admin {
 	private $db_device;
 	

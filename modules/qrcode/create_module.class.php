@@ -4,9 +4,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 二维码扫描登录创建二维码图片链接
  * @author will.chen
- *
  */
- 
 class create_module extends api_front implements api_interface {
 
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {

@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJia快捷菜单管理控制器
  */
-
 class admin_shortcut extends ecjia_admin {
 
 	private $mobile;

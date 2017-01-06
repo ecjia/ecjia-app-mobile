@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJIA 应用语言包
  */
-
 return array(
 	//应用配置
 	'mobile_config'		=> 'Application Configuration',

@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJia百宝箱管理控制器
  */
-
 class admin_discover extends ecjia_admin {
 	private $mobile;
 

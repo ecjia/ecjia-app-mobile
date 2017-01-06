@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJIA移动应用配置模块
  */
-
 class admin_config extends ecjia_admin {
 	public function __construct() {
 		parent::__construct();
@@ -42,6 +41,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function basic_info_init () {
 		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);	
+		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
 		//加载应用配置中的code
@@ -118,6 +118,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function app_download_url () {
 		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
 		$this->assign('form_action', RC_Uri::url('mobile/admin_config/update_app_download_url'));
@@ -151,6 +152,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function app_screenshots () {
 		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
 		$this->assign('form_action', RC_Uri::url('mobile/admin_config/update_app_screenshots'));
@@ -189,6 +191,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function mobile_adsense_set () {
 		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);	
+		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
 		$this->assign('form_action', RC_Uri::url('mobile/admin_config/update_mobile_adsense_set'));
@@ -225,6 +228,7 @@ class admin_config extends ecjia_admin {
      */
     public function insert() {
         $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+        
         $upload = RC_Upload::uploader('image', array('save_path' => 'data/screenshots', 'auto_sub_dirs' => true));
         $code = !empty($_POST['code']) ? $_POST['code'] : $_GET['code'];
         if (!$upload->check_upload_file($_FILES['img_url'])) {
@@ -256,6 +260,7 @@ class admin_config extends ecjia_admin {
 	*/
 	public function sort_image() {
         $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+        
 		$sort = $_GET['info'];
 		foreach ($sort as $k => $v) {
             $data['sort'] = $k + 1;
@@ -269,6 +274,7 @@ class admin_config extends ecjia_admin {
 	*/
 	public function update_image_desc() {
         $this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+        
 		$id = $_GET['id'];
 		$val = $_GET['val'];
 		RC_DB::table('mobile_screenshots')->where('id', $id)->where('app_code', '=', 'cityo2o')->update(array('img_desc' => $val));
@@ -280,6 +286,7 @@ class admin_config extends ecjia_admin {
 	*/
 	public function drop_image() {
 		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+		
 		$id = empty($_GET['id']) ? 0 : intval($_GET['id']);
 
 		/* 删除图片文件 */
@@ -298,6 +305,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function update_basic_info() {
 		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		
 		$code = $_POST['code'];
 		
 		/*基本信息处理*/
@@ -382,6 +390,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function update_app_download_url() {
 		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		
 		$code = $_POST['code'];
 		
 		/* iphone二维码上传*/
@@ -454,6 +463,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function update_mobile_adsense_set() {
 		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		
 		$code = $_POST['code'];
 		
 		$mobile_launch_adsense 			= !empty($_POST['mobile_launch_adsense']) 		? $_POST['mobile_launch_adsense'] 				: '';
@@ -480,6 +490,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function update_app_screenshots() {
 		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		
 		$code = $_POST['code'];
 		
 		// 应用截图
@@ -531,6 +542,7 @@ class admin_config extends ecjia_admin {
 	 */
 	public function del() {
 		$this->admin_priv('mobile_config_delete', ecjia::MSGTYPE_JSON);
+		
 		$disk = RC_Filesystem::disk();
 		$code = trim($_GET['code']);
 		

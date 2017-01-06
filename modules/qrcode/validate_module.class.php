@@ -4,9 +4,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 二维码登录验证
  * @author will.chen
- *
  */
- 
 class validate_module extends api_front implements api_interface {
 
 	public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {

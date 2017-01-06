@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJia今日热点管理控制器
  */
-
 class admin_mobile_news extends ecjia_admin {
 	private $db_mobile_news;
 
@@ -212,6 +211,7 @@ class admin_mobile_news extends ecjia_admin {
 	 */
 	public function remove() {
 		$this->admin_priv('mobile_news_delete', ecjia::MSGTYPE_JSON);
+		
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		$info = RC_DB::table('mobile_news')->where('id', $id)->orWhere('group_id', $id)->get();
 		
