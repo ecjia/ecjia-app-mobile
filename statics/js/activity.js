@@ -21,6 +21,7 @@
         submit: function () {
             $(".time").datetimepicker({
                 format: "yyyy-mm-dd hh:ii",
+                container: '.main_content',
             });
  
             $('#info-toggle-button').toggleButtons({
