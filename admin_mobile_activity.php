@@ -80,8 +80,8 @@ class admin_mobile_activity extends ecjia_admin {
 		RC_Script::enqueue_script('discover', RC_App::apps_url('statics/js/activity.js', __FILE__), array(), false, false);
 
 		//时间控件
-		RC_Script::enqueue_script('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.js'));
-		RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+		RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
+		RC_Style::enqueue_style('datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
 
 		RC_Style::enqueue_style('mobile_activity', RC_App::apps_url('statics/css/mobile_activity.css', __FILE__), array(), false, false);
 		
