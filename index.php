@@ -89,8 +89,8 @@ class index extends ecjia_front {
 		} else {
 			$urlscheme = ecjia::config('mobile_shop_urlscheme');
 			$this->assign('upload_image', RC_App::apps_url('mobile/templates/front/image/icon1.png'));
-			$this->assign('android_upload_url', ecjia::config('shop_android_download'));
-			$this->assign('iphone_upload_url', ecjia::config('shop_iphone_download'));
+			$this->assign('android_upload_url', ecjia::config('mobile_android_download'));
+			$this->assign('iphone_upload_url', ecjia::config('mobile_iphone_download'));
 		}
 		
 		/* 判断是否是ecjia设备扫描*/
