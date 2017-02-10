@@ -50,12 +50,15 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * ECJIA移动应用配置模块
  */
 class admin_config extends ecjia_admin {
+	private $db_region;
 	public function __construct() {
 		parent::__construct();
 
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
-
+		
+		$this->db_region = RC_Loader::load_app_model('region_model', 'shipping');
+		
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('smoke');
@@ -65,7 +68,7 @@ class admin_config extends ecjia_admin {
 		RC_Style::enqueue_style('uniform-aristo');
 		RC_Script::enqueue_script('jquery-uniform');
 		RC_Script::enqueue_script('bootstrap-placeholder');
-
+		
 		RC_Style::enqueue_style('mobile_config', RC_App::apps_url('statics/css/mobile_config.css', __FILE__), array(), false, false);
 		RC_Style::enqueue_style('goods-colorpicker-style', RC_Uri::admin_url('/statics/lib/colorpicker/css/colorpicker.css'));
 		RC_Script::enqueue_script('goods-colorpicker-script', RC_Uri::admin_url('/statics/lib/colorpicker/bootstrap-colorpicker.js'), array());
@@ -141,7 +144,8 @@ class admin_config extends ecjia_admin {
 			}
 		}
 		
-		$this->assign('mobile_recommend_city', $regions);		
+		$this->assign('mobile_recommend_city', $regions);	
+		$this->assign('countries', $this->db_region->get_regions());
 		/*短信提醒*/
 		$order_reminder_type = ecjia::config('order_reminder_type', ecjia::CONFIG_CHECK) ? ecjia::config('order_reminder_type') : 0;
 		$this->assign('order_reminder_type', $order_reminder_type);
