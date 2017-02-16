@@ -97,7 +97,7 @@ class admin_mobile_news extends ecjia_admin {
 	 * 添加展示页面
 	 */
 	public function add() {
-		$this->admin_priv('mobile_news_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_news_update');
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_mobile_news')));
 		
@@ -166,7 +166,7 @@ class admin_mobile_news extends ecjia_admin {
 	 * 编辑显示页面
 	 */
 	public function edit() {
-		$this->admin_priv('mobile_news_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_news_update');
 		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.edit_mobile_news'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.edit_mobile_news')));
@@ -276,6 +276,8 @@ class admin_mobile_news extends ecjia_admin {
 	 * 发布
 	 */
 	public function issue() {
+		$this->admin_priv('mobile_news_update', ecjia::MSGTYPE_JSON);
+
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		$this->db_mobile_news->mobile_news_manage(array('status' => 1), array('id' => $id, 'group_id' => 0));
 		
@@ -286,6 +288,8 @@ class admin_mobile_news extends ecjia_admin {
 	 * 取消发布
 	 */
 	public function unissue() {
+		$this->admin_priv('mobile_news_update', ecjia::MSGTYPE_JSON);
+		
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		$this->db_mobile_news->mobile_news_manage(array('status' => 0), array('id' => $id, 'group_id'=> 0));
 		

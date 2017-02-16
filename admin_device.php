@@ -84,7 +84,7 @@ class admin_device extends ecjia_admin {
 	 * 移动设备列表
 	 */
 	public function init() {
-		$this->admin_priv('device_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('device_manage');
 		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_device_list'));
 		
@@ -246,7 +246,7 @@ class admin_device extends ecjia_admin {
 	 * 预览
 	 */
 	public function preview() {
-		$this->admin_priv('device_detail',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('device_detail');
 	
 		$id = intval($_GET['id']);
 	
@@ -265,7 +265,6 @@ class admin_device extends ecjia_admin {
         } elseif ($device['device_client'] == 'ipad') {
             $device['device_client'] = 'iPad';
         }
-		
 		$this->assign('device', $device);
 
 		$this->display('preview.dwt');
@@ -275,7 +274,7 @@ class admin_device extends ecjia_admin {
 	 * 编辑设备别名
 	 */
 	public function edit_device_alias() {
-		$this->admin_priv('device_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('device_update', ecjia::MSGTYPE_JSON);
 	
 		$id           = intval($_POST['pk']);
 		$device_alias = !empty($_POST['value']) ? trim($_POST['value']) : '';

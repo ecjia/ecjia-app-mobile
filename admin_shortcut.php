@@ -91,7 +91,7 @@ class admin_shortcut extends ecjia_admin {
 	 * 快捷菜单列表页面加载
 	 */
 	public function init() {
-		$this->admin_priv('shortcut_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shortcut_manage');
 
 		$playerdb = $this->mobile->shortcut_data(true);
 
@@ -141,7 +141,7 @@ class admin_shortcut extends ecjia_admin {
 	 * 添加及提交处理
 	 */
 	public function add() {
-		$this->admin_priv('shortcut_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shortcut_update', ecjia::MSGTYPE_JSON);
 
 		if (empty($_POST['step'])) {
 			$url     = isset($_GET['url']) ? trim($_GET['url']) : 'http://';
@@ -206,7 +206,7 @@ class admin_shortcut extends ecjia_admin {
 	 * 编辑及提交处理
 	 */
 	public function edit() {
-		$this->admin_priv('shortcut_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shortcut_update', ecjia::MSGTYPE_JSON);
 
 		$id       = intval($_REQUEST['id']); //取得id
 		$flashdb  = $this->mobile->shortcut_data();
@@ -281,7 +281,7 @@ class admin_shortcut extends ecjia_admin {
 	 * 删除快捷菜单
 	 */
 	public function remove() {
-		$this->admin_priv('shortcut_delete',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shortcut_delete', ecjia::MSGTYPE_JSON);
 
 		$id = intval($_GET['id']);
 		$flashdb = $this->mobile->shortcut_data();
@@ -308,7 +308,7 @@ class admin_shortcut extends ecjia_admin {
 	 * 编辑快捷菜单的排序
 	 */
 	public function edit_sort() {
-		$this->admin_priv('shortcut_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shortcut_update', ecjia::MSGTYPE_JSON);
 
 		$id    = intval($_POST['pk']);
 		$order = intval(trim($_POST['value']));
@@ -331,7 +331,7 @@ class admin_shortcut extends ecjia_admin {
 	 * 切换是否显示
 	 */
 	public function toggle_show() {
-		$this->admin_priv('shortcut_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shortcut_update', ecjia::MSGTYPE_JSON);
 
 		$id       = intval($_POST['id']);
 		$val      = intval($_POST['val']);

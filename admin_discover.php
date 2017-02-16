@@ -88,7 +88,7 @@ class admin_discover extends ecjia_admin {
 	 * 百宝箱列表页面加载
 	 */
 	public function init () {
-		$this->admin_priv('discover_manage',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('discover_manage');
 
 		ecjia_screen::$current_screen->remove_last_nav_here();
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.discover')));
@@ -107,7 +107,7 @@ class admin_discover extends ecjia_admin {
 	 * 添加及提交处理
 	 */
 	public function add() {
-		$this->admin_priv('discover_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('discover_update', ecjia::MSGTYPE_JSON);
 
 		if (empty($_POST['step'])) {
 			$url = isset($_GET['url']) ? trim($_GET['url']) : 'http://';
@@ -172,7 +172,7 @@ class admin_discover extends ecjia_admin {
 	 * 编辑及提交处理
 	 */
 	public function edit() {
-		$this->admin_priv('discover_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('discover_update', ecjia::MSGTYPE_JSON);
 
 		$id = intval($_REQUEST['id']); //取得id
 		$flashdb = $this->mobile->discover_data();
@@ -245,7 +245,7 @@ class admin_discover extends ecjia_admin {
 	 * 删除百宝箱
 	 */
 	public function remove() {
-		$this->admin_priv('discover_delete');
+		$this->admin_priv('discover_delete', ecjia::MSGTYPE_JSON);
 
 		$id = intval($_GET['id']);
 		$flashdb = $this->mobile->discover_data();
@@ -274,7 +274,7 @@ class admin_discover extends ecjia_admin {
 	 * 编辑百宝箱的排序
 	 */
 	public function edit_sort() {
-		$this->admin_priv('discover_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('discover_update', ecjia::MSGTYPE_JSON);
 
 		$id    = intval($_POST['pk']);
 		$order = intval(trim($_POST['value']));
@@ -296,7 +296,7 @@ class admin_discover extends ecjia_admin {
 	 * 切换是否显示
 	 */
 	public function toggle_show() {
-		$this->admin_priv('discover_update',ecjia::MSGTYPE_JSON);
+		$this->admin_priv('discover_update', ecjia::MSGTYPE_JSON);
 
 		$id      = intval($_POST['id']);
 		$val	 = intval($_POST['val']);

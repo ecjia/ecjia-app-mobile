@@ -100,7 +100,7 @@ class admin_mobile_activity extends ecjia_admin {
 	 *活动列表页面加载
 	*/
 	public function init () {
-		$this->admin_priv('mobile_activity_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_activity_manage');
 		
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.activity_list')));
@@ -119,7 +119,7 @@ class admin_mobile_activity extends ecjia_admin {
 	*添加活动
 	*/
     public function add() {
-		$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_activity_update');
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_activity')));
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.add_activity'));
@@ -178,7 +178,7 @@ class admin_mobile_activity extends ecjia_admin {
      * 活动编辑页面
      */
 	public function edit() {
-	   	$this->admin_priv('mobile_activity_update', ecjia::MSGTYPE_JSON);
+	   	$this->admin_priv('mobile_activity_update');
 	   	
 	   	$activity_id = !empty($_GET['id']) ? intval($_GET['id']) : $_GET['id'];
 	   
@@ -321,7 +321,7 @@ class admin_mobile_activity extends ecjia_admin {
    * 活动记录列表
    */
    public function activity_record() {
-	   	$this->admin_priv('activity_record_manage', ecjia::MSGTYPE_JSON);
+	   	$this->admin_priv('activity_record_manage');
 	   	
 	   	$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.back_activity_list'), 'href' => RC_Uri::url('mobile/admin_mobile_activity/init')));
 	   	ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.view_activity_record')));
@@ -341,7 +341,7 @@ class admin_mobile_activity extends ecjia_admin {
 	 * 活动奖品池页面显示
 	 */
 	public function activity_prize() {
-		$this->admin_priv('activity_record_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('activity_record_manage');
 		
 		$id = intval($_GET['id']);
 

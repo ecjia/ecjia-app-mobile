@@ -88,7 +88,7 @@ class admin_config extends ecjia_admin {
 	 * 移动应用基本信息
 	 */
 	public function basic_info_init () {
-		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);	
+		$this->admin_priv('mobile_config_manage');	
 		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
@@ -166,7 +166,7 @@ class admin_config extends ecjia_admin {
 	 * app下载地址页面
 	 */
 	public function app_download_url () {
-		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_config_manage');
 		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
@@ -192,6 +192,7 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_shopkeeper_urlscheme', ecjia::config('mobile_shopkeeper_urlscheme'));
 		$this->assign('mobile_shop_urlscheme', ecjia::config('mobile_shop_urlscheme'));
 		$this->assign('current_code', trim($_GET['code']));
+
 		$this->display('mobile_config.dwt');
 	}
 	
@@ -200,7 +201,7 @@ class admin_config extends ecjia_admin {
 	 * app应用截图
 	 */
 	public function app_screenshots () {
-		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_config_manage');
 		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));
@@ -229,7 +230,7 @@ class admin_config extends ecjia_admin {
 		foreach($img_list as $key => $val){
 			$img_list[$key]['img_url'] = !empty($val['img_url'])? RC_Upload::upload_url().'/'.$val['img_url'] : '';
 		}
-		$this->assign('img_list',            $img_list);
+		$this->assign('img_list', $img_list);
 		$this->assign('current_code', trim($_GET['code']));
 		$this->display('mobile_config.dwt');
 	}
@@ -239,7 +240,7 @@ class admin_config extends ecjia_admin {
 	 * 广告位页面
 	 */
 	public function mobile_adsense_set () {
-		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);	
+		$this->admin_priv('mobile_config_manage');	
 		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_config'));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_config')));

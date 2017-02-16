@@ -83,8 +83,8 @@ class admin_mobile_manage extends ecjia_admin {
 	/**
 	 * 移动应用配置页面
 	 */
-	public function init () {
-		$this->admin_priv('mobile_manage', ecjia::MSGTYPE_JSON);
+	public function init() {
+		$this->admin_priv('mobile_manage');
 
 		ecjia_screen::$current_screen->remove_last_nav_here();
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_manage')));
@@ -101,8 +101,8 @@ class admin_mobile_manage extends ecjia_admin {
 	/**
 	 * 添加移动应用配置
 	 */
-	public function add () {
-		$this->admin_priv('mobile_manage_update', ecjia::MSGTYPE_JSON);
+	public function add() {
+		$this->admin_priv('mobile_manage_update');
 		
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.add_mobile_app')));
 		
@@ -153,7 +153,7 @@ class admin_mobile_manage extends ecjia_admin {
 	 * 编辑显示页面
 	 */
 	public function edit() {
-		$this->admin_priv('mobile_manage_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_manage_update');
 		
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.edit_mobile_app')));
 		
