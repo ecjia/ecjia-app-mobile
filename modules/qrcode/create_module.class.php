@@ -68,7 +68,7 @@ class create_module extends api_front implements api_interface {
 		$is_admin = $device['code'] == '8001' ? 1 : 0;
 		$db       = RC_Model::model('mobile/qrcode_validate_model');
 		$db->insert(array(
-				'user_id' => '',
+				'user_id' 		=> 0,
 				'is_admin'      => $is_admin,
 				'uuid'		    => $code,
 				'status'	    => 0,
