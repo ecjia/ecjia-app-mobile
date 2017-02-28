@@ -62,19 +62,23 @@ class mobile_device_record_api extends Component_Event_Api {
 			return new ecjia_error('invalid_parameter', RC_Lang::get('system::system.invalid_parameter'));
 		}
 		
-		$db_mobile_device = RC_Model::model('mobile/mobile_device_model');
-		$device = $options['device'];
-		$device_data = array(
-				'device_udid'	=> $device['udid'],
-				'device_client'	=> $device['client'],
-				'device_code'	=> $device['code']
-		);
-		$row = $db_mobile_device->find($device_data);
-		if(empty($row)) {
-			$device_data['add_time'] = RC_Time::gmtime();
-			$db_mobile_device->insert($device_data);
+		if (!empty($device['udid']) && !empty($device['client']) && !empty($device['code'])) {
+			$db_mobile_device = RC_Model::model('mobile/mobile_device_model');
+			$device = $options['device'];
+			$device_data = array(
+					'device_udid'	=> $device['udid'],
+					'device_client'	=> $device['client'],
+					'device_code'	=> $device['code']
+			);
+			
+			$row = $db_mobile_device->find($device_data);
+			
+			if(empty($row)) {
+				$device_data['add_time'] = RC_Time::gmtime();
+				$db_mobile_device->insert($device_data);
+			}
 		}
-        
+		return true;
 	}
 }
 
