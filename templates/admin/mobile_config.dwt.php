@@ -93,6 +93,7 @@
 							<input type='text' name='mobile_share_link' value='{$mobile_share_link}'>
 						</div>
 					</div>
+					
 					<div class="control-group formSep">
 						<label class="control-label">新人有礼红包：</label>
 						<div class="controls">

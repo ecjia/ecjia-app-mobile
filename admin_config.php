@@ -157,7 +157,10 @@ class admin_config extends ecjia_admin {
 		$this->assign('shop_touch_url', ecjia::config('mobile_touch_url'));	
 		
 		$this->assign('mobile_signup_reward', ecjia::config('mobile_signup_reward'));
-		$bonus_type_list = RC_Api::api('bonus', 'bonus_type_list');
+		$bonus_type_list = RC_Api::api('bonus', 'bonus_type_list', array('type' => 'allow_send'));
+	    if (empty($bonus_type_list)) {
+		    $bonus_type_list = array( array('type_name' => '暂无有效红包'));
+		}
 		
 		$this->assign('bonus_type_list', $bonus_type_list);
 		$this->assign('mobile_signup_reward_notice', ecjia::config('mobile_signup_reward_notice'));
