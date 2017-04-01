@@ -40,6 +40,20 @@ class admin_street extends ecjia_admin
         
         $this->display('mobile_street.dwt');
     }
+    
+    public function download() {
+        
+        $get_size = empty($_GET['size']) ? '12cm' : $_GET['size'];
+       
+        $size = mobile_qrcode::QrSizeCmToPx($get_size);
+        $file_url = mobile_qrcode::getStreetQrcodeUrl($size);
+        //文件的类型
+        header('Content-type: application/image/pjpeg');
+        //下载显示的名字
+        header('Content-Disposition: attachment; filename="ecjia_street_qrcode_'.$get_size.'.png"');
+        readfile($file_url);
+        exit();
+    }
 }
 
 // end
