@@ -5,6 +5,7 @@ class mobile_qrcode
     
     public static function getApiUrl()
     {
+        RC_Package::package('app::touch')->loadClass('ecjia_touch_manager', false);
         $url = with(new ecjia_touch_manager())->serverHost();
         return $url;
     }
