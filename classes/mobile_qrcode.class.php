@@ -22,6 +22,13 @@ class mobile_qrcode
         return $url;
     }
     
+    
+    public static function makeStreetEcjiaOpenUrl($url)
+    {
+        $url = base64url_encode($url);
+        return 'ecjiaopen://app?open_type=street&key='.$url;
+    }
+    
     /**
      * 创建二维码并保存
      * @param string $url
@@ -40,6 +47,8 @@ class mobile_qrcode
         if (! is_dir($save_dir)) {
             RC_File::makeDirectory($save_dir);
         }
+        
+        $url = self::makeStreetEcjiaOpenUrl($url);
         
         RC_QrCode::format('png')->size($size)->margin(1)
                     ->merge($icon_path, 0.2, true)
