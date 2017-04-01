@@ -27,7 +27,7 @@ class mobile_qrcode
      * @param string $url
      * @param number $size
      */
-    public static function createStreetQrcode($url, $size = 512)
+    public static function createStreetQrcode($url, $size = 430)
     {
         
         $mobile_app_icon = ecjia_config::get('mobile_app_icon');
@@ -48,6 +48,24 @@ class mobile_qrcode
         
     }
     
+    
+    /**
+     * 获取默认的二维码图片
+     * @return string
+     */
+    public static function getDefaultQrcodeUrl()
+    {
+        $size = 430;
+        $file_path = RC_Upload::upload_path().'data/qrcodes/street_qrcode_'.$size.'.png';
+        
+        if (! RC_File::exists($file_path))
+        {
+            self::createStreetQrcode(self::getApiUrl(), $size);
+        }
+        
+        return self::getStreetQrcodeUrl($size);
+    }
+    
     /**
      * 获取二维码的Url
      * @param number $size
@@ -63,7 +81,7 @@ class mobile_qrcode
         }
         else 
         {
-            $url = RC_Upload::upload_url().'/data/qrcodes/street_qrcode_512.png';
+            $url = RC_Upload::upload_url().'/data/qrcodes/street_qrcode_430.png';
         }
 
         return $url;
@@ -81,7 +99,7 @@ class mobile_qrcode
     
         if (! RC_File::exists($file_path))
         {
-            $file_path = RC_Upload::upload_path().'data/qrcodes/street_qrcode_512.png';
+            $file_path = RC_Upload::upload_path().'data/qrcodes/street_qrcode_430.png';
         }
     
         return $file_path;
