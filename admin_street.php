@@ -24,18 +24,14 @@ class admin_street extends ecjia_admin
         $ec_icon    = RC_App::apps_url('statics/images/ec_icon.png', __FILE__);
         $dianpujie = RC_App::apps_url('statics/images/dianpujie.png', __FILE__);
         
-        if (!empty($_GET['size'])) {
-        	$size = trim($_GET['size']);
-        	$street_qrcode = mobile_qrcode::getStreetQrcodeUrl($size);
-        } else {
-        	$street_qrcode = mobile_qrcode::getStreetQrcodeUrl();
-        }
         $api_url = mobile_qrcode::getApiUrl();
+        $small_qrcode = mobile_qrcode::getDefaultQrcodeUrl();
         
         $this->assign('api_url', $api_url);
         $this->assign('mobile_img', $mobile_img);
         $this->assign('ec_icon', $ec_icon);
         $this->assign('street_qrcode', $street_qrcode);
+        $this->assign('small_qrcode', $small_qrcode);
         $this->assign('dianpujie', $dianpujie);
         
         $this->display('mobile_street.dwt');

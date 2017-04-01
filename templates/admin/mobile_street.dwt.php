@@ -32,7 +32,7 @@
 				</div>
 				<div class="qrcode-apiaddress-info">
 					<div class="street-qrcode-info">
-						<a href="{$street_qrcode}" target="_blank"><img class="street-qrcode" src="{$street_qrcode}"></a>
+						<a href="{$small_qrcode}" target="_blank"><img class="street-qrcode" src="{$small_qrcode}"></a>
 						<div class="scanning">扫一下下载体验免费APP</div>
 					</div>
 					<div class="api-address-info">
