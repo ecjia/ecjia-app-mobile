@@ -30,7 +30,9 @@ class admin_street extends ecjia_admin
         } else {
         	$street_qrcode = mobile_qrcode::getStreetQrcodeUrl();
         }
+        $api_url = mobile_qrcode::getApiUrl();
         
+        $this->assign('api_url', $api_url);
         $this->assign('mobile_img', $mobile_img);
         $this->assign('ec_icon', $ec_icon);
         $this->assign('street_qrcode', $street_qrcode);

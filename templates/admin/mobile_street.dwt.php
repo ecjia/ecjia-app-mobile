@@ -37,7 +37,7 @@
 					</div>
 					<div class="api-address-info">
 						<div class="apiaddress">API地址：</div>
-						<div class="api-url">www.cityo2o.ecjia.com/sites/api/</div>
+						<div class="api-url">{$api_url}</div>
 						<div>您选择可以扫一扫添加店铺，也可以选择手动输入API地址进行添加</div>
 					</div>	
 				</div>
