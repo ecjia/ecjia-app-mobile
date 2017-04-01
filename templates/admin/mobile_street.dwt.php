@@ -14,61 +14,85 @@
 	</h3>	
 </div>
 
-
 <div class="row-fluid goods_preview">
 	<div class="span12 ">
-		<div class="foldable-list move-mod-group" id="goods_info_sort_submit">
-			<div class="accordion-group">
-				<div class="accordion-heading">
-					<a class="accordion-toggle collapsed move-mod-head" data-toggle="collapse" data-target="#goods_info_area_submit">
-						<strong>{lang key='mobile::mobile.device_info'}</strong>
-					</a>
+		<div class="section-one">
+			<div class="mobile-img-div">
+				<img class="mobile-img" src="{$mobile_img}" />
+			</div>
+			<div class="street-info">
+				<div class="ec-icon-info">
+					<img class="ec-icon-img" src="{$ec_icon}">
+					<div class="literal">ECJia店铺街</div>
 				</div>
-				<div class="accordion-body in collapse" id="goods_info_area_submit">
-					<table class="table table-oddtd m_b0">
-						<tbody class="first-td-no-leftbd">
-							<tr>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_user_id'}</strong></div></td>
-								<td colspan="3">{if $device.user_id eq 0}{lang key='mobile::mobile.no'}{else}{$device.user_id}{/if}&nbsp;&nbsp;&nbsp;{if $device.user_type neq 'admin'}【{lang key='mobile::mobile.not_admin'}】{else}【{lang key='mobile::mobile.is_admin'}】{/if}</td>
-							</tr>
-							<tr>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_type'}</strong></div></td>
-								<td>{$device.device_client}</td>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_name'}</strong></div></td>
-								<td>{$device.device_name}</td>
-							</tr>
-							<tr>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_os'}</strong></div></td>
-								<td><!-- {if $device.device_type} -->{$device.device_type}（{$device.device_os}）<!-- {/if} --></td>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_udid'}</strong></div></td>
-								<td>{$device.device_udid}</td>
-							</tr>
-							<tr>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_alias'}</strong></div></td>
-								<td>
-							        <span class="cursor_pointer" data-text="text" data-trigger="editable" data-url="{RC_Uri::url('mobile/admin_device/edit_device_alias')}" data-name="device_alias" data-pk="{$device.id}" data-title="{lang key='mobile::mobile.edit_device_alias'}" >{$device.device_alias}</span>
-							    </td>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_in_status'}</strong></div></td>
-								<td>{if $device.in_status eq 0}{lang key='mobile::mobile.enabled'}{else}{lang key='mobile::mobile.disable'}{/if}</td>
-							</tr>	
-							<tr>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_add_time'}</strong></div></td>
-								<td>{$device.add_time}</td>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_location'}</strong></div></td>
-								<td>{$device.location_province}/{$device.location_city}</td>
-							</tr>
-							<tr>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_update_time'}</strong></div></td>
-								<td>{$device.update_time}</td>
-								<td><div align="right"><strong>{lang key='mobile::mobile.visit_times'}</strong></div></td>
-								<td>{$device.visit_times}</td>
-							</tr>
-							<tr>
-								<td><div align="right"><strong>{lang key='mobile::mobile.label_device_token'}</strong></div></td>
-								<td colspan="3">{$device.device_token}</td>
-							</tr>
-						</tbody>
-					</table>
+				<div class="street-decription">
+				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
+				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
+				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
+				</div>
+				<div class="qrcode-apiaddress-info">
+					<div class="street-qrcode-info">
+						<a href="{$street_qrcode}" target="_blank"><img class="street-qrcode" src="{$street_qrcode}"></a>
+						<div class="scanning">扫一下下载体验免费APP</div>
+					</div>
+					<div class="api-address-info">
+						<div class="apiaddress">API地址：</div>
+						<div class="api-url">www.cityo2o.ecjia.com/sites/api/</div>
+						<div>您选择可以扫一扫添加店铺，也可以选择手动输入API地址进行添加</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="span12">
+		<div class="qrcode-size-download">二维码更多尺寸下载：</div>
+		<table class="table table-striped smpl_tbl table-hide-edit">
+			<thead>
+				<tr>
+					<th>二维码边长（cm）</th>
+					<th>建议扫描距离（米）</th>
+					<th class="w100">下载链接</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>8cm</td>
+					<td>0.5cm</td>
+					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={8}"}' title="下载"><i class="icon-download"></i></a></td>
+				</tr>
+				<tr>
+					<td>12cm</td>
+					<td>0.8cm</td>
+					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={12}"}' title="下载"><i class="icon-download"></i></a></td>
+				</tr>
+				<tr>
+					<td>15cm</td>
+					<td>1cm</td>
+					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={15}"}' title="下载"><i class="icon-download"></i></a></td>
+				</tr>
+				<tr>
+					<td>30cm</td>
+					<td>1.5cm</td>
+					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={30}"}' title="下载"><i class="icon-download"></i></a></td>
+				</tr>
+				<tr>
+					<td>50cm</td>
+					<td>2.5cm</td>
+					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={50}"}' title="下载"><i class="icon-download"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div><span class="warning"></span><span style="display:inline-block;margin-left:22px;">二维码尺寸请按照4.3像素的整数倍数缩放，以保持最佳效果</span></div>
+		<div class="daojia-info">
+			<div class="daojia">
+				<div class="daojia-literal">ECJia店铺街APP下载</div>
+				<div class="daojia-qrcode">
+					<img src="{$dianpujie}">
+				</div>
+				<div class="download">
+					<a class="btn-apple" style="background-color:#009FE8;" href="javascript:;"><span class="apple-icon"></span><span style="color:#fff;">iPone端下载</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn-android" style="background-color:#53B958;" href="javascript:;"><span class="android-icon"></span><span style="color:#fff;">Android端下载</span></a>
 				</div>
 			</div>
 		</div>
