@@ -26,9 +26,7 @@
 					<div class="literal">ECJia店铺街</div>
 				</div>
 				<div class="street-decription">
-				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
-				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
-				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
+				ECJia店铺街到家是一款免费的到家APP，拿起APP直接扫码便可体验原生到家手机APP，1分钟简单操作就能开启属于你的电商之旅，还提供了各种尺寸的店铺二维码图片，让宣传更加方便。
 				</div>
 				<div class="qrcode-apiaddress-info">
 					<div class="street-qrcode-info">
