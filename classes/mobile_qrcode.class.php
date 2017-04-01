@@ -3,6 +3,12 @@
 class mobile_qrcode
 {
     
+    public static function getApiUrl()
+    {
+        $url = with(new ecjia_touch_manager())->serverHost();
+        return $url;
+    }
+    
     /**
      * 创建二维码并保存
      * @param string $url
