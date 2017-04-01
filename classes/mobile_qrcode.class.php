@@ -3,6 +3,18 @@
 class mobile_qrcode
 {
     
+    public static function QrSizeCmToPx()
+    {
+        return [
+        	'8cm'  => '258',
+            '12cm' => '344',
+            '15cm' => '430',
+            '30cm' => '860',
+            '50cm' => '1280',
+        ];
+    }
+    
+    
     public static function getApiUrl()
     {
         RC_Package::package('app::touch')->loadClass('ecjia_touch_manager', false);
