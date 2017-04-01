@@ -48,9 +48,8 @@
 	width:25%;
 }
 .qrcode-apiaddress-info .street-qrcode-info img{
-	width:85%;
-	height:85%;
-	padding:7%;
+	width:258px;
+	height:258px;
 }
 .qrcode-apiaddress-info .street-qrcode-info .scanning{
 	padding-bottom:10px;
@@ -73,6 +72,7 @@
 	background-color:#e0e0e0 !important;
 	margin-top:15px;
 	margin-bottom:15px;
+	font-weight:bold;
 }
 .qrcode-size-download{
 	margin-top:25px;
