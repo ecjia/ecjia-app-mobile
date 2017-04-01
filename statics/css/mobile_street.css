@@ -14,7 +14,7 @@
 	background-color: #f5f5f5;
 	padding:10px;
 	float:right;
-	height:410px;
+	height:415px;
 }
 .street-info .ec-icon-info{
 	border-bottom: 1.8px dashed #ddd;
@@ -54,10 +54,12 @@
 .qrcode-apiaddress-info .street-qrcode-info .scanning{
 	padding-bottom:10px;
 	text-align:center;
+	background-color: #f5f5f5;
 }
 .qrcode-apiaddress-info .api-address-info{
-	float:right;
+	float:left;
 	width:56%;
+	margin-left:20px;
 }
 .qrcode-apiaddress-info .api-address-info .apiaddress{
 	height:25px;
