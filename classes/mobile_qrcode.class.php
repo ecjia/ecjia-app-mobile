@@ -27,9 +27,11 @@ class mobile_qrcode
         if (! is_dir($save_dir)) {
             RC_File::makeDirectory($save_dir);
         }
-
+        
         RC_QrCode::format('png')->size($size)->margin(1)
-                    ->merge($icon_path, 0.2, true)->generate($url, $save_path);
+                    ->merge($icon_path, 0.2, true)
+                    ->errorCorrection('H')
+                    ->generate($url, $save_path);
         
     }
     
