@@ -26,9 +26,7 @@
 					<div class="literal">ECJia店铺街</div>
 				</div>
 				<div class="street-decription">
-				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
-				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
-				ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街ECJia店铺街
+				ECJia店铺街到家是一款免费的到家APP，拿起APP直接扫码便可体验原生到家手机APP，1分钟简单操作就能开启属于你的电商之旅，还提供了各种尺寸的店铺二维码图片，让宣传更加方便。
 				</div>
 				<div class="qrcode-apiaddress-info">
 					<div class="street-qrcode-info">
@@ -59,27 +57,27 @@
 				<tr>
 					<td>8cm</td>
 					<td>0.5cm</td>
-					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={8}"}' title="下载"><i class="icon-download"></i></a></td>
+					<td><a class=" no-underline" href='{url path="mobile/admin_street/download" args="size=8cm"}' title="下载"><i class="icon-download"></i></a></td>
 				</tr>
 				<tr>
 					<td>12cm</td>
 					<td>0.8cm</td>
-					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={12}"}' title="下载"><i class="icon-download"></i></a></td>
+					<td><a class=" no-underline" href='{url path="mobile/admin_street/download" args="size=12cm"}' title="下载"><i class="icon-download"></i></a></td>
 				</tr>
 				<tr>
 					<td>15cm</td>
 					<td>1cm</td>
-					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={15}"}' title="下载"><i class="icon-download"></i></a></td>
+					<td><a class=" no-underline" href='{url path="mobile/admin_street/download" args="size=15cm"}' title="下载"><i class="icon-download"></i></a></td>
 				</tr>
 				<tr>
 					<td>30cm</td>
 					<td>1.5cm</td>
-					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={30}"}' title="下载"><i class="icon-download"></i></a></td>
+					<td><a class=" no-underline" href='{url path="mobile/admin_street/download" args="size=30cm"}' title="下载"><i class="icon-download"></i></a></td>
 				</tr>
 				<tr>
 					<td>50cm</td>
 					<td>2.5cm</td>
-					<td><a class="data-pjax no-underline" href='{url path="mobile/admin_street/init" args="size={50}"}' title="下载"><i class="icon-download"></i></a></td>
+					<td><a class=" no-underline" href='{url path="mobile/admin_street/download" args="size=50cm"}' title="下载"><i class="icon-download"></i></a></td>
 				</tr>
 			</tbody>
 		</table>
