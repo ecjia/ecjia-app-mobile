@@ -45,7 +45,7 @@
 .qrcode-apiaddress-info .street-qrcode-info{
 	float:left;
 	background-color:#fff !important;
-	width:25%;
+	width:258px;
 }
 .qrcode-apiaddress-info .street-qrcode-info img{
 	width:258px;
@@ -57,7 +57,7 @@
 }
 .qrcode-apiaddress-info .api-address-info{
 	float:right;
-	width:70%;
+	width:56%;
 }
 .qrcode-apiaddress-info .api-address-info .apiaddress{
 	height:25px;
