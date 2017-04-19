@@ -88,7 +88,7 @@ abstract class AbstractQrcode
      */
     public function getQrcodePath()
     {
-        return RC_Upload::upload_path() . $this->fileName();
+        return $this->storeDir() . $this->fileName();
     }
     
 }
