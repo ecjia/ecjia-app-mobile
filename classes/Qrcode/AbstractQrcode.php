@@ -13,6 +13,27 @@ abstract class AbstractQrcode
     protected $logo;
     
     /**
+     * ID
+     *
+     * @var integer
+     */
+    protected $id;
+    
+    public function __construct($id, $logo = null)
+    {
+        $this->id = $id;
+        $this->logo = $logo;
+    
+        if (! is_dir($this->storeDir())) {
+            RC_File::makeDirectory($this->storeDir(), 0777, true);
+        }
+    
+        if (! RC_File::exists($this->getQrcodePath())) {
+            $this->createQrcode();
+        }
+    }
+    
+    /**
      * 二维码内容
      */
     abstract public function content();

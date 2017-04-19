@@ -3,22 +3,7 @@
 namespace Ecjia\App\Mobile\Qrcode;
 
 class GenerateMerchant extends AbstractQrcode {
-    
-    /**
-     * 商家ID
-     * 
-     * @var integer
-     */
-    protected $id;
-
-    
-    public function __construct($id, $logo = null)
-    {
-        $this->id = $id;
-        $this->logo = $logo;
-    }
-    
-    
+        
     public function content()
     {
         $args = [
@@ -32,11 +17,7 @@ class GenerateMerchant extends AbstractQrcode {
     public function storeDir() 
     {
         $dir = RC_Upload::upload_path().'data/qrcodes/merchants/';
-        
-        if (! is_dir($dir)) {
-            RC_File::makeDirectory($dir, 0777, true);
-        }
-        
+
         return $dir;
     }
     
@@ -47,3 +28,5 @@ class GenerateMerchant extends AbstractQrcode {
     }
     
 }
+
+// end
