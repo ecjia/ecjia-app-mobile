@@ -1,6 +1,9 @@
 <?php
 
-abstract class generate_qrcode {
+namespace Ecjia\App\Mobile\Qrcode;
+
+abstract class AbstractQrcode 
+{
     
     /**
      * 二维码中间logo图片

@@ -1,8 +1,8 @@
 <?php
 
-RC_Package::package('app::mobile')->loadClass('generate_qrcode', false);
+namespace Ecjia\App\Mobile\Qrcode;
 
-class generate_qrcode_merchant extends generate_qrcode {
+class GenerateMerchant extends AbstractQrcode {
     
     /**
      * 商家ID
@@ -12,12 +12,22 @@ class generate_qrcode_merchant extends generate_qrcode {
     protected $id;
 
     
-    public function content($id, $logo = null)
+    public function __construct($id, $logo = null)
     {
         $this->id = $id;
         $this->logo = $logo;
     }
     
+    
+    public function content()
+    {
+        $args = [
+            'handle'        => 'ecjiaopen', 
+            'open_type'     => 'merchant', 
+            'merchant_id'   => $this->id
+        ];
+        return RC_Uri::url('mobile/redirect/init', $args);
+    }
     
     public function storeDir() 
     {
