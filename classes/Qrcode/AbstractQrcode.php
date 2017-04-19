@@ -2,6 +2,10 @@
 
 namespace Ecjia\App\Mobile\Qrcode;
 
+use RC_File;
+use RC_QrCode;
+use RC_Upload;
+
 abstract class AbstractQrcode 
 {
     

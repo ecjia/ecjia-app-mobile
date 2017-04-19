@@ -2,6 +2,9 @@
 
 namespace Ecjia\App\Mobile\Qrcode;
 
+use RC_Upload;
+use RC_Uri;
+
 class GenerateGoods extends AbstractQrcode {
     
     public function content()
@@ -25,7 +28,7 @@ class GenerateGoods extends AbstractQrcode {
 
     public function fileName()
     {
-        return 'goods_' . $this->id . '.png'';
+        return 'goods_' . $this->id . '.png';
     }
 
 }
