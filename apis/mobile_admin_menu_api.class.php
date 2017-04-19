@@ -56,7 +56,6 @@ class mobile_admin_menu_api extends Component_Event_Api {
         $menus = ecjia_admin::make_admin_menu('01_content', RC_Lang::get('mobile::mobile.mobile_app'), '', 1);
         
         $submenus = array(
-        	ecjia_admin::make_admin_menu('a', '新快捷菜单', RC_Uri::url('adsense/admin_shortcut/init'), 1)->add_purview('shortcut_manage'),
             ecjia_admin::make_admin_menu('01_mobile_list', RC_Lang::get('mobile::mobile.shorcut'), RC_Uri::url('mobile/admin_shortcut/init'), 1)->add_purview('shortcut_manage'),
         	ecjia_admin::make_admin_menu('02_discover_list', RC_Lang::get('mobile::mobile.discover'), RC_Uri::url('mobile/admin_discover/init'), 2)->add_purview('discover_manage'),
         	ecjia_admin::make_admin_menu('03_device_list', RC_Lang::get('mobile::mobile.mobile_device'), RC_Uri::url('mobile/admin_device/init'), 3)->add_purview('device_manage'),
