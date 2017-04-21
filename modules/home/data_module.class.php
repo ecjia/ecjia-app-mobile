@@ -85,24 +85,36 @@ class data_module extends api_front implements api_interface {
 
 function cycleimage_data($response, $request) 
 {
-	$mobile_cycleimage = RC_Loader::load_app_class('cycleimage_method', 'cycleimage');
-	$cycleimageDatas   = $mobile_cycleimage->player_data(true);
+    $city_id	= $this->requestData('city_id', 0);
+    
+    $device_client = $request->header('device-client', 'iphone');
+    
+    if ($device_client == 'android') {
+        $client = Ecjia\App\Adsense\Client::ANDROID;
+    } elseif ($device_client == 'h5') {
+        $client = Ecjia\App\Adsense\Client::H5;
+    } else {
+        $client = Ecjia\App\Adsense\Client::IPHONE;
+    }
+    
+	$cycleimageDatas = RC_Api::api('adsense',  'cycleimage', [
+	    'code' => 'home_cycleimage', 
+	    'client' => $client, 
+	    'city' => $city_id
+	]);
+	
+	
 	$player_data = array();
 	foreach ($cycleimageDatas as $val) {
 		$player_data[] = array(
-				'photo'      => array(
-						'small'      => $val['src'],
-						'thumb'      => $val['src'],
-						'url'        => $val['src'],
-				),
-				'url'        => $val['url'],
-				'description'=> $val['text'],
+			'photo' => array(
+					'small'      => $val['ad_code'],
+					'thumb'      => $val['ad_code'],
+					'url'        => $val['ad_code'],
+			),
+			'url'        => $val['ad_link'],
+			'description'=> $val['ad_name'],
 		);
-	}
-
-	/* 限制轮播图片显示最多5张 */
-	if (count($player_data) > 5) {
-		$player_data = array_slice($player_data, 0, 5);
 	}
 
 	$response['player'] = $player_data;
