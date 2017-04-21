@@ -104,17 +104,17 @@ function cycleimage_data($response, $request)
 	    'client'   => $client, 
 	    'city'     => $city_id
 	]);
-	
+
 	$player_data = array();
 	foreach ($cycleimageDatas as $val) {
 		$player_data[] = array(
 			'photo' => array(
-					'small'      => $val['ad_code'],
-					'thumb'      => $val['ad_code'],
-					'url'        => $val['ad_code'],
+					'small'      => $val['image'],
+					'thumb'      => $val['image'],
+					'url'        => $val['image'],
 			),
-			'url'        => $val['ad_link'],
-			'description'=> $val['ad_name'],
+			'url'        => $val['url'],
+			'description'=> $val['text'],
 		);
 	}
 
