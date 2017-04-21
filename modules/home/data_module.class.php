@@ -102,7 +102,6 @@ function cycleimage_data($response, $request)
 	    'client'   => $client, 
 	    'city'     => $city_id
 	]);
-	_dump($cycleimageDatas,1);
 	
 	$player_data = array();
 	foreach ($cycleimageDatas as $val) {
