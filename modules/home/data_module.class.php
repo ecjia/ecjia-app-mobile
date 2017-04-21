@@ -85,7 +85,7 @@ class data_module extends api_front implements api_interface {
 
 function cycleimage_data($response, $request) 
 {
-    $city_id	= $this->requestData('city_id', 0);
+    $city_id	= $request->input('city_id', 0);
     
     $device_client = $request->header('device-client', 'iphone');
     
