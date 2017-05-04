@@ -74,14 +74,25 @@ class data_module extends api_front implements api_interface {
 		} 
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
-			//流程逻辑开始
-			// runloop 流
-			$response = array();
-			$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
+		//流程逻辑开始
+		// runloop 流
+		$response = array();
+		$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
 		return $response;
 
 	}
 }
+
+function filter_adsense_group_data($data) {
+    return collect($data)->mapWithKeys(function($item, $key) {
+    	return [
+    		'image' => empty($item['ad_code']) ? '' : RC_Upload::upload_url($item['ad_code']),
+    		'text' => $item['ad_name'],
+    		'url' => $item['ad_link'],
+    	];
+    })->toArray();
+}
+RC_Hook::add_filter('filter_adsense_group_data', 'filter_adsense_group_data');
 
 function cycleimage_data($response, $request) 
 {
@@ -222,22 +233,45 @@ function new_goods_data($response, $request) {
 
 
 function mobile_home_adsense_group($response, $request) {
-	if (ecjia::config('mobile_home_adsense_group') == '' || ecjia::config('mobile_home_adsense_group') == 0) {
-		$response['adsense_group'] = array();
-	} else {
-		$adsense_group = explode(',', ecjia::config('mobile_home_adsense_group'));
-		$mobile_home_adsense_group = array();
-		if (!empty($adsense_group)) {
-			foreach ($adsense_group as $key => $val) {
-				$mobile_adsense_group = RC_Api::api('adsense', 'adsense_list', array('position_id' => $val));
-				if (!empty($mobile_adsense_group)) {
-				    $mobile_home_adsense_group[] = $mobile_adsense_group;
-				}
-			}
-		}
+    $request = royalcms('request');
+    
+    $city_id	= $request->input('city_id', 0);
+    
+    $device_client = $request->header('device-client', 'iphone');
+    
+    if ($device_client == 'android') {
+        $client = Ecjia\App\Adsense\Client::ANDROID;
+    } elseif ($device_client == 'h5') {
+        $client = Ecjia\App\Adsense\Client::H5;
+    } else {
+        $client = Ecjia\App\Adsense\Client::IPHONE;
+    }
+    
+    $mobile_home_adsense_group = RC_Api::api('adsense',  'adsense_group', [
+        'code'     => 'home_complex_adsense',
+        'client'   => $client,
+        'city'     => $city_id
+    ]);
+    
+//     _dump($mobile_home_adsense_group,1);
+// 	if (ecjia::config('mobile_home_adsense_group') == '' || ecjia::config('mobile_home_adsense_group') == 0) {
+// 		$response['adsense_group'] = array();
+// 	} else {
+// 		$adsense_group = explode(',', ecjia::config('mobile_home_adsense_group'));
+// 		$mobile_home_adsense_group = array();
+// 		if (!empty($adsense_group)) {
+// 			foreach ($adsense_group as $key => $val) {
+// 				$mobile_adsense_group = RC_Api::api('adsense', 'adsense_list', array('position_id' => $val));
+// 				if (!empty($mobile_adsense_group)) {
+// 				    $mobile_home_adsense_group[] = $mobile_adsense_group;
+// 				}
+// 			}
+// 		}
 
-		$response['adsense_group'] = $mobile_home_adsense_group;
-	}
+// 		$response['adsense_group'] = $mobile_home_adsense_group;
+// 	}
+	
+	$response['adsense_group'] = $mobile_home_adsense_group;
 
 	return $response;
 }
