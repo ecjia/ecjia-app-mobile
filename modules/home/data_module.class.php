@@ -84,7 +84,7 @@ class data_module extends api_front implements api_interface {
 }
 
 function filter_adsense_group_data($data) {
-    return collect($data)->mapWithKeys(function($item, $key) {
+    return collect($data)->map(function($item, $key) {
     	return [
     		'image' => empty($item['ad_code']) ? '' : RC_Upload::upload_url($item['ad_code']),
     		'text' => $item['ad_name'],
