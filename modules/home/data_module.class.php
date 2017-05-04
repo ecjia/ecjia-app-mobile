@@ -252,25 +252,7 @@ function mobile_home_adsense_group($response, $request) {
         'client'   => $client,
         'city'     => $city_id
     ]);
-    
-//     _dump($mobile_home_adsense_group,1);
-// 	if (ecjia::config('mobile_home_adsense_group') == '' || ecjia::config('mobile_home_adsense_group') == 0) {
-// 		$response['adsense_group'] = array();
-// 	} else {
-// 		$adsense_group = explode(',', ecjia::config('mobile_home_adsense_group'));
-// 		$mobile_home_adsense_group = array();
-// 		if (!empty($adsense_group)) {
-// 			foreach ($adsense_group as $key => $val) {
-// 				$mobile_adsense_group = RC_Api::api('adsense', 'adsense_list', array('position_id' => $val));
-// 				if (!empty($mobile_adsense_group)) {
-// 				    $mobile_home_adsense_group[] = $mobile_adsense_group;
-// 				}
-// 			}
-// 		}
-
-// 		$response['adsense_group'] = $mobile_home_adsense_group;
-// 	}
-	
+    	
 	$response['adsense_group'] = $mobile_home_adsense_group;
 
 	return $response;
