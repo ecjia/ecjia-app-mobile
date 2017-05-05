@@ -135,21 +135,6 @@ function cycleimage_data($response, $request)
 }
 
 function mobile_menu_data($response, $request) {
-// 	$mobile            = RC_Loader::load_app_class('mobile_method','mobile');
-// 	$mobile_menu       = array_merge($mobile->shortcut_data(true));
-// 	$mobile_menu_data  = array();
-// 	if (!empty($mobile_menu)) {
-// 		foreach ($mobile_menu as $key => $val) {
-// 			if ($val['display'] == '1') {
-// 				$mobile_menu_data[] = array(
-// 						'image'	=> $val['src'],
-// 						'text'	=> $val['text'],
-// 						'url'	=> $val['url']
-// 				);
-// 			}
-// 		}
-// 	}
-	
 	$request = royalcms('request');
 	
 	$city_id	= $request->input('city_id', 0);
