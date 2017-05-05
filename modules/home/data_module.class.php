@@ -135,22 +135,42 @@ function cycleimage_data($response, $request)
 }
 
 function mobile_menu_data($response, $request) {
-	$mobile            = RC_Loader::load_app_class('mobile_method','mobile');
-	$mobile_menu       = array_merge($mobile->shortcut_data(true));
-	$mobile_menu_data  = array();
-	if (!empty($mobile_menu)) {
-		foreach ($mobile_menu as $key => $val) {
-			if ($val['display'] == '1') {
-				$mobile_menu_data[] = array(
-						'image'	=> $val['src'],
-						'text'	=> $val['text'],
-						'url'	=> $val['url']
-				);
-			}
-		}
+// 	$mobile            = RC_Loader::load_app_class('mobile_method','mobile');
+// 	$mobile_menu       = array_merge($mobile->shortcut_data(true));
+// 	$mobile_menu_data  = array();
+// 	if (!empty($mobile_menu)) {
+// 		foreach ($mobile_menu as $key => $val) {
+// 			if ($val['display'] == '1') {
+// 				$mobile_menu_data[] = array(
+// 						'image'	=> $val['src'],
+// 						'text'	=> $val['text'],
+// 						'url'	=> $val['url']
+// 				);
+// 			}
+// 		}
+// 	}
+	
+	$request = royalcms('request');
+	
+	$city_id	= $request->input('city_id', 0);
+	
+	$device_client = $request->header('device-client', 'iphone');
+	
+	if ($device_client == 'android') {
+	    $client = Ecjia\App\Adsense\Client::ANDROID;
+	} elseif ($device_client == 'h5') {
+	    $client = Ecjia\App\Adsense\Client::H5;
+	} else {
+	    $client = Ecjia\App\Adsense\Client::IPHONE;
 	}
+	
+	$shortcutDatas = RC_Api::api('adsense',  'shortcut', [
+	    'code'     => 'home_shortcut',
+	    'client'   => $client,
+	    'city'     => $city_id
+	    ]);
 
-	$response['mobile_menu'] = $mobile_menu_data;
+	$response['mobile_menu'] = $shortcutDatas;
 	return $response;
 }
 
