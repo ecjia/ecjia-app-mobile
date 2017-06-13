@@ -158,7 +158,7 @@ class admin_config extends ecjia_admin {
 		
 		$this->assign('mobile_signup_reward', ecjia::config('mobile_signup_reward'));
 		//新人有礼红包，有效期内+按用户发放类型+平台红包
-		$bonus_type_list = RC_Api::api('bonus', 'bonus_type_list', array('store_id' => 0, 'type' => 'allow_send', 'send_type' => 'user'));
+		$bonus_type_list = RC_Api::api('bonus', 'bonus_type_list', array('store_id' => 0, 'type' => 'allow_use', 'send_type' => 'user'));
 	    if (empty($bonus_type_list)) {
 		    $bonus_type_list = array( array('type_name' => '暂无有效红包'));
 		}
