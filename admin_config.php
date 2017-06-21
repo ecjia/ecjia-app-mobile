@@ -647,7 +647,7 @@ class admin_config extends ecjia_admin {
 	}
 
 	public function search_article() {
-		$result = RC_Api::api('article', 'article_list', array('keywords' => $_POST['artile'], 'article_type' => 'system'));
+		$result = RC_Api::api('article', 'article_list', array('keywords' => $_POST['artile'], 'article_type' => 'article', 'article_approved' => 1));
 		$list = array();
 		if (!empty($result['arr'])) {
 			foreach ($result['arr'] as $val) {
