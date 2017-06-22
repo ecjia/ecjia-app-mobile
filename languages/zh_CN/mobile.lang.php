@@ -531,6 +531,14 @@ return array(
 	'mobile_app_preview2'		=> '应用预览图2：',
 	'mobile_app_screenshots'	=> '应用截图：',
     'drop_screenshots_confirm'  => '您确定要删除这张应用截图吗？',
+    
+    //店铺街
+	'help_about_dianpujie'		=> '关于店铺街帮助文档',
+	'help_about_zhanggui'		=> '关于掌柜帮助文档',
+	'help_about_peisong'		=> '关于配送员帮助文档',
+	'dianpujie_pub_list'		=> 'ECJia店铺街到家是一款免费的到家APP，拿起APP直接扫码便可体验原生到家手机APP',
+	'zhanggui_pub_list'			=> 'ECJia掌柜，让商家更方便地管理自己的店铺。',
+	'peisong_pub_list'			=> 'EC+配送员是具有系统派单，抢单，取货，配送，及配送记录的APP。'
 );
 
 // end
