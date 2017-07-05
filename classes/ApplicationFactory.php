@@ -21,21 +21,30 @@ class ApplicationFactory
         $cache_key = 'mobile_application_factories';
     
         $factories = RC_Cache::app_cache_get($cache_key, 'mobile');
-    
+
         if (empty($factories)) {
     
-            $dir = __DIR__ . '/Events';
+            $dir = __DIR__ . '/Platform';
     
-            $events = royalcms('files')->files($dir);
-    
+            $platforms = royalcms('files')->files($dir);
+
             $factories = [];
     
-            foreach ($events as $key => $value) {
+            foreach ($platforms as $key => $value) {
                 $value = str_replace($dir . '/', '', $value);
                 $value = str_replace('.php', '', $value);
                 $className = __NAMESPACE__ . '\Platform\\' . $value;
-                $key = with(new $className)->getCode();
-                $factories[$key] = $className;
+                
+                $class = new $className;
+                $code = $class->getCode();
+                $name = $class->getName();
+                $desciption = $class->getDescription();
+                $factories[$code] = [
+                	'code' => $code,
+                    'name' => $name,
+                    'description' => $desciption,
+                    'class' => $className,
+                ];
             }
     
             RC_Cache::app_cache_set($cache_key, $factories, 'mobile', 10080);

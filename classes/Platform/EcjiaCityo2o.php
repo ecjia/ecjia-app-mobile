@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecjia\App\Mobile;
+namespace Ecjia\App\Mobile\Platform;
 
 use Ecjia\App\Mobile\ApplicationPlatform;
 
@@ -24,15 +24,21 @@ class EcjiaCityo2o extends ApplicationPlatform
      * 描述
      * @var string
      */
-    protected $desciption = 'ECJia到家App是一款集消费者、商家、配送员于一体的客户端。';
+    protected $description = 'ECJia到家App是一款集消费者、商家、配送员于一体的客户端。';
+    
+    /**
+     * 图标
+     * @var string
+     */
+    protected $icon = '';
     
     /**
      * 支持的客户端类型
      * @var array
      */
-    protected $client = [
-        iphone,
-        android
+    protected $clients = [
+        'iphone',
+        'android'
     ];
     
     

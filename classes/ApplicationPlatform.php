@@ -20,7 +20,13 @@ class ApplicationPlatform
      * 描述
      * @var string
      */
-    protected $desciption;
+    protected $description;
+    
+    /**
+     * 图标
+     * @var string
+     */
+    protected $icon;
     
     /**
      * 支持的客户端类型
