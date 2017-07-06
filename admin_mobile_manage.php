@@ -77,6 +77,9 @@ class admin_mobile_manage extends ecjia_admin {
 		RC_Script::enqueue_script('mobile_manage', RC_App::apps_url('statics/js/mobile_manage.js', __FILE__), array(), false, false);
 		RC_Script::localize_script('mobile_manage', 'js_lang', RC_Lang::get('mobile::mobile.js_lang'));
 		
+
+		RC_Style::enqueue_style('mobile_manage', RC_App::apps_url('statics/css/mobile_manage.css', __FILE__), array(), false, false);
+		
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_manage'), RC_Uri::url('mobile/admin_mobile_manage/init')));
 	}
 					
@@ -92,12 +95,32 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_manage'));
 		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.add_mobile_app'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/add')));
 		
-		$mobile_manage = $this->get_mobile_manage_list();
-		$this->assign('mobile_manage', $mobile_manage);
+		$factory = new Ecjia\App\Mobile\ApplicationFactory();
+		$pruduct_list = $factory->getFactories();
+		$this->assign('pruduct_list', $pruduct_list);
 		
 		$this->display('mobile_manage_list.dwt');
 	}
+	
+	
+	/**
+	 * 移动应用配置页面
+	 */
+	public function client_list() {
+		$this->admin_priv('mobile_manage');
+	
+		ecjia_screen::$current_screen->remove_last_nav_here();
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_manage')));
+	
+		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_manage'));
+		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.add_mobile_app'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/add')));
 		
+		$manage_list = $this->get_mobile_manage_list($_GET['code']);
+		$this->assign('manage_list', $manage_list);
+
+		$this->display('mobile_client_list.dwt');
+	}
+	
 	/**
 	 * 添加移动应用配置
 	 */
@@ -243,15 +266,13 @@ class admin_mobile_manage extends ecjia_admin {
 	 * 获取客户端管理列表
 	 * @return array
 	 */
-	private function get_mobile_manage_list() {
+	private function get_mobile_manage_list($code) {
 		$db_mobile_manage = RC_DB::table('mobile_manage');
 		
 		$count = $db_mobile_manage->count();
 		$page  = new ecjia_page ($count, 10, 5);
-		
-		$mobile_manage_list = $db_mobile_manage->orderby('sort', 'desc')->take(10)->skip($page->start_id-1)->get();
-		
-		$mobile_client = array('iphone' => 'iPhone', 'ipad' => 'iPad', 'android' => 'Android');
+		$mobile_manage_list = $db_mobile_manage->where('platform', $code)->orderby('sort', 'desc')->take(10)->skip($page->start_id-1)->get();
+		$mobile_client = array('iphone' => 'iPhone', 'android' => 'Android');
 		if (!empty($mobile_manage_list)) {
 			foreach ($mobile_manage_list as $key => $val) {
 				$mobile_manage_list[$key]['device_client'] 	= $mobile_client[$val['device_client']];
