@@ -71,7 +71,7 @@ class ApplicationFactory
     public function platform($code)
     {
         if (!array_key_exists($code, self::$factories)) {
-            throw new InvalidArgumentException("Event '$code' is not supported.");
+            throw new InvalidArgumentException("Application platform '$code' is not supported.");
         }
     
         $className = self::$factories[$code];
