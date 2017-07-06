@@ -80,7 +80,7 @@ class admin_mobile_manage extends ecjia_admin {
 
 		RC_Style::enqueue_style('mobile_manage', RC_App::apps_url('statics/css/mobile_manage.css', __FILE__), array(), false, false);
 		
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_manage'), RC_Uri::url('mobile/admin_mobile_manage/init')));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('移动产品', RC_Uri::url('mobile/admin_mobile_manage/init')));
 	}
 					
 	/**
@@ -90,10 +90,9 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->admin_priv('mobile_manage');
 
 		ecjia_screen::$current_screen->remove_last_nav_here();
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_manage')));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('移动产品'));
 		
-		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_manage'));
-		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.add_mobile_app'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/add')));
+		$this->assign('ur_here', '移动产品');
 		
 		$factory = new Ecjia\App\Mobile\ApplicationFactory();
 		$pruduct_list = $factory->getFactories();
@@ -109,11 +108,10 @@ class admin_mobile_manage extends ecjia_admin {
 	public function client_list() {
 		$this->admin_priv('mobile_manage');
 	
-		ecjia_screen::$current_screen->remove_last_nav_here();
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_manage')));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理'));
 	
-		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_manage'));
-		$this->assign('action_link', array('text' => RC_Lang::get('mobile::mobile.add_mobile_app'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/add')));
+		$this->assign('ur_here', '客户端管理');
+		$this->assign('action_link', array('text' => '添加客户端', 'href' => RC_Uri::url('mobile/admin_mobile_manage/add')));
 		
 		$manage_list = $this->get_mobile_manage_list($_GET['code']);
 		$this->assign('manage_list', $manage_list);
