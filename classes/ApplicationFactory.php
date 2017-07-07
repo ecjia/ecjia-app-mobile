@@ -56,15 +56,15 @@ class ApplicationFactory
     
     public function getPlatforms()
     {
-        $events = [];
+        $platforms = [];
     
         foreach (self::$factories as $value) {
-            $event = new $value;
-            $key = $event->getCode();
-            $events[$key] = $event;
+            $platform = new $value;
+            $key = $platform->getCode();
+            $platforms[$key] = $platform;
         }
     
-        return $events;
+        return $platforms;
     }
     
     
@@ -74,7 +74,8 @@ class ApplicationFactory
             throw new InvalidArgumentException("Application platform '$code' is not supported.");
         }
     
-        $className = self::$factories[$code];
+        $platform = self::$factories[$code];
+        $className = $platform['class'];
     
         return new $className();
     }
