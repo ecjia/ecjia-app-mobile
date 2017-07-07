@@ -35,22 +35,14 @@ class ApplicationFactory
                 $value = str_replace('.php', '', $value);
                 $className = __NAMESPACE__ . '\Platform\\' . $value;
                 
-                $class = new $className;
-                $code = $class->getCode();
-                $name = $class->getName();
-                $desciption = $class->getDescription();
-                $factories[$code] = [
-                	'code' => $code,
-                    'name' => $name,
-                    'description' => $desciption,
-                    'class' => $className,
-                ];
+                $key = with(new $className)->getCode();
+                $factories[$key] = $className;
             }
     
             RC_Cache::app_cache_set($cache_key, $factories, 'mobile', 10080);
         }
     
-        return RC_Hook::apply_filters('ecjia_mobile_application_platform_filter', $factories);
+        return RC_Hook::apply_filters('ecjia_mobile_platform_filter', $factories);
     }
     
     
@@ -58,10 +50,8 @@ class ApplicationFactory
     {
         $platforms = [];
     
-        foreach (self::$factories as $value) {
-            $platform = new $value;
-            $key = $platform->getCode();
-            $platforms[$key] = $platform;
+        foreach (self::$factories as $key => $value) {
+            $platforms[$key] = new $value;
         }
     
         return $platforms;
@@ -74,8 +64,7 @@ class ApplicationFactory
             throw new InvalidArgumentException("Application platform '$code' is not supported.");
         }
     
-        $platform = self::$factories[$code];
-        $className = $platform['class'];
+        $className = self::$factories[$code];
     
         return new $className();
     }
