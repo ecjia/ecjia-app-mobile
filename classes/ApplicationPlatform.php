@@ -32,10 +32,7 @@ class ApplicationPlatform
      * 支持的客户端类型
      * @var array
      */
-    protected $clients = [
-    	'iphone',
-        'android'
-    ];
+    protected $clients = [];
     
     
     public function getCode()
