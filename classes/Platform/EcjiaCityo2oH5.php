@@ -38,9 +38,9 @@ class EcjiaCityo2oH5 extends ApplicationPlatform
      */
     protected $clients = [
         [
-        	'device-client' => 'h5',
-            'device-name' => 'H5',
-            'device-code' => '6004',
+        	'device_client' => 'h5',
+            'device_name' => 'H5',
+            'device_code' => '6004',
         ],
     ];
     

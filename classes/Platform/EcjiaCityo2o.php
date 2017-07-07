@@ -38,14 +38,14 @@ class EcjiaCityo2o extends ApplicationPlatform
      */
     protected $clients = [
         [
-        	'device-client' => 'iphone',
-            'device-name' => 'iPhone',
-            'device-code' => '6002',
+        	'device_client' => 'iphone',
+            'device_name' => 'iPhone',
+            'device_code' => '6002',
         ],
         [
-            'device-client' => 'android',
-            'device-name' => 'Android',
-            'device-code' => '6001',
+            'device_client' => 'android',
+            'device_name' => 'Android',
+            'device_code' => '6001',
         ]
     ];
     

@@ -38,9 +38,9 @@ class EcjiaWeapp extends ApplicationPlatform
      */
     protected $clients = [
         [
-            'device-client' => 'weapp',
-            'device-name' => '微信小程序',
-            'device-code' => '6015',
+            'device_client' => 'weapp',
+            'device_name' => '微信小程序',
+            'device_code' => '6015',
         ],
     ];
     

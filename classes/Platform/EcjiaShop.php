@@ -38,14 +38,14 @@ class EcjiaShop extends ApplicationPlatform
      */
     protected $clients = [
         [
-        	'device-client' => 'iphone',
-            'device-name' => 'iPhone',
-            'device-code' => '6012',
+        	'device_client' => 'iphone',
+            'device_name' => 'iPhone',
+            'device_code' => '6012',
         ],
         [
-            'device-client' => 'android',
-            'device-name' => 'Android',
-            'device-code' => '6011',
+            'device_client' => 'android',
+            'device_name' => 'Android',
+            'device_code' => '6011',
         ]
     ];
     
