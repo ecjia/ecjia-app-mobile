@@ -98,6 +98,9 @@ class admin_mobile_manage extends ecjia_admin {
 		$pruduct_list = $factory->getFactories();
 		$this->assign('pruduct_list', $pruduct_list);
 		
+		$product_img = RC_App::apps_url('statics/images/product.png', __FILE__);
+		$this->assign('product_img', $product_img);
+		
 		$this->display('mobile_manage_list.dwt');
 	}
 	
@@ -115,7 +118,16 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$manage_list = $this->get_mobile_manage_list($_GET['code']);
 		$this->assign('manage_list', $manage_list);
-
+		
+		$ok_img = RC_App::apps_url('statics/images/ok.png', __FILE__);
+		$error_img = RC_App::apps_url('statics/images/error.png', __FILE__);
+		$Android_img = RC_App::apps_url('statics/images/Android.png', __FILE__);
+		$iPhone_img = RC_App::apps_url('statics/images/iPhone.png', __FILE__);
+		$this->assign('ok_img', $ok_img);
+		$this->assign('error_img', $error_img);
+		$this->assign('Android_img', $Android_img);
+		$this->assign('iPhone_img', $iPhone_img);
+		
 		$this->display('mobile_client_list.dwt');
 	}
 	

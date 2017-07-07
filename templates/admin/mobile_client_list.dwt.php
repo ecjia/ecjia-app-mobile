@@ -20,9 +20,9 @@
 					<li>
 						<p style="text-align: right;">
 						{if $list.status eq 1}
-							<img src="{RC_Uri::admin_url('statics/images/ok.png')}" />
+							<img src="{$ok_img}" />
 						{else}
-							<img src="{RC_Uri::admin_url('statics/images/error.png')}" />
+							<img src="{$error_img}" />
 						{/if}
 						</p>
 						<h2>{$list.app_name}</h2>
@@ -30,9 +30,9 @@
 						<p style="margin-top:25px;"> Platform：{$list.platform}<br/> Bundle Id:{$list.app_key}<br/></p>
 						<p style="margin-top:30px;">
 							{if $list.device_client eq 'Android'}
-						 		<img src="{RC_Uri::admin_url('statics/images/Android.png')}" />
+						 		<img src="{$Android_img}" />
 						 	{else}
-						 		<img src="{RC_Uri::admin_url('statics/images/iPhone.png')}" />
+						 		<img src="{$iPhone_img}" />
 						 	{/if}
 						</p>
 						<p style="margin-top:60px;">
