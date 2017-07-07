@@ -16,7 +16,7 @@
 		<div class="tab-content">
 			<div class="active">
 				<div class="row-fluid">
-					<!-- {foreach from=$pruduct_list item=list} -->
+					<!-- {foreach from=$data item=list} -->
 						<div class="outline">
 							<a class="data-pjax" style="text-decoration:none" href='{RC_Uri::url("mobile/admin_mobile_manage/client_list", "code={$list.code}")}' >
 								<div class="outline-left"><img src="{$product_img}" /></div>
