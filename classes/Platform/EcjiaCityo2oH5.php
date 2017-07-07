@@ -4,7 +4,7 @@ namespace Ecjia\App\Mobile\Platform;
 
 use Ecjia\App\Mobile\ApplicationPlatform;
 
-class EcjiaCityo2o extends ApplicationPlatform
+class EcjiaCityo2oH5 extends ApplicationPlatform
 {
     
     
