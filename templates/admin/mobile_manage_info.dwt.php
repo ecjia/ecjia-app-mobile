@@ -80,9 +80,11 @@
 				<div class="control-group">
 					<div class="controls">
 						<input type="hidden" name="id" value="{$manage_data.app_id}" />
-						<input type="hidden" name="device_code" value={$device_code} />
-						<input type="hidden" name="device_client" value={$device_client} />
-						<input type="hidden" name="code" value={$code} />
+						<input type="hidden" name="device_code" value="{$device_code} "/>
+						<input type="hidden" name="device_client" value="{$device_client}" />
+						<input type="hidden" name="code" value="{$code}" />
+						
+						<input type="hidden" name="code_vale" value="{$manage_data.platform}" />
 						
 						{if $action eq 'edit'}
 							<button class="btn btn-gebo" type="submit">更新</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

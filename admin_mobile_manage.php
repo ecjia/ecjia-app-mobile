@@ -291,8 +291,7 @@ class admin_mobile_manage extends ecjia_admin {
 	public function update() {
 		$this->admin_priv('mobile_manage_update', ecjia::MSGTYPE_JSON);
 		
-		$id 		= intval($_POST['id']);
-		$code 		= trim($_POST['code']);
+		$code 		= trim($_POST['code_vale']);
 		$name 		= trim($_POST['name']);
 		$bundleid 	= trim($_POST['bundleid']);
 		$status 	= isset($_POST['status']) ? $_POST['status'] : 0;
