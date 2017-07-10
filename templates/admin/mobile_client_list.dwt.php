@@ -24,7 +24,15 @@
 					<h2>默认</h2>
 					<h3></h3>
 					<p style="margin-top:25px;">Code：{$config.code}</p>
-					<p style="margin-top:25px;"><img src="{$Android_img}" /><img src="{$iPhone_img}" /></p>
+					<p style="margin-top:25px;">
+						{if $config.code eq 'ecjia-cityo2o-h5'}
+							<img src="{$h5}"/>
+						{elseif $config.code eq 'ecjia-shop-weapp'}
+							<img src="{$wechant_client}" />
+						{else}
+							<img src="{$Android_img}" /><img src="{$iPhone_img}" />
+						{/if}
+					</p>
 					<p style="margin-top:60px;">
 						<a><span>配置</span></a>
 					</p>
@@ -41,9 +49,13 @@
 							<p style="margin-top:25px;">Code：{$config.code}</p>
 							<p style="margin-top:30px;">
 								{if $list.device_client eq 'android'}
-							 		<img src="{$Android_img}" />
+									<img src="{$Android_img}" />
+								{elseif $list.device_client eq 'iphone'}
+									<img src="{$iPhone_img}" />
+								{elseif $list.device_client eq 'h5'}
+							 		<img src="{$h5}" />
 							 	{else}
-							 		<img src="{$iPhone_img}" />
+							 	    <img src="{$wechant_client}" />
 							 	{/if}
 							</p>
 							<p style="margin-top:60px;">
@@ -55,9 +67,13 @@
 							<h3></h3>
 							<p style="margin-top:72px;">
 								{if $list.device_client eq 'android'}
-							 		<img src="{$Android_img}" />
+									<img src="{$Android_img}" />
+								{elseif $list.device_client eq 'iphone'}
+									<img src="{$iPhone_img}" />
+								{elseif $list.device_client eq 'h5'}
+							 		<img src="{$h5}" />
 							 	{else}
-							 		<img src="{$iPhone_img}" />
+							 	    <img src="{$wechant_client}" />
 							 	{/if}
 							</p>
 							<p style="margin-top:60px;">

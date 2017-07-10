@@ -164,10 +164,14 @@ class admin_mobile_manage extends ecjia_admin {
 		$error_img = RC_App::apps_url('statics/images/error.png', __FILE__);
 		$Android_img = RC_App::apps_url('statics/images/Android.png', __FILE__);
 		$iPhone_img = RC_App::apps_url('statics/images/iPhone.png', __FILE__);
+		$wechant_client = RC_App::apps_url('statics/images/wechant_client.png', __FILE__);
+		$h5 = RC_App::apps_url('statics/images/h5_client.png', __FILE__);
 		$this->assign('ok_img', $ok_img);
 		$this->assign('error_img', $error_img);
 		$this->assign('Android_img', $Android_img);
 		$this->assign('iPhone_img', $iPhone_img);
+		$this->assign('wechant_client', $wechant_client);
+		$this->assign('h5', $h5);
 	
 		$this->display('mobile_client_list.dwt');
 	}
@@ -265,6 +269,16 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		
 		$manage_data = RC_DB::table('mobile_manage')->where('app_id', $id)->first();
+		
+		if($manage_data['device_client'] == 'iphone'){
+			$manage_data['device_client'] = 'iPhone';
+		} elseif ($manage_data['device_client'] == 'android'){
+			$manage_data['device_client'] = 'Android';
+		} elseif ($manage_data['device_client'] == 'h5'){
+			$manage_data['device_client'] = 'H5';
+		}else{
+			$manage_data['device_client'] = '微信小程序';
+		}
 		$this->assign('manage_data', $manage_data);
 		
 		$this->assign('action', 'edit');
