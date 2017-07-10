@@ -263,8 +263,8 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$code = $_GET['code'];
 		$id   = intval($_GET['id']);
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('编辑客户端'));
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理', RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('编辑客户端'));
 		$this->assign('ur_here', '编辑客户端');
 		$this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		
