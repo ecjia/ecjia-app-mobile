@@ -34,36 +34,39 @@
 					</div>
 				</div>
 				
-				<div class="control-group formSep">
-					<label class="control-label">Code：</label>
-					<div class="controls l_h30">
-						{$manage_data.platform}
+				{if $action eq 'edit'}
+					<div class="control-group formSep">
+						<label class="control-label">Code：</label>
+						<div class="controls l_h30">
+							{$manage_data.platform}
+						</div>
 					</div>
-				</div>
-				<div class="control-group formSep">
-					<label class="control-label">Client：</label>
-					<div class="controls l_h30">
-						{$manage_data.device_client}
+					<div class="control-group formSep">
+						<label class="control-label">Client：</label>
+						<div class="controls l_h30">
+							{$manage_data.device_client}
+						</div>
 					</div>
-				</div>
-				<div class="control-group formSep">
-					<label class="control-label">Device Code：</label>
-					<div class="controls l_h30">
-						{$manage_data.device_code}
+					<div class="control-group formSep">
+						<label class="control-label">Device Code：</label>
+						<div class="controls l_h30">
+							{$manage_data.device_code}
+						</div>
 					</div>
-				</div>
-				<div class="control-group formSep">
-					<label class="control-label">AppKey：</label>
-					<div class="controls l_h30">
-						{$manage_data.app_key}
+					<div class="control-group formSep">
+						<label class="control-label">AppKey：</label>
+						<div class="controls l_h30">
+							{$manage_data.app_key}
+						</div>
 					</div>
-				</div>
-				<div class="control-group formSep">
-					<label class="control-label">AppSecret：</label>
-					<div class="controls l_h30">
-						{$manage_data.app_secret}
+					<div class="control-group formSep">
+						<label class="control-label">AppSecret：</label>
+						<div class="controls l_h30">
+							{$manage_data.app_secret}
+						</div>
 					</div>
-				</div>
+				{/if}
+				
 				<div class="control-group formSep">
 					<label class="control-label">是否启用</label>
 					<div class="controls">
@@ -81,8 +84,17 @@
 				<div class="control-group">
 					<div class="controls">
 						<input type="hidden" name="id" value="{$manage_data.app_id}" />
-						<input type="hidden" name="code" value="{$manage_data.platform}" />
-						<button class="btn btn-gebo" type="submit">更新</button>
+							
+						<input type="hidden" name="device_code" value={$device_code} />
+						<input type="hidden" name="device_client" value={$device_client} />
+						<input type="hidden" name="code" value={$code} />
+						
+						{if $action eq 'edit'}
+							<button class="btn btn-gebo" type="submit">更新</button>
+							<a data-toggle="ajaxremove" class="ajaxremove"  data-msg="你确定要删除该客户端端吗？"  href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$manage_data.app_id}&code={$manage_data.platform}")}' title="删除"><button class="btn btn-gebo" type="submit">删除</button></a>
+						{else}
+							<button class="btn btn-gebo" type="submit">激活</button>
+						{/if}
 					</div>
 				</div>
 			</fieldset>

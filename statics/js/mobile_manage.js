@@ -1,20 +1,7 @@
 // JavaScript Document
 ;(function (app, $) {
     app.mobile_manage = {
-        init: function () {
-            $(".ajaxclient").on('click', function (e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-                var device_code = $("input[name='device_code").val();
-                var device_client = $("input[name='device_client").val();
-                var code = $("input[name='code").val();
-                url += '&device_code=' + device_code+'&device_client=' + device_client+'&code=' + code;
-                $.get(url, function (data) {
-                    ecjia.admin.showmessage(data);
-                }, 'json');
-            });
-        },
-            
+
         info: function () {
             app.mobile_manage.submit();
  

@@ -2,6 +2,16 @@
 <!-- {extends file="ecjia.dwt.php"} -->
 
 <!-- {block name="footer"} -->
+<style>
+a{
+	color:#000000;
+	text-decoration:none;
+}
+a:hover {
+    color:#08c;
+	text-decoration:none;
+}
+</style>
 <!-- {/block} -->
 
 <!-- {block name="main_content"} -->
@@ -18,7 +28,7 @@
 				<div class="row-fluid">
 					<!-- {foreach from=$data item=list} -->
 						<div class="outline">
-							<a class="data-pjax" style="text-decoration:none" href='{RC_Uri::url("mobile/admin_mobile_manage/client_list", "code={$list.code}")}' >
+							<a class="data-pjax"  href='{RC_Uri::url("mobile/admin_mobile_manage/client_list", "code={$list.code}")}' >
 								<div class="outline-left"><img src="{$product_img}" /></div>
 								<div class="outline-right">
 									<h3>{$list.name}</h3>

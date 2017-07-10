@@ -2,9 +2,6 @@
 <!-- {extends file="ecjia.dwt.php"} -->
 
 <!-- {block name="footer"} -->
-<script type="text/javascript">
-	ecjia.admin.mobile_manage.init();
-</script>
 <!-- {/block} -->
 
 <!-- {block name="main_content"} -->
@@ -50,8 +47,7 @@
 							 	{/if}
 							</p>
 							<p style="margin-top:60px;">
-								<a style='cursor:pointer;'  href='{RC_Uri::url("mobile/admin_mobile_manage/edit", "code={$config.code}&id={$list.app_id}")}'>编辑</a>
-								<a style="margin-left:10px;" class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="你确定要删除该客户端端吗？" href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$list.app_id}")}' title="删除"><span>删除</span></a>
+								<a style="cursor:pointer;"  class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_manage/edit", "code={$config.code}&id={$list.app_id}")}'>编辑</a>
 							</p>
 					    {else}
 						    <p style="text-align: right;"><img src="{$error_img}" /></p>
@@ -65,10 +61,7 @@
 							 	{/if}
 							</p>
 							<p style="margin-top:60px;">
-							<input type="hidden" name=device_code value={$list.device_code} />
-							<input type="hidden" name=device_client value={$list.device_client} />
-							<input type="hidden" name=code value={$config.code} />
-							<a class="ajaxclient" style='cursor:pointer;'  href='{RC_Uri::url("mobile/admin_mobile_manage/open")}'>激活</a>
+							<a style="cursor:pointer;" class="data-pjax"  href='{RC_Uri::url("mobile/admin_mobile_manage/open", "code={$config.code}&device_code={$list.device_code}&device_client={$list.device_client}")}'>激活</a>
 							</p>
 					    {/if}
 					</li>
