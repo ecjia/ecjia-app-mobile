@@ -2,6 +2,9 @@
 <!-- {extends file="ecjia.dwt.php"} -->
 
 <!-- {block name="footer"} -->
+<script type="text/javascript">
+	ecjia.admin.mobile_manage.init();
+</script>
 <!-- {/block} -->
 
 <!-- {block name="main_content"} -->
@@ -62,7 +65,10 @@
 							 	{/if}
 							</p>
 							<p style="margin-top:60px;">
-								<a style='cursor:pointer;'  href='{RC_Uri::url("mobile/admin_mobile_manage/open", "code={$config.code}&device_code={$list.device_code}&device_client={$list.device_client}")}'>激活</a>
+							<input type="hidden" name=device_code value={$list.device_code} />
+							<input type="hidden" name=device_client value={$list.device_client} />
+							<input type="hidden" name=code value={$config.code} />
+							<a class="ajaxclient" style='cursor:pointer;'  href='{RC_Uri::url("mobile/admin_mobile_manage/open")}'>激活</a>
 							</p>
 					    {/if}
 					</li>

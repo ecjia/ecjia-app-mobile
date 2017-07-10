@@ -182,20 +182,17 @@ class admin_mobile_manage extends ecjia_admin {
 		$device_code   = trim($_GET['device_code']);
 		$device_client = trim($_GET['device_client']);
 		$data = array(
-				'app_key' 		=> 'key',
-				'app_secret'	=> 'secret',
-				'device_code'	=> $device_code,
-				'device_client'	=> $device_client,
-				'platform'    	=> $code,
-				'status'	  	=> '1',
-				'add_time'    	=> RC_Time::gmtime(),
+			'app_key' 		=> 'key',
+			'app_secret'	=> 'secret',
+			'device_code'	=> $device_code,
+			'device_client'	=> $device_client,
+			'platform'    	=> $code,
+			'status'	  	=> '1',
+			'add_time'    	=> RC_Time::gmtime(),
 		);
 		RC_DB::table('mobile_manage')->insertGetId($data);
 		return $this->showmessage('激活客户端成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/client_list', array('code' => $code))));
 	}
-	
-	
-	
 	
 	/**
 	 * 获取客户端管理列表
