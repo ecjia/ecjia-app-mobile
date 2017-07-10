@@ -20,90 +20,69 @@
 		<form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data" >
 			<fieldset>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.label_app_name'}</label>
+					<label class="control-label">应用名称：</label>
 					<div class="controls">
-						<input class="span4" name="name" type="text" value="{$mobile_manage.app_name}" />
+						<input class="span4" name="name" type="text" value="{$manage_data.app_name}" />
 						<span class="input-must">{lang key='system::system.require_field'}</span> 
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.label_package_name'}</label>
+					<label class="control-label">应用包名：</label>
 					<div class="controls">
-						<input class="span4" name="bundleid" type="text" value="{$mobile_manage.bundle_id}" />
+						<input class="span4" name="bundleid" type="text" value="{$manage_data.bundle_id}" />
 						<span class="input-must">{lang key='system::system.require_field'}</span> 
 					</div>
 				</div>
+				
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.label_client'}</label>
-					<div class="controls">
-						<select name='client' class="span4">
-							<option value=''>{lang key='mobile::mobile.label_select'}</option>
-							<!-- {foreach from=$mobile_client item=item key=key} -->
-							<option value='{$key}' {if $mobile_manage.device_client eq $key}selected='selected'{/if}>{$item}</option>
-							<!-- {/foreach} -->
-						</select>
-						<span class="input-must">{lang key='system::system.require_field'}</span> 
+					<label class="control-label">Code：</label>
+					<div class="controls l_h30">
+						{$manage_data.platform}
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.code'}</label>
-					<div class="controls">
-						<!-- {if $mobile_manage.device_code} -->
-							<div class="p_t5">
-							{$mobile_manage.device_code}
-							</div>
-						<!-- {else} -->
-							<input class="span4" name="code" type="text" value="" />
-							<span class="input-must">{lang key='system::system.require_field'}</span> 
-						<!-- {/if} -->
+					<label class="control-label">Client：</label>
+					<div class="controls l_h30">
+						{$manage_data.device_client}
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.appkey'}</label>
-					<div class="controls">
-						<input class="span4" name="appkey" type="text" value="{$mobile_manage.app_key}" />
-						<span class="input-must">{lang key='system::system.require_field'}</span> 
+					<label class="control-label">Device Code：</label>
+					<div class="controls l_h30">
+						{$manage_data.device_code}
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.appsecret'}</label>
-					<div class="controls">
-						<input class="span4" name="appsecret" type="text" value="{$mobile_manage.app_secret}" />
-						<span class="input-must">{lang key='system::system.require_field'}</span> 
+					<label class="control-label">AppKey：</label>
+					<div class="controls l_h30">
+						{$manage_data.app_key}
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.label_platform'}</label>
-					<div class="controls">
-						<select name='platform' class="span4">
-							<option value=''>{lang key='mobile::mobile.label_select'}</option>
-							<option value="umeng-push" {if $mobile_manage.platform eq 'umeng-push'}selected='selected'{/if}>{lang key='mobile::mobile.umeng_push'}</option>
-						</select>
-						<span class="input-must">{lang key='system::system.require_field'}</span> 
+					<label class="control-label">AppSecret：</label>
+					<div class="controls l_h30">
+						{$manage_data.app_secret}
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.is_enable'}</label>
+					<label class="control-label">是否启用</label>
 					<div class="controls">
 			            <div id="info-toggle-button">
-			                <input class="nouniform" name="status" type="checkbox"  {if $mobile_manage.status eq 1}checked="checked"{/if}  value="1"/>
+			                <input class="nouniform" name="status" type="checkbox"  {if $manage_data.status eq 1}checked="checked"{/if}  value="1"/>
 			            </div>
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">{lang key='mobile::mobile.label_sort'}</label>
+					<label class="control-label">排序</label>
 					<div class="controls">
-						<input name="sort" type="text" value="{if $mobile_manage.sort}{$mobile_manage.sort}{else}0{/if}" />
+						<input name="sort" type="text" value="{if $manage_data.sort}{$manage_data.sort}{else}0{/if}" />
 					</div>
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<input type="hidden" name="id" value="{$mobile_manage.app_id}" />
-						{if $rt.id eq ''}
-						<button class="btn btn-gebo" type="submit">{lang key='system::system.button_submit'}</button>
-						{else}
-						<button class="btn btn-gebo" type="submit">{lang key='mobile::mobile.update'}</button>
-						{/if}
+						<input type="hidden" name="id" value="{$manage_data.app_id}" />
+						<input type="hidden" name="code" value="{$manage_data.platform}" />
+						<button class="btn btn-gebo" type="submit">更新</button>
 					</div>
 				</div>
 			</fieldset>

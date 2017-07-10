@@ -47,8 +47,8 @@
 							 	{/if}
 							</p>
 							<p style="margin-top:60px;">
-								<a><span>编辑</span></a>
-								<a style="margin-left:10px;"><span>删除</span></a>
+								<a style='cursor:pointer;'  href='{RC_Uri::url("mobile/admin_mobile_manage/edit", "code={$config.code}&id={$list.app_id}")}'>编辑</a>
+								<a style="margin-left:10px;" class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg="你确定要删除该客户端端吗？" href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$list.app_id}")}' title="删除"><span>删除</span></a>
 							</p>
 					    {else}
 						    <p style="text-align: right;"><img src="{$error_img}" /></p>
