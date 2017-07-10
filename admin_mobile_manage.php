@@ -206,8 +206,6 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$name = trim($_POST['name']);
 		$bundleid = $_POST['bundleid'];
-		$sort	= intval($_POST['sort']);
-		$status = intval($_POST['status']);
 		$code = trim($_POST['code']);
 		$device_code   = trim($_POST['device_code']);
 		$device_client = trim($_POST['device_client']);
@@ -219,9 +217,8 @@ class admin_mobile_manage extends ecjia_admin {
 			'device_code'	=> $device_code,
 			'device_client'	=> $device_client,
 			'platform'    	=> $code,
-			'status'	  	=> $status,
+			'status'	  	=> 1,
 			'add_time'    	=> RC_Time::gmtime(),
-			'sort'			=> $sort	
 		);
 		$id = RC_DB::table('mobile_manage')->insertGetId($data);
 		return $this->showmessage('激活客户端成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=> $id, 'code' => $code))));
@@ -305,7 +302,6 @@ class admin_mobile_manage extends ecjia_admin {
 			'app_name'		=> $name,
 			'bundle_id'		=> $bundleid,
 			'status'		=> $status,
-			'sort'			=> intval($_POST['sort']),
 		);
 	    RC_DB::table('mobile_manage')->where('app_id', $id)->update($data);
 		

@@ -65,33 +65,28 @@
 							{$manage_data.app_secret}
 						</div>
 					</div>
+					
+					<div class="control-group formSep">
+						<label class="control-label">是否启用</label>
+						<div class="controls">
+				            <div id="info-toggle-button">
+				                <input class="nouniform" name="status" type="checkbox"  {if $manage_data.status eq 1}checked="checked"{/if}  value="1"/>
+				            </div>
+						</div>
+					</div>
 				{/if}
 				
-				<div class="control-group formSep">
-					<label class="control-label">是否启用</label>
-					<div class="controls">
-			            <div id="info-toggle-button">
-			                <input class="nouniform" name="status" type="checkbox"  {if $manage_data.status eq 1}checked="checked"{/if}  value="1"/>
-			            </div>
-					</div>
-				</div>
-				<div class="control-group formSep">
-					<label class="control-label">排序</label>
-					<div class="controls">
-						<input name="sort" type="text" value="{if $manage_data.sort}{$manage_data.sort}{else}0{/if}" />
-					</div>
-				</div>
+				
 				<div class="control-group">
 					<div class="controls">
 						<input type="hidden" name="id" value="{$manage_data.app_id}" />
-							
 						<input type="hidden" name="device_code" value={$device_code} />
 						<input type="hidden" name="device_client" value={$device_client} />
 						<input type="hidden" name="code" value={$code} />
 						
 						{if $action eq 'edit'}
-							<button class="btn btn-gebo" type="submit">更新</button>
-							<a data-toggle="ajaxremove" class="ajaxremove"  data-msg="你确定要删除该客户端端吗？"  href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$manage_data.app_id}&code={$manage_data.platform}")}' title="删除"><button class="btn btn-gebo" type="submit">删除</button></a>
+							<button class="btn btn-gebo" type="submit">更新</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a data-toggle="ajaxremove" class="ajaxremove"  data-msg="你确定要删除该客户端端吗？"  href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$manage_data.app_id}&code={$manage_data.platform}")}' title="删除"><button class="btn" type="submit">删除</button></a>
 						{else}
 							<button class="btn btn-gebo" type="submit">激活</button>
 						{/if}
