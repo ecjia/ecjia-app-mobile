@@ -79,17 +79,17 @@
 				
 				<div class="control-group">
 					<div class="controls">
-						<input type="hidden" name="id" value="{$manage_data.app_id}" />
-						<input type="hidden" name="device_code" value="{$device_code} "/>
-						<input type="hidden" name="device_client" value="{$device_client}" />
-						<input type="hidden" name="code" value="{$code}" />
-						
-						<input type="hidden" name="code_vale" value="{$manage_data.platform}" />
-						
+			
 						{if $action eq 'edit'}
+							<input type="hidden" name="code_vale" value="{$manage_data.platform}" />
+							<input type="hidden" name="id" value="{$manage_data.app_id}" />
 							<button class="btn btn-gebo" type="submit">更新</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a data-toggle="ajaxremove" class="ajaxremove"  data-msg="你确定要删除该客户端端吗？"  href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$manage_data.app_id}&code={$manage_data.platform}")}' title="删除"><button class="btn" type="submit">删除</button></a>
 						{else}
+							
+							<input type="hidden" name="device_code" value="{$device_code} "/>
+							<input type="hidden" name="device_client" value="{$device_client}" />
+							<input type="hidden" name="code" value="{$code}" />
 							<button class="btn btn-gebo" type="submit">激活</button>
 						{/if}
 					</div>
