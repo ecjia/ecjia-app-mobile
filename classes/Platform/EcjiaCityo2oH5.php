@@ -74,7 +74,7 @@ class EcjiaCityo2oH5 extends ApplicationPlatform
      * 图标
      * @var string
      */
-    protected $icon = '';
+    protected $icon = '/statics/images/H5.png';
     
     /**
      * 支持的客户端类型

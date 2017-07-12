@@ -29,7 +29,7 @@ a:hover {
 					<!-- {foreach from=$data item=list} -->
 						<div class="outline">
 							<a class="data-pjax"  href='{RC_Uri::url("mobile/admin_mobile_manage/client_list", "code={$list.code}")}' >
-								<div class="outline-left"><img src="{$product_img}" /></div>
+								<div class="outline-left"><img src="{$list.icon}" /></div>
 								<div class="outline-right">
 									<h3>{$list.name}</h3>
 									<span>{$list.description}</span>

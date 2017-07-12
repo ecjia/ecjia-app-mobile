@@ -95,10 +95,7 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$data = $this->product_list();
 		$this->assign('data', $data);
-		
-		$product_img = RC_App::apps_url('statics/images/product.png', __FILE__);
-		$this->assign('product_img', $product_img);
-		
+				
 		$this->display('mobile_manage_list.dwt');
 	}
 	
@@ -115,6 +112,7 @@ class admin_mobile_manage extends ecjia_admin {
 			$pruduct_list[$k]['code'] = $event->getCode();
 			$pruduct_list[$k]['name'] = $event->getName();
 			$pruduct_list[$k]['description'] = $event->getDescription();
+			$pruduct_list[$k]['icon'] = $event->getIcon();
 		}
 	
 		return $pruduct_list;
