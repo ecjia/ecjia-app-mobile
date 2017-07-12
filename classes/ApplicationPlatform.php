@@ -100,6 +100,15 @@ class ApplicationPlatform
         return $this->description;
     }
     
+    public function getIcon()
+    {
+        if ($this->icon) 
+        {
+            $this->icon = \RC_App::apps_url('', __DIR__) . $this->icon;
+        }
+        return $this->icon;
+    }
+    
     public function getClients()
     {
         return $this->clients;

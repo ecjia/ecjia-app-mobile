@@ -75,7 +75,7 @@ class EcjiaWeapp extends ApplicationPlatform
      * 图标
      * @var string
      */
-    protected $icon = '';
+    protected $icon = '/statics/images/Android.png';
     
     /**
      * 支持的客户端类型
