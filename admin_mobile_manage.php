@@ -209,11 +209,15 @@ class admin_mobile_manage extends ecjia_admin {
 		$code = trim($_POST['code']);
 		$device_code   = trim($_POST['device_code']);
 		$device_client = trim($_POST['device_client']);
+		
+		$key = Ecjia\App\Mobile\ClientManage::generateAppKey();
+		$secret = Ecjia\App\Mobile\ClientManage::generateAppSecret();
+
 		$data = array(
 			'app_name'		=> $name,	
 			'bundle_id'		=> $bundleid,
-			'app_key' 		=> 'key',
-			'app_secret'	=> 'secret',
+			'app_key' 		=> $key,
+			'app_secret'	=> $secret,
 			'device_code'	=> $device_code,
 			'device_client'	=> $device_client,
 			'platform'    	=> $code,
