@@ -48,6 +48,17 @@ class EcjiaShop extends ApplicationPlatform
             'device_code' => '6011',
         ]
     ];
+        
+    /**
+     * 支持的支付方式
+     * @var array
+     */
+    protected $payments = [
+        'pay_balance',
+        'pay_cod',
+        'pay_alipay',
+        'pay_wxpay_shop',
+    ];
     
     
     public function __construct()

@@ -43,6 +43,18 @@ class EcjiaWeapp extends ApplicationPlatform
             'device_code' => '6015',
         ],
     ];
+        
+    /**
+     * 支持的支付方式
+     * @var array
+     */
+    protected $payments = [
+        'pay_balance',
+        'pay_cod',
+        'pay_alipay',
+        'pay_wxpay',
+    ];
+       
     
     public function __construct()
     {

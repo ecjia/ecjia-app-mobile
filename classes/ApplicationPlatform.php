@@ -33,6 +33,12 @@ class ApplicationPlatform
      * @var array
      */
     protected $clients = [];
+
+    /**
+     * 支持的支付方式
+     * @var array
+     */
+    protected $payments = [];
     
     
     public function getCode()
@@ -53,6 +59,11 @@ class ApplicationPlatform
     public function getClients()
     {
         return $this->clients;
+    }
+    
+    public function getPayments()
+    {
+        return $this->payments;
     }
     
     

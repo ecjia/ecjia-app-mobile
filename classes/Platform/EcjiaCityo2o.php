@@ -49,6 +49,16 @@ class EcjiaCityo2o extends ApplicationPlatform
         ]
     ];
     
+    /**
+     * 支持的支付方式
+     * @var array
+     */    
+    protected $payments = [
+    	'pay_balance',
+    	'pay_cod',
+    	'pay_alipay',
+    	'pay_wxpay_app',
+    ];
     
     public function __construct()
     {
