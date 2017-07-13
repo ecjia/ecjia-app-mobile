@@ -48,7 +48,7 @@ ecjia.admin.mobile_config.info();
 				<!-- {/foreach} -->
 				</ul>
 			{else}
-				<pre class="sepH_c" style=" background-color: #fbfbfb; height:80px;line-height:80px;">{lang key='system::system.no_records'}</pre>
+				<pre class="sepH_c" style=" background-color: #fbfbfb; height:80px;line-height:80px;">没有找到任何记录，需进行安装相关支付插件。</pre>
 			{/if}
 		</div>
 	</div>
