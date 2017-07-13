@@ -80,6 +80,53 @@
         }
     };
     
+    
+    app.mobile_config = {
+            info: function () {
+                $('.switch').on('click', function (e) {
+                    var url = $(this).attr('data-url');
+                	$.get(url, function(data) {
+                		ecjia.admin.showmessage(data);
+                	});
+                });
+                
+                app.mobile_config.submit();
+            },
+            
+            submit: function () {
+                var $this = $("form[name='theForm']");
+                var option = {
+                    rules: {
+                    	api_key: {
+                            required: true
+                        },
+                        secret_key: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                    	api_key: {
+                            required: "请输入Api Key"
+                        },
+                        secret_key: {
+                            required: "请输入Secret Key"
+                        }
+                    },
+                    submitHandler: function () {
+                        $this.ajaxSubmit({
+                            dataType: "json",
+                            success: function (data) {
+                                ecjia.admin.showmessage(data);
+                            }
+                        });
+                    }
+                }
+                var options = $.extend(ecjia.admin.defaultOptions.validate, option);
+                $this.validate(options);
+            },
+
+        };
+    
 })(ecjia.admin, jQuery);
  
 // end

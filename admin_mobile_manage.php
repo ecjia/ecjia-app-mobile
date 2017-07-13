@@ -225,7 +225,6 @@ class admin_mobile_manage extends ecjia_admin {
 		$id = RC_DB::table('mobile_manage')->insertGetId($data);
 		return $this->showmessage('激活客户端成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=> $id, 'code' => $code))));
 	
-		$this->display('mobile_manage_info.dwt');
 	}
 	
 	/**
@@ -320,6 +319,7 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		return $this->showmessage('删除客户端成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/client_list', array('id' => $id, 'code' => $_GET['code']))));
 	}
+	
 }
 
 //end
