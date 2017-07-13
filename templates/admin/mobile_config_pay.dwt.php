@@ -40,7 +40,8 @@ ecjia.admin.mobile_config.info();
 									<a class="switch" href="javascript:;" data-url='{RC_Uri::url("mobile/admin_mobile_config/enable", "pay_code={$val.pay_code}&code={$code}&id={$id}")}' title="启用">点击启用</a>
 								{else}
 									<a class="switch" href="javascript:;" data-url='{RC_Uri::url("mobile/admin_mobile_config/disable", "pay_code={$val.pay_code}&code={$code}&id={$id}")}' title="禁用">点击禁用</a>
-								{/if}&nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" href='{url path="payment/admin/edit" args="code={$val.pay_code}"}'>插件配置</a></span>
+									&nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" href='{url path="payment/admin/edit" args="code={$val.pay_code}"}'>插件配置</a></span>
+								{/if}
 							</div>
 						</div>
 					</li>
