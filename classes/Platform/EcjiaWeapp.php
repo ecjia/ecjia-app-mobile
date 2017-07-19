@@ -94,10 +94,7 @@ class EcjiaWeapp extends ApplicationPlatform
      * @var array
      */
     protected $payments = [
-        'pay_balance',
-        'pay_cod',
-        'pay_alipay',
-        'pay_wxpay',
+        'pay_wxpay_weapp',
     ];
        
     
