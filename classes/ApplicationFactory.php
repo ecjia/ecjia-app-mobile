@@ -89,7 +89,10 @@ class ApplicationFactory
         return RC_Hook::apply_filters('ecjia_mobile_platform_filter', $factories);
     }
     
-    
+    /**
+     * 获取所有支持平台
+     * @return array
+     */
     public function getPlatforms()
     {
         $platforms = [];
@@ -101,7 +104,12 @@ class ApplicationFactory
         return $platforms;
     }
     
-    
+    /**
+     * 获取某个平台操作对象
+     * @param string $code  平台代号
+     * @throws InvalidArgumentException
+     * @return \Ecjia\App\Mobile\ApplicationPlatform
+     */
     public function platform($code)
     {
         if (!array_key_exists($code, self::$factories)) {
@@ -111,6 +119,15 @@ class ApplicationFactory
         $className = self::$factories[$code];
     
         return new $className();
+    }
+    
+    /**
+     * 获取所有平台的客户端
+     * @return array
+     */
+    public function getAllClients()
+    {
+        
     }
     
     
