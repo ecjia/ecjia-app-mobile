@@ -127,8 +127,40 @@ class ApplicationFactory
      */
     public function getAllClients()
     {
+        $allClients = [];
         
+        foreach (self::$factories as $key => $value) {
+            $platform = new $value;
+            $clients = $platform->getClients();
+            
+            foreach ($clients as $client) {
+                $allClients[$client['device_code']] = with(new ApplicationClient())->setDeviceClient($client['device_client'])
+                                                                                   ->setDeviceName($client['device_name'])
+                                                                                   ->setDeviceCode($client['device_code'])
+                                                                                   ->setPlatformCode($platform->getCode())
+                                                                                   ->setPlatform($platform);
+            }
+        }
+        
+        return $allClients;
     }
     
+    /**
+     * 获取某个客户端操作对象
+     * @param string $code
+     * @throws InvalidArgumentException
+     * @return \Ecjia\App\Mobile\ApplicationClient
+     */
+    public function client($code) {
+        $allClients = $this->getAllClients();
+        
+        if (!array_key_exists($code, $allClients)) {
+            throw new InvalidArgumentException("Application client '$code' is not supported.");
+        }
+        
+        $class = $allClients[$code];
+        
+        return $class;
+    }
     
 }
