@@ -103,6 +103,7 @@ class EcjiaShop extends ApplicationPlatform
         'pay_cod',
         'pay_alipay',
         'pay_wxpay_shop',
+        'pay_unionpay',
     ];
     
     
