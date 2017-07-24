@@ -109,16 +109,22 @@ class admin_mobile_config extends ecjia_admin {
 	 */
 	public function config_push_insert() {
 		$this->admin_priv('mobile_manage_update');
+		$code = trim($_POST['code']);
+		$id = intval($_POST['id']);
+		if(!empty($id)){
+			$data = array(
+					'platform'		=> $code,
+					'app_id'		=> $id,
+					'option_name' 	=> '',
+					'option_type'	=> '',
+					'option_value'	=> '',
+			);
+			$id = RC_DB::table('mobile_options')->insertGetId($data);
+			return $this->showmessage('配置推送成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=> $id, 'code' => $code))));
+		}else{
+			
+		}
 	
-		$data = array(
-			'platform'		=> trim($_POST['code']),
-			'app_id'		=> intval($_POST['id']),
-			'option_name' 	=> '',
-			'option_type'	=> '',
-			'option_value'	=> '',
-		);
-		$id = RC_DB::table('mobile_options')->insertGetId($data);
-		return $this->showmessage('配置推送成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=> $id, 'code' => $code))));
 	}
 	
 	

@@ -34,7 +34,7 @@
 						{/if}
 					</p>
 					<p style="margin-top:60px;">
-						<a><span>配置</span></a>
+						<a style="cursor:pointer;"  class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_config/config_push", "code={$config.code}")}'><span>配置</span></a>
 					</p>
 				</li>
 				
