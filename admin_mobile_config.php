@@ -90,7 +90,7 @@ class admin_mobile_config extends ecjia_admin {
 		$this->admin_priv('mobile_manage_update');
 	
 		$code = trim($_GET['code']);
-		$id   = intval($_GET['id']);
+		$app_id   = intval($_GET['app_id']);
 		
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理', RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端配置'));
@@ -100,9 +100,9 @@ class admin_mobile_config extends ecjia_admin {
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_config/config_push_insert'));
 		
 		$this->assign('code', $code);
-		$this->assign('id', $id);
+		$this->assign('app_id', $app_id);
 		
-		$data = RC_DB::table('mobile_options')->where('app_id', $id)->first();
+		$data = RC_DB::table('mobile_options')->where('app_id', $app_id)->first();
 		$data['option_value'] = unserialize($data['option_value']);
 		$this->assign('data', $data);
 				
@@ -116,18 +116,18 @@ class admin_mobile_config extends ecjia_admin {
 		$this->admin_priv('mobile_manage_update');
 		
 		$code = trim($_POST['code']);
-		$id = intval($_POST['id']);
+		$app_id = intval($_POST['app_id']);
 		
-		$query = RC_DB::table('mobile_options')->where('option_name', 'umeng_push_config')->where('app_id', $id)->count();
+		$query = RC_DB::table('mobile_options')->where('option_name', 'umeng_push_config')->where('platform', $code)->where('app_id', $app_id)->count();
     	if ($query > 0) {
     		$data = array(
     			'option_value'	=> serialize($_POST['umeng_push_config']),
     		);
-    		RC_DB::table('mobile_options')->where('app_id', $id)->update($data);
+    		RC_DB::table('mobile_options')->where('app_id', $app_id)->update($data);
 		} else {
 			$data = array(
 				'platform'		=> $code,
-				'app_id'		=> $id,
+				'app_id'		=> $app_id,
 				'option_name' 	=> 'umeng_push_config',
 				'option_type'	=> 'serialize',
 				'option_value'	=> serialize($_POST['umeng_push_config']),
@@ -135,7 +135,7 @@ class admin_mobile_config extends ecjia_admin {
 			$id = RC_DB::table('mobile_options')->insertGetId($data);
 		}
 
-		return $this->showmessage('配置推送成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_config/config_push', array('id'=> $id, 'code' => $code))));
+		return $this->showmessage('配置推送成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_config/config_push', array('app_id'=> $app_id, 'code' => $code))));
 	}
 	
 	/**
@@ -145,19 +145,18 @@ class admin_mobile_config extends ecjia_admin {
 		$this->admin_priv('mobile_manage_update');
 	
 		$code = $_GET['code'];
-		$id   = intval($_GET['id']);
+		$app_id = intval($_GET['app_id']);
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理', RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端配置'));
 		$this->assign('ur_here', '客户端配置');
 		$this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 	
 		$this->assign('code', $code);
-		$this->assign('id', $id);
-		
+		$this->assign('app_id', $app_id);
 		
 		$factory = new Ecjia\App\Mobile\ApplicationFactory();
 		$pruduct_info = $factory->platform($code);
-		$getPayments = $pruduct_info->getPayments();
+		$getPayments  = $pruduct_info->getPayments();
 
 		$pay_list  = RC_Api::api('payment', 'batch_payment_info', array('code' => $getPayments));
 		$this->assign('pay_list', $pay_list);
@@ -174,13 +173,13 @@ class admin_mobile_config extends ecjia_admin {
 		
 		$code = trim($_GET['code']);
 		$pay_code = trim($_GET['pay_code']);
-		$id   = intval($_GET['id']);
+		$app_id   = intval($_GET['app_id']);
 		
 		$data = array('enabled' => 0);
 		
 		RC_DB::table('payment')->where('pay_code', $pay_code)->update($data);
 	
-		return $this->showmessage('成功禁用插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_config/config_pay',array('code' => $code, 'id' => $id))));
+		return $this->showmessage('成功禁用插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_config/config_pay',array('code' => $code, 'app_id' => $app_id))));
 	}
 	
 	/**
@@ -191,15 +190,14 @@ class admin_mobile_config extends ecjia_admin {
 		
 		$code = trim($_GET['code']);
 		$pay_code = trim($_GET['pay_code']);
-		$id   = intval($_GET['id']);
+		$app_id   = intval($_GET['app_id']);
 		
 		$data = array('enabled' => 1);
 	
 		RC_DB::table('payment')->where('pay_code', $pay_code)->update($data);
 
-		return $this->showmessage('成功启用插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_config/config_pay',array('code' => $code, 'id' => $id))));
+		return $this->showmessage('成功启用插件', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_config/config_pay',array('code' => $code, 'app_id' => $app_id))));
 	}
-	
 	
 }
 

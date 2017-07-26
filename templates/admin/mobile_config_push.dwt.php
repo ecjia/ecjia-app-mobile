@@ -22,7 +22,7 @@ ecjia.admin.mobile_config.info();
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href='javascript:;'>推送配置</a></li>
-			<li><a class="data-pjax" href='{url path="mobile/admin_mobile_config/config_pay" args="code={$code}&id={$id}"}'>支付配置</a></li>
+			<li><a class="data-pjax" href='{url path="mobile/admin_mobile_config/config_pay" args="code={$code}&app_id={$app_id}"}'>支付配置</a></li>
 		</ul>
 		
 		<div class="tab-content">
@@ -57,7 +57,7 @@ ecjia.admin.mobile_config.info();
 					
 					<div class="control-group">
 						<div class="controls">
-						<input type="hidden" name="id"   value="{$id}">
+						<input type="hidden" name="app_id"   value="{$app_id}">
 						<input type="hidden" name="code" value="{$code}">
 							<button class="btn btn-gebo" type="submit">确定</button>
 						</div>
