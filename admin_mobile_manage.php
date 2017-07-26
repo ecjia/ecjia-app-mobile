@@ -174,8 +174,6 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->display('mobile_client_list.dwt');
 	}
 	
-	
-
 	//激活
 	public function open() {
 		$this->admin_priv('mobile_manage');
