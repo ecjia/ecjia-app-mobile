@@ -89,7 +89,7 @@ class admin_mobile_config extends ecjia_admin {
 	public function config_push() {
 		$this->admin_priv('mobile_manage_update');
 	
-		$code = $_GET['code'];
+		$code = trim($_GET['code']);
 		$id   = intval($_GET['id']);
 		
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理', RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
@@ -101,32 +101,42 @@ class admin_mobile_config extends ecjia_admin {
 		
 		$this->assign('code', $code);
 		$this->assign('id', $id);
-	
+		
+		$data = RC_DB::table('mobile_options')->where('app_id', $id)->first();
+		$data['option_value'] = unserialize($data['option_value']);
+		$this->assign('data', $data);
+				
 		$this->display('mobile_config_push.dwt');
 	}
+	
 	/**
 	 * 推送配置处理
 	 */
 	public function config_push_insert() {
 		$this->admin_priv('mobile_manage_update');
+		
 		$code = trim($_POST['code']);
 		$id = intval($_POST['id']);
-		if(!empty($id)){
+		
+		$query = RC_DB::table('mobile_options')->where('option_name', 'umeng_push_config')->where('app_id', $id)->count();
+    	if ($query > 0) {
+    		$data = array(
+    			'option_value'	=> serialize($_POST['umeng_push_config']),
+    		);
+    		RC_DB::table('mobile_options')->where('app_id', $id)->update($data);
+		} else {
 			$data = array(
-					'platform'		=> $code,
-					'app_id'		=> $id,
-					'option_name' 	=> '',
-					'option_type'	=> '',
-					'option_value'	=> '',
+				'platform'		=> $code,
+				'app_id'		=> $id,
+				'option_name' 	=> 'umeng_push_config',
+				'option_type'	=> 'serialize',
+				'option_value'	=> serialize($_POST['umeng_push_config']),
 			);
 			$id = RC_DB::table('mobile_options')->insertGetId($data);
-			return $this->showmessage('配置推送成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=> $id, 'code' => $code))));
-		}else{
-			
 		}
-	
+
+		return $this->showmessage('配置推送成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_config/config_push', array('id'=> $id, 'code' => $code))));
 	}
-	
 	
 	/**
 	 * 支付配置
