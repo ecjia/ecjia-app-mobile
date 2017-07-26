@@ -46,6 +46,8 @@
 //
 namespace Ecjia\App\Mobile;
 
+use Ecjia\App\Mobile\Models\MobileOptionModel;
+
 class ApplicationPlatform
 {
     /**
@@ -117,6 +119,18 @@ class ApplicationPlatform
     public function getPayments()
     {
         return $this->payments;
+    }
+    
+    public function getOptions()
+    {
+        $model = new MobileOptionModel();
+        
+        $result = $model->platform($this->code)->appid(0)->get();
+        
+        if ($result) {
+            
+        }
+        
     }
     
     
