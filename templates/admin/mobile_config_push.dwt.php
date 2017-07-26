@@ -33,8 +33,8 @@ ecjia.admin.mobile_config.info();
 					<div class="control-group formSep">
 						<label class="control-label">推送环境：</label>
 						<div class="controls">
-							 <input type="radio" name="umeng_push[environment]" value="environment_develop" checked="true"{if $data.option_value.environment eq 'environment_develop'} checked="true" {/if} />开发环境
-				        	 <input type="radio" name="umeng_push[environment]" value="environment_online" {if $data.option_value.environment eq 'environment_online'} checked="true" {/if} />生产环境
+							 <input type="radio" name="umeng_push[push_development]" value="develop" checked="true"{if $data.option_value.push_development eq 'develop'} checked="true" {/if} />开发环境
+				        	 <input type="radio" name="umeng_push[push_development]" value="online" {if $data.option_value.push_development eq 'online'} checked="true" {/if} />生产环境
 				        	 <span class="help-block">App上线运行请务必切换置生产环境</span>
 						</div>
 						
