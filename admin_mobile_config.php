@@ -118,17 +118,17 @@ class admin_mobile_config extends ecjia_admin {
 		$code = trim($_POST['code']);
 		$app_id = intval($_POST['app_id']);
 		
-		$query = RC_DB::table('mobile_options')->where('option_name', 'umeng_push_config')->where('platform', $code)->where('app_id', $app_id)->count();
+		$query = RC_DB::table('mobile_options')->where('option_name', 'umeng_push')->where('platform', $code)->where('app_id', $app_id)->count();
     	if ($query > 0) {
     		$data = array(
-    			'option_value'	=> serialize($_POST['umeng_push_config']),
+    			'option_value'	=> serialize($_POST['umeng_push']),
     		);
     		RC_DB::table('mobile_options')->where('app_id', $app_id)->update($data);
 		} else {
 			$data = array(
 				'platform'		=> $code,
 				'app_id'		=> $app_id,
-				'option_name' 	=> 'umeng_push_config',
+				'option_name' 	=> 'umeng_push',
 				'option_type'	=> 'serialize',
 				'option_value'	=> serialize($_POST['umeng_push_config']),
 			);

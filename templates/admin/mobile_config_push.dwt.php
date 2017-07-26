@@ -33,8 +33,8 @@ ecjia.admin.mobile_config.info();
 					<div class="control-group formSep">
 						<label class="control-label">推送环境：</label>
 						<div class="controls">
-							 <input type="radio" name="umeng_push_config[environment]" value="environment_develop" checked="true"{if $data.option_value.environment eq 'environment_develop'} checked="true" {/if} />开发环境
-				        	 <input type="radio" name="umeng_push_config[environment]" value="environment_online" {if $data.option_value.environment eq 'environment_online'} checked="true" {/if} />生产环境
+							 <input type="radio" name="umeng_push[environment]" value="environment_develop" checked="true"{if $data.option_value.environment eq 'environment_develop'} checked="true" {/if} />开发环境
+				        	 <input type="radio" name="umeng_push[environment]" value="environment_online" {if $data.option_value.environment eq 'environment_online'} checked="true" {/if} />生产环境
 				        	 <span class="help-block">App上线运行请务必切换置生产环境</span>
 						</div>
 						
@@ -44,7 +44,7 @@ ecjia.admin.mobile_config.info();
 					<div class="control-group formSep">
 						<label class="control-label">Api Key：</label>
 						<div class="controls">
-							<input class="span4" name="umeng_push_config[api_key]" type="text" value="{$data.option_value.api_key}" />
+							<input class="span4" name="umeng_push[api_key]" type="text" value="{$data.option_value.api_key}" />
 							<span class="input-must">{lang key='system::system.require_field'}</span> 
 						</div>
 					</div>
@@ -52,7 +52,7 @@ ecjia.admin.mobile_config.info();
 					<div class="control-group formSep">
 						<label class="control-label">Secret Key：</label>
 						<div class="controls">
-							<input class="span4" name="umeng_push_config[secret_key]" type="text" value="{$data.option_value.secret_key}" />
+							<input class="span4" name="umeng_push[secret_key]" type="text" value="{$data.option_value.secret_key}" />
 							<span class="input-must">{lang key='system::system.require_field'}</span> 
 						</div>
 					</div>
