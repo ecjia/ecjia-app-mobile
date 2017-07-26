@@ -37,9 +37,7 @@ ecjia.admin.mobile_config.info();
 				        	 <input type="radio" name="umeng_push[push_development]" value="online" {if $data.option_value.push_development eq 'online'} checked="true" {/if} />生产环境
 				        	 <span class="help-block">App上线运行请务必切换置生产环境</span>
 						</div>
-						
 					</div>
-					
 					
 					<div class="control-group formSep">
 						<label class="control-label">App Key：</label>
