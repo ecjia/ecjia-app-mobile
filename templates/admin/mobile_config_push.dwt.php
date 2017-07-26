@@ -35,7 +35,9 @@ ecjia.admin.mobile_config.info();
 						<div class="controls">
 							 <input type="radio" name="umeng_push_config[environment]" value="environment_develop" checked="true"{if $data.option_value.environment eq 'environment_develop'} checked="true" {/if} />开发环境
 				        	 <input type="radio" name="umeng_push_config[environment]" value="environment_online" {if $data.option_value.environment eq 'environment_online'} checked="true" {/if} />生产环境
+				        	 <span class="help-block">App上线运行请务必切换置生产环境</span>
 						</div>
+						
 					</div>
 					
 					
