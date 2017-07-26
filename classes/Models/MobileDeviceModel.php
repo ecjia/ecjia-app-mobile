@@ -53,6 +53,8 @@ class MobileDeviceModel extends Model
 {
     protected $table = 'mobile_device';
     
+    protected $primaryKey = 'id';
+    
     
     /**
      * 限制查询只包括客户端。

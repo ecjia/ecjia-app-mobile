@@ -53,6 +53,7 @@ class MobileOptionModel extends Model
 {
     protected $table = 'mobile_options';
     
+    protected $primaryKey = 'option_id';
     
     /**
      * 限制查询只包括指定平台。

@@ -53,6 +53,7 @@ class MobileManageModel extends Model
 {
     protected $table = 'mobile_manage';
     
+    protected $primaryKey = 'app_id';
     
     /**
      * 限制查询只包括指定平台。
@@ -65,6 +66,27 @@ class MobileManageModel extends Model
     }
     
     /**
+     * 限制查询只包括指定应用。
+     *
+     * @return \Royalcms\Component\Database\Eloquent\Builder
+     */
+    public function scopeApp($query, $device_code)
+    {
+        return $query->where('device_code', $device_code);
+    }
+    
+    /**
+     * 限制查询只包括激活的应用。
+     *
+     * @return \Royalcms\Component\Database\Eloquent\Builder
+     */
+    public function scopeEnabled($query)
+    {
+        return $query->where('status', 1);
+    }
+    
+    
+    /**
      * 获取所有选项
      * @return \Royalcms\Component\Database\Eloquent\Relations\HasMany
      */
@@ -73,11 +95,7 @@ class MobileManageModel extends Model
         return $this->hasMany('Ecjia\App\Mobile\Models\MobileOptionModel', 'app_id');
     }
     
-    
-    public function getApp($device_code)
-    {
-        return $this->platform()->where('device_code', $device_code)->where('status', 1)->first();
-    }    
+       
     
     
 }

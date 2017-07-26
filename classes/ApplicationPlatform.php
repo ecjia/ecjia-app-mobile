@@ -47,6 +47,7 @@
 namespace Ecjia\App\Mobile;
 
 use Ecjia\App\Mobile\Models\MobileOptionModel;
+use Royalcms\Component\Database\Eloquent\Collection;
 
 class ApplicationPlatform
 {
@@ -125,12 +126,30 @@ class ApplicationPlatform
     {
         $model = new MobileOptionModel();
         
-        $result = $model->platform($this->code)->appid(0)->get();
-        
-        if ($result) {
-            
+        $data = $model->platform($this->code)->appid(0)->get();
+
+        if ($data) {
+            $data = $this->processOptionValue($data);
         }
+
+        return $data;
+    }
+    
+    
+    public function processOptionValue(Collection $data)
+    {
+        $result = $data->mapWithKeys(function ($item) {
+             
+            if ($item->option_type == 'serialize') {
+                $values = unserialize($item->option_value);
+            } else {
+                $values = $item->option_value;
+            }
         
+            return array($item->option_name => $values);
+        })->all();
+        
+        return $result;
     }
     
     

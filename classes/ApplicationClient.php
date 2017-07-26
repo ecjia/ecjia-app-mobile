@@ -2,6 +2,9 @@
 
 namespace Ecjia\App\Mobile;
 
+use Ecjia\App\Mobile\Models\MobileOptionModel;
+use Ecjia\App\Mobile\Models\MobileManageModel;
+
 class ApplicationClient
 {
     /**
@@ -109,6 +112,32 @@ class ApplicationClient
     public function getPlatform()
     {
         return $this->platform;
+    }
+    
+    public function getOptions($name = null)
+    {
+        $model = new MobileManageModel();
+        
+        $data = $model->platform($this->platform_code)->app($this->device_code)->enabled()->first();
+        if ($data) {
+            $data = $data->options;
+            $data = $this->getPlatform()->processOptionValue($data);
+        }
+
+        if (is_null($name))
+        {
+            return $data;
+        }
+        
+        if (array_get($data, $name)) 
+        {
+            return array_get($data, $name);
+        }
+
+        $data = $this->getPlatform()->getOptions();
+        if (array_get($data, $name)) {
+            return array_get($data, $name);
+        }
     }
     
 }
