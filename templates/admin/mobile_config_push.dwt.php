@@ -42,17 +42,17 @@ ecjia.admin.mobile_config.info();
 					
 					
 					<div class="control-group formSep">
-						<label class="control-label">Api Key：</label>
+						<label class="control-label">App Key：</label>
 						<div class="controls">
-							<input class="span4" name="umeng_push[api_key]" type="text" value="{$data.option_value.api_key}" />
+							<input class="span4" name="umeng_push[app_key]" type="text" value="{$data.option_value.app_key}" />
 							<span class="input-must">{lang key='system::system.require_field'}</span> 
 						</div>
 					</div>
 					
 					<div class="control-group formSep">
-						<label class="control-label">Secret Key：</label>
+						<label class="control-label">App Secret：</label>
 						<div class="controls">
-							<input class="span4" name="umeng_push[secret_key]" type="text" value="{$data.option_value.secret_key}" />
+							<input class="span4" name="umeng_push[app_secret]" type="text" value="{$data.option_value.app_secret}" />
 							<span class="input-must">{lang key='system::system.require_field'}</span> 
 						</div>
 					</div>

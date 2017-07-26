@@ -97,19 +97,19 @@
                 var $this = $("form[name='theForm']");
                 var option = {
                     rules: {
-                    	api_key: {
+                    	app_key: {
                             required: true
                         },
-                        secret_key: {
+                        app_secret: {
                             required: true
                         }
                     },
                     messages: {
-                    	api_key: {
-                            required: "请输入Api Key"
+                    	app_key: {
+                            required: "请输入App Key"
                         },
-                        secret_key: {
-                            required: "请输入Secret Key"
+                        app_secret: {
+                            required: "请输入App Secret"
                         }
                     },
                     submitHandler: function () {
