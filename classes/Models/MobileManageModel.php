@@ -95,7 +95,31 @@ class MobileManageModel extends Model
         return $this->hasMany('Ecjia\App\Mobile\Models\MobileOptionModel', 'app_id');
     }
     
-       
+    /**
+     * 获取所有的设备信息，device_code作索引
+     * @return array | null
+     */
+    public function getAllDeviceCode()
+    {
+        $data = $this->groupBy('device_code')->get();
+        
+        $result = [];
+        if ($data) {
+            $data->map(function($item) use (& $result) {
+            	$data = array(
+            		'app_id'          => $item->app_id,
+            		'app_name'        => $item->app_name,
+            		'bundle_id'       => $item->bundle_id,
+            		'device_code'     => $item->device_code,
+            		'device_client'   => $item->device_client,
+            		'platform'        => $item->platform
+            	);
+
+                $result[$item->device_code] = $data;
+            });
+        }
+        return $result;
+    }
     
     
 }
