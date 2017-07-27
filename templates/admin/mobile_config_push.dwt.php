@@ -33,8 +33,8 @@ ecjia.admin.mobile_config.info();
 					<div class="control-group formSep">
 						<label class="control-label">推送环境：</label>
 						<div class="controls">
-							 <input type="radio" name="umeng_push[environment]" value="develop" checked="true"{if $data.option_value.environment eq 'develop'} checked="true" {/if} />开发环境
-				        	 <input type="radio" name="umeng_push[environment]" value="online" {if $data.option_value.environment eq 'online'} checked="true" {/if} />生产环境
+							 <input type="radio" name="push_umeng[environment]" value="develop" checked="true"{if $data.option_value.environment eq 'develop'} checked="true" {/if} />开发环境
+				        	 <input type="radio" name="push_umeng[environment]" value="online" {if $data.option_value.environment eq 'online'} checked="true" {/if} />生产环境
 				        	 <span class="help-block">App上线运行请务必切换置生产环境</span>
 						</div>
 					</div>
@@ -42,7 +42,7 @@ ecjia.admin.mobile_config.info();
 					<div class="control-group formSep">
 						<label class="control-label">App Key：</label>
 						<div class="controls">
-							<input class="span4" name="umeng_push[app_key]" type="text" value="{$data.option_value.app_key}" />
+							<input class="span4" name="push_umeng[app_key]" type="text" value="{$data.option_value.app_key}" />
 							<span class="input-must">{lang key='system::system.require_field'}</span> 
 						</div>
 					</div>
@@ -50,7 +50,7 @@ ecjia.admin.mobile_config.info();
 					<div class="control-group formSep">
 						<label class="control-label">App Secret：</label>
 						<div class="controls">
-							<input class="span4" name="umeng_push[app_secret]" type="text" value="{$data.option_value.app_secret}" />
+							<input class="span4" name="push_umeng[app_secret]" type="text" value="{$data.option_value.app_secret}" />
 							<span class="input-must">{lang key='system::system.require_field'}</span> 
 						</div>
 					</div>

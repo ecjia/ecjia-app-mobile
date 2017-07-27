@@ -118,26 +118,26 @@ class admin_mobile_config extends ecjia_admin {
 		$code = trim($_POST['code']);
 		$app_id = intval($_POST['app_id']);
 		
-		$umeng_push = $_POST['umeng_push'];
-		foreach ($umeng_push as $row) {
+		$push_umeng = $_POST['push_umeng'];
+		foreach ($push_umeng as $row) {
 			if (empty($row)){
 				return $this->showmessage('配置信息不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 		}
 		
-		$query = RC_DB::table('mobile_options')->where('option_name', 'umeng_push')->where('platform', $code)->where('app_id', $app_id)->count();
+		$query = RC_DB::table('mobile_options')->where('option_name', 'push_umeng')->where('platform', $code)->where('app_id', $app_id)->count();
     	if ($query > 0) {
     		$data = array(
-    			'option_value'	=> serialize($umeng_push),
+    			'option_value'	=> serialize($push_umeng),
     		);
     		RC_DB::table('mobile_options')->where('app_id', $app_id)->update($data);
 		} else {
 			$data = array(
 				'platform'		=> $code,
 				'app_id'		=> $app_id,
-				'option_name' 	=> 'umeng_push',
+				'option_name' 	=> 'push_umeng',
 				'option_type'	=> 'serialize',
-				'option_value'	=> serialize($_POST['umeng_push']),
+				'option_value'	=> serialize($_POST['push_umeng']),
 			);
 			$id = RC_DB::table('mobile_options')->insertGetId($data);
 		}
