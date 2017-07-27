@@ -37,27 +37,26 @@ class User {
      * 获取所有可用于推送的用户设备
      */
     public function getDevices()
-    {
-        $model = new MobileDeviceModel();
-        
+    {        
+        $model = MobileDeviceModel::whereNotNull('device_token');
+
         switch ($this->user_type) {
         
     	    case self::TYPE_USER:
-    	       $model->user();
+    	       $model->user($this->user_id);
     	       break;
     	       
     	    case self::TYPE_ADMIN:
-    	        $model->admin();
+    	        $model->admin($this->user_id);
     	        break;
     	        
     	    case self::TYPE_MERCHANT:
-    	        $model->merchant();
+    	        $model->merchant($this->user_id);
     	        break;
     	       
             default:
         }
-        
-        $model->whereNotNull('device_token');
+
         return $model->get();
     }
     
