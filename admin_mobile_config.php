@@ -102,7 +102,7 @@ class admin_mobile_config extends ecjia_admin {
 		$this->assign('code', $code);
 		$this->assign('app_id', $app_id);
 		
-		$data = RC_DB::table('mobile_options')->where('app_id', $app_id)->first();
+		$data = RC_DB::table('mobile_options')->where('option_name', 'push_umeng')->where('platform', $code)->where('app_id', $app_id)->first();
 		$data['option_value'] = unserialize($data['option_value']);
 		$this->assign('data', $data);
 				
