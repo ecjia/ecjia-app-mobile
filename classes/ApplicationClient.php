@@ -114,6 +114,11 @@ class ApplicationClient
         return $this->platform;
     }
     
+    /**
+     * 获取当前客户端选项，没有就获取平台的选项
+     * @param string $name
+     * @return array
+     */
     public function getOptions($name = null)
     {
         $model = new MobileManageModel();

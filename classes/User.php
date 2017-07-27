@@ -33,7 +33,9 @@ class User {
         return $this->user_id;
     }
     
-    
+    /**
+     * 获取所有可用于推送的用户设备
+     */
     public function getDevices()
     {
         $model = new MobileDeviceModel();
@@ -59,7 +61,14 @@ class User {
         return $model->get();
     }
     
-    
+    /**
+     * 获取客户端配置选项
+     */
+    public function getClientOptions($client_code, $name)
+    {
+        $client = with(new ApplicationFactory)->client($client_code);
+        return $client->getOptions($name);
+    }
     
     
 }
