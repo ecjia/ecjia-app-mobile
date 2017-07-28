@@ -28,7 +28,7 @@ ecjia.admin.mobile_config.info();
 		<div class="tab-content">
 			<form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post"  >
 				<fieldset>
-					<h3 class="heading">友盟推送</h3>
+					<h3 class="heading">APP推送</h3>
 					
 					<div class="control-group formSep">
 						<label class="control-label">推送环境：</label>
