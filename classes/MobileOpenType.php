@@ -45,7 +45,18 @@ class MobileOpenType
     
     public function getArguments()
     {
-        return $this->args;
+        $result = collect($this->args)->mapWithKeys(function ($item, $key) {
+            if (is_array($item)) {
+                list($name, $desc) = $item;
+            } else {
+                $name = $item;
+                $desc = null;
+            }
+            
+            return [$key => with(new MobileOpenTypeParamerter($key, $name, $desc))];
+        });
+
+        return $result;
     }
     
     public function getArgumentsFilled()

@@ -203,7 +203,9 @@ class MobileAction extends Object
         return array(
             'name'     => '内置浏览器',
             'opentype' => 'webview',
-            'args'     => ['url'],
+            'args'     => [
+                'url' => 'URL'
+            ],
         );
     }
     
@@ -255,7 +257,9 @@ class MobileAction extends Object
         return array(
             'name'     => '搜索',
             'opentype' => 'search',
-            'args'     => ['keyword'],
+            'args'     => [
+                'keyword' => '关键字'
+            ],
         );
     }
     
@@ -281,7 +285,9 @@ class MobileAction extends Object
         return array(
             'name'     => '商品列表',
             'opentype' => 'goods_list',
-            'args'     => ['category_id'],
+            'args'     => [
+                'category_id' => '商品分类ID'
+            ],
         );
     }
     
@@ -294,7 +300,9 @@ class MobileAction extends Object
         return array(
             'name'     => '商品评论',
             'opentype' => 'goods_comment',
-            'args'     => ['goods_id'],
+            'args'     => [
+                'goods_id' => '商品ID'
+            ],
         );
     }
     
@@ -307,7 +315,9 @@ class MobileAction extends Object
         return array(
             'name'     => '商品详情',
             'opentype' => 'goods_detail',
-            'args'     => ['goods_id'],
+            'args'     => [
+                'goods_id' => '订单ID'
+            ],
         );
     }
     
@@ -424,7 +434,9 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺街',
             'opentype' => 'seller',
-            'args'     => ['category_id'],
+            'args'     => [
+                'category_id' => '店铺街分类ID'
+            ],
         );
     }
     
@@ -437,7 +449,9 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺首页',
             'opentype' => 'merchant',
-            'args'     => ['merchant_id'],
+            'args'     => [
+                'merchant_id' => '店铺ID'
+            ],
         );
     }
     
@@ -450,7 +464,10 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺内分类商品',
             'opentype' => 'merchant_goods_list',
-            'args'     => ['merchant_id', 'category_id'],
+            'args'     => [
+                'merchant_id' => '店铺ID', 
+                'category_id' => '店铺街分类ID'
+            ],
         );
     }
     
@@ -463,7 +480,10 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺内活动商品',
             'opentype' => 'merchant_suggest_list',
-            'args'     => ['merchant_id'],
+            'args'     => [
+                'merchant_id' => '店铺ID',
+                'type' => array('活动类型', '（best：精品推荐，hot：热销商品，new：新品推荐）'),
+            ],
         );
     }
     
@@ -476,7 +496,9 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺详情',
             'opentype' => 'merchant_detail',
-            'args'     => ['merchant_id'],
+            'args'     => [
+                'merchant_id' => '店铺ID'
+            ],
         );
     }
     
