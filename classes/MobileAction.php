@@ -203,7 +203,7 @@ class MobileAction extends Object
         return array(
             'name'     => '内置浏览器',
             'opentype' => 'webview',
-            'args'     => [],
+            'args'     => ['url'],
         );
     }
     
@@ -255,7 +255,7 @@ class MobileAction extends Object
         return array(
             'name'     => '搜索',
             'opentype' => 'search',
-            'args'     => [],
+            'args'     => ['keyword'],
         );
     }
     
@@ -281,7 +281,7 @@ class MobileAction extends Object
         return array(
             'name'     => '商品列表',
             'opentype' => 'goods_list',
-            'args'     => [],
+            'args'     => ['category_id'],
         );
     }
     
@@ -294,7 +294,7 @@ class MobileAction extends Object
         return array(
             'name'     => '商品评论',
             'opentype' => 'goods_comment',
-            'args'     => [],
+            'args'     => ['goods_id'],
         );
     }
     
@@ -307,7 +307,7 @@ class MobileAction extends Object
         return array(
             'name'     => '商品详情',
             'opentype' => 'goods_detail',
-            'args'     => [],
+            'args'     => ['goods_id'],
         );
     }
     
@@ -333,7 +333,7 @@ class MobileAction extends Object
         return array(
             'name'     => '订单详情',
             'opentype' => 'orders_detail',
-            'args'     => [],
+            'args'     => ['order_id'],
         );
     }
     
@@ -424,7 +424,7 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺街',
             'opentype' => 'seller',
-            'args'     => [],
+            'args'     => ['category_id'],
         );
     }
     
@@ -437,7 +437,7 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺首页',
             'opentype' => 'merchant',
-            'args'     => [],
+            'args'     => ['merchant_id'],
         );
     }
     
@@ -450,7 +450,7 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺内分类商品',
             'opentype' => 'merchant_goods_list',
-            'args'     => [],
+            'args'     => ['merchant_id', 'category_id'],
         );
     }
     
@@ -463,7 +463,7 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺内活动商品',
             'opentype' => 'merchant_suggest_list',
-            'args'     => [],
+            'args'     => ['merchant_id'],
         );
     }
     
@@ -476,7 +476,7 @@ class MobileAction extends Object
         return array(
             'name'     => '店铺详情',
             'opentype' => 'merchant_detail',
-            'args'     => [],
+            'args'     => ['merchant_id'],
         );
     }
     
