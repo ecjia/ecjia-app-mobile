@@ -82,7 +82,7 @@ class MobileOpenType
     
     public function setQueryParams($name, $value)
     {
-        if (in_array($name, $this->args)) {
+        if (in_array($name, array_keys($this->args))) {
             $this->args_filled[$name] = $value;
             
             $this->buildEcjiaOpen();
