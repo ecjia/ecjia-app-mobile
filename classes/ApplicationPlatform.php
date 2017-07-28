@@ -87,6 +87,12 @@ class ApplicationPlatform
      */
     protected $payments = [];
     
+    /**
+     * 支持的opentype类型
+     * @var array
+     */
+    protected $opentypes = [];
+    
     
     public function getCode()
     {
@@ -149,6 +155,17 @@ class ApplicationPlatform
             return array($item->option_name => $values);
         })->all();
         
+        return $result;
+    }
+    
+    
+    public function getOpenTypes()
+    {
+        $result = collect($this->opentypes)->mapWithKeys(function ($item) {
+        	 $opentype = MobileAction::singleton()->opentype($item);
+        	 return [$item => $opentype];
+        });
+        _dump($result,1);
         return $result;
     }
     
