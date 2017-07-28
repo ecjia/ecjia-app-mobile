@@ -43,20 +43,27 @@ class MobileOpenType
     }
     
     
-    public function getArguments()
+    public function getArguments($code = null)
     {
-        $result = collect($this->args)->mapWithKeys(function ($item, $key) {
-            if (is_array($item)) {
-                list($name, $desc) = $item;
-            } else {
-                $name = $item;
-                $desc = null;
-            }
-            
-            return [$key => with(new MobileOpenTypeParamerter($key, $name, $desc))];
-        });
+        static $result;
+        if (empty($result)) {
+            $result = collect($this->args)->mapWithKeys(function ($item, $key) {
+                if (is_array($item)) {
+                    list($name, $desc) = $item;
+                } else {
+                    $name = $item;
+                    $desc = null;
+                }
+                
+                return [$key => with(new MobileOpenTypeParamerter($key, $name, $desc))];
+            });
+        }
+        
+        if (is_null($code)) {
+            return $result->all();
+        }
 
-        return $result;
+        return $result->get($code);
     }
     
     public function getArgumentsFilled()
