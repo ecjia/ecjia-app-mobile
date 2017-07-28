@@ -179,12 +179,14 @@ class ApplicationPlatform
      */
     public function getOpenTypes($name = null)
     {
-        static $resul;
-        if (empty($resul)) {
+        static $data;
+        $result = array_has($data, $this->code);
+        if (empty($result)) {
             $result = collect($this->opentypes)->mapWithKeys(function ($item) {
             	 $opentype = MobileAction::singleton()->opentype($item);
             	 return [$item => $opentype];
             });
+            $data = array_add($data, $this->code, $result);
         }
         
         if (is_null($name))
