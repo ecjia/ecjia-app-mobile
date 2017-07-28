@@ -137,7 +137,6 @@ class EcjiaCityo2o extends ApplicationPlatform
     	MobileAction::USER_ACCOUNT,
     	MobileAction::USER_COLLECT,
     	MobileAction::USER_PASSWORD,
-    	MobileAction::SELLER,
     	MobileAction::MERCHANT,
     	MobileAction::MERCHANT_GOODS_LIST,
     	MobileAction::MERCHANT_SUGGEST_LIST,
