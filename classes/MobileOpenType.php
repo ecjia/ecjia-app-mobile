@@ -13,6 +13,8 @@ class MobileOpenType
     
     protected $args = array();
     
+    protected $args_filled = array();
+    
     
     protected $schema = 'ecjiaopen://';
     
@@ -46,6 +48,11 @@ class MobileOpenType
         return $this->args;
     }
     
+    public function getArgumentsFilled()
+    {
+        return $this->args_filled;
+    }
+    
     public function getOpenUrl()
     {
         return $this->openurl;
@@ -54,11 +61,24 @@ class MobileOpenType
     protected function buildEcjiaOpen()
     {
         $data = array('open_type' => $this->opentype);
-        $data = array_merge($data, $this->args);
+        $data = array_merge($data, $this->args_filled);
      
         $this->openurl = $this->schema . http_build_query($data);
+        
+        return $this;
     }
     
+    
+    public function setQueryParams($name, $value)
+    {
+        if (in_array($name, $this->args)) {
+            $this->args_filled[$name] = $value;
+            
+            $this->buildEcjiaOpen();
+        }
+
+        return $this;
+    }
     
     
 }
