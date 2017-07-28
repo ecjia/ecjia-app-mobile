@@ -16,7 +16,7 @@ class MobileOpenType
     protected $args_filled = array();
     
     
-    protected $schema = 'ecjiaopen://';
+    protected $schema = 'ecjiaopen://app?';
     
     protected $openurl;
     
