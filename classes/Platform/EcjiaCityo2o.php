@@ -48,6 +48,7 @@
 namespace Ecjia\App\Mobile\Platform;
 
 use Ecjia\App\Mobile\ApplicationPlatform;
+use Ecjia\App\Mobile\MobileAction;
 
 class EcjiaCityo2o extends ApplicationPlatform
 {
@@ -104,6 +105,45 @@ class EcjiaCityo2o extends ApplicationPlatform
     	'pay_alipay',
     	'pay_wxpay_app',
     ];
+    
+    /**
+     * 支持的opentype类型
+     * @var array
+     */
+    protected $opentypes = [
+    	MobileAction::MAIN,
+    	MobileAction::SINGIN,
+    	MobileAction::SIGNUP,
+    	MobileAction::FORGET_PASSWORD,
+    	MobileAction::DISCOVER,
+    	MobileAction::QRCODE,
+    	MobileAction::QRSHARE,
+    	MobileAction::HISTORY,
+    	MobileAction::MAP,
+    	MobileAction::MESSAGE,
+    	MobileAction::WEBVIEW,
+    	MobileAction::SETTING,
+    	MobileAction::LANGUAGE,
+    	MobileAction::CART,
+    	MobileAction::SEARCH,
+    	MobileAction::HELP,
+    	MobileAction::GOODS_LIST,
+    	MobileAction::GOODS_COMMENT,
+    	MobileAction::GOODS_DETAIL,
+    	MobileAction::ORDERS_LIST,
+    	MobileAction::ORDERS_DETAIL,
+    	MobileAction::USER_CENTER,
+    	MobileAction::USER_ADDRESS,
+    	MobileAction::USER_ACCOUNT,
+    	MobileAction::USER_COLLECT,
+    	MobileAction::USER_PASSWORD,
+    	MobileAction::SELLER,
+    	MobileAction::MERCHANT,
+    	MobileAction::MERCHANT_GOODS_LIST,
+    	MobileAction::MERCHANT_SUGGEST_LIST,
+    	MobileAction::MERCHANT_DETAIL,
+    ];
+    
     
     public function __construct()
     {

@@ -118,16 +118,28 @@ class ApplicationPlatform
         return $this->icon;
     }
     
+    /**
+     *
+     * @return array
+     */
     public function getClients()
     {
         return $this->clients;
     }
     
+    /**
+     *
+     * @return array
+     */
     public function getPayments()
     {
         return $this->payments;
     }
     
+    /**
+     * 
+     * @return array
+     */
     public function getOptions()
     {
         $model = new MobileOptionModel();
@@ -141,7 +153,10 @@ class ApplicationPlatform
         return $data;
     }
     
-    
+    /**
+     *
+     * @return array
+     */
     public function processOptionValue(Collection $data)
     {
         $result = $data->mapWithKeys(function ($item) {
@@ -158,14 +173,17 @@ class ApplicationPlatform
         return $result;
     }
     
-    
+    /**
+     * 
+     * @return array
+     */
     public function getOpenTypes()
     {
         $result = collect($this->opentypes)->mapWithKeys(function ($item) {
         	 $opentype = MobileAction::singleton()->opentype($item);
         	 return [$item => $opentype];
-        });
-        _dump($result,1);
+        })->all();
+
         return $result;
     }
     
