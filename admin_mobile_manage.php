@@ -140,11 +140,10 @@ class admin_mobile_manage extends ecjia_admin {
 		$config['name'] = $pruduct_info->getName();
 		$this->assign('config', $config);
 
-		
 		$data = $pruduct_info->getClients();
 		$database = RC_DB::table('mobile_manage')
 		->where('platform', $code)
-		->select('app_id', 'device_client', 'status')
+		->select('app_id', 'device_client', 'status', 'app_name')
 		->get();
 		foreach ($database as $key => $val) {
 			$database[$val['device_client']] = $val;
@@ -154,6 +153,7 @@ class admin_mobile_manage extends ecjia_admin {
 			if (array_key_exists($v['device_client'], $database)) {
 				$data[$k]['app_id'] = $database[$v['device_client']]['app_id'];
 				$data[$k]['status'] = $database[$v['device_client']]['status'];
+				$data[$k]['app_name'] = $database[$v['device_client']]['app_name'];
 			}
 		}
 		$this->assign('data', $data);

@@ -44,7 +44,7 @@
 						    <p style="text-align: right;">
 								{if $list.status eq 1}<img src="{$ok_img}" />{else}<img src="{$error_img}" />{/if}
 							</p>
-							<h2>已激活</h2>
+							<h2>{$list.app_name}</h2>
 							<h3></h3>
 							<p style="margin-top:25px;">Code：{$config.code}</p>
 							<p style="margin-top:30px;">
