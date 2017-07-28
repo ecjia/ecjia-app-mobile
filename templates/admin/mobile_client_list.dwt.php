@@ -47,7 +47,7 @@
 							<h2>{$list.app_name}</h2>
 							<h3></h3>
 							<p style="margin-top:25px;">{$list.device_name}</p>
-							<p style="margin-top:30px;">
+							<p style="margin-top:25px;">
 								{if $list.device_client eq 'android'}
 									<img src="{$Android_img}" />
 								{elseif $list.device_client eq 'iphone'}
