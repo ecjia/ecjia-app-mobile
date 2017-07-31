@@ -49,6 +49,7 @@ namespace Ecjia\App\Mobile\Qrcode;
 use RC_File;
 use RC_QrCode;
 use RC_Upload;
+use RC_Storage;
 
 abstract class AbstractQrcode 
 {
@@ -101,8 +102,8 @@ abstract class AbstractQrcode
      */
     public function removeQrcode()
     {
-        if (RC_File::exists($this->getQrcodePath()))
-            return RC_File::delete($this->getQrcodePath());
+        if (RC_Storage::disk()->exists($this->getQrcodePath()))
+            return RC_Storage::disk()->delete($this->getQrcodePath());
     }
     
     /**
@@ -111,10 +112,18 @@ abstract class AbstractQrcode
      */
     public function createQrcode($size = 430)
     {
+        $tempPath = $this->getTempPath();
+        
         RC_QrCode::format('png')->size($size)->margin(1)
                     ->merge($this->logo, 0.2, true)
                     ->errorCorrection('H')
-                    ->generate($this->content(), $this->getQrcodePath());
+                    ->generate($this->content(), $tempPath);
+                    
+        //上传临时文件到指定目录            
+        RC_Storage::disk()->move_uploaded_file($tempPath, $this->getQrcodePath());
+        
+        //删除临时文件
+        RC_File::delete($tempPath);
     }
     
     /**
@@ -133,6 +142,16 @@ abstract class AbstractQrcode
     public function getQrcodePath()
     {
         return $this->storeDir() . $this->fileName();
+    }
+    
+    /**
+     * 生成临时文件路径
+     * @return string
+     */
+    public function getTempPath()
+    {
+        $tmpfname = tempnam(storage_path() . 'temp/qrcodes/', 'qrcode_');
+        return $tmpfname;
     }
     
 }
