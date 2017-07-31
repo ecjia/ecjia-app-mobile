@@ -61,14 +61,20 @@
 					<div class="control-group formSep">
 						<label class="control-label">AppKey：</label>
 						<div class="controls l_h30">
-							{$manage_data.app_key}
+							<div id="app_key" class="app_copy" data-clipboard-text="{$manage_data.app_key}">
+								<span>{$manage_data.app_key}</span>
+								<span class="cursor_pointer"><strong>复制</strong></span>
+							</div>
 						</div>
 					</div>
 					
 					<div class="control-group formSep">
 						<label class="control-label">AppSecret：</label>
 						<div class="controls l_h30">
-							{$manage_data.app_secret}
+							<div id="app_secret"class="app_copy" data-clipboard-text="{$manage_data.app_secret}">
+								<span>{$manage_data.app_secret}</span>
+								<span class="cursor_pointer">复制</span>
+							</div>
 						</div>
 					</div>
 				{else}
