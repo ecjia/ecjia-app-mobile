@@ -15,6 +15,8 @@
 		<!-- {/if} -->
 	</h3>
 </div>
+
+
 <div class="row-fluid">
 	<div class="span12">
 		<form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data" >
@@ -22,30 +24,32 @@
 				{if $action eq 'edit'}
 					<div class="control-group formSep">
 						<label class="control-label">应用名称：</label>
-						<div class="controls">
-							<input class="span4" name="name" type="text" value="{$manage_data.app_name}" />
-							<span class="input-must">{lang key='system::system.require_field'}</span> 
+						<div class="controls l_h30">
+						<span class="cursor_pointer ecjiaf-pre ecjiaf-wsn" data-trigger="editable" data-url='{url path="mobile/admin_mobile_manage/edit_app_name" args="code={$manage_data.platform}"}' data-name="app_name" data-pk="{$manage_data.app_id}" data-title="应用名称">{$manage_data.app_name}</span>
 						</div>
 					</div>
+					
 					<div class="control-group formSep">
 						<label class="control-label">应用包名：</label>
-						<div class="controls">
-							<input class="span4" name="bundleid" type="text" value="{$manage_data.bundle_id}" />
-							<span class="input-must">{lang key='system::system.require_field'}</span> 
+						<div class="controls l_h30">
+						<span class="cursor_pointer ecjiaf-pre ecjiaf-wsn" data-trigger="editable" data-url='{url path="mobile/admin_mobile_manage/edit_bag_name" args="code={$manage_data.platform}"}' data-name="bag_name" data-pk="{$manage_data.app_id}" data-title="应用包名">{$manage_data.bundle_id}</span>
 						</div>
 					</div>
+					
 					<div class="control-group formSep">
 						<label class="control-label">Code：</label>
 						<div class="controls l_h30">
 							{$manage_data.platform}
 						</div>
 					</div>
+					
 					<div class="control-group formSep">
 						<label class="control-label">Client：</label>
 						<div class="controls l_h30">
 							{$manage_data.device_client}
 						</div>
 					</div>
+					
 					<div class="control-group">
 						<label class="control-label">Device Code：</label>
 						<div class="controls l_h30">
@@ -57,13 +61,20 @@
 					<div class="control-group formSep">
 						<label class="control-label">AppKey：</label>
 						<div class="controls l_h30">
-							{$manage_data.app_key}
+							<div id="app_key" class="app_copy" data-clipboard-text="{$manage_data.app_key}">
+								<span>{$manage_data.app_key}</span>
+								<span class="cursor_pointer copy"><strong>复制</strong></span>
+							</div>
 						</div>
 					</div>
+					
 					<div class="control-group formSep">
 						<label class="control-label">AppSecret：</label>
 						<div class="controls l_h30">
-							{$manage_data.app_secret}
+							<div id="app_secret"class="app_copy" data-clipboard-text="{$manage_data.app_secret}">
+								<span>{$manage_data.app_secret}</span>
+								<span class="cursor_pointer copy">复制</span>
+							</div>
 						</div>
 					</div>
 				{else}

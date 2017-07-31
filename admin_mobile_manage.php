@@ -73,11 +73,10 @@ class admin_mobile_manage extends ecjia_admin {
 		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
 		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
 		RC_Script::enqueue_script('bootstrap-placeholder');
-		
+		RC_Script::enqueue_script('clipboard.min', RC_App::apps_url('statics/js/clipboard.min.js', __FILE__), array(), false, false);
 		RC_Script::enqueue_script('mobile_manage', RC_App::apps_url('statics/js/mobile_manage.js', __FILE__), array(), false, false);
 		RC_Script::localize_script('mobile_manage', 'js_lang', RC_Lang::get('mobile::mobile.js_lang'));
 		
-
 		RC_Style::enqueue_style('mobile_manage', RC_App::apps_url('statics/css/mobile_manage.css', __FILE__), array(), false, false);
 		
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('移动产品', RC_Uri::url('mobile/admin_mobile_manage/init')));
@@ -284,6 +283,9 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->display('mobile_manage_info.dwt');
 	}
 	
+	/**
+	 * 开启客户端
+	 */
 	public function open_status() {
 		$this->admin_priv('mobile_manage_update');
 		
@@ -295,6 +297,9 @@ class admin_mobile_manage extends ecjia_admin {
 		return $this->showmessage('开启客户端成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=>$id, 'code'=>$code))));
 	}
 	
+	/**
+	 * 关闭客户端
+	 */
 	public function close_status() {
 		$this->admin_priv('mobile_manage_update');
 		
@@ -305,6 +310,38 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		return $this->showmessage('关闭客户端成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=>$id, 'code'=>$code))));
 	}
+	
+	
+	/**
+	 * 编辑应用名称
+	 */
+	public function edit_app_name() {
+		$this->admin_priv('mobile_manage_update');
+	
+		$id		= trim($_POST['pk']);
+		$app_name = trim($_POST['value']);
+		$code = trim($_GET['code']);
+
+		RC_DB::table('mobile_manage')->where('app_id', $id)->update(array('app_name' => $app_name));
+	
+		return $this->showmessage('更新应用名称成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=>$id, 'code'=>$code))));
+	}
+	
+	/**
+	 * 编辑应用包名
+	 */
+	public function edit_bag_name() {
+		$this->admin_priv('mobile_manage_update');
+	
+		$id		= trim($_POST['pk']);
+		$bag_name = trim($_POST['value']);
+		$code = trim($_GET['code']);
+		
+		RC_DB::table('mobile_manage')->where('app_id', $id)->update(array('bundle_id' => $bag_name));
+	
+		return $this->showmessage('更新应用名称成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('id'=>$id, 'code'=>$code))));
+	}
+	
 
 	/**
 	 * 删除
@@ -317,6 +354,7 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		return $this->showmessage('删除客户端成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/client_list', array('id' => $id, 'code' => $_GET['code']))));
 	}
+	
 	
 }
 
