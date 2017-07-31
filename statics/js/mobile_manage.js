@@ -3,6 +3,21 @@
     app.mobile_manage = {
 
         info: function () {
+	    	$('.change_status').on('click', function() {
+				var $this = $(this);
+				var message = $this.attr('data-msg');
+				var url = $this.attr('data-href');
+				if (message != undefined) {
+					smoke.confirm(message, function(e) {
+						if (e) {
+							$.get(url, function(data){
+								ecjia.admin.showmessage(data);
+							})
+						}
+					}, {ok:"确定", cancel:"取消"});
+				} 
+			});
+	    	
             app.mobile_manage.submit();
  
             $('#info-toggle-button').toggleButtons({

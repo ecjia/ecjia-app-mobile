@@ -19,22 +19,21 @@
 	<div class="span12">
 		<form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data" >
 			<fieldset>
-				<div class="control-group formSep">
-					<label class="control-label">应用名称：</label>
-					<div class="controls">
-						<input class="span4" name="name" type="text" value="{$manage_data.app_name}" />
-						<span class="input-must">{lang key='system::system.require_field'}</span> 
-					</div>
-				</div>
-				<div class="control-group formSep">
-					<label class="control-label">应用包名：</label>
-					<div class="controls">
-						<input class="span4" name="bundleid" type="text" value="{$manage_data.bundle_id}" />
-						<span class="input-must">{lang key='system::system.require_field'}</span> 
-					</div>
-				</div>
-				
 				{if $action eq 'edit'}
+					<div class="control-group formSep">
+						<label class="control-label">应用名称：</label>
+						<div class="controls">
+							<input class="span4" name="name" type="text" value="{$manage_data.app_name}" />
+							<span class="input-must">{lang key='system::system.require_field'}</span> 
+						</div>
+					</div>
+					<div class="control-group formSep">
+						<label class="control-label">应用包名：</label>
+						<div class="controls">
+							<input class="span4" name="bundleid" type="text" value="{$manage_data.bundle_id}" />
+							<span class="input-must">{lang key='system::system.require_field'}</span> 
+						</div>
+					</div>
 					<div class="control-group formSep">
 						<label class="control-label">Code：</label>
 						<div class="controls l_h30">
@@ -47,12 +46,14 @@
 							{$manage_data.device_client}
 						</div>
 					</div>
-					<div class="control-group formSep">
+					<div class="control-group">
 						<label class="control-label">Device Code：</label>
 						<div class="controls l_h30">
 							{$manage_data.device_code}
 						</div>
 					</div>
+
+					<h3 class="heading">推送信息</h3>
 					<div class="control-group formSep">
 						<label class="control-label">AppKey：</label>
 						<div class="controls l_h30">
@@ -65,35 +66,54 @@
 							{$manage_data.app_secret}
 						</div>
 					</div>
-					
+				{else}
 					<div class="control-group formSep">
-						<label class="control-label">是否启用</label>
+						<label class="control-label">应用名称：</label>
 						<div class="controls">
-				            <div id="info-toggle-button">
-				                <input class="nouniform" name="status" type="checkbox"  {if $manage_data.status eq 1}checked="checked"{/if}  value="1"/>
-				            </div>
+							<input class="span4" name="name" type="text" value="" />
+							<span class="input-must">{lang key='system::system.require_field'}</span> 
+						</div>
+					</div>
+					<div class="control-group formSep">
+						<label class="control-label">应用包名：</label>
+						<div class="controls">
+							<input class="span4" name="bundleid" type="text" value="" />
+							<span class="input-must">{lang key='system::system.require_field'}</span> 
 						</div>
 					</div>
 				{/if}
-				
-				
-				<div class="control-group">
-					<div class="controls">
-			
-						{if $action eq 'edit'}
-							<input type="hidden" name="code_vale" value="{$manage_data.platform}" />
-							<input type="hidden" name="id" value="{$manage_data.app_id}" />
-							<button class="btn btn-gebo" type="submit">更新</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<a data-toggle="ajaxremove" class="ajaxremove"  data-msg="你确定要删除该客户端端吗？"  href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$manage_data.app_id}&code={$manage_data.platform}")}' title="删除"><button class="btn" type="submit">删除</button></a>
-						{else}
-							
+									
+				{if $action eq 'edit'}
+					<input type="hidden" name="code_vale" value="{$manage_data.platform}" />
+					<input type="hidden" name="id" value="{$manage_data.app_id}" />
+					<a data-toggle="ajaxremove" class="ajaxremove ecjiafc-red"  data-msg="你确定要删除该客户端端吗？"  href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$manage_data.app_id}&code={$manage_data.platform}")}' title="删除">删除客户端</a>
+					<div class="pull-right">
+						<a class="change_status" style="cursor: pointer;"  
+						 data-msg="{if $manage_data.status eq 1}您确定要关闭该客户端吗？{else}您确定要开启该客户端吗？{/if}" 
+						 data-href='
+						 {if $manage_data.status eq 1}
+						 	{url path="mobile/admin_mobile_manage/close_status" args="code={$manage_data.platform}&id={$manage_data.app_id}"}
+						 {else}
+						 	{url path="mobile/admin_mobile_manage/open_status" args="code={$manage_data.platform}&id={$manage_data.app_id}"}
+						 {/if}' >
+				       	 {if $manage_data.status eq 1}
+				         	<button class="btn" type="button" >点击关闭客户端</button>  
+				         {else}
+				         	<button class="btn btn-gebo" type="button" >点击开启客户端</button> 
+				         {/if}
+				        </a>  
+				     </div>
+				{else}
+					<div class="control-group">
+						<div class="controls">
 							<input type="hidden" name="device_code" value="{$device_code} "/>
 							<input type="hidden" name="device_client" value="{$device_client}" />
 							<input type="hidden" name="code" value="{$code}" />
 							<button class="btn btn-gebo" type="submit">激活</button>
-						{/if}
+						</div>
 					</div>
-				</div>
+				{/if}
+					
 			</fieldset>
 		</form>
 	</div>
