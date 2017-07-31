@@ -123,8 +123,12 @@
 
 .app_copy span { 
 	color:white;
-	margin-left:3px;
+	margin-left:5px;
 	font-size: 14px;
+}
+.copy{
+	float:right;
+	margin-right:10px;
 }
 
 

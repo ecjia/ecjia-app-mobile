@@ -63,7 +63,7 @@
 						<div class="controls l_h30">
 							<div id="app_key" class="app_copy" data-clipboard-text="{$manage_data.app_key}">
 								<span>{$manage_data.app_key}</span>
-								<span class="cursor_pointer"><strong>复制</strong></span>
+								<span class="cursor_pointer copy"><strong>复制</strong></span>
 							</div>
 						</div>
 					</div>
@@ -73,7 +73,7 @@
 						<div class="controls l_h30">
 							<div id="app_secret"class="app_copy" data-clipboard-text="{$manage_data.app_secret}">
 								<span>{$manage_data.app_secret}</span>
-								<span class="cursor_pointer">复制</span>
+								<span class="cursor_pointer copy">复制</span>
 							</div>
 						</div>
 					</div>
