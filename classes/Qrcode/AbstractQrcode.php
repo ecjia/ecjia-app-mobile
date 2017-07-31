@@ -73,11 +73,11 @@ abstract class AbstractQrcode
         $this->id = $id;
         $this->logo = $logo;
     
-        if (! is_dir($this->storeDir())) {
-            RC_File::makeDirectory($this->storeDir(), 0777, true);
+        if (! RC_Storage::disk()->is_dir($this->storeDir())) {
+            RC_Storage::disk()->mkdir($this->storeDir(), 0777);
         }
     
-        if (! RC_File::exists($this->getQrcodePath())) {
+        if (! RC_Storage::disk()->exists($this->getQrcodePath())) {
             $this->createQrcode();
         }
     }
@@ -113,15 +113,15 @@ abstract class AbstractQrcode
     public function createQrcode($size = 430)
     {
         $tempPath = $this->getTempPath();
-        
+
         RC_QrCode::format('png')->size($size)->margin(1)
                     ->merge($this->logo, 0.2, true)
                     ->errorCorrection('H')
                     ->generate($this->content(), $tempPath);
                     
         //上传临时文件到指定目录            
-        RC_Storage::disk()->move_uploaded_file($tempPath, $this->getQrcodePath());
-        
+        RC_Storage::disk()->move($tempPath, $this->getQrcodePath(), true);
+
         //删除临时文件
         RC_File::delete($tempPath);
     }
@@ -150,7 +150,12 @@ abstract class AbstractQrcode
      */
     public function getTempPath()
     {
-        $tmpfname = tempnam(storage_path() . 'temp/qrcodes/', 'qrcode_');
+        $tempDir = storage_path() . '/temp/qrcodes/';
+        if (!RC_File::exists($tempDir)) {
+            RC_File::makeDirectory($tempDir, 0777, true);
+        }
+        
+        $tmpfname = tempnam($tempDir, 'qrcode_');
         return $tmpfname;
     }
     
