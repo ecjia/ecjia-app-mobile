@@ -55,6 +55,7 @@ class admin_street extends ecjia_admin
         parent::__construct();
         
         RC_Style::enqueue_style('mobile_street', RC_App::apps_url('statics/css/mobile_street.css', __FILE__));
+        RC_Script::enqueue_script('mobile_street', RC_App::apps_url('statics/js/mobile_street.js', __FILE__), array(), false, true);
     }
     
     
@@ -96,20 +97,24 @@ class admin_street extends ecjia_admin
         $this->assign('api_url', $api_url);
         $this->assign('small_qrcode', $small_qrcode);
         $this->assign('app_url', $app_url);
+        $this->assign('refresh_action', RC_Uri::url('mobile/admin_street/refresh'));
         
         $this->display('mobile_street.dwt');
     }
     
     
     public function refresh() {
-        $sizes = Ecjia\App\Mobile\Qrcode\GenerateStreet::QrSizeCmToPx();
+    	$allow 		= !empty($_POST['check']) 	? $_POST['check']			: '';
+	    if ($allow == 'allow') {
+			$sizes = Ecjia\App\Mobile\Qrcode\GenerateStreet::QrSizeCmToPx();
+	        
+	        collect(array_values($sizes))->each(function ($item) {
+	            Ecjia\App\Mobile\Qrcode\GenerateStreet::singleton()->removeQrcode($item);
+	        });
         
-        collect(array_values($sizes))->each(function ($item) {
-            Ecjia\App\Mobile\Qrcode\GenerateStreet::singleton()->removeQrcode($item);
-        });
-        
+		}
         //提示操作成功
-        
+        return $this->showmessage('刷新成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_street/init')));
     }
     
     
