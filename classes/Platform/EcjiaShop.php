@@ -48,6 +48,7 @@
 namespace Ecjia\App\Mobile\Platform;
 
 use Ecjia\App\Mobile\ApplicationPlatform;
+use Ecjia\App\Mobile\MobileAction;
 
 class EcjiaShop extends ApplicationPlatform
 {
@@ -106,6 +107,23 @@ class EcjiaShop extends ApplicationPlatform
         'pay_unionpay',
     ];
     
+    
+    /**
+     * 支持的opentype类型
+     * @var array
+     */
+    protected $opentypes = [
+        MobileAction::MAIN,
+        MobileAction::HISTORY,
+        MobileAction::WEBVIEW,
+        MobileAction::HELP,
+        MobileAction::GOODS_COMMENT,
+        MobileAction::GOODS_DETAIL,
+        MobileAction::ORDERS_DETAIL,
+        MobileAction::USER_CENTER,
+        MobileAction::USER_ADDRESS,
+        MobileAction::USER_WALLET,
+    ];
     
     public function __construct()
     {
