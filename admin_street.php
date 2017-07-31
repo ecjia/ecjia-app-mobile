@@ -54,7 +54,6 @@ class admin_street extends ecjia_admin
     {
         parent::__construct();
         
-        RC_Loader::load_app_class('mobile_qrcode', 'mobile', false);
         RC_Style::enqueue_style('mobile_street', RC_App::apps_url('statics/css/mobile_street.css', __FILE__));
     }
     
@@ -91,8 +90,8 @@ class admin_street extends ecjia_admin
         
         $app_url =  RC_App::apps_url('statics/images', __FILE__);
         
-        $api_url = mobile_qrcode::getApiUrl();
-        $small_qrcode = mobile_qrcode::getDefaultQrcodeUrl();
+        $api_url = Ecjia\App\Mobile\Qrcode\GenerateStreet::getApiUrl();
+        $small_qrcode = Ecjia\App\Mobile\Qrcode\GenerateStreet::singleton()->getQrcodeUrl();
         
         $this->assign('api_url', $api_url);
         $this->assign('small_qrcode', $small_qrcode);
@@ -101,17 +100,34 @@ class admin_street extends ecjia_admin
         $this->display('mobile_street.dwt');
     }
     
-    public function download() {
+    
+    public function refresh() {
+        $sizes = Ecjia\App\Mobile\Qrcode\GenerateStreet::QrSizeCmToPx();
         
-        $get_size = empty($_GET['size']) ? '12cm' : $_GET['size'];
-       
-        $size = mobile_qrcode::QrSizeCmToPx($get_size);
-        $file_url = mobile_qrcode::getStreetQrcodeUrl($size);
+        collect(array_values($sizes))->each(function ($item) {
+            Ecjia\App\Mobile\Qrcode\GenerateStreet::singleton()->removeQrcode($item);
+        });
+        
+        //提示操作成功
+        
+    }
+    
+    
+    public function download() {
+
+        $sizeCM = royalcms('request')->input('size', '12cm');
+        
+        $sizes = Ecjia\App\Mobile\Qrcode\GenerateStreet::QrSizeCmToPx();
+        
+        $sizePX = array_get($sizes, $sizeCM);
+        
+        $file = Ecjia\App\Mobile\Qrcode\GenerateStreet::singleton()->createQrcode($sizePX)->getQrcodePath($sizePX);
+        
         //文件的类型
-        header('Content-type: application/image/pjpeg');
+        header('Content-type: application/octet-stream');
         //下载显示的名字
-        header('Content-Disposition: attachment; filename="ecjia_street_qrcode_'.$get_size.'.png"');
-        readfile($file_url);
+        header('Content-Disposition: attachment; filename="ecjia_street_qrcode_'.$sizeCM.'.png"');
+        readfile($file);
         exit();
     }
 }
