@@ -45,8 +45,8 @@ class MobileOpenType
     
     public function getArguments($code = null)
     {
-        static $data;
-        $result = array_has($data, $this->opentype);
+        static $data = array();
+        $result = array_get($data, $this->opentype);
         if (empty($result)) {
             $result = collect($this->args)->mapWithKeys(function ($item, $key) {
                 if (is_array($item)) {
