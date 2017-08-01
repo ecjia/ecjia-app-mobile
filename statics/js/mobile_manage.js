@@ -3,12 +3,6 @@
     app.mobile_manage = {
 
         info: function () {	
-        	
-	        var app_key = document.getElementById('app_key');
-	    	new Clipboard(app_key);
-	    	var app_secret = document.getElementById('app_secret');
-	    	new Clipboard(app_secret);
-	    	
 	    	$('.change_status').on('click', function() {
 				var $this = $(this);
 				var message = $this.attr('data-msg');

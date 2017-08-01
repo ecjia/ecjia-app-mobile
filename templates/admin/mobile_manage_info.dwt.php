@@ -4,6 +4,12 @@
 <!-- {block name="footer"} -->
 <script type="text/javascript">
 	ecjia.admin.mobile_manage.info();
+
+    var app_key = document.getElementById('app_key');
+	new Clipboard(app_key);
+	var app_secret = document.getElementById('app_secret');
+	new Clipboard(app_secret);
+	
 </script>
 <!-- {/block} -->
 <!-- {block name="main_content"} -->
