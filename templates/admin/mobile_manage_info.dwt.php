@@ -57,7 +57,7 @@
 						</div>
 					</div>
 
-					<h3 class="heading">推送信息</h3>
+					<h3 class="heading">安全信息</h3>
 					<div class="control-group formSep">
 						<label class="control-label">AppKey：</label>
 						<div class="controls l_h30">
