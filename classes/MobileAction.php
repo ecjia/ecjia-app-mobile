@@ -316,7 +316,7 @@ class MobileAction extends Object
             'name'     => '商品详情',
             'opentype' => 'goods_detail',
             'args'     => [
-                'goods_id' => '订单ID'
+                'goods_id' => '商品ID'
             ],
         );
     }
@@ -343,7 +343,9 @@ class MobileAction extends Object
         return array(
             'name'     => '订单详情',
             'opentype' => 'orders_detail',
-            'args'     => ['order_id'],
+            'args'     => [
+        		'order_id' => '订单ID'
+        	],
         );
     }
     
