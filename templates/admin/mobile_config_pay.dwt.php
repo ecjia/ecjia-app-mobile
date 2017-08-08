@@ -30,8 +30,8 @@ ecjia.admin.mobile_config.info();
 			{if $pay_list}
 			  	<ul>
 				<!-- {foreach from=$pay_list item=val} -->
-					<li class='thumbnail {if $val.enabled eq 1}pay_open{else}pay_close{/if}'>
-						<div class="bd">
+					<li class='thumbnail'>
+						<div class="bd {if $val.enabled eq 1}pay_open{else}pay_close{/if}">
 							<div class="merchants_name">
 								{$val.pay_name}<br>
 								<div class="title">{$val.pay_code}</div><br>
@@ -48,7 +48,7 @@ ecjia.admin.mobile_config.info();
 				<!-- {/foreach} -->
 				</ul>
 			{else}
-				<pre class="sepH_c" style=" background-color: #fbfbfb; height:80px;line-height:80px;">没有找到任何记录，需进行安装相关支付插件。</pre>
+				<pre class="sepH_c" style="background-color: #fbfbfb; height:80px;line-height:80px;">没有找到任何记录，需进行安装相关支付插件。</pre>
 			{/if}
 		</div>
 	</div>

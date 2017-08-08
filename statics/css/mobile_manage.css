@@ -90,19 +90,27 @@
 	background: #fff;
 }
 
+.wookmark .thumbnail {
+	background-color: #F9F9F9;
+	margin-right: 1%;
+    width: 24%;
+}
 
 .wookmark .bd {
     height: 120px;
     overflow: hidden;
 	line-height: 150%;
+	
 }
 
-.wookmark .pay_open {
-	 background: url("../images/open.png") no-repeat right top;
+.wookmark .bd.pay_open {
+	background: url("../images/open.png") no-repeat right top;
 }
-.wookmark .pay_close {
+.wookmark .bd.pay_close {
 	 background: url("../images/close.png") no-repeat right top;
 }
+
+
 .merchants_name {
     font-size:16px;
     margin-top: 32px;
