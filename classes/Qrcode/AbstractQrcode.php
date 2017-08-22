@@ -75,7 +75,7 @@ abstract class AbstractQrcode extends Object
         $this->logo = $logo;
     
         if (! RC_Storage::disk()->is_dir($this->storeDir())) {
-            RC_Storage::disk()->mkdir($this->storeDir(), 0777);
+            RC_Storage::disk()->mkdir($this->storeDir(), FS_CHMOD_DIR);
         }
     
         if (! RC_Storage::disk()->exists($this->getQrcodePath())) {
