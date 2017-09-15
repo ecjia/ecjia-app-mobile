@@ -94,7 +94,13 @@ class EcjiaShopKeeper extends ApplicationPlatform
      * 支持的支付方式
      * @var array
      */
-    protected $payments = [];
+    protected $payments = [
+    	'pay_cash',
+    	'pay_balance',
+    	'pay_koolyun_alipay',
+    	'pay_koolyun_upmp',
+    	'pay_koolyun_wxpay',
+    ];
     
     
     /**
