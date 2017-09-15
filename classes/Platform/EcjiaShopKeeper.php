@@ -86,12 +86,12 @@ class EcjiaShopKeeper extends ApplicationPlatform
         [
         	'device_client' => 'iphone',
             'device_name' => 'iPhone',
-            'device_code' => '2001',
+            'device_code' => '2002',
         ],
         [
             'device_client' => 'android',
             'device_name' => 'Android',
-            'device_code' => '2002',
+            'device_code' => '2001',
         ]
     ];
         
