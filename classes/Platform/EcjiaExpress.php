@@ -86,12 +86,12 @@ class EcjiaExpress extends ApplicationPlatform
         [
         	'device_client' => 'iphone',
             'device_name' => 'iPhone',
-            'device_code' => '9001',
+            'device_code' => '9002',
         ],
         [
             'device_client' => 'android',
             'device_name' => 'Android',
-            'device_code' => '9002',
+            'device_code' => '9001',
         ]
     ];
         
