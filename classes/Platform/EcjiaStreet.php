@@ -70,7 +70,7 @@ class EcjiaStreet extends ApplicationPlatform
      * 描述
      * @var string
      */
-    protected $description = 'ECJia店铺街App是一款多站点通用的消费者客户端。';
+    protected $description = 'ECJia店铺街App是一款多站点通用的消费者购物客户端。';
     
     /**
      * 图标
