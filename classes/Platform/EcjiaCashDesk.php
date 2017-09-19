@@ -50,7 +50,7 @@ namespace Ecjia\App\Mobile\Platform;
 use Ecjia\App\Mobile\ApplicationPlatform;
 use Ecjia\App\Mobile\MobileAction;
 
-class EcjiaShopKeeper extends ApplicationPlatform
+class EcjiaCashDesk extends ApplicationPlatform
 {
     
     
