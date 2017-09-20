@@ -125,12 +125,6 @@ class EcjiaShop extends ApplicationPlatform
         MobileAction::USER_WALLET,
     ];
     
-    public function __construct()
-    {
-        
-    }
-    
-    
     
     
     
