@@ -236,6 +236,7 @@
                     val = $parent.attr('data-val'),
                     name = $parent.find('span').eq(0).text(),
                     $tmp = $('<input type="checkbox" checked="checked" value="' + val + '" name="regions[]" /><span class="m_r10">' + name + '</span>');
+                
                 $('.selected_area div').each(function (i) {
                     if ($(this).find("input").val() == val) {
                         var data = {
@@ -247,6 +248,7 @@
                         return false;
                     }
                 });
+                
                 if (bool) {
                     $('.selected_area').append($tmp);
                     $tmp.uniform();
