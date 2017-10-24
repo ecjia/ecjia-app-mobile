@@ -154,7 +154,7 @@
 					</div>
 				<!-- 登录色值end -->
 				<!-- 热门城市start -->
-					<h3 class="heading">热门城市设置</h3>
+					<h3 class="heading">经营区域设置</h3>
 					<div class="control-group formSep">
 						<label class="control-label">{lang key='mobile::mobile.selected_area'}</label>
 						<div class="controls selected_area chk_radio">
@@ -167,34 +167,46 @@
 						<label class="control-label">{lang key='mobile::mobile.hot_city'}</label>
 						<div class="controls">
 							<div class="ms-container ms-shipping span12" id="ms-custom-navigation">
-								<div class="ms-selectable ms-mobile-selectable span2">
+								<div class="ms-selectable ms-mobile-selectable span2" style="width: 140px;">
 									<div class="search-header">
-										<input class="span12" type="text" placeholder="{lang key='mobile::mobile.search_country_name'}" autocomplete="off" id="selCountry" />
+										<input class="span12" type="text" placeholder="搜索省份" autocomplete="off" id="selProvinces" />
 									</div>
-									<ul class="ms-list ms-list-mobile nav-list-ready selCountry" data-url="{url path='shipping/region/init' args='target=selProvinces&type=1'}" data-next="selProvinces">
-										<!-- {foreach from=$countries item=country key=key} -->
-										<li class="ms-elem-selectable select_hot_city" data-val="{$country.region_id}"><span>{$country.region_name|escape:html}</span></li>
+									<ul class="ms-list ms-list-mobile nav-list-ready selProvinces" data-url="{url path='setting/region/init' args='target=selCities'}" data-next="selCities">
+										<!-- {foreach from=$provinces item=province key=key} -->
+										<li class="ms-elem-selectable select_hot_city" data-val="{$province.region_id}"><span>{$province.region_name|escape:html}</span></li>
 										<!-- {foreachelse} -->
-										<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{lang key='mobile::mobile.empty_country'}</span></li>
+										<li class="ms-elem-selectable select_hot_city" data-val="0"><span>没有可选的省份地区……</span></li>
 										<!-- {/foreach} -->
 									</ul>
 								</div>
-								<div class="ms-selectable ms-mobile-selectable span2">
+								
+								<div class="ms-selectable ms-mobile-selectable span2" style="width: 140px;">
 									<div class="search-header">
-										<input class="span12" type="text" placeholder="{lang key='mobile::mobile.search_province_name'}" autocomplete="off" id="selProvinces" />
+										<input class="span12" type="text" placeholder="搜索市" autocomplete="off" id="selCities" />
 									</div>
-									<ul class="ms-list ms-list-mobile nav-list-ready selProvinces" data-url="{url path='shipping/region/init' args='target=selCities&type=2'}" data-next="selCities">
-										<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{lang key='mobile::mobile.select_province_first'}</span></li>
+									<ul class="ms-list ms-list-mobile nav-list-ready selCities" data-url="{url path='setting/region/init' args='target=selDistricts'}" data-next="selDistricts">
+										<li class="ms-elem-selectable select_hot_city" data-val="0"><span>请选择市</span></li>
 									</ul>
 								</div>
-								<div class="ms-selectable ms-mobile-selectable span2">
+								
+								<div class="ms-selectable ms-mobile-selectable span2" style="width: 140px;">
 									<div class="search-header">
-										<input class="span12" type="text" placeholder="{lang key='mobile::mobile.search_city_name'}" autocomplete="off" id="selCities" />
+										<input class="span12" type="text" placeholder="搜索区/县" autocomplete="off" id="selDistricts" />
 									</div>
-									<ul class="ms-list ms-list-mobile nav-list-ready selCities">
-										<li class="ms-elem-selectable select_hot_city" data-val="0"><span>{lang key='mobile::mobile.select_city_first'}</span></li>
+									<ul class="ms-list ms-list-mobile nav-list-ready selDistricts" data-url="{url path='setting/region/init' args='target=selTown'}" data-next="selTown">
+										<li class="ms-elem-selectable select_hot_city" data-val="0"><span>请选择区/县</span></li>
 									</ul>
 								</div>
+								
+								<div class="ms-selectable ms-mobile-selectable span2" style="width: 140px;">
+									<div class="search-header">
+										<input class="span12" type="text" placeholder="搜索区街道/镇" autocomplete="off" id="selTown" />
+									</div>
+									<ul class="ms-list ms-list-mobile nav-list-ready selTown">
+										<li class="ms-elem-selectable select_hot_city" data-val="0"><span>请选择街道/镇</span></li>
+									</ul>
+								</div>
+								
 							</div>
 						</div>
 					</div>

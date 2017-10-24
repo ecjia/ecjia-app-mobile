@@ -130,6 +130,9 @@ class admin_config extends ecjia_admin {
 		$this->assign('mobile_phone_login_fgcolor', ecjia::config('mobile_phone_login_fgcolor'));
 		$this->assign('mobile_phone_login_bgcolor', ecjia::config('mobile_phone_login_bgcolor'));
 		$mobile_phone_login_bgimage = ecjia::config('mobile_phone_login_bgimage');
+		
+		
+		
 		/*热门城市*/
 		$regions = array ();
 		$mobile_recommend_city = explode(',', ecjia::config('mobile_recommend_city'));
@@ -145,7 +148,12 @@ class admin_config extends ecjia_admin {
 		}
 		
 		$this->assign('mobile_recommend_city', $regions);	
-		$this->assign('countries', $this->db_region->get_regions());
+// 		$this->assign('countries', $this->db_region->get_regions());
+		$provinces = with(new Ecjia\App\Setting\Region)->getProvinces();//获取当前国家的所有省份
+		$this->assign('provinces', $provinces);
+		
+		
+		
 		/*短信提醒*/
 		$order_reminder_type = ecjia::config('order_reminder_type', ecjia::CONFIG_CHECK) ? ecjia::config('order_reminder_type') : 0;
 		$this->assign('order_reminder_type', $order_reminder_type);
