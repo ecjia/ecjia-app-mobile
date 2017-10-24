@@ -636,9 +636,9 @@ class admin_config extends ecjia_admin {
 		return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $list));
 	}
 
-	private function get_regions($type = 0, $parent = 0) {
-		return RC_DB::table('region')->where('region_type', $type)->where('parent_id', $parent)->select('region_id', 'region_name')->get();
-	}
+// 	private function get_regions($type = 0, $parent = 0) {
+// 		return RC_DB::table('region')->where('region_type', $type)->where('parent_id', $parent)->select('region_id', 'region_name')->get();
+// 	}
 }
 
 //end
