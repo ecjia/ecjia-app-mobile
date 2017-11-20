@@ -50,14 +50,11 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * ECJIA移动应用配置模块
  */
 class admin_config extends ecjia_admin {
-	private $db_region;
 	public function __construct() {
 		parent::__construct();
 
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
-		
-		$this->db_region = RC_Loader::load_app_model('region_model', 'shipping');
 		
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
