@@ -56,7 +56,7 @@ class data_module extends api_front implements api_interface {
 		$device		= $this->device;
 
 		$location	= $this->requestData('location', array());
-		$city_id	= $this->requestData('city_id', 0);
+		$city_id	= $this->requestData('city_id');
 
 		$request = null;
 		
@@ -98,7 +98,7 @@ function cycleimage_data($response, $request)
 {
     $request = royalcms('request');
     
-    $city_id	= $request->input('city_id', 0);
+    $city_id	= $request->input('city_id');
     
     $device_client = $request->header('device-client', 'iphone');
     
@@ -120,9 +120,9 @@ function cycleimage_data($response, $request)
 	foreach ($cycleimageDatas as $val) {
 		$player_data[] = array(
 			'photo' => array(
-					'small'      => $val['image'],
-					'thumb'      => $val['image'],
-					'url'        => $val['image'],
+				'small'      => $val['image'],
+				'thumb'      => $val['image'],
+				'url'        => $val['image'],
 			),
 			'url'        => $val['url'],
 			'description'=> $val['text'],
@@ -137,7 +137,7 @@ function cycleimage_data($response, $request)
 function mobile_menu_data($response, $request) {
 	$request = royalcms('request');
 	
-	$city_id	= $request->input('city_id', 0);
+	$city_id	= $request->input('city_id');
 	
 	$device_client = $request->header('device-client', 'iphone');
 	
@@ -240,7 +240,7 @@ function new_goods_data($response, $request) {
 function mobile_home_adsense_group($response, $request) {
     $request = royalcms('request');
     
-    $city_id	= $request->input('city_id', 0);
+    $city_id	= $request->input('city_id');
     
     $device_client = $request->header('device-client', 'iphone');
     
