@@ -56,7 +56,7 @@ class discover_module extends api_front implements api_interface {
 	
 		$request = royalcms('request');
 		
-		$city_id	= $request->input('city_id', 0);
+		$city_id	= $request->input('city_id', '');
 		
 		$device_client = $request->header('device-client', 'iphone');
 		
