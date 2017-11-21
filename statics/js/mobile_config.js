@@ -143,7 +143,7 @@
         },
 
         choose_area: function () {
-            $('.select_hot_city').on('click', function (e) {
+            $('.select_hot_city').off('click').on('click', function (e) {
                 e.preventDefault();
                 var $this = $(this),
                     val = $this.attr('data-val'),
@@ -227,7 +227,7 @@
         },
 
         selected_area: function () {
-            $('.ms-elem-selectable .edit-list a').on('click', function (e) {
+            $('.ms-elem-selectable .edit-list a').off('click').on('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var bool = true;
