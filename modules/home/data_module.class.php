@@ -98,7 +98,7 @@ function cycleimage_data($response, $request)
 {
     $request = royalcms('request');
     
-    $city_id	= $request->input('city_id');
+    $city_id	= $request->input('city_id', 0);
     
     $device_client = $request->header('device-client', 'iphone');
     
@@ -137,7 +137,7 @@ function cycleimage_data($response, $request)
 function mobile_menu_data($response, $request) {
 	$request = royalcms('request');
 	
-	$city_id	= $request->input('city_id');
+	$city_id	= $request->input('city_id', 0);
 	
 	$device_client = $request->header('device-client', 'iphone');
 	
@@ -240,7 +240,7 @@ function new_goods_data($response, $request) {
 function mobile_home_adsense_group($response, $request) {
     $request = royalcms('request');
     
-    $city_id	= $request->input('city_id');
+    $city_id	= $request->input('city_id', 0);
     
     $device_client = $request->header('device-client', 'iphone');
     
