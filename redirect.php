@@ -60,9 +60,7 @@ class redirect extends ecjia_front
         $handle = $request->query('handle');
         
         if ($handle != 'ecjiaopen') {
-            
             $this->showmessage('Invalid parameter', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
-            
         }
         
         $open_type = $request->query('open_type');
@@ -80,6 +78,14 @@ class redirect extends ecjia_front
         {
             $store_id = $request->query('merchant_id');
             $url = RC_Uri::url('merchant/index/init', array('store_id' => $store_id));
+            $url = str_replace(RC_Uri::site_url(), RC_Uri::home_url().'/sites/m', $url);
+            $this->redirect($url);
+        }
+        // 商家收款码跳转
+        elseif ($open_type == 'collectmoney') 
+        {
+            $store_id = $request->query('merchant_id');
+            $url = RC_Uri::url('merchant/quickpay/collectmoney', array('store_id' => $store_id));
             $url = str_replace(RC_Uri::site_url(), RC_Uri::home_url().'/sites/m', $url);
             $this->redirect($url);
         }

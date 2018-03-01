@@ -55,7 +55,7 @@ class GenerateCollectMoney extends AbstractQrcode {
     {
         $args = [
             'handle'        => 'ecjiaopen', 
-            'open_type'     => 'merchant', 
+            'open_type'     => 'collectmoney', 
             'merchant_id'   => $this->id
         ];
         return RC_Uri::url('mobile/redirect/init', $args);
