@@ -14,6 +14,7 @@ class UrlTempQrcode
     {
         if (is_null($url)) {
             $this->url = RC_Uri::current_url();
+            $this->url = str_replace('&_pjax=.ecjia', '', $this->url);
         } else {
             $this->url = $url;
         }
