@@ -4,6 +4,7 @@ namespace Ecjia\App\Mobile;
 
 use RC_Uri;
 use RC_QrCode;
+use RC_Cache;
 
 class UrlTempQrcode 
 {
