@@ -160,7 +160,7 @@
 						<label class="control-label">App Store ID</label>
 						<div class="controls">
 							<input type='text' name='app_store_id' value='{$app_store_id}'>
-							<span class="help-block">Apple应用商城中的应用程序ID。可以从iTunes Link Maker中找到您的应用程序ID，请在搜索字段中输入您的应用程序的名称，然后选择适当的国家和媒体类型。 在结果中，找到您的应用程序并在右侧的列中选择iPhone应用程序链接。 您的应用ID是ID和？mt之间的九位数字。</span>
+							<span class="help-block">Apple应用商城中的应用程序ID。可以从<a href="https://linkmaker.itunes.apple.com/" target="_blank">iTunes Link Maker</a>中找到您的应用程序ID，请在搜索字段中输入您的应用程序的名称，然后选择适当的国家和媒体类型。 在结果中，找到您的应用程序并在右侧的列中选择iPhone应用程序链接。 您的应用ID是ID和？mt之间的九位数字。</span>
 						</div>
 					</div>
 					<div class="control-group formSep">
@@ -168,12 +168,6 @@
 						<div class="controls">
 							<input type='text' name='app_argument' value='{$app_argument}'>
 							<span class="help-block">可以指定从您的网站跳转到iOS应用程序中的相应位置，如不填写为空，会自动获取当前页面地址。</span>
-						</div>
-					</div>
-					<div class="control-group formSep">
-						<label class="control-label">iTunes Link Maker：</label>
-						<div class="controls l_h30">
-							<span class="span6"><a href="https://linkmaker.itunes.apple.com/" target="_blank">https://linkmaker.itunes.apple.com</a></span>
 						</div>
 					</div>
 				<!-- iOS智能广告条end -->
