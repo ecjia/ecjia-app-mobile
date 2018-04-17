@@ -170,6 +170,12 @@
 							<span class="help-block">可以指定从您的网站跳转到iOS应用程序中的相应位置，如不填写为空，会自动获取当前页面地址。</span>
 						</div>
 					</div>
+					<div class="control-group formSep">
+						<label class="control-label">iTunes Link Maker：</label>
+						<div class="controls l_h30">
+							<span class="span6"><a href="https://linkmaker.itunes.apple.com/" target="_blank">https://linkmaker.itunes.apple.com</a></span>
+						</div>
+					</div>
 				<!-- iOS智能广告条end -->
 				
 				<!-- {/if} -->
