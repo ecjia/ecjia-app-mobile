@@ -56,7 +56,11 @@ class mobile_front_hooks {
            #affiliate-data(可选) 是iTunes 分销联盟计划的ID 一般用不到。
            #app-argument（可选）点击『打开』给APP传参数
            $app_id = ecjia::config('app_store_id');
-           $app_argument = ecjia_config::get('app_argument', RC_Uri::current_url());
+           if (ecjia::config('app_argument')) {
+               $app_argument = ecjia::config('app_argument');
+           } else {
+               $app_argument = RC_Uri::current_url();
+           }
            
            echo "<meta name=\"apple-itunes-app\" content=\"app-id={$app_id}, app-argument={$app_argument}\">";
        }
