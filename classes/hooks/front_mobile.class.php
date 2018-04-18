@@ -50,13 +50,13 @@ class mobile_front_hooks {
     
    public static function iOS_Smart_App_Banner() 
    {
-       if (RC_SITE == 'm') {
+       if (RC_SITE == 'm' && ecjia::config('app_store_id')) {
            #content 属性可以传三个参数，以逗号隔开
            #app-id(必选) 填写应用在APPStrore的ID
            #affiliate-data(可选) 是iTunes 分销联盟计划的ID 一般用不到。
            #app-argument（可选）点击『打开』给APP传参数
-           $app_id = '1118895347';
-           $app_argument = RC_Uri::current_url();
+           $app_id = ecjia::config('app_store_id');
+           $app_argument = ecjia_config::get('app_argument', RC_Uri::current_url());
            
            echo "<meta name=\"apple-itunes-app\" content=\"app-id={$app_id}, app-argument={$app_argument}\">";
        }
