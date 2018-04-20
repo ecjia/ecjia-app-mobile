@@ -65,7 +65,7 @@ class redirect extends ecjia_front
         
         $open_type = $request->query('open_type');
         
-        // 商品祥情跳转
+        // 商品详情跳转
         if ($open_type == 'goods_detail') 
         {
             $goods_id = $request->query('goods_id');
