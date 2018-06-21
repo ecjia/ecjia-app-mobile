@@ -57,7 +57,8 @@ return array(
 	'author'        => 'ECJIA TEAM',			/* 作者 */
 	'website'       => 'http://www.ecjia.com',	/* 网址 */
 	'version'       => '1.17.0',					/* 版本号 */
-	'copyright'     => 'ECJIA Copyright 2014.'
+	'copyright'     => 'ECJIA Copyright 2014.',
+    'namespace'     => 'Ecjia\App\Mobile',
 );
 
 // end
