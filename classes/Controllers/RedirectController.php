@@ -87,8 +87,8 @@ class RedirectController extends ecjia_front
             //如果还未解析返回错误信息
             return $this->showmessage('Invalid parameter', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
         }
-        
-        $this->redirect($url);
+
+        return $this->redirect($url);
     }
     
     
