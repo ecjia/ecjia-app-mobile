@@ -66,7 +66,7 @@ class RedirectController extends ecjia_front
         $handle = $this->request->query('handle');
         
         if ($handle != 'ecjiaopen') {
-            $this->showmessage('Invalid parameter', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('Invalid parameter', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
         }
         
         $gets = $this->request->query();
@@ -85,7 +85,7 @@ class RedirectController extends ecjia_front
         
         if (strpos($url, 'ecjiaopen://') === 0) {
             //如果还未解析返回错误信息
-            $this->showmessage('Invalid parameter', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('Invalid parameter', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
         }
         
         $this->redirect($url);
