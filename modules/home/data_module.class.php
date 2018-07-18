@@ -58,7 +58,7 @@ class data_module extends api_front implements api_interface {
 		$location	= $this->requestData('location', array());
 		$city_id	= $this->requestData('city_id');
 
-		$request = null;
+		$request = [];
 		
 		if (is_array($location) && isset($location['latitude']) && isset($location['longitude'])) {
 			$request                     = array('location' => $location);
@@ -68,9 +68,9 @@ class data_module extends api_front implements api_interface {
 			$request['geohash_code']     = $geohash_code;
 			$request['store_id_group']   = RC_Api::api('store', 'neighbors_store_id', array('geohash' => $geohash_code, 'city_id' => $city_id));
 
-			if (empty($request['store_id_group'])) {
-				$request['store_id_group'] = array(0);
-			}
+			// if (empty($request['store_id_group'])) {
+			// 	$request['store_id_group'] = array(0);
+			// }
 		} 
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
@@ -299,8 +299,7 @@ function mobile_home_adsense_group($response, $request) {
 }
 
 function group_goods_data($response, $request) {
-	$request = royalcms('request');
-	$api_version = $request->header('api-version');
+	$api_version = royalcms('request')->header('api-version');
 	
 	if (version_compare($api_version, '1.18', '>=')) {
 		$store_id_arr = $request['store_id_group'];
@@ -397,13 +396,13 @@ function mobile_toutiao_data($response, $request) {
 
 
 RC_Hook::add_filter('api_home_data_runloop', 'cycleimage_data', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'mobile_menu_data', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'promote_goods_data', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'new_goods_data', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'best_goods_data', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'mobile_home_adsense_group', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'group_goods_data', 10, 2);
+RC_Hook::add_filter('api_home_data_runloop', 'mobile_menu_data', 20, 2);
+RC_Hook::add_filter('api_home_data_runloop', 'promote_goods_data', 30, 2);
+RC_Hook::add_filter('api_home_data_runloop', 'new_goods_data', 40, 2);
+RC_Hook::add_filter('api_home_data_runloop', 'best_goods_data', 50, 2);
+RC_Hook::add_filter('api_home_data_runloop', 'mobile_home_adsense_group', 60, 2);
+RC_Hook::add_filter('api_home_data_runloop', 'group_goods_data', 70, 2);
 //RC_Hook::add_filter('api_home_data_runloop', 'mobilebuy_goods_data', 10, 2);
-RC_Hook::add_filter('api_home_data_runloop', 'topic_data', 10, 2);
+RC_Hook::add_filter('api_home_data_runloop', 'topic_data', 80, 2);
 
 // end
