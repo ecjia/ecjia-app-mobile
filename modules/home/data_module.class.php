@@ -68,9 +68,9 @@ class data_module extends api_front implements api_interface {
 			$request['geohash_code']     = $geohash_code;
 			$request['store_id_group']   = RC_Api::api('store', 'neighbors_store_id', array('geohash' => $geohash_code, 'city_id' => $city_id));
 
-			// if (empty($request['store_id_group'])) {
-			// 	$request['store_id_group'] = array(0);
-			// }
+			if (empty($request['store_id_group'])) {
+				$request['store_id_group'] = array(0);
+			}
 		} 
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
