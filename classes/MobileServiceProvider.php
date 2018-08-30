@@ -9,7 +9,7 @@ class MobileServiceProvider extends  AppParentServiceProvider
     
     public function boot()
     {
-        $this->package('ecjia/app-mobile', null, dirname(__DIR__));
+        $this->package('ecjia/app-mobile');
     }
     
     public function register()
