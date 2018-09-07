@@ -74,11 +74,43 @@ class data_module extends api_front implements api_interface {
 		} 
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
+
+
+
 		//流程逻辑开始
-		// runloop 流
-		$response = array();
-		$response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
-		return $response;
+        $api_version = royalcms('request')->header('api-version');
+        if (version_compare($api_version, '1.21', '>=')) {
+
+            $factory = new Ecjia\App\Theme\Factory();
+            $components = [
+                'home_cycleimage',
+                'home_complex_adsense_1',
+                'home_complex_adsense_2',
+                'home_shortcut',
+                'promote_goods',
+                'new_goods',
+                'best_goods',
+                'groupbuy_goods',
+            ];
+
+            $response = collect($components)->mapWithKeys(function($item) use ($factory) {
+                try {
+                    return [$factory->component($item)->handleData()];
+                } catch (InvalidArgumentException $e) {
+                    ecjia_log_notice($e->getMessage());
+                    return [];
+                }
+
+            })->all();
+
+            return $response;
+
+        } else {
+            // runloop 流
+            $response = array();
+            $response = RC_Hook::apply_filters('api_home_data_runloop', $response, $request);//mobile_home_adsense1
+            return $response;
+        }
 
 	}
 }
@@ -389,10 +421,10 @@ function topic_data($response, $request) {
 	return $response;
 }
 
-function mobile_toutiao_data($response, $request) {
-	$response['toutiao'] = $mobile_toutiao_data;
-	return $response;
-}
+//function mobile_toutiao_data($response, $request) {
+//	$response['toutiao'] = $mobile_toutiao_data;
+//	return $response;
+//}
 
 
 RC_Hook::add_filter('api_home_data_runloop', 'cycleimage_data', 10, 2);
