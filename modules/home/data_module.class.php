@@ -206,6 +206,7 @@ function promote_goods_data($response, $request) {
 	);
 
 	$result = RC_Api::api('goods', 'goods_list', $filter);
+	
 	if ( !empty($result['list']) ) {
 		foreach ( $result['list'] as $key => $val ) {
 			$promote_goods_data[] = array(
@@ -226,6 +227,7 @@ function promote_goods_data($response, $request) {
 					),
 					'store_id'					=> $val['store_id'],
 					'store_name'				=> $val['store_name'],
+					'store_logo'				=> $val['store_logo']
 			);
 		}
 	}
@@ -265,6 +267,7 @@ function new_goods_data($response, $request) {
 					),
 					'store_id'		=> $val['store_id'],
 					'store_name'	=> $val['store_name'],
+					'store_logo'	=> $val['store_logo'],
 			);
 		}
 	}
@@ -303,6 +306,7 @@ function best_goods_data($response, $request) {
 					),
 					'store_id'		=> $val['store_id'],
 					'store_name'	=> $val['store_name'],
+					'store_logo'	=> $val['store_logo']
 			);
 		}
 	}
