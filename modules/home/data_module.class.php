@@ -75,35 +75,25 @@ class data_module extends api_front implements api_interface {
 		
 		$device['code'] = isset($device['code']) ? $device['code'] : '';
 
-
-
 		//流程逻辑开始
         $api_version = royalcms('request')->header('api-version');
-      
+       	
 //         if (version_compare($api_version, '1.21', '>=')) {
-
 //             $factory = new Ecjia\App\Theme\Factory();
-//             $components = [
-//                 'home_cycleimage',
-//                 'home_complex_adsense_1',
-//                 'home_complex_adsense_2',
-//                 'home_shortcut',
-//                 'promote_goods',
-//                 'new_goods',
-//                 'best_goods',
-//                 'groupbuy_goods',
-//             ];
-
-//             $response = collect($components)->mapWithKeys(function($item) use ($factory) {
-//                 try {
-//                     return [$factory->component($item)->handleData()];
-//                 } catch (InvalidArgumentException $e) {
-//                     ecjia_log_notice($e->getMessage());
-//                     return [];
-//                 }
-
-//             })->all();
-
+//             $response = [];
+//             $used_components_code = ecjia::config('home_visual_page');
+//             if ($used_components_code) {
+//             	$used_components_code = unserialize($used_components_code);
+//             	$response = collect($used_components_code)->mapWithKeys(function($item) use ($factory) {
+//             		try {
+//             			return [$factory->component($item)->handleData()];
+//             		} catch (InvalidArgumentException $e) {
+//             			ecjia_log_notice($e->getMessage());
+//             			return [];
+//             		}
+            	
+//             	})->all();
+//             }
 //             return $response;
 
 //         } else {
