@@ -54,6 +54,8 @@ class data_module extends api_front implements api_interface {
 
     public function __construct()
     {
+        parent::__construct();
+
         RC_Hook::add_filter('filter_adsense_group_data', [$this, 'filter_adsense_group_data']);
 
         RC_Hook::add_filter('api_home_data_runloop', [$this, 'cycleimage_data'], 10, 2);
