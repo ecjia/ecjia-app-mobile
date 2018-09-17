@@ -50,7 +50,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * news 今日热点
  * @author will.chen
  */
-class news_module extends api_front implements api_interface {
+class home_news_module extends api_front implements api_interface {
 
 	 public function handleRequest(\Royalcms\Component\HttpKernel\Request $request) {
     	$this->authSession();

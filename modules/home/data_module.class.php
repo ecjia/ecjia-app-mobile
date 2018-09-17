@@ -50,7 +50,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * 首页轮播图及推荐数据
  * @author royalwang
  */
-class data_module extends api_front implements api_interface {
+class home_data_module extends api_front implements api_interface {
 
     public function __construct()
     {
