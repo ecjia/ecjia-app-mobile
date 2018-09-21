@@ -145,21 +145,25 @@ class checkin_record_module extends api_front implements api_interface {
 					"more"	=> 0
 			);
 		} else {
-			$db_view = RC_Model::model('mobile/mobile_checkin_viewmodel');
+			//$db_view = RC_Model::model('mobile/mobile_checkin_viewmodel');
+			$dbview = RC_DB::table('mobile_checkin as mc')->leftJoin('users as u', RC_DB::raw('mc.user_id'), '=', RC_DB::raw('u.user_id'));
 			/* 获取数量 */
 			$size    = $this->requestData('pagination.count', 15);
 			$page    = $this->requestData('pagination.page', 1);
 			
-			$checkin_count = $db_view->join(null)->count();
+			//$checkin_count = $db_view->join(null)->count();
+			$checkin_count = $dbview->count(RC_DB::raw('mc.id'));
 			//实例化分页
 			$page_row = new ecjia_page($checkin_count, $size, 6, '', $page);
 			
-			$checkin_result = $db_view
-                    			->field(array('mc.*', 'user_name'))
-                    			->join(array('users'))
-                    			->order(array('checkin_time' => 'DESC'))
-                    			->limit($page_row->limit())
-                    			->select();
+			//$checkin_result = $db_view
+            //        			->field(array('mc.*', 'user_name'))
+            //        			->join(array('users'))
+            //        			->order(array('checkin_time' => 'DESC'))
+            //        			->limit($page_row->limit())
+            //        			->select();
+            
+			$checkin_result   = $dbview->select(RC_DB::raw('mc.*, u.user_name'))->orderBy(RC_DB::raw('mc.checkin_time'))->take($size)->skip($page_row->start_id -1)->get();
 			
 			$checkin_list = array();
 			if (!empty($checkin_result)) {
