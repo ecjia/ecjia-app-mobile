@@ -76,7 +76,7 @@ class checkin_record_module extends api_front implements api_interface {
 		if ($filite_user == 'current') {
 			$this->authSession();
 			
-			$db = RC_Model::model('mobile/mobile_checkin_model');
+			//$db = RC_Model::model('mobile/mobile_checkin_model');
 			
 			$month = RC_Time::local_getdate();
 			// 创建本月开始时间
@@ -84,9 +84,10 @@ class checkin_record_module extends api_front implements api_interface {
 			// 创建本月结束时间
 			$month_end 	= RC_Time::local_mktime(23, 59, 59, $month['mon'], date('t'), $month['year']);
 			
-			$checkin_result = $db
-                			->where(array('user_id' => $_SESSION['user_id'], 'checkin_time >= "'.$month_start.'" and checkin_time <= "'.$month_end.'"'))
-                			->select();
+			//$checkin_result = $db
+            //    			->where(array('user_id' => $_SESSION['user_id'], 'checkin_time >= "'.$month_start.'" and checkin_time <= "'.$month_end.'"'))
+            //    			->select();
+			$checkin_result = RC_DB::table('mobile_checkin')->where('user_id', $_SESSION['user_id'])->where('checkin_time', '>=', $month_start)->where('checkin_time', '<=', $month_end)->get();
 			
 			$checkin_list = array();
 			if (!empty($checkin_result)) {
