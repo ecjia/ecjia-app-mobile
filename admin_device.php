@@ -382,7 +382,7 @@ class admin_device extends ecjia_admin {
 		$count = $device_db->count('id');
 		$page = new ecjia_page($count, 10, 5);
 	
-		$data = $device_db->select('*')->orderby('id', 'desc')->take(10)->skip($page->start_id-1)->get();
+		$data = $device_db->select('*')->orderBy('id', 'desc')->take(10)->skip($page->start_id-1)->get();
 		
 		$arr = array();
 		if (!empty($data)) {

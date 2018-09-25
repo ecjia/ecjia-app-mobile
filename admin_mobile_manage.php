@@ -234,7 +234,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$page  = new ecjia_page ($count, 10, 5);
 		$mobile_manage_list = $db_mobile_manage
 		->where('platform', $code)
-		->orderby('app_id', 'desc')
+		->orderBy('app_id', 'desc')
 		->take(10)
 		->skip($page->start_id-1)
 		->get();
