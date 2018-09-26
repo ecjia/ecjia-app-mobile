@@ -156,9 +156,13 @@ class admin_home_data_module extends api_admin implements api_interface {
 		}
 		
 		$time                 = RC_Time::local_date('Y-m-d', RC_Time::gmtime());
-		$stats_result         = $stats_db->field('FROM_UNIXTIME(access_time, "%Y-%m-%m") as time')->group('ip_address')->having("time = $time")->select();
+		//$stats_result         = $stats_db->field('FROM_UNIXTIME(access_time, "%Y-%m-%m") as time')->group('ip_address')->having("time = $time")->select();
+		$stats_result		  = RC_DB::table('stats')->select(RC_DB::raw('FROM_UNIXTIME(access_time, "%Y-%m-%m") as time'))->groupBy(RC_DB::raw('ip_address'))->having('time', '=', $time)->get();
+		
 		$nexttime             = RC_Time::local_date('Y-m-d', RC_Time::gmtime()+24*60*60);
-		$next_stats_result    = $stats_db->field('FROM_UNIXTIME(access_time, "%Y-%m-%m") as time')->group('ip_address')->having("time = $nexttime")->select();
+		//$next_stats_result    = $stats_db->field('FROM_UNIXTIME(access_time, "%Y-%m-%m") as time')->group('ip_address')->having("time = $nexttime")->select();
+		$next_stats_result	  = RC_DB::table('stats')->select(RC_DB::raw('FROM_UNIXTIME(access_time, "%Y-%m-%m") as time'))->groupBy(RC_DB::raw('ip_address'))->having('time', '=', $nexttime)->get();
+		
 		$total_visitors       = round(count($stats_result)*1.2);
 		$next_total_visitors  = round(count($next_stats_result)*1.2);
 		$data['order_stats']  =  array(
