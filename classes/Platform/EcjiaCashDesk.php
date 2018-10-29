@@ -97,6 +97,7 @@ class EcjiaCashDesk extends ApplicationPlatform
     protected $payments = [
     	'pay_cash',
     	'pay_balance',
+    	'pay_shouqianba',
     	'pay_koolyun_alipay',
     	'pay_koolyun_unionpay',
     	'pay_koolyun_wxpay',
