@@ -104,7 +104,7 @@ class merchant_privilege extends ecjia_merchant
         $priv_group = \Ecjia\App\Mobile\Frameworks\Component\Purview::load_purview($priv_str);
 
         /* 赋值 */
-        $this->assign('ur_here', sprintf(__('分派公众平台权限 [ %s ] '), $user_name));
+        $this->assign('ur_here', sprintf(__('分派掌柜权限 [ %s ] '), $user_name));
         $this->assign('priv_group', $priv_group);
         $this->assign('user_id', $userid);
 
