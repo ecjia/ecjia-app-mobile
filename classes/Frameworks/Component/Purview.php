@@ -44,20 +44,32 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-namespace Ecjia\App\Mobile\Users;
+namespace Ecjia\App\Mobile\Frameworks\Component;
 
-use Ecjia\System\Frameworks\Meta\MetaAbstract;
+use ecjia_purview;
+use RC_Api;
 
-class StaffUserAllotPurview extends MetaAbstract
+/**
+ * @author royalwang
+ *
+ */
+class Purview extends ecjia_purview
 {
     
-    protected $meta_key     = 'shopkeeper_allot_purview';
-    
-    protected $object_type  = 'ecjia.staff';
-    
-    protected $object_group = 'staff_user';
-    
-    protected $object_id;
-    
-    
+    protected function loadSystemPurivew($priv_str)
+    {
+    	//
+    }
+
+    /**
+     * 请求权限API，获取配置数据
+     * @param string $app_dir
+     */
+    protected function requestPurviewApi($app_dir)
+    {
+        $res = RC_Api::api($app_dir, 'shopkeeper_purview');
+        return $res;
+    }
 }
+
+// end

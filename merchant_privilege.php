@@ -84,7 +84,7 @@ class merchant_privilege extends ecjia_merchant
         ecjia_merchant_screen::get_current_screen()->add_option('current_code', 'shopkeeper_privilege_menu');
 
         /* 获得该管理员的权限 */
-        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, session('store_id'), '\Ecjia\App\Mobile\Users\StaffUserAllotPurview');
+        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, session('store_id'), '\Ecjia\App\Mobile\Frameworks\Users\StaffUserAllotPurview');
         $user_name = $user->getUserName();
         $priv_str = $user->getActionList();
         $group_id = $user->getRoleId();
@@ -101,7 +101,7 @@ class merchant_privilege extends ecjia_merchant
             return $this->showmessage(__('您不能对此管理员的权限进行任何操作！'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $link));
         }
 
-        $priv_group = \Ecjia\App\Platform\Frameworks\Component\Purview::load_purview($priv_str);
+        $priv_group = \Ecjia\App\Mobile\Frameworks\Component\Purview::load_purview($priv_str);
 
         /* 赋值 */
         $this->assign('ur_here', sprintf(__('分派公众平台权限 [ %s ] '), $user_name));
@@ -125,7 +125,7 @@ class merchant_privilege extends ecjia_merchant
 
         $userid = $this->request->input('user_id');
         /* 取得当前管理员用户名 */
-        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, session('store_id'), '\Ecjia\App\Mobile\Users\StaffUserAllotPurview');
+        $user = new Ecjia\App\Merchant\Frameworks\Users\StaffUser($userid, session('store_id'), '\Ecjia\App\Mobile\Frameworks\Users\StaffUserAllotPurview');
         $user_name = $user->getUserName();
 
         /* 更新管理员的权限 */
