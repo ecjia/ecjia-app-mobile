@@ -356,7 +356,7 @@ class admin_config extends ecjia_admin {
 	 * 处理移动应用基本信息
 	 */
 	public function update_basic_info() {
-		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
 		
 		$code = $_POST['code'];
 		
@@ -432,7 +432,7 @@ class admin_config extends ecjia_admin {
 	 * 处理app下载地址
 	 */
 	public function update_app_download_url() {
-		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
 		
 		$code = $_POST['code'];
 		
@@ -505,7 +505,7 @@ class admin_config extends ecjia_admin {
 	 * 处理移动应用广告位设置
 	 */
 	public function update_mobile_adsense_set() {
-		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
 		
 		$code = $_POST['code'];
 		
@@ -532,7 +532,7 @@ class admin_config extends ecjia_admin {
 	 * 处理应用截图
 	 */
 	public function update_app_screenshots() {
-		$this->admin_priv('mobile_config_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
 		
 		$code = $_POST['code'];
 		
@@ -584,7 +584,7 @@ class admin_config extends ecjia_admin {
 	 * 删除上传文件
 	 */
 	public function del() {
-		$this->admin_priv('mobile_config_delete', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('mobile_config_manage', ecjia::MSGTYPE_JSON);
 		
 		$disk = RC_Filesystem::disk();
 		$code = trim($_GET['code']);
