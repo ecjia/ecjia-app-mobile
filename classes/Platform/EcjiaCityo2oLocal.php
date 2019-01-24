@@ -62,7 +62,7 @@ class EcjiaCityo2oLocal extends ApplicationPlatform
      * 名称
      * @var string
      */
-    protected $name = 'ECJia到家';
+    protected $name = 'ECJia到家Local';
     
     /**
      * 描述
