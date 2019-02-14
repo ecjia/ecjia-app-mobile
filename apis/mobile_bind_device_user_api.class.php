@@ -75,7 +75,7 @@ class mobile_bind_device_user_api extends Component_Event_Api
                 RC_DB::table('mobile_device')->where('device_udid', $options['udid'])
                     ->where('device_client', $options['client'])
                     ->where('device_code', $options['code'])
-                    ->where('user_type', 'user')
+                    ->where('user_type', $user_type)
                     ->update(
                         array('user_id' => $user_id, 'update_time' => RC_Time::gmtime())
                     );
