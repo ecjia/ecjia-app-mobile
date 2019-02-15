@@ -103,6 +103,28 @@ class ApplicationFactory
     
         return $platforms;
     }
+
+    /**
+     * 获取所有支持平台，并携带分组信息，二维数组
+     * @return array
+     */
+    public function getPlatformsWithGroup()
+    {
+        $platforms = [];
+
+        foreach (self::$factories as $key => $value) {
+            $object = new $value;
+            $group = $object->getGroup();
+
+            if (empty($group)) {
+                $group = 'unknown';
+            }
+
+            $platforms[$group][$key] = $object;
+        }
+
+        return $platforms;
+    }
     
     /**
      * 获取某个平台操作对象
