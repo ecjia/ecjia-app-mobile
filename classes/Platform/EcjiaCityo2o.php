@@ -61,18 +61,6 @@ class EcjiaCityo2o extends ApplicationPlatform
     protected $code = 'ecjia-cityo2o';
     
     /**
-     * 名称
-     * @var string
-     */
-    protected $name = 'ECJia到家';
-    
-    /**
-     * 描述
-     * @var string
-     */
-    protected $description = 'ECJia到家App是一款集消费者、商家、配送员于一体的客户端。';
-    
-    /**
      * 图标
      * @var string
      */
@@ -142,8 +130,13 @@ class EcjiaCityo2o extends ApplicationPlatform
     	MobileAction::MERCHANT_SUGGEST_LIST,
     	MobileAction::MERCHANT_DETAIL,
     ];
-    
-    
+
+
+    public function __construct()
+    {
+        $this->name = __('ECJia到家', 'mobile');
+        $this->description = __('ECJia到家App是一款集消费者、商家、配送员于一体的客户端。', 'mobile');
+    }
     
     
 }

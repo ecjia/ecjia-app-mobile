@@ -59,19 +59,7 @@ class EcjiaShop extends ApplicationPlatform
      * @var string
      */
     protected $code = 'ecjia-shop';
-    
-    /**
-     * 名称
-     * @var string
-     */
-    protected $name = 'ECJia到家门店';
-    
-    /**
-     * 描述
-     * @var string
-     */
-    protected $description = 'ECJia到家门店App是一款以附近门店为中心的消费者购物客户端。';
-    
+
     /**
      * 图标
      * @var string
@@ -124,8 +112,12 @@ class EcjiaShop extends ApplicationPlatform
         MobileAction::USER_ADDRESS,
         MobileAction::USER_WALLET,
     ];
-    
-    
-    
+
+
+    public function __construct()
+    {
+        $this->name = __('ECJia到家门店', 'mobile');
+        $this->description = __('ECJia到家门店App是一款以附近门店为中心的消费者购物客户端。', 'mobile');
+    }
     
 }

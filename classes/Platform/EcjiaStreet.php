@@ -61,18 +61,6 @@ class EcjiaStreet extends ApplicationPlatform
     protected $code = 'ecjia-street';
     
     /**
-     * 名称
-     * @var string
-     */
-    protected $name = 'ECJia云店';
-    
-    /**
-     * 描述
-     * @var string
-     */
-    protected $description = 'ECJia云店App是一款多站点通用的消费者购物客户端。';
-    
-    /**
      * 图标
      * @var string
      */
@@ -141,6 +129,11 @@ class EcjiaStreet extends ApplicationPlatform
     	MobileAction::MERCHANT_SUGGEST_LIST,
     	MobileAction::MERCHANT_DETAIL,
     ];
-    
+
+    public function __construct()
+    {
+        $this->name = __('ECJia云店', 'mobile');
+        $this->description = __('ECJia云店App是一款多站点通用的消费者购物客户端。', 'mobile');
+    }
     
 }

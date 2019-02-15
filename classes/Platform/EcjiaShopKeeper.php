@@ -59,19 +59,7 @@ class EcjiaShopKeeper extends ApplicationPlatform
      * @var string
      */
     protected $code = 'ecjia-shopkeeper';
-    
-    /**
-     * 名称
-     * @var string
-     */
-    protected $name = 'ECJia掌柜';
-    
-    /**
-     * 描述
-     * @var string
-     */
-    protected $description = 'ECJia掌柜App是一款多站点通用的商家管理客户端。';
-    
+
     /**
      * 图标
      * @var string
@@ -110,6 +98,11 @@ class EcjiaShopKeeper extends ApplicationPlatform
         MobileAction::MAIN,
         MobileAction::WEBVIEW,
     ];
-    
+
+    public function __construct()
+    {
+        $this->name = __('ECJia掌柜', 'mobile');
+        $this->description = __('ECJia掌柜App是一款多站点通用的商家管理客户端。', 'mobile');
+    }
     
 }

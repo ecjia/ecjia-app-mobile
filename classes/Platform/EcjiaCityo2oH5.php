@@ -59,18 +59,6 @@ class EcjiaCityo2oH5 extends ApplicationPlatform
     protected $code = 'ecjia-cityo2o-h5';
     
     /**
-     * 名称
-     * @var string
-     */
-    protected $name = 'ECJia到家H5';
-    
-    /**
-     * 描述
-     * @var string
-     */
-    protected $description = 'ECJia到家H5是一款用于微信公众号上使用的微商城。';
-    
-    /**
      * 图标
      * @var string
      */
@@ -98,7 +86,13 @@ class EcjiaCityo2oH5 extends ApplicationPlatform
         'pay_alipay',
         'pay_wxpay',
     ];
-    
+
+
+    public function __construct()
+    {
+        $this->name = __('ECJia到家H5', 'mobile');
+        $this->description = __('ECJia到家H5是一款用于微信公众号上使用的微商城。', 'mobile');
+    }
     
     
 }

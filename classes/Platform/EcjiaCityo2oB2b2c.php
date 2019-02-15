@@ -61,18 +61,6 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform
     protected $code = 'ecjia-cityo2o-b2b2c';
     
     /**
-     * 名称
-     * @var string
-     */
-    protected $name = 'ECJia到家商城';
-    
-    /**
-     * 描述
-     * @var string
-     */
-    protected $description = 'ECJia到家商城是一款全新的电商业务APP，去除了O2O定位的限制，适合跨区域的购物与配送。';
-    
-    /**
      * 图标
      * @var string
      */
@@ -142,8 +130,12 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform
     	MobileAction::MERCHANT_SUGGEST_LIST,
     	MobileAction::MERCHANT_DETAIL,
     ];
-    
-    
-    
+
+
+    public function __construct()
+    {
+        $this->name = __('ECJia到家商城', 'mobile');
+        $this->description = __('ECJia到家商城是一款全新的电商业务APP，去除了O2O定位的限制，适合跨区域的购物与配送。', 'mobile');
+    }
     
 }

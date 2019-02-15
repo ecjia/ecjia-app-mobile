@@ -59,18 +59,6 @@ class EcjiaCityo2oLocal extends ApplicationPlatform
     protected $code = 'ecjia-cityo2o-local';
     
     /**
-     * 名称
-     * @var string
-     */
-    protected $name = 'ECJia到家Local';
-    
-    /**
-     * 描述
-     * @var string
-     */
-    protected $description = 'ECJia到家是一款用于微信公众号上使用的微商城。';
-    
-    /**
      * 图标
      * @var string
      */
@@ -98,7 +86,11 @@ class EcjiaCityo2oLocal extends ApplicationPlatform
         'pay_alipay',
         'pay_wxpay_pc',
     ];
-    
-    
+
+    public function __construct()
+    {
+        $this->name = __('ECJia到家Local', 'mobile');
+        $this->description = __('ECJia到家是一款用于微信公众号上使用的微商城。', 'mobile');
+    }
     
 }
