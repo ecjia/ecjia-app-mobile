@@ -52,7 +52,12 @@ use Ecjia\App\Mobile\MobileAction;
 
 class EcjiaExpress extends ApplicationPlatform
 {
-    
+
+    /**
+     * 分组
+     * @var string
+     */
+    protected $group = 'cloud';
     
     /**
      * 代号标识

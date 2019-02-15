@@ -51,7 +51,12 @@ use Ecjia\App\Mobile\ApplicationPlatform;
 
 class EcjiaWeapp extends ApplicationPlatform
 {
-    
+
+    /**
+     * 分组
+     * @var string
+     */
+    protected $group = 'wechat';
     
     /**
      * 代号标识
@@ -84,7 +89,7 @@ class EcjiaWeapp extends ApplicationPlatform
                 'device_code' => '6015',
             ],
         ];
-        
+
     }
     
     

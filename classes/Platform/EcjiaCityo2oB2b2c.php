@@ -52,7 +52,12 @@ use Ecjia\App\Mobile\MobileAction;
 
 class EcjiaCityo2oB2b2c extends ApplicationPlatform
 {
-    
+
+    /**
+     * 分组
+     * @var string
+     */
+    protected $group = 'app';
     
     /**
      * 代号标识

@@ -52,6 +52,12 @@ use Royalcms\Component\Database\Eloquent\Collection;
 class ApplicationPlatform
 {
     /**
+     * 分组
+     * @var string
+     */
+    protected $group;
+
+    /**
      * 代号标识
      * @var string
      */

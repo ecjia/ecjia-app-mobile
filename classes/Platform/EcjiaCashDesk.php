@@ -52,7 +52,11 @@ use Ecjia\App\Mobile\MobileAction;
 
 class EcjiaCashDesk extends ApplicationPlatform
 {
-    
+    /**
+     * 分组
+     * @var string
+     */
+    protected $group = 'cashier';
     
     /**
      * 代号标识

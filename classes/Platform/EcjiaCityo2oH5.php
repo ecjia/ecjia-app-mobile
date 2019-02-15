@@ -50,7 +50,12 @@ use Ecjia\App\Mobile\ApplicationPlatform;
 
 class EcjiaCityo2oH5 extends ApplicationPlatform
 {
-    
+
+    /**
+     * 分组
+     * @var string
+     */
+    protected $group = 'wechat';
     
     /**
      * 代号标识

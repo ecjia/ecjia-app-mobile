@@ -52,7 +52,11 @@ use Ecjia\App\Mobile\MobileAction;
 
 class EcjiaShop extends ApplicationPlatform
 {
-    
+    /**
+     * 分组
+     * @var string
+     */
+    protected $group = 'app';
     
     /**
      * 代号标识

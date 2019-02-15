@@ -50,7 +50,12 @@ use Ecjia\App\Mobile\ApplicationPlatform;
 
 class EcjiaCityo2oLocal extends ApplicationPlatform
 {
-    
+
+    /**
+     * 分组
+     * @var string
+     */
+    protected $group = 'local';
     
     /**
      * 代号标识
