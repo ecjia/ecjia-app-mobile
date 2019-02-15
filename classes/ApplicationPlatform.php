@@ -98,7 +98,14 @@ class ApplicationPlatform
      * @var array
      */
     protected $opentypes = [];
-    
+
+    /**
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
     
     public function getCode()
     {
