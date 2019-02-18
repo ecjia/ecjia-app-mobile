@@ -90,30 +90,27 @@ class admin_mobile_manage extends ecjia_admin {
 		ecjia_screen::$current_screen->remove_last_nav_here();
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('移动产品'));
 		$this->assign('ur_here', '移动产品');
-		
-		$data = $this->product_list();
-		$this->assign('data', $data);
+
+        $group_list = array();
+
+        $factory = new Ecjia\App\Mobile\ApplicationFactory();
+        $pruduct_data = $factory->getPlatformsWithGroup();
+
+        foreach ($pruduct_data as $group => $lists) {
+
+            $group_list[] = array(
+                'group' => $group,
+                'label' => \Ecjia\App\Mobile\ApplicationPlatformGroup::getGroupLabel($group),
+                'sort' => \Ecjia\App\Mobile\ApplicationPlatformGroup::getGroupSort($group),
+                'data' => $lists,
+            );
+        }
+
+        $group_list = array_sort($group_list, 'sort');
+
+		$this->assign('pruduct_data', $group_list);
 				
 		$this->display('mobile_manage_list.dwt');
-	}
-	
-	/**
-	 * 获取产品
-	 */
-	private function product_list() {
-	
-		$pruduct_list = array();
-	
-		$factory = new Ecjia\App\Mobile\ApplicationFactory();
-		$pruduct_data = $factory->getPlatforms();
-		foreach ($pruduct_data as $k => $event) {
-			$pruduct_list[$k]['code'] = $event->getCode();
-			$pruduct_list[$k]['name'] = $event->getName();
-			$pruduct_list[$k]['description'] = $event->getDescription();
-			$pruduct_list[$k]['icon'] = $event->getIcon();
-		}
-	
-		return $pruduct_list;
 	}
 	
 	/**
