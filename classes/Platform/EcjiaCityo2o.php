@@ -159,7 +159,16 @@ class EcjiaCityo2o extends ApplicationPlatform implements HomeComponentInterface
      */
     public function getDefinedHomeComponent()
     {
-        return [];
+        return [
+            'best_goods', //店长推荐
+            'home_complex_adsense_one', //广告组一
+            'home_complex_adsense_two', //广告组二
+            'home_cycleimage', //轮播图
+            'home_shortcut', //快捷菜单
+            'new_goods', //新品推荐
+            'promote_goods', //促销商品
+            'scanqrcode_and_membercode', //扫码购
+        ];
     }
     
 }

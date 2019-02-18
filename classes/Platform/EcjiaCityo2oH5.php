@@ -116,7 +116,16 @@ class EcjiaCityo2oH5 extends ApplicationPlatform implements HomeComponentInterfa
      */
     public function getDefinedHomeComponent()
     {
-        return [];
+        return [
+            'best_goods', //店长推荐
+            'groupbuy_goods', //团购商品
+            'home_complex_adsense_one', //广告组一
+            'home_complex_adsense_two', //广告组二
+            'home_cycleimage', //轮播图
+            'home_shortcut', //快捷菜单
+            'new_goods', //新品推荐
+            'promote_goods', //促销商品
+        ];
     }
     
 }
