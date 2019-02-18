@@ -48,9 +48,10 @@
 namespace Ecjia\App\Mobile\Platform;
 
 use Ecjia\App\Mobile\ApplicationPlatform;
+use Ecjia\App\Mobile\Contracts\HomeComponentInterface;
 use Ecjia\App\Mobile\MobileAction;
 
-class EcjiaCityo2oB2b2c extends ApplicationPlatform
+class EcjiaCityo2oB2b2c extends ApplicationPlatform implements HomeComponentInterface
 {
 
     /**
@@ -142,5 +143,23 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform
         $this->name = __('ECJia到家商城', 'mobile');
         $this->description = __('ECJia到家商城是一款全新的电商业务APP，去除了O2O定位的限制，适合跨区域的购物与配送。', 'mobile');
     }
-    
+
+    /**
+     * 获取首页可用模块组件
+     * @return mixed
+     */
+    public function getHomeComponent()
+    {
+
+    }
+
+
+    /**
+     * 获取首页定义允许使用的模块组件
+     * @return mixed
+     */
+    public function getDefinedHomeComponent()
+    {
+        return [];
+    }
 }
