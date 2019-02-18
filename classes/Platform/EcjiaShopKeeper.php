@@ -56,7 +56,7 @@ class EcjiaShopKeeper extends ApplicationPlatform
      * 分组
      * @var string
      */
-    protected $group = 'app';
+    protected $group = 'cloud';
     
     /**
      * 代号标识
