@@ -91,14 +91,23 @@ class ApplicationClientOption implements ApplicationOptionInterface
             $hander = new OptionTypeSerialize();
         }
 
-        $model = new MobileOptionModel();
-        $model->platform = $this->client->getPlatformCode();
-        $model->app_id = $this->client->getDeviceCode();
-        $model->option_type = $hander->getOptionType();
-        $model->option_name = $key;
-        $model->option_value = $hander->encodeOptionVaule($value);
+        $model = MobileOptionModel::where('platform', $this->client->getPlatformCode())
+            ->where('app_id', $this->client->getDeviceCode())->where('option_name', $key)->first();
 
-        $model->save();
+        if (empty($model)) {
+            $model = new MobileOptionModel();
+            $model->platform = $this->client->getPlatformCode();
+            $model->app_id = $this->client->getDeviceCode();
+            $model->option_type = $hander->getOptionType();
+            $model->option_name = $key;
+            $model->option_value = $hander->encodeOptionVaule($value);
+
+            return $model->save();
+        }
+
+        //修改
+        $model->option_value = $hander->encodeOptionVaule($value);
+        return $model->save();
     }
 
 

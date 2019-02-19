@@ -90,14 +90,23 @@ class ApplicationPlatformOption implements ApplicationOptionInterface, OptionSto
             $hander = new OptionTypeSerialize();
         }
 
-        $model = new MobileOptionModel();
-        $model->platform = $this->platform->getCode();
-        $model->app_id = 0;
-        $model->option_type = $hander->getOptionType();
-        $model->option_name = $key;
-        $model->option_value = $hander->encodeOptionVaule($value);
+        $model = MobileOptionModel::where('platform', $this->platform->getCode())
+            ->where('app_id', 0)->where('option_name', $key)->first();
 
-        $model->save();
+        if (empty($model)) {
+            $model = new MobileOptionModel();
+            $model->platform = $this->platform->getCode();
+            $model->app_id = 0;
+            $model->option_type = $hander->getOptionType();
+            $model->option_name = $key;
+            $model->option_value = $hander->encodeOptionVaule($value);
+
+            return $model->save();
+        }
+
+        //修改
+        $model->option_value = $hander->encodeOptionVaule($value);
+        return $model->save();
     }
 
 

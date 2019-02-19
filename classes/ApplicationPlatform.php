@@ -159,27 +159,15 @@ class ApplicationPlatform
      */
     public function getOptions()
     {
-        return (new ApplicationPlatformOption($this))->getOptions();
+        return $this->getApplicationPlatformOption()->getOptions();
     }
-    
+
     /**
-     *
-     * @return array
+     * @return ApplicationPlatformOption
      */
-    public function processOptionValue(Collection $data)
+    public function getApplicationPlatformOption()
     {
-        $result = $data->mapWithKeys(function ($item) {
-             
-            if ($item->option_type == 'serialize') {
-                $values = unserialize($item->option_value);
-            } else {
-                $values = $item->option_value;
-            }
-        
-            return array($item->option_name => $values);
-        })->all();
-        
-        return $result;
+        return new ApplicationPlatformOption($this);
     }
     
     /**

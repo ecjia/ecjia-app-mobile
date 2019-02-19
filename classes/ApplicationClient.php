@@ -112,12 +112,20 @@ class ApplicationClient
     }
 
     /**
+     * @return ApplicationClientOption
+     */
+    public function getApplicationClientOption()
+    {
+        return new ApplicationClientOption($this);
+    }
+
+    /**
      *
      * @return array
      */
     public function getOptions()
     {
-        return (new ApplicationClientOption($this))->getOptions();
+        return $this->getApplicationClientOption()->getOptions();
     }
     
     /**
