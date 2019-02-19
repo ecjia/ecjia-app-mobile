@@ -10,10 +10,12 @@ namespace Ecjia\App\Mobile;
 
 
 use Ecjia\App\Mobile\Contracts\ApplicationOptionInterface;
+use Ecjia\App\Mobile\Contracts\OptionStorageInterface;
 use Ecjia\App\Mobile\Models\MobileOptionModel;
+use Ecjia\App\Mobile\Options\OptionTypeSerialize;
 use Royalcms\Component\Database\Eloquent\Collection;
 
-class ApplicationPlatformOption implements ApplicationOptionInterface
+class ApplicationPlatformOption implements ApplicationOptionInterface, OptionStorageInterface
 {
 
     protected $platform;
@@ -63,7 +65,8 @@ class ApplicationPlatformOption implements ApplicationOptionInterface
         $result = $data->mapWithKeys(function ($item) {
 
             if ($item->option_type == 'serialize') {
-                $values = unserialize($item->option_value);
+                $hander = new OptionTypeSerialize();
+                $values = $hander->decodeOptionVaule($item->option_value);
             } else {
                 $values = $item->option_value;
             }
@@ -73,5 +76,43 @@ class ApplicationPlatformOption implements ApplicationOptionInterface
 
         return $result;
     }
+
+
+    /**
+     * 保存选项值
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    public function saveOption($key, $value, $hander = null)
+    {
+        if (is_null($hander)) {
+            $hander = new OptionTypeSerialize();
+        }
+
+        $model = new MobileOptionModel();
+        $model->platform = $this->platform->getCode();
+        $model->app_id = 0;
+        $model->option_type = $hander->getOptionType();
+        $model->option_name = $key;
+        $model->option_value = $hander->encodeOptionVaule($value);
+
+        $model->save();
+    }
+
+
+    /**
+     * 删除选项值
+     * @param $key
+     * @return mixed
+     */
+    public function deleteOption($key)
+    {
+        return MobileOptionModel::where('platform', $this->platform->getCode())
+            ->where('app_id', 0)
+            ->where('option_name', $key)
+            ->delete();
+    }
+
 
 }

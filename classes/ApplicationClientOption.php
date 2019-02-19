@@ -11,6 +11,8 @@ namespace Ecjia\App\Mobile;
 
 use Ecjia\App\Mobile\Contracts\ApplicationOptionInterface;
 use Ecjia\App\Mobile\Models\MobileManageModel;
+use Ecjia\App\Mobile\Models\MobileOptionModel;
+use Ecjia\App\Mobile\Options\OptionTypeSerialize;
 use Royalcms\Component\Database\Eloquent\Collection;
 
 class ApplicationClientOption implements ApplicationOptionInterface
@@ -74,6 +76,43 @@ class ApplicationClientOption implements ApplicationOptionInterface
         })->all();
 
         return $result;
+    }
+
+
+    /**
+     * 保存选项值
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    public function saveOption($key, $value, $hander = null)
+    {
+        if (is_null($hander)) {
+            $hander = new OptionTypeSerialize();
+        }
+
+        $model = new MobileOptionModel();
+        $model->platform = $this->client->getPlatformCode();
+        $model->app_id = $this->client->getDeviceCode();
+        $model->option_type = $hander->getOptionType();
+        $model->option_name = $key;
+        $model->option_value = $hander->encodeOptionVaule($value);
+
+        $model->save();
+    }
+
+
+    /**
+     * 删除选项值
+     * @param $key
+     * @return mixed
+     */
+    public function deleteOption($key)
+    {
+        return MobileOptionModel::where('platform', $this->client->getPlatformCode())
+            ->where('app_id', $this->client->getDeviceCode())
+            ->where('option_name', $key)
+            ->delete();
     }
 
 }

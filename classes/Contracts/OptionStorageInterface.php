@@ -18,7 +18,7 @@ interface OptionStorageInterface
      * @param $value
      * @return mixed
      */
-    public function saveOption($key, $value);
+    public function saveOption($key, $value, $hander = null);
 
     /**
      * 获取选项值
