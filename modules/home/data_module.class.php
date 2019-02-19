@@ -99,7 +99,7 @@ class home_data_module extends api_front implements api_interface {
 
             $components = \Ecjia\App\Theme\ComponentPlatform::getUseingHomeComponentWithData($this->device['code']);
 
-            $response = $components->all();
+            $response = $components->values();
 
             return $response;
 
