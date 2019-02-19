@@ -13,6 +13,7 @@ use Ecjia\App\Mobile\Contracts\ApplicationOptionInterface;
 use Ecjia\App\Mobile\Models\MobileManageModel;
 use Ecjia\App\Mobile\Models\MobileOptionModel;
 use Ecjia\App\Mobile\Options\OptionTypeSerialize;
+use Exception;
 use Royalcms\Component\Database\Eloquent\Collection;
 
 class ApplicationClientOption implements ApplicationOptionInterface
@@ -20,6 +21,12 @@ class ApplicationClientOption implements ApplicationOptionInterface
 
     protected $client;
 
+    protected $device;
+
+    /**
+     * ApplicationClientOption constructor.
+     * @param ApplicationClient $client
+     */
     public function __construct(ApplicationClient $client)
     {
         $this->client = $client;
@@ -35,6 +42,7 @@ class ApplicationClientOption implements ApplicationOptionInterface
         $model = new MobileManageModel();
 
         $data = $model->platform($this->client->getPlatformCode())->app($this->client->getDeviceCode())->enabled()->first();
+
         if ($data) {
             $data = $data->options;
             $data = $this->processOptionValue($data);
@@ -83,6 +91,7 @@ class ApplicationClientOption implements ApplicationOptionInterface
      * 保存选项值
      * @param $key
      * @param $value
+     * @throws Exception
      * @return mixed
      */
     public function saveOption($key, $value, $hander = null)
@@ -91,13 +100,18 @@ class ApplicationClientOption implements ApplicationOptionInterface
             $hander = new OptionTypeSerialize();
         }
 
+        $this->device = $this->client->getMobileDevice();
+        if (empty($this->device)) {
+            throw new Exception('当前设置未激活，请去设备管理中激活设备！');
+        }
+
         $model = MobileOptionModel::where('platform', $this->client->getPlatformCode())
-            ->where('app_id', $this->client->getDeviceCode())->where('option_name', $key)->first();
+            ->where('app_id', $this->device['app_id'])->where('option_name', $key)->first();
 
         if (empty($model)) {
             $model = new MobileOptionModel();
             $model->platform = $this->client->getPlatformCode();
-            $model->app_id = $this->client->getDeviceCode();
+            $model->app_id = $this->device['app_id'];
             $model->option_type = $hander->getOptionType();
             $model->option_name = $key;
             $model->option_value = $hander->encodeOptionVaule($value);

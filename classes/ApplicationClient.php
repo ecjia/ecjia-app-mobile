@@ -2,6 +2,8 @@
 
 namespace Ecjia\App\Mobile;
 
+use Ecjia\App\Mobile\Models\MobileManageModel;
+
 class ApplicationClient
 {
     /**
@@ -148,6 +150,32 @@ class ApplicationClient
         }
 
         return $value;
+    }
+
+    /**
+     * 获取所有的设备信息，device_code作索引
+     * @return array | null
+     */
+    public function getMobileDevice()
+    {
+        $model = MobileManageModel::where('platform', $this->getPlatform()->getCode())
+            ->where('device_code', $this->device_code)
+            ->enabled()
+            ->first();
+
+        $result = [];
+        if ($model) {
+            $result = array(
+                'app_id'          => $model->app_id,
+                'app_name'        => $model->app_name,
+                'bundle_id'       => $model->bundle_id,
+                'device_code'     => $model->device_code,
+                'device_client'   => $model->device_client,
+                'platform'        => $model->platform
+            );
+        }
+
+        return $result;
     }
     
 }

@@ -46,6 +46,7 @@
 //
 namespace Ecjia\App\Mobile;
 
+use Ecjia\App\Mobile\Models\MobileManageModel;
 use Royalcms\Component\Database\Eloquent\Collection;
 
 class ApplicationPlatform
@@ -193,6 +194,30 @@ class ApplicationPlatform
 
         return $result->get($name);
     }
-    
-    
+
+    /**
+     * 获取启用所有的设备信息，device_code作索引
+     * @return array | null
+     */
+    public function getMobileDevices()
+    {
+        $data = MobileManageModel::where('platform', $this->getCode())->enabled()->groupBy('device_code')->get();
+
+        $result = [];
+        if ($data) {
+            $data->map(function($item) use (& $result) {
+                $data = array(
+                    'app_id'          => $item->app_id,
+                    'app_name'        => $item->app_name,
+                    'bundle_id'       => $item->bundle_id,
+                    'device_code'     => $item->device_code,
+                    'device_client'   => $item->device_client,
+                    'platform'        => $item->platform
+                );
+
+                $result[$item->device_code] = $data;
+            });
+        }
+        return $result;
+    }
 }
