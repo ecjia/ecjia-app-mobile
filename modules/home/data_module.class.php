@@ -103,23 +103,6 @@ class home_data_module extends api_front implements api_interface {
 
             return $response;
 
-//            $factory = new Ecjia\App\Theme\Factory();
-////            $response = [];
-////            $used_components_code = ecjia::config('home_visual_page');
-////            if ($used_components_code) {
-////            	$used_components_code = unserialize($used_components_code);
-////            	$response = collect($used_components_code)->flatMap(function($item) use ($factory) {
-////            		try {
-////            			return [$factory->component($item)->handleData()];
-////            		} catch (InvalidArgumentException $e) {
-////            			ecjia_log_notice($e->getMessage());
-////            			return [];
-////            		}
-////
-////            	})->all();
-////            }
-
-
         } else {
             // runloop 流
             $response = array();
