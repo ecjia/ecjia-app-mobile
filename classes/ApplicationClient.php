@@ -2,9 +2,6 @@
 
 namespace Ecjia\App\Mobile;
 
-use Ecjia\App\Mobile\Models\MobileOptionModel;
-use Ecjia\App\Mobile\Models\MobileManageModel;
-
 class ApplicationClient
 {
     /**

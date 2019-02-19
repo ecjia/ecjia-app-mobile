@@ -46,7 +46,6 @@
 //
 namespace Ecjia\App\Mobile;
 
-use Ecjia\App\Mobile\Models\MobileOptionModel;
 use Royalcms\Component\Database\Eloquent\Collection;
 
 class ApplicationPlatform
