@@ -171,15 +171,15 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform implements HomeComponentInte
     public function getDefinedHomeComponent()
     {
         return [
-            'best_goods', //店长推荐
-            'home_complex_adsense_one', //广告组一
-            'home_complex_adsense_two', //广告组二
             'home_cycleimage', //轮播图
             'home_shortcut', //快捷菜单
-            'new_goods', //新品推荐
-            'promote_goods', //促销商品
-            'topic', //主题街
             'toutiao', //商家头条
+            'topic', //主题街
+            'home_complex_adsense_one', //广告组一
+            'home_complex_adsense_two', //广告组二
+            'promote_goods', //促销商品
+            'new_goods', //新品推荐
+            'best_goods', //店长推荐
         ];
     }
 }
