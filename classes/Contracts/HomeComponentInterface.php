@@ -11,6 +11,13 @@ interface HomeComponentInterface
 {
 
     /**
+     * 获取首页默认模块组件
+     * @return mixed
+     */
+    public function getHomeComponent();
+
+
+    /**
      * 获取首页定义允许使用的模块组件
      * @return mixed
      */

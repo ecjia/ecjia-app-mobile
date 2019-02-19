@@ -100,6 +100,25 @@ class EcjiaCityo2oLocal extends ApplicationPlatform implements HomeComponentInte
     }
 
     /**
+     * 获取首页默认模块组件
+     * @return mixed
+     */
+    public function getHomeComponent()
+    {
+        return [
+            'home_cycleimage',
+            'home_shortcut',
+            'scanqrcode_and_membercode',
+            'promote_goods',
+            'new_goods',
+            'best_goods',
+            'home_complex_adsense_one',
+            'home_complex_adsense_two',
+            'groupbuy_goods',
+        ];
+    }
+
+    /**
      * 获取首页定义允许使用的模块组件
      * @return mixed
      */
