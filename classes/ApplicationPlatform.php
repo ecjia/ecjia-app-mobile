@@ -160,15 +160,7 @@ class ApplicationPlatform
      */
     public function getOptions()
     {
-        $model = new MobileOptionModel();
-        
-        $data = $model->platform($this->code)->appid(0)->get();
-
-        if ($data) {
-            $data = $this->processOptionValue($data);
-        }
-
-        return $data;
+        return (new ApplicationPlatformOption($this))->getOptions();
     }
     
     /**
