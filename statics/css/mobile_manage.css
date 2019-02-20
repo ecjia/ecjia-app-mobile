@@ -1,5 +1,5 @@
 .outline{
-    background-color: #efefef;
+	background-color: #efefef;
     border-radius: 5px;
     color: #000000;
 	width: 47%;
@@ -11,8 +11,9 @@
 .outline-right{
     margin-top: 6px;
 }
-
-
+.outline-background{
+   background-color: #d1eae2;
+}
 .container_list ul {
 	margin: 0;
 	padding: 0;
