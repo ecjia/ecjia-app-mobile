@@ -96,7 +96,7 @@ class EcjiaCityo2oLocal extends ApplicationPlatform implements HomeComponentInte
     public function __construct()
     {
         $this->name = __('ECJia到家Local', 'mobile');
-        $this->description = __('ECJia到家Local是为了方便在同一进程中调用快速调用API数据的模拟客户端。', 'mobile');
+        $this->description = __('ECJia到家Local是为了方便在同一进程中快速调用API数据的模拟客户端。', 'mobile');
     }
 
     /**
