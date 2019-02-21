@@ -89,7 +89,6 @@
 						<label class="control-label">应用包名：</label>
 						<div class="controls">
 							<input class="span4" name="bundleid" type="text" value="" />
-							<span class="input-must">{lang key='system::system.require_field'}</span> 
 						</div>
 					</div>
 				{/if}
