@@ -96,15 +96,11 @@ class admin_mobile_config extends ecjia_admin {
         $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
 
         $config_groups = $options->getConfigGroups();
-        $config_push = $options->getOptionKey('config_push');
-
-        $platform_clients = $config_push->getMobilePlatformClients();
-        $client = $config_push->getMobilePlatformClient();
+        $config_handler = $options->getOptionKey('config_push');
+        $config_handler->handleClientMenus();
 
         $this->assign('config_groups', $config_groups);
         $this->assign('current_group', 'config_push');
-        $this->assign('platform_clients', $platform_clients);
-        $this->assign('current_client', $client['device_client']);
 
 		$this->assign('ur_here', '客户端配置');
 		$this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
@@ -173,15 +169,11 @@ class admin_mobile_config extends ecjia_admin {
         $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
 
         $config_groups = $options->getConfigGroups();
-        $config_pay = $options->getOptionKey('config_pay');
-
-        $platform_clients = $config_pay->getMobilePlatformClients();
-        $client = $config_pay->getMobilePlatformClient();
+        $config_handler = $options->getOptionKey('config_pay');
+        $config_handler->handleClientMenus();
 
         $this->assign('config_groups', $config_groups);
         $this->assign('current_group', 'config_pay');
-        $this->assign('platform_clients', $platform_clients);
-        $this->assign('current_client', $client['device_client']);
 
 		$this->assign('ur_here', '客户端配置');
 		$this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));

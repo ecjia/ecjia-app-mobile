@@ -8,17 +8,7 @@
 <!-- {/block} -->
 <!-- {block name="main_right_content"} -->
 
-<!-- {if count($platform_clients)} -->
-<ul class="nav nav-tabs">
-    <!-- {foreach from=$platform_clients item=client} -->
-    <!-- {if $client.device_client == $current_client} -->
-    <li class="active"><a href="javascript:;">{$client.app_name}</a></li>
-    <!-- {else} -->
-    <li><a class="data-pjax" href='{url path="mobile/admin_mobile_manage/edit" args="code={$client.platform}&app_id={$client.app_id}"}'>{$client.app_name}</a></li>
-    <!-- {/if} -->
-    <!-- {/foreach} -->
-</ul>
-<!-- {/if} -->
+<!-- {ecjia:hook id=mobile_platform_client_menus} -->
 
 <form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data" >
     <fieldset>

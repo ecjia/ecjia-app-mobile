@@ -9,7 +9,7 @@
 namespace Ecjia\App\Mobile;
 
 use Ecjia\App\Mobile\Models\MobileManageModel;
-
+use RC_Uri;
 
 abstract class ApplicationConfig
 {
@@ -144,5 +144,43 @@ abstract class ApplicationConfig
         return $data;
     }
 
+    /**
+     * 获取客户端菜单
+     */
+    public function displayMobilePlatformClientMenus($route)
+    {
+
+        $platform_clients = $this->getMobilePlatformClients();
+        $current_client = $this->getMobilePlatformClient();
+
+        $outHtml = '';
+
+        if (count($platform_clients)) {
+
+            $outHtml = '<ul class="nav nav-tabs">' . PHP_EOL;
+
+            foreach ($platform_clients as $client) {
+
+                if ($client['device_client'] == $current_client['device_client']) {
+
+                    $outHtml .= '<li class="active"><a href="javascript:;">' . $client['app_name'] . '</a></li>' . PHP_EOL;
+
+                } else {
+
+                    $url = RC_Uri::url($route, [
+                        'code' => $client['platform'],
+                        'app_id' => $client['app_id'],
+                    ]);
+                    $outHtml .= '<li><a class="data-pjax" href="' . $url . '">' . $client['app_name'] . '</a></li>' . PHP_EOL;
+                }
+
+            }
+
+            $outHtml .= '</ul>' . PHP_EOL;
+
+        }
+
+        return $outHtml;
+    }
 
 }

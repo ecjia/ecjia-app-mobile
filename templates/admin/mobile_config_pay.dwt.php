@@ -11,17 +11,7 @@ ecjia.admin.mobile_config.info();
 <!-- {block name="main_right_content"} -->
 <div class="tabbable">
 
-    <!-- {if count($platform_clients)} -->
-    <ul class="nav nav-tabs">
-        <!-- {foreach from=$platform_clients item=client} -->
-        <!-- {if $client.device_client == $current_client} -->
-        <li class="active"><a href="javascript:;">{$client.app_name}</a></li>
-        <!-- {else} -->
-        <li><a class="data-pjax" href='{url path="mobile/admin_mobile_config/config_pay" args="code={$client.platform}&app_id={$client.app_id}"}'>{$client.app_name}</a></li>
-        <!-- {/if} -->
-        <!-- {/foreach} -->
-    </ul>
-    <!-- {/if} -->
+    <!-- {ecjia:hook id=mobile_platform_client_menus} -->
 
     <div class="list-div list media_captcha wookmark warehouse" id="listDiv">
         {if $pay_list}

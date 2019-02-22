@@ -11,6 +11,7 @@ namespace Ecjia\App\Mobile\Metables;
 use Ecjia\App\Mobile\ApplicationConfig;
 use Ecjia\App\Mobile\ApplicationConfigOptions;
 use RC_Uri;
+use RC_Hook;
 
 class ConfigClient extends ApplicationConfig
 {
@@ -45,6 +46,12 @@ class ConfigClient extends ApplicationConfig
         ]);
     }
 
+    public function handleClientMenus()
+    {
+        RC_Hook::add_action('mobile_platform_client_menus', function() {
+            echo $this->displayMobilePlatformClientMenus('mobile/admin_mobile_manage/edit');
+        });
+    }
 
 
 }

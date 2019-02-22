@@ -12,6 +12,7 @@ namespace Ecjia\App\Mobile\Metables;
 use Ecjia\App\Mobile\ApplicationConfig;
 use Ecjia\App\Mobile\ApplicationConfigOptions;
 use RC_Uri;
+use RC_Hook;
 
 class ConfigPay extends ApplicationConfig
 {
@@ -44,5 +45,13 @@ class ConfigPay extends ApplicationConfig
             'app_id' => $this->options->getAppId(),
         ]);
     }
+
+    public function handleClientMenus()
+    {
+        RC_Hook::add_action('mobile_platform_client_menus', function() {
+            echo $this->displayMobilePlatformClientMenus('mobile/admin_mobile_config/config_pay');
+        });
+    }
+
 
 }
