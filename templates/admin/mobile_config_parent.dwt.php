@@ -13,22 +13,7 @@
 
 <div class="row-fluid">
     <div class="span3">
-
-        <div class="setting-group m_b20">
-            <span class="setting-group-title"><i class="fontello-icon-cog"></i>{t domain="mobile"}应用配置{/t}</span>
-            <ul class="nav nav-list m_t10">
-                <!-- {foreach from=$config_groups item=group} -->
-                <li>
-                    <a class="setting-group-item
-                            {if $group.code == $current_group}
-                            llv-active
-                            {/if}
-                            " href="{$group.link}">{$group.name}</a>
-                </li>
-                <!-- {/foreach} -->
-            </ul>
-        </div>
-
+        <!-- {ecjia:hook id=mobile_platform_config_menus} -->
     </div>
 
     <div class="span9">
