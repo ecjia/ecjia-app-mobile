@@ -118,7 +118,7 @@ class ApplicationConfig
         $clients = $clients->all();
 
         if (in_array('all', $this->clients)) {
-            if (count($collection) > 1) {
+            if (count($collection)) {
                 array_unshift($clients, [
                     'app_id' => 0,
                     'app_name' => __('统一设置', 'mobile'),
