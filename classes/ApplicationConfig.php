@@ -136,9 +136,9 @@ class ApplicationConfig
     public function getMobilePlatformClient($app_id)
     {
         $clients = $this->getMobilePlatformClients($this->platform);
-
+        
         $data = collect($clients)->where('app_id', $app_id)->first();
-        if (empty($client)) {
+        if (empty($data)) {
             $data = collect($clients)->first();
         }
 
