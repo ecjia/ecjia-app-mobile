@@ -147,10 +147,6 @@ class admin_mobile_manage extends ecjia_admin {
 		->select('app_id', 'device_client', 'status', 'app_name')
 		->get();
 		
-		if($database){
-			$this->assign('default_select', $database);
-		} 
-		
 		foreach ($database as $key => $val) {
 			$database[$val['device_client']] = $val;
 			unset($database[$key]);

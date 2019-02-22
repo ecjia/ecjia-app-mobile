@@ -16,28 +16,6 @@
 	<div class="span12">
 		<div class="container_list">
 			<ul>
-				<!-- 默认 -->
-				<li>
-					<p style="text-align: right;">
-						{if $default_select}<img src="{$ok_img}" />{else}<img src="{$error_img}" />{/if}
-					</p>
-					<h2>默认</h2>
-					<h3></h3>
-					<p style="margin-top:25px;">Code：{$config.code}</p>
-					<p style="margin-top:25px;">
-						{if $config.code eq 'ecjia-cityo2o-h5'}
-							<img src="{$h5}"/>
-						{elseif $config.code eq 'ecjia-shop-weapp'}
-							<img src="{$wechant_client}" />
-						{else}
-							<img src="{$Android_img}" /><img src="{$iPhone_img}" />
-						{/if}
-					</p>
-					<p style="margin-top:60px;">
-						<a style="cursor:pointer;"  class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_config/config_push", "code={$config.code}")}'><span>配置</span></a>
-					</p>
-				</li>
-				
 				<!-- {foreach from=$data item=list} -->
 					<li>
 					    {if $list.app_id}
