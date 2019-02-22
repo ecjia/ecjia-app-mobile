@@ -92,6 +92,15 @@ class EcjiaCityo2oLocal extends ApplicationPlatform
         'pay_wxpay_pc',
     ];
 
+    /**
+     * 应用支持的配置选项
+     * @var array
+     */
+    protected $options = [
+        'config_client',
+        'config_pay',
+    ];
+
     public function __construct()
     {
         $this->name = __('ECJia到家Local', 'mobile');

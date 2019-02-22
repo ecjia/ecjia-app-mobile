@@ -9,20 +9,20 @@
 namespace Ecjia\App\Mobile;
 
 use Ecjia\App\Mobile\Models\MobileManageModel;
-use RC_Uri;
 
-class ApplicationConfig
+
+abstract class ApplicationConfig
 {
 
     /**
      * @var string 配置项名字 key
      */
-    protected $name;
+    protected $code;
 
     /**
      * @var string 配置项显示名字
      */
-    protected $label;
+    protected $name;
 
     /**
      * @var string 配置项链接
@@ -35,9 +35,9 @@ class ApplicationConfig
     protected $clients = [];
 
     /**
-     * @var string 配置项属于平台
+     * @var ApplicationConfigOptions
      */
-    protected $platform;
+    protected $options;
 
     /**
      * @var \Ecjia\App\Mobile\ApplicationFactory
@@ -56,35 +56,34 @@ class ApplicationConfig
         return self::$factory;
     }
 
-
-    public static function getConfigGroups($code, $app_id)
+    public function getCode()
     {
-
-        $defaults = [
-
-            [
-                'name' => 'config_push',
-                'label' => '推送配置',
-                'link' => RC_Uri::url('mobile/admin_mobile_config/config_push', [
-                    'code' => $code,
-                    'app_id' => $app_id,
-                ]),
-            ],
-
-            [
-                'name' => 'config_pay',
-                'label' => '支付配置',
-                'link' => RC_Uri::url('mobile/admin_mobile_config/config_pay', [
-                    'code' => $code,
-                    'app_id' => $app_id,
-                ]),
-            ],
-
-        ];
-
-        return $defaults;
+        return $this->code;
     }
 
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    abstract public function getLink();
+
+    public function toArray()
+    {
+        return [
+            'code' => $this->code,
+            'name' => $this->name,
+            'link' => $this->getLink(),
+        ];
+    }
+
+    public function setApplicationConfigOptions(ApplicationConfigOptions $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
 
     /**
      * 获取支持首页模块化的产品多客户端
@@ -93,7 +92,7 @@ class ApplicationConfig
      */
     public function getMobilePlatformClients()
     {
-        $collection = MobileManageModel::platform($this->platform)->get();
+        $collection = MobileManageModel::platform($this->options->getPlatform()->getCode())->get();
 
         $clients = $collection->filter(function ($item) {
 
@@ -108,7 +107,7 @@ class ApplicationConfig
             return [
                 'app_id' => $item->app_id,
                 'app_name' => $item->app_name,
-                'platform' => $item->platform,
+                'platform' => $this->options->getPlatform()->getCode(),
                 'device_client' => $item->device_client,
                 'device_code' => $item->device_code,
             ];
@@ -122,7 +121,7 @@ class ApplicationConfig
                 array_unshift($clients, [
                     'app_id' => 0,
                     'app_name' => __('统一设置', 'mobile'),
-                    'platform' => $this->platform,
+                    'platform' => $this->options->getPlatform()->getCode(),
                     'device_client' => 'all',
                     'device_code' => 0,
                 ]);
@@ -133,11 +132,11 @@ class ApplicationConfig
     }
 
 
-    public function getMobilePlatformClient($app_id)
+    public function getMobilePlatformClient()
     {
-        $clients = $this->getMobilePlatformClients($this->platform);
+        $clients = $this->getMobilePlatformClients();
         
-        $data = collect($clients)->where('app_id', $app_id)->first();
+        $data = collect($clients)->where('app_id', $this->options->getAppId())->first();
         if (empty($data)) {
             $data = collect($clients)->first();
         }

@@ -78,6 +78,15 @@ class EcjiaWeapp extends ApplicationPlatform
         'pay_wxpay_weapp',
     ];
 
+    /**
+     * 应用支持的配置选项
+     * @var array
+     */
+    protected $options = [
+        'config_client',
+        'config_pay',
+    ];
+
     public function __construct()
     {
         $this->name = __('ECJia到家门店小程序', 'mobile');

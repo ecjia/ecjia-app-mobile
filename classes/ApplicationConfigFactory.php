@@ -44,80 +44,81 @@
 //
 //  ---------------------------------------------------------------------------------
 //
+namespace Ecjia\App\Mobile;
 
-namespace Ecjia\App\Mobile\Platform;
+use RC_Hook;
+use RC_Cache;
+use InvalidArgumentException;
 
-use Ecjia\App\Mobile\ApplicationPlatform;
-use Ecjia\App\Mobile\MobileAction;
-
-class EcjiaPOS extends ApplicationPlatform
+class ApplicationConfigFactory
 {
-    /**
-     * 分组
-     * @var string
-     */
-    protected $group = 'cashier';
     
-    /**
-     * 代号标识
-     * @var string
-     */
-    protected $code = 'ecjia-pos';
+    protected static $factories;
     
-    /**
-     * 图标
-     * @var string
-     */
-    protected $icon = '/statics/images/pos.png';
-    
-    /**
-     * 支持的客户端类型
-     * @var array
-     */
-    protected $clients = [
-        [
-            'device_client' => 'android',
-            'device_name' => 'Android',
-            'device_code' => '8011',
-        ]
-    ];
-        
-    /**
-     * 支持的支付方式
-     * @var array
-     */
-    protected $payments = [
-    	'pay_cash',
-    	'pay_balance',
-    	'pay_shouqianba',
-    	'pay_koolyun_alipay',
-    	'pay_koolyun_unionpay',
-    	'pay_koolyun_wxpay',
-    ];
-    
-    
-    /**
-     * 支持的opentype类型
-     * @var array
-     */
-    protected $opentypes = [
-        MobileAction::MAIN,
-        MobileAction::WEBVIEW,
-    ];
-
-    /**
-     * 应用支持的配置选项
-     * @var array
-     */
-    protected $options = [
-        'config_client',
-        'config_pay',
-    ];
-
     public function __construct()
     {
-        $this->name = __('ECJia收银POS', 'mobile');
-        $this->description = __('ECJia收银POS App是一款多站点通用的商家POS机收银终端。', 'mobile');
+        self::$factories = $this->getFactories();
     }
+    
+    public function getFactories()
+    {
+        $cache_key = 'mobile_application_config_factories';
+    
+        $factories = RC_Cache::app_cache_get($cache_key, 'mobile');
 
+        if (empty($factories)) {
+    
+            $dir = __DIR__ . '/Metables';
+    
+            $platforms = royalcms('files')->files($dir);
+
+            $factories = [];
+    
+            foreach ($platforms as $key => $value) {
+                $value = str_replace($dir . '/', '', $value);
+                $value = str_replace('.php', '', $value);
+                $className = __NAMESPACE__ . '\Metables\\' . $value;
+                
+                $key = with(new $className)->getCode();
+                $factories[$key] = $className;
+            }
+    
+            RC_Cache::app_cache_set($cache_key, $factories, 'mobile', 10080);
+        }
+    
+        return RC_Hook::apply_filters('ecjia_mobile_config_filter', $factories);
+    }
+    
+    /**
+     * 获取所有支持平台
+     * @return array
+     */
+    public function getOptionKeys()
+    {
+        $platforms = [];
+    
+        foreach (self::$factories as $key => $value) {
+            $platforms[$key] = new $value();
+        }
+    
+        return $platforms;
+    }
+    
+    /**
+     * 获取某个平台操作对象
+     * @param string $code  平台代号
+     * @throws InvalidArgumentException
+     * @return \Ecjia\App\Mobile\ApplicationPlatform
+     */
+    public function getOptionKey($code)
+    {
+        if (!array_key_exists($code, self::$factories)) {
+            throw new InvalidArgumentException("Application Option key '$code' is not supported.");
+        }
+    
+        $className = self::$factories[$code];
+    
+        return new $className();
+    }
+    
 }

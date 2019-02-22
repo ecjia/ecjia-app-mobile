@@ -117,6 +117,15 @@ class EcjiaShop extends ApplicationPlatform
         MobileAction::USER_WALLET,
     ];
 
+    /**
+     * 应用支持的配置选项
+     * @var array
+     */
+    protected $options = [
+        'config_client',
+        'config_push',
+        'config_pay',
+    ];
 
     public function __construct()
     {
