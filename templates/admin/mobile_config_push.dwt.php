@@ -39,7 +39,7 @@ ecjia.admin.mobile_config.info();
                 <div class="control-group formSep">
                     <label class="control-label">App Key：</label>
                     <div class="controls">
-                        <input class="span4" name="push_umeng[app_key]" type="text" value="{$data.option_value.app_key}" />
+                        <input class="span6" name="push_umeng[app_key]" type="text" value="{$data.option_value.app_key}" />
                         <span class="input-must">{lang key='system::system.require_field'}</span>
                     </div>
                 </div>
@@ -47,7 +47,7 @@ ecjia.admin.mobile_config.info();
                 <div class="control-group formSep">
                     <label class="control-label">App Secret：</label>
                     <div class="controls">
-                        <input class="span4" name="push_umeng[app_secret]" type="text" value="{$data.option_value.app_secret}" />
+                        <input class="span6" name="push_umeng[app_secret]" type="text" value="{$data.option_value.app_secret}" />
                         <span class="input-must">{lang key='system::system.require_field'}</span>
                     </div>
                 </div>

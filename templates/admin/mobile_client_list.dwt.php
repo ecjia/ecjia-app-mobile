@@ -37,8 +37,7 @@
 							 	{/if}
 							</p>
 							<p style="margin-top:60px;">
-								<a style="cursor:pointer;"  class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_manage/edit", "code={$config.code}&app_id={$list.app_id}")}'>查看</a>
-								<a style="cursor:pointer;"  class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_config/config_push", "code={$config.code}&app_id={$list.app_id}")}'>配置</a>
+								<a style="cursor:pointer;"  class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_manage/edit", "code={$config.code}&app_id={$list.app_id}")}'>配置</a>
 							</p>
 					    {else}
 						    <p style="text-align: right;"><img src="{$error_img}" /></p>
