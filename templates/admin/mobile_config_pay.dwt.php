@@ -33,11 +33,11 @@ ecjia.admin.mobile_config.info();
                         {$val.pay_name}<br>
                         <div class="title">{$val.pay_code}</div><br>
                         <span class="ecjiaf-fs1">
-								{if $val.enabled eq 0}
-									<a class="switch" href="javascript:;" data-url='{RC_Uri::url("mobile/admin_mobile_config/enable", "pay_code={$val.pay_code}&code={$code}&app_id={$app_id}")}' title="启用">点击启用</a>
-								{else}
-									<a class="switch" href="javascript:;" data-url='{RC_Uri::url("mobile/admin_mobile_config/disable", "pay_code={$val.pay_code}&code={$code}&app_id={$app_id}")}' title="禁用">点击禁用</a>
-									&nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" href='{url path="payment/admin_plugin/edit" args="code={$val.pay_code}"}'>插件配置</a></span>
+						{if $val.enabled eq 0}
+							<a class="switch" href="javascript:;" data-url='{RC_Uri::url("mobile/admin_mobile_config/enable", "pay_code={$val.pay_code}&code={$code}&app_id={$app_id}")}' title="启用">点击启用</a>
+						{else}
+							<a class="switch" href="javascript:;" data-url='{RC_Uri::url("mobile/admin_mobile_config/disable", "pay_code={$val.pay_code}&code={$code}&app_id={$app_id}")}' title="禁用">点击禁用</a>
+							&nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" href='{url path="payment/admin_plugin/edit" args="code={$val.pay_code}"}'>插件配置</a></span>
                         {/if}
                     </div>
                 </div>
