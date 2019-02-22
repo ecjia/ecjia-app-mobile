@@ -92,11 +92,14 @@ class admin_mobile_config extends ecjia_admin {
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端配置'));
 
 
-        $config_groups = \Ecjia\App\Mobile\ApplicationConfig::getConfigGroups($code, $app_id);
-        $config_push = new \Ecjia\App\Mobile\Meta\ConfigPush($code);
+        $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
+        $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
+
+        $config_groups = $options->getConfigGroups();
+        $config_push = $options->getOptionKey('config_push');
 
         $platform_clients = $config_push->getMobilePlatformClients();
-        $client = $config_push->getMobilePlatformClient($app_id);
+        $client = $config_push->getMobilePlatformClient();
 
         $this->assign('config_groups', $config_groups);
         $this->assign('current_group', 'config_push');
@@ -166,12 +169,14 @@ class admin_mobile_config extends ecjia_admin {
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端配置'));
 
 
-        $config_groups = \Ecjia\App\Mobile\ApplicationConfig::getConfigGroups($code, $app_id);
+        $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
+        $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
 
-        $config_pay = new \Ecjia\App\Mobile\Meta\ConfigPay($code);
+        $config_groups = $options->getConfigGroups();
+        $config_pay = $options->getOptionKey('config_pay');
 
         $platform_clients = $config_pay->getMobilePlatformClients();
-        $client = $config_pay->getMobilePlatformClient($app_id);
+        $client = $config_pay->getMobilePlatformClient();
 
         $this->assign('config_groups', $config_groups);
         $this->assign('current_group', 'config_pay');

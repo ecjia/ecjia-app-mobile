@@ -20,10 +20,10 @@
                 <!-- {foreach from=$config_groups item=group} -->
                 <li>
                     <a class="setting-group-item
-                            {if $group.name == $current_group}
+                            {if $group.code == $current_group}
                             llv-active
                             {/if}
-                            " href="{$group.link}">{$group.label}</a>
+                            " href="{$group.link}">{$group.name}</a>
                 </li>
                 <!-- {/foreach} -->
             </ul>
