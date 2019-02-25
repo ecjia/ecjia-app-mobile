@@ -132,9 +132,11 @@ abstract class ApplicationConfig
     }
 
 
-    public function getMobilePlatformClient()
+    public function getMobilePlatformClient(array $clients = null)
     {
-        $clients = $this->getMobilePlatformClients();
+        if (is_null($clients)) {
+            $clients = $this->getMobilePlatformClients();
+        }
         
         $data = collect($clients)->where('app_id', $this->options->getAppId())->first();
         if (empty($data)) {
