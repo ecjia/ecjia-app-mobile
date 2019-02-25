@@ -84,6 +84,38 @@ class admin_device extends ecjia_admin {
 	 */
 	public function init() {
 		$this->admin_priv('device_manage');
+
+        $code = trim($this->request->input('code'));
+        $app_id   = intval($this->request->input('app_id'));
+
+        $meta_key = 'mobile_device';
+        $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
+        $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
+        $options->handleConfigMenus($meta_key);
+        $config_handler = $options->getOptionKey($meta_key);
+        $config_handler->handleClientMenus();
+
+        $platform_clients = $config_handler->getMobilePlatformClients();
+
+        $platform_clients = collect($platform_clients)->map(function($item) {
+            if ($item['device_client'] == 'all') {
+                $item['app_name'] = __('全部', 'mobile');
+            }
+
+            return $item;
+        })->push(
+            [
+                "app_id" => -1,
+                "app_name" => "回收站",
+                "platform" => "ecjia-cityo2o",
+                "device_client" => "recyclebin",
+                "device_code" => 0,
+            ]
+        )->all();
+
+        $current_client = $config_handler->getMobilePlatformClient($platform_clients);
+
+//        dd($platform_clients);
 		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_device_list'));
 		
@@ -91,7 +123,12 @@ class admin_device extends ecjia_admin {
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_device_manage')));
 		
 		$device_list = $this->get_device_list();
+
+        $this->assign('code', $code);
+        $this->assign('app_id', $app_id);
 		$this->assign('device_list', $device_list);
+		$this->assign('platform_clients', $platform_clients);
+		$this->assign('current_client', $current_client['device_client']);
 		$this->assign('search_action', RC_Uri::url('mobile/admin_device/init'));
 				
 		$this->display('device_list.dwt');

@@ -1,5 +1,5 @@
 <?php defined('IN_ECJIA') or exit('No permission resources.');?>
-<!-- {extends file="ecjia.dwt.php"} -->
+<!-- {extends file="mobile_config_parent.dwt.php"} -->
 
 <!-- {block name="footer"} -->
 <script type="text/javascript">
@@ -7,28 +7,15 @@
 </script>
 <!-- {/block} -->
 
-<!-- {block name="main_content"} -->
-<div>
-	<h3 class="heading">
-		<!-- {if $ur_here}{$ur_here}{/if} -->
-		{if $action_link}
-		<a class="btn plus_or_reply data-pjax" href="{$action_link.href}" id="sticky_a"><i class="fontello-icon-plus"></i>{$action_link.text}</a>
-		{/if}
-	</h3>
-</div>
+<!-- {block name="main_right_content"} -->
 
-<!-- <div class="row-fluid"> -->
-	<!-- <div class="choose_list span12">  -->
-	<ul class="nav nav-pills">
-		<li class="{if $device_list.filter.deviceval eq '0'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=0"}'>{lang key='mobile::mobile.all'}<span class="badge badge-info">{$device_list.msg_count.count}</span></a></li>
-		<li class="{if $device_list.filter.deviceval eq '1'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=1"}'>{lang key='mobile::mobile.android'}<span class="badge badge-info">{$device_list.msg_count.android}</span></a></li>
-		<li class="{if $device_list.filter.deviceval eq '2'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=2"}'>{lang key='mobile::mobile.iphone'}<span class="badge badge-info">{$device_list.msg_count.iphone}</span></a></li>
-		<li class="{if $device_list.filter.deviceval eq '3'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=3"}'>{lang key='mobile::mobile.ipad'}<span class="badge badge-info">{$device_list.msg_count.ipad}</span></a></li>
-		<li class="{if $device_list.filter.deviceval eq '4'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=4"}'>{lang key='mobile::mobile.cashdesk'}<span class="badge badge-info">{$device_list.msg_count.cashier}</span></a></li>
-		<li class="{if $device_list.filter.deviceval eq '5'}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="deviceval=5"}'>{lang key='mobile::mobile.recycle_bin'}<span class="badge badge-info">{$device_list.msg_count.trashed}</span></a></li>
-	</ul>
-	<!-- </div> -->
-<!-- </div> -->
+<!-- {if $platform_clients} -->
+<ul class="nav nav-pills">
+    <!-- {foreach $platform_clients as $client} -->
+    <li class="{if $client.device_client eq $current_client}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="code={$client.platform}&app_id={$client.app_id}"}'>{$client.app_name}<span class="badge badge-info">{$device_list.msg_count.count}</span></a></li>
+    <!-- {/foreach} -->
+</ul>
+<!-- {/if} -->
 
 <!-- 批量操作和搜索 -->
 <div class="row-fluid batch" >
