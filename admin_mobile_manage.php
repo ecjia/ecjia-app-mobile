@@ -262,11 +262,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$code = $_GET['code'];
         $app_id   = intval($_GET['app_id']);
 
-        $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
-        $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
-        $options->handleConfigMenus('config_client');
-        $config_handler = $options->getOptionKey('config_client');
-        $config_handler->handleClientMenus();
+        RC_Hook::do_action('mobile_config_metable_loading', $code, $app_id, 'config_client');
 
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理', RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('查看客户端'));

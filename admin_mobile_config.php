@@ -91,13 +91,7 @@ class admin_mobile_config extends ecjia_admin {
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理', RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端配置'));
 
-
-        $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
-        $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
-        $options->handleConfigMenus('config_push');
-        $config_handler = $options->getOptionKey('config_push');
-        $config_handler->handleClientMenus();
-
+        RC_Hook::do_action('mobile_config_metable_loading', $code, $app_id, 'config_push');
 
 		$this->assign('ur_here', '客户端配置');
 		$this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
@@ -161,11 +155,7 @@ class admin_mobile_config extends ecjia_admin {
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理', RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端配置'));
 
-        $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
-        $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
-        $options->handleConfigMenus('config_pay');
-        $config_handler = $options->getOptionKey('config_pay');
-        $config_handler->handleClientMenus();
+        RC_Hook::do_action('mobile_config_metable_loading', $code, $app_id, 'config_pay');
 
 		$this->assign('ur_here', '客户端配置');
 		$this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
