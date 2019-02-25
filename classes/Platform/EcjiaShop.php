@@ -123,6 +123,8 @@ class EcjiaShop extends ApplicationPlatform
      */
     protected $options = [
         'config_client',
+        'mobile_device',
+
         'config_push',
         'config_pay',
     ];

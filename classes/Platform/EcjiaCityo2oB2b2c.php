@@ -143,6 +143,8 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform implements HomeComponentInte
      */
     protected $options = [
         'config_client',
+        'mobile_device',
+
         'config_push',
         'config_pay',
     ];

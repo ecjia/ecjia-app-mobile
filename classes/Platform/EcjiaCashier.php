@@ -113,6 +113,8 @@ class EcjiaCashier extends ApplicationPlatform
      */
     protected $options = [
         'config_client',
+        'mobile_device',
+
         'config_pay',
     ];
 

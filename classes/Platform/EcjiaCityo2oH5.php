@@ -99,6 +99,8 @@ class EcjiaCityo2oH5 extends ApplicationPlatform implements HomeComponentInterfa
      */
     protected $options = [
         'config_client',
+        'mobile_device',
+
         'config_pay',
     ];
 

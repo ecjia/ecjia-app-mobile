@@ -84,6 +84,8 @@ class EcjiaWeapp extends ApplicationPlatform
      */
     protected $options = [
         'config_client',
+        'mobile_device',
+
         'config_pay',
     ];
 

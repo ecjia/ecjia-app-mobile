@@ -98,6 +98,8 @@ class EcjiaCityo2oLocal extends ApplicationPlatform
      */
     protected $options = [
         'config_client',
+        'mobile_device',
+
         'config_pay',
     ];
 
