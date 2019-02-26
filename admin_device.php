@@ -109,7 +109,7 @@ class admin_device extends ecjia_admin {
             [
                 "app_id" => -1,
                 "app_name" => "回收站",
-                "platform" => "ecjia-cityo2o",
+                "platform" => $code,
                 "device_client" => "recyclebin",
                 "device_code" => 0,
             ]
