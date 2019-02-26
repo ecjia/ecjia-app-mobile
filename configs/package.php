@@ -60,6 +60,7 @@ return array(
 	'copyright'     => 'ECJIA Copyright 2014 ~ 2019.',
     'namespace'     => 'Ecjia\App\Mobile',
     'provider'      => 'MobileServiceProvider',
+    'installer'     => 'Ecjia\App\Mobile\Installer',
 );
 
 // end
