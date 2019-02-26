@@ -117,8 +117,6 @@ class admin_device extends ecjia_admin {
 
         $current_client = $config_handler->getMobilePlatformClient($platform_clients);
 
-//        dd($current_client);
-		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_device_list'));
 		
 		ecjia_screen::get_current_screen()->remove_last_nav_here();

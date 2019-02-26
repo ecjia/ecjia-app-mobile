@@ -22,10 +22,6 @@ class MobileDeviceManage
 
     protected $current_client;
 
-    protected $device_code;
-
-    protected $device_client;
-
     protected $take = 20;
 
     protected $page = 1;
@@ -34,11 +30,8 @@ class MobileDeviceManage
     {
         $this->platform_clients = collect($platform_clients);
         $this->current_client = $current_client;
-//        $this->device_code = $device_code;
-//        $this->device_client = $device_client;
 
         $this->model = new MobileDeviceModel();
-
 
     }
 
