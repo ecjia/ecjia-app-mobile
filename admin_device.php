@@ -87,6 +87,8 @@ class admin_device extends ecjia_admin {
 
         $code = trim($this->request->input('code'));
         $app_id   = intval($this->request->input('app_id'));
+        $page   = intval($this->request->input('page'));
+        $keywords   = trim($this->request->input('keywords'));
 
         $meta_key = 'mobile_device';
         $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
@@ -115,21 +117,57 @@ class admin_device extends ecjia_admin {
 
         $current_client = $config_handler->getMobilePlatformClient($platform_clients);
 
-//        dd($platform_clients);
+//        dd($current_client);
 		
 		$this->assign('ur_here', RC_Lang::get('mobile::mobile.mobile_device_list'));
 		
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_device_manage')));
-		
-		$device_list = $this->get_device_list();
+
+
+        $MobileDeviceManage = new \Ecjia\App\Mobile\MobileDeviceManage($platform_clients, $current_client);
+
+        if (! empty($keywords)) {
+            $query_callback = function ($query) use ($keywords) {
+                $query->where('device_name', 'like', '%' . ecjia_mysql_like_quote($keywords) . '%');
+            };
+        } else {
+            $query_callback = null;
+        }
+
+		$ecjia_page = null;
+		list($devices, $ecjia_page) = $MobileDeviceManage->getAllDevices($page, function($model) {
+            $model->add_time = RC_Time::local_date(ecjia::config('time_format'), $model->add_time);
+            if ($model->device_client == 'android') {
+                $model->device_client = 'Android';
+            } elseif ($model->device_client == 'iphone') {
+                $model->device_client = 'iPhone';
+            } elseif ($model->device_client == 'ipad'){
+                $model->device_client = 'iPad';
+            }
+            return $model;
+        }, $query_callback);
+		$total = $MobileDeviceManage->getAllDevicesCount();
+
+        $device_list = array(
+            'device_list' => $devices->toArray(), //$arr,
+            'filter' => [
+                'code' => $code,
+                'app_id' => $app_id,
+                'keywords' => $keywords,
+            ], //$filter,
+            'page' => $ecjia_page->show(5), //$page->show(5),
+            'desc' => $ecjia_page->page_desc(), //$page->page_desc(),
+            'msg_count' => $total->toArray(), //$msg_count
+        );
+
 
         $this->assign('code', $code);
         $this->assign('app_id', $app_id);
 		$this->assign('device_list', $device_list);
 		$this->assign('platform_clients', $platform_clients);
 		$this->assign('current_client', $current_client['device_client']);
-		$this->assign('search_action', RC_Uri::url('mobile/admin_device/init'));
+		$this->assign('search_action', RC_Uri::url('mobile/admin_device/init', ['code' => $code, 'app_id' => $app_id]));
 				
 		$this->display('device_list.dwt');
 	}
