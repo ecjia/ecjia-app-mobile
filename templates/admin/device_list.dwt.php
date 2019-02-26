@@ -12,7 +12,8 @@
 <!-- {if $platform_clients} -->
 <ul class="nav nav-pills">
     <!-- {foreach $platform_clients as $client} -->
-    <li class="{if $client.device_client eq $current_client}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="code={$client.platform}&app_id={$client.app_id}"}'>{$client.app_name}<span class="badge badge-info">{$device_list.msg_count.count}</span></a></li>
+    {assign var="count_key" value="{$client.device_client}_count"}
+    <li class="{if $client.device_client eq $current_client}active{/if}"><a class="data-pjax" href='{url path="mobile/admin_device/init" args="code={$client.platform}&app_id={$client.app_id}"}'>{$client.app_name}<span class="badge badge-info">{$device_list.msg_count.{$count_key}}</span></a></li>
     <!-- {/foreach} -->
 </ul>
 <!-- {/if} -->

@@ -12,11 +12,11 @@
 </div>
 
 <div class="row-fluid">
-    <div class="span3">
+    <div class="span2">
         <!-- {ecjia:hook id=mobile_platform_config_menus} -->
     </div>
 
-    <div class="span9">
+    <div class="span10">
     <!-- {block name="main_right_content"} -->
     <!-- {/block} -->
     </div>
