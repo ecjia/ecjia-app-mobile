@@ -262,7 +262,7 @@ class admin_mobile_manage extends ecjia_admin {
 		$code = $_GET['code'];
         $app_id   = intval($_GET['app_id']);
 
-        RC_Hook::do_action('mobile_config_metable_loading', $code, $app_id, 'config_client');
+        $app_id = RC_Hook::apply_filters('mobile_config_appid_filter', $app_id, $code, 'config_client');
 
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('客户端管理', RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here('查看客户端'));
@@ -271,7 +271,7 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$manage_data = RC_DB::table('mobile_manage')->where('app_id', $app_id)->first();
 		
-		if($manage_data['device_client'] == 'iphone'){
+		if ($manage_data['device_client'] == 'iphone'){
 			$manage_data['device_client'] = 'iPhone';
 		} elseif ($manage_data['device_client'] == 'android'){
 			$manage_data['device_client'] = 'Android';

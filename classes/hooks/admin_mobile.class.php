@@ -59,11 +59,11 @@ class mobile_admin_hooks {
    }
 
 
-   public static function mobile_config_metable_loading($code, $app_id, $meta_key)
+   public static function mobile_config_appid_filter($app_id, $code, $meta_key)
    {
 
        if (empty($code)) {
-           return ;
+           return $app_id;
        }
 
        $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
@@ -72,6 +72,9 @@ class mobile_admin_hooks {
        $config_handler = $options->getOptionKey($meta_key);
        $config_handler->handleClientMenus();
 
+       $current_client = $config_handler->getMobilePlatformClient();
+
+       return $current_client['app_id'];
    }
 
     
@@ -79,6 +82,6 @@ class mobile_admin_hooks {
 
 
 RC_Hook::add_action( 'append_admin_setting_group', array('mobile_admin_hooks', 'append_admin_setting_group') );
-RC_Hook::add_action( 'mobile_config_metable_loading', array('mobile_admin_hooks', 'mobile_config_metable_loading'), 10, 3 );
+RC_Hook::add_filter( 'mobile_config_appid_filter', array('mobile_admin_hooks', 'mobile_config_appid_filter'), 10, 3 );
 
 // end
