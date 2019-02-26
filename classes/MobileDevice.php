@@ -59,9 +59,11 @@ use ecjia_page;
  */
 class MobileDevice
 {
- 	const NORMAL 	 = 1;//正常
+ 	const NORMAL 	 = 0;//正常
+
+    const TRASH 	 = 1;//回收站
  	const LOCKED 	 = 2;//锁定
-	
+
 
      /**
      * 移动设备更新

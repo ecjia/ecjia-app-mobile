@@ -77,13 +77,13 @@ class MobileDeviceManage
             })->pluck('device_code')->all();
 
             $count = $this->model
-                ->where('in_status', 0)
+                ->where('in_status', 1)
                 ->whereIn('device_code', $clients)->count();
 
             $page_instance = new ecjia_page($count, $this->take, '', $page);
 
             $data = $this->model
-                ->where('in_status', 0)
+                ->where('in_status', 1)
                 ->whereIn('device_code', $clients)
                 ->where(function ($query) use ($query_callback) {
                     if (is_callable($query_callback)) {
