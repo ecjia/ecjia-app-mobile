@@ -122,6 +122,7 @@ class admin_device extends ecjia_admin {
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('mobile::mobile.mobile_device_manage')));
 
+        $this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 
         $MobileDeviceManage = new \Ecjia\App\Mobile\MobileDeviceManage($platform_clients, $current_client);
 
