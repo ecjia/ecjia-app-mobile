@@ -62,23 +62,23 @@ class admin_street extends ecjia_admin
     public function init()
     {
     	$this->admin_priv('mobile_street');
-    	$this->assign('ur_here', '云店铺');
-        ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('云店铺')));
+    	$this->assign('ur_here', __('云店铺', 'mobile'));
+        ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('云店铺', 'mobile')));
         ecjia_screen::get_current_screen()->add_help_tab(array(
         	'id'		=> 'dianpujie',
-        	'title'		=> '店铺街',
+        	'title'		=> __('店铺街', 'mobile'),
         	'content'	=>
         	'<p>' . RC_Lang::get('mobile::mobile.dianpujie_pub_list') . '</p>'
         ));
         ecjia_screen::get_current_screen()->add_help_tab(array(
         'id'		=> 'zhangggui',
-        'title'		=> '掌柜',
+        'title'		=> __('掌柜', 'mobile'),
         'content'	=>
         '<p>' . RC_Lang::get('mobile::mobile.zhanggui_pub_list') . '</p>'
         ));
         ecjia_screen::get_current_screen()->add_help_tab(array(
         'id'		=> 'peisongyuan',
-        'title'		=> '配送员',
+        'title'		=> __('配送员', 'mobile'),
         'content'	=>
         '<p>' . RC_Lang::get('mobile::mobile.peisong_pub_list') . '</p>'
         ));
@@ -114,7 +114,7 @@ class admin_street extends ecjia_admin
         
 		}
         //提示操作成功
-        return $this->showmessage('刷新成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_street/init')));
+        return $this->showmessage(__('刷新成功！', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_street/init')));
     }
     
     

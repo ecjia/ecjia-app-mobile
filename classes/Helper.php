@@ -63,12 +63,12 @@ class Helper
     	ecjia_admin_log::instance()->add_object('mobile_discover_display', RC_Lang::get('mobile::mobile.mobile_discover_display'));
     	ecjia_admin_log::instance()->add_object('mobile_discover_sort', RC_Lang::get('mobile::mobile.mobile_discover_sort'));
     	
-    	ecjia_admin_log::instance()->add_object('mobile_device', RC_Lang::get('mobile::mobile.mobile_device'));
+    	ecjia_admin_log::instance()->add_object('mobile_device', __('移动设备', 'mobile'));
     	
     	ecjia_admin_log::instance()->add_object('mobile_cycleimage', RC_Lang::get('mobile::mobile.cycleimage'));
     	ecjia_admin_log::instance()->add_object('mobile_config', RC_Lang::get('mobile::mobile.mobile_config'));
     	ecjia_admin_log::instance()->add_object('mobile_news', RC_Lang::get('mobile::mobile.mobile_news'));
-    	ecjia_admin_log::instance()->add_object('mobile_manage', RC_Lang::get('mobile::mobile.mobile_app_manage'));
+    	ecjia_admin_log::instance()->add_object('mobile_manage', __('客户端管理', 'mobile'));
     	ecjia_admin_log::instance()->add_object('mobile_toutiao', RC_Lang::get('mobile::mobile.mobile_headline'));
     	ecjia_admin_log::instance()->add_object('mobile_activity', RC_Lang::get('mobile::mobile.activity'));
     }

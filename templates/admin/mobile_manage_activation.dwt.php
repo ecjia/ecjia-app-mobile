@@ -22,17 +22,17 @@
 		<form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data" >
 			<fieldset>
 				<div class="control-group formSep">
-					<label class="control-label">应用名称：</label>
+					<label class="control-label">{t domain="mobile"}应用名称：{/t}</label>
 					<div class="controls">
 						<input class="span4" name="name" type="text" value="" />
-						<span class="input-must">{lang key='system::system.require_field'}</span> 
+						<span class="input-must"><span class="require-field" style="color:#FF0000,">*</span></span>
 					</div>
 				</div>
 				<div class="control-group formSep">
-					<label class="control-label">应用包名：</label>
+					<label class="control-label">{t domain="mobile"}应用包名：{/t}</label>
 					<div class="controls">
 						<input class="span4" name="bundleid" type="text" value="" />
-						<span class="input-must">{lang key='system::system.require_field'}</span> 
+						<span class="input-must"><span class="require-field" style="color:#FF0000,">*</span></span>
 					</div>
 				</div>
 				<div class="control-group">
@@ -40,7 +40,7 @@
 						<input type="hidden" name="device_code" value="{$device_code} "/>
 						<input type="hidden" name="device_client" value="{$device_client}" />
 						<input type="hidden" name="code" value="{$code}" />
-						<button class="btn btn-gebo" type="submit">激活</button>
+						<button class="btn btn-gebo" type="submit">{t domain="mobile"}激活{/t}</button>
 					</div>
 				</div>
 			</fieldset>

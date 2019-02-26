@@ -35,7 +35,7 @@ ecjia.admin.mobile_config.info();
             <!-- {/foreach} -->
         </ul>
         {else}
-        <pre class="sepH_c" style="background-color: #fbfbfb; height:80px;line-height:80px;">没有找到任何记录，需进行安装相关支付插件。</pre>
+        <pre class="sepH_c" style="background-color: #fbfbfb; height:80px;line-height:80px;">{t domain="mobile"}没有找到任何记录，需进行安装相关支付插件。{/t}</pre>
         {/if}
     </div>
 </div>

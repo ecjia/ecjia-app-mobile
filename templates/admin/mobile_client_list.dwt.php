@@ -37,11 +37,11 @@
 							 	{/if}
 							</p>
 							<p style="margin-top:60px;">
-								<a style="cursor:pointer;"  class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_manage/edit", "code={$config.code}&app_id={$list.app_id}")}'>配置</a>
+								<a style="cursor:pointer;"  class="data-pjax" href='{RC_Uri::url("mobile/admin_mobile_manage/edit", "code={$config.code}&app_id={$list.app_id}")}'>{t domain="mobile"}配置{/t}</a>
 							</p>
 					    {else}
 						    <p style="text-align: right;"><img src="{$error_img}" /></p>
-							<h2>未激活</h2>
+							<h2>{t domain="mobile"}未激活{/t}</h2>
 							<h3></h3>
 							<p style="margin-top:72px;">
 								{if $list.device_client eq 'android'}

@@ -97,7 +97,7 @@ class EcjiaWeapp extends ApplicationPlatform implements HomeComponentInterface
         $this->clients = [
             [
                 'device_client' => 'weapp',
-                'device_name' => __('微信小程序'),
+                'device_name' => __('微信小程序', 'mobile'),
                 'device_code' => '6015',
             ],
         ];

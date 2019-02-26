@@ -108,7 +108,7 @@ class admin_device extends ecjia_admin {
         })->push(
             [
                 "app_id" => -1,
-                "app_name" => "回收站",
+                "app_name" => __("回收站", 'mobile'),
                 "platform" => $code,
                 "device_client" => "recyclebin",
                 "device_code" => 0,
