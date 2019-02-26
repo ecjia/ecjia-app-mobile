@@ -196,7 +196,7 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_manage/open_insert'));
 		
-		$this->display('mobile_manage_info.dwt');
+		$this->display('mobile_manage_activation.dwt');
 	}
 	
 	public function open_insert() {
