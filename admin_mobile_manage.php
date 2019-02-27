@@ -328,10 +328,10 @@ class admin_mobile_manage extends ecjia_admin {
 	 */
 	public function edit_app_name() {
 		$this->admin_priv('mobile_manage');
-	
-		$id		= trim($_POST['pk']);
+		
+		$id		  = intval($_POST['pk']);
 		$app_name = trim($_POST['value']);
-		$code = trim($_GET['code']);
+		$code     = trim($_GET['code']);
 
 		RC_DB::table('mobile_manage')->where('app_id', $id)->update(array('app_name' => $app_name));
 	
@@ -344,13 +344,13 @@ class admin_mobile_manage extends ecjia_admin {
 	public function edit_bag_name() {
 		$this->admin_priv('mobile_manage');
 	
-		$id		= trim($_POST['pk']);
+		$id		  = intval($_POST['pk']);
 		$bag_name = trim($_POST['value']);
-		$code = trim($_GET['code']);
+		$code     = trim($_GET['code']);
 		
 		RC_DB::table('mobile_manage')->where('app_id', $id)->update(array('bundle_id' => $bag_name));
 	
-		return $this->showmessage(__('更新应用名称成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('app_id'=>$id, 'code'=>$code))));
+		return $this->showmessage(__('更新应用名称成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('app_id' => $id, 'code' => $code))));
 	}
 	
 	/**
@@ -358,11 +358,12 @@ class admin_mobile_manage extends ecjia_admin {
 	 */
 	public function remove() {
 		$this->admin_priv('mobile_manage');
-	
-		$id = intval($_GET['id']);
-		RC_DB::table('mobile_manage')->where('app_id', $id)->delete();
 		
-		return $this->showmessage(__('删除客户端成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/client_list', array('id' => $id, 'code' => $_GET['code']))));
+	    $code   = trim($_GET['code']);
+		$app_id = intval($_GET['app_id']);
+		RC_DB::table('mobile_manage')->where('app_id', $app_id)->delete();
+		
+		return $this->showmessage(__('删除客户端成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/client_list', array('code' => $code))));
 	}
 }
 

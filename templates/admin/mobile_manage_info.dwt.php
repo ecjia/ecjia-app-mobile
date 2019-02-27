@@ -70,7 +70,9 @@
 
         <input type="hidden" name="code_vale" value="{$manage_data.platform}" />
         <input type="hidden" name="id" value="{$manage_data.app_id}" />
-        <a data-toggle="ajaxremove" class="ajaxremove ecjiafc-red"  data-msg='{t domain="mobile"}你确定要删除该客户端端吗？{/t}'  href='{RC_Uri::url("mobile/admin_mobile_manage/remove","id={$manage_data.app_id}&code={$manage_data.platform}")}' title='{t domain="mobile"}删除{/t}'>{t domain="mobile"}删除客户端{/t}</a>
+        
+        <a class="new_del" style="cursor: pointer;color: #c62626;"   data-msg='{t domain="mobile"}你确定要删除该客户端端吗？{/t}'  data-href='{RC_Uri::url("mobile/admin_mobile_manage/remove","app_id={$manage_data.app_id}&code={$manage_data.platform}")}'>{t domain="mobile"}删除客户端{/t}</a>
+        
         <div class="pull-right">
             <a class="change_status" style="cursor: pointer;"
                data-msg='{if $manage_data.status eq 1}{t domain="mobile"}您确定要关闭该客户端吗？{/t}{else}{t domain="mobile"}您确定要开启该客户端吗？{/t}{/if}'
