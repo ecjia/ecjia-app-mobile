@@ -26,7 +26,6 @@ class MobileDevice extends ApplicationConfig
         'all',
         'iphone',
         'android',
-        'local',
         'weapp',
         'h5',
     ];
