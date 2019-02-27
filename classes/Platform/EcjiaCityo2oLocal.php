@@ -67,7 +67,7 @@ class EcjiaCityo2oLocal extends ApplicationPlatform
      * 图标
      * @var string
      */
-    protected $icon = '/statics/images/H5.png';
+    protected $icon = '/statics/images/cityo2olocal.png';
     
     /**
      * 支持的客户端类型
