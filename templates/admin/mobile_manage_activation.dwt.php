@@ -24,7 +24,7 @@
 				<div class="control-group formSep">
 					<label class="control-label">{t domain="mobile"}应用名称：{/t}</label>
 					<div class="controls">
-						<input class="span4" name="name" type="text" value="" />
+						<input class="span4" name="name" type="text" value="{$name}" />
 						<span class="input-must">*</span>
 					</div>
 				</div>
@@ -32,6 +32,7 @@
 					<label class="control-label">{t domain="mobile"}应用包名：{/t}</label>
 					<div class="controls">
 						<input class="span4" name="bundleid" type="text" value="" />
+						<span class="help-block">{t domain="adsense"}若为APP产品则为必填项{/t}</span>
 					</div>
 				</div>
 				<div class="control-group">

@@ -32,6 +32,8 @@
 									<img src="{$iPhone_img}" />
 								{elseif $list.device_client eq 'h5'}
 							 		<img src="{$h5}" />
+							 	{else if $list.device_client eq 'local'}
+							 	    <img src="{$local}" />
 							 	{else}
 							 	    <img src="{$wechant_client}" />
 							 	{/if}
@@ -50,6 +52,8 @@
 									<img src="{$iPhone_img}" />
 								{elseif $list.device_client eq 'h5'}
 							 		<img src="{$h5}" />
+							 	{else if $list.device_client eq 'local'}
+							 	    <img src="{$local}" />
 							 	{else}
 							 	    <img src="{$wechant_client}" />
 							 	{/if}

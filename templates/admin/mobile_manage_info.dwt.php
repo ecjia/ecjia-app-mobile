@@ -36,7 +36,7 @@
         <div class="control-group formSep">
             <label class="control-label">Client：</label>
             <div class="controls l_h30">
-                {$manage_data.device_client}
+                {$manage_data.device_name}
             </div>
         </div>
 

@@ -166,12 +166,14 @@ class admin_mobile_manage extends ecjia_admin {
 		$iPhone_img = RC_App::apps_url('statics/images/iPhone.png', __FILE__);
 		$wechant_client = RC_App::apps_url('statics/images/wechant_client.png', __FILE__);
 		$h5 = RC_App::apps_url('statics/images/h5_client.png', __FILE__);
+		$local = RC_App::apps_url('statics/images/cityo2olocal.png', __FILE__);
 		$this->assign('ok_img', $ok_img);
 		$this->assign('error_img', $error_img);
 		$this->assign('Android_img', $Android_img);
 		$this->assign('iPhone_img', $iPhone_img);
 		$this->assign('wechant_client', $wechant_client);
 		$this->assign('h5', $h5);
+		$this->assign('local', $local);
 	
 		$this->display('mobile_client_list.dwt');
 	}
@@ -194,6 +196,18 @@ class admin_mobile_manage extends ecjia_admin {
 		$this->assign('code', $code);
 		$this->assign('device_code', $device_code);
 		$this->assign('device_client', $device_client);
+		
+		//获取默认应用名称（产品名称-客户端名称）
+		$factory = new Ecjia\App\Mobile\ApplicationFactory();
+		$pruduct_info = $factory->platform($code);
+		$name = $pruduct_info->getName();
+		$Clients = $pruduct_info->getClients();
+		foreach($Clients as $key => $val){
+			if(in_array($device_code, $val)){
+				 $data = $val;
+			}
+		}
+		$this->assign('name', $name.'-'.$data['device_name']);
 		
 		$this->assign('form_action', RC_Uri::url('mobile/admin_mobile_manage/open_insert'));
 		
@@ -262,25 +276,15 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$code = $_GET['code'];
         $app_id   = intval($_GET['app_id']);
-
         $app_id = RC_Hook::apply_filters('mobile_config_appid_filter', $app_id, $code, 'config_client');
-
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('客户端管理', 'mobile'), RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(__('查看客户端', 'mobile')));
 		$this->assign('ur_here', __('基本信息', 'mobile'));
 		$this->assign('action_link', array('text' => __('客户端管理', 'mobile'), 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list',array('code' => $code))));
 		
 		$manage_data = RC_DB::table('mobile_manage')->where('app_id', $app_id)->first();
-		
-		if ($manage_data['device_client'] == 'iphone'){
-			$manage_data['device_client'] = 'iPhone';
-		} elseif ($manage_data['device_client'] == 'android'){
-			$manage_data['device_client'] = 'Android';
-		} elseif ($manage_data['device_client'] == 'h5'){
-			$manage_data['device_client'] = 'H5';
-		}else{
-			$manage_data['device_client'] = __('微信小程序', 'mobile');
-		}
+		$device_info = (new \Ecjia\App\Mobile\ApplicationFactory())->client($manage_data['device_code']);
+		$manage_data['device_name'] = $device_info->getDeviceName();
 		$this->assign('manage_data', $manage_data);
 		
 		$this->assign('action', 'edit');
@@ -349,7 +353,6 @@ class admin_mobile_manage extends ecjia_admin {
 		return $this->showmessage(__('更新应用名称成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/edit', array('app_id'=>$id, 'code'=>$code))));
 	}
 	
-
 	/**
 	 * 删除
 	 */
@@ -361,8 +364,6 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		return $this->showmessage(__('删除客户端成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_mobile_manage/client_list', array('id' => $id, 'code' => $_GET['code']))));
 	}
-	
-	
 }
 
 //end
