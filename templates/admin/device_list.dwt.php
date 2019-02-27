@@ -28,10 +28,10 @@
 			</a>
 			<ul class="dropdown-menu">
 				<!-- {if $device_list.filter.app_id eq '-1'} -->
-				<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=returndevice"}' data-msg='{t domain="mobile"}您确定要批量还原选中的设备吗？{/t}' data-noSelectMsg='{t domain="mobile"}请先选中要还原的设备！{/t}' data-name="id" href="javascript:;"><i class="fontello-icon-reply-all"></i>{t domain="mobile"}还原设备{/t}</a></li>
-				<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=del"}'  data-msg='{t domain="mobile"}您确定要批量删除选中的设备吗？{/t}' data-noSelectMsg='{t domain="mobile"}请先选中要删除的设备！{/t}' data-name="id" href="javascript:;"><i class="fontello-icon-trash"></i>{t domain="mobile"}永久删除{/t}</a></li>
+				<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="code={$code}&app_id={$app_id}&sel_action=returndevice"}' data-msg='{t domain="mobile"}您确定要批量还原选中的设备吗？{/t}' data-noSelectMsg='{t domain="mobile"}请先选中要还原的设备！{/t}' data-name="id" href="javascript:;"><i class="fontello-icon-reply-all"></i>{t domain="mobile"}还原设备{/t}</a></li>
+				<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="code={$code}&app_id={$app_id}&sel_action=del"}'  data-msg='{t domain="mobile"}您确定要批量删除选中的设备吗？{/t}' data-noSelectMsg='{t domain="mobile"}请先选中要删除的设备！{/t}' data-name="id" href="javascript:;"><i class="fontello-icon-trash"></i>{t domain="mobile"}永久删除{/t}</a></li>
 				<!-- {else} -->
-				<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="&sel_action=trash"}'  data-msg='{t domain="mobile"}您确定要批量将选中的设备移至回收站吗？{/t}' data-noSelectMsg='{t domain="mobile"}请先选中要移至回收站的的设备！{/t}' data-name="id" href="javascript:;"><i class="fontello-icon-box"></i>{t domain="mobile"}移至回收站{/t}</a></li>
+				<li><a class="button_remove" data-toggle="ecjiabatch" data-idClass=".checkbox:checked" data-url='{url path="mobile/admin_device/batch" args="code={$code}&app_id={$app_id}&sel_action=trash"}'  data-msg='{t domain="mobile"}您确定要批量将选中的设备移至回收站吗？{/t}' data-noSelectMsg='{t domain="mobile"}请先选中要移至回收站的的设备！{/t}' data-name="id" href="javascript:;"><i class="fontello-icon-box"></i>{t domain="mobile"}移至回收站{/t}</a></li>
 				<!-- {/if} -->
 			</ul>
 		</div>
@@ -66,11 +66,11 @@
 						{$val.device_client}
 						<div class="edit-list">
 						{if $device_list.filter.app_id eq '-1'}
-	     					<a class="toggle_view" data-msg='{t domain="mobile"}您确定要还原此设备吗？{/t}' href='{url path="mobile/admin_device/returndevice" args="id={$val.id}"}' data-pjax-url='{url path="mobile/admin_device/init"}' data-val="back">{t domain="mobile"}还原设备{/t}</a>&nbsp;|&nbsp;
-							<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg='{t domain="mobile"}您确定要删除此设备吗？{/t}' href='{RC_Uri::url("mobile/admin_device/remove","id={$val.id}")}'>{t domain="mobile"}永久删除{/t}</a>
+	     					<a class="toggle_view" data-msg='{t domain="mobile"}您确定要还原此设备吗？{/t}' href='{url path="mobile/admin_device/returndevice" args="id={$val.id}"}' data-pjax-url='{url path="mobile/admin_device/init" args="code={$code}&app_id={$app_id}"}' data-val="back">{t domain="mobile"}还原设备{/t}</a>&nbsp;|&nbsp;
+							<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg='{t domain="mobile"}您确定要删除此设备吗？{/t}' href='{RC_Uri::url("mobile/admin_device/remove","code={$code}&app_id={$app_id}&id={$val.id}")}'>{t domain="mobile"}永久删除{/t}</a>
 						{else}
-							<a class="data-pjax" href='{RC_Uri::url("mobile/admin_device/preview", "code={$code}&app_id={$app_id}&id={$val.id}")}' title='{t domain="mobile"}查看{/t}'>{t domain="mobile"}查看{/t}</a>&nbsp;|&nbsp;
-							<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg='{t domain="mobile"}您确定要将此设备移至回收站吗？{/t}' href='{RC_Uri::url("mobile/admin_device/trash", "id={$val.id}")}' title='{t domain="mobile"}移至回收站{/t}'>{t domain="mobile"}移至回收站{/t}</a>
+							<a class="data-pjax" href='{RC_Uri::url("mobile/admin_device/preview", "code={$code}&app_id={$app_id}&id={$val.id}")}' >{t domain="mobile"}查看{/t}</a>&nbsp;|&nbsp;
+							<a class="ajaxremove ecjiafc-red" data-toggle="ajaxremove" data-msg='{t domain="mobile"}您确定要将此设备移至回收站吗？{/t}' href='{RC_Uri::url("mobile/admin_device/trash", "code={$code}&app_id={$app_id}&id={$val.id}")}' >{t domain="mobile"}移至回收站{/t}</a>
 						{/if}
 						</div>
 					</td>
