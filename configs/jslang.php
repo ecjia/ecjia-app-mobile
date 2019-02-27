@@ -44,19 +44,47 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
- * 后台移动应用
- * @author royalwang
+ * js语言包设置
  */
-class mobile_tool_menu_api extends Component_Event_Api {
 
-    public function call(&$options) {
-        $menus = ecjia_admin::make_admin_menu('01_content', __('移动应用', 'mobile'), RC_Uri::url('mobile/admin_mobile_manage/init'), 1)->add_purview('mobile_manage');
-        
-        return $menus;
-    }
-}
+defined('IN_ECJIA') or exit('No permission resources.');
 
-// end
+return array(
+    //mobile
+    'mobile_page' =>array(
+        'ok'					=> __('确定', 'mobile'),
+        'cancel'				=> __('取消', 'mobile'),
+        'label_brief'			=> __('简介：', 'mobile'),
+        'img_url_required'		=> __('请输入图片链接地址', 'mobile'),
+        'add'					=> __('添加', 'mobile'),
+        'no_select_region'		=> __('没有可选择的地区', 'mobile'),
+        'region_selected'		=> __('该地区已被选择！', 'mobile'),
+        'no_select_goods'		=> __('未搜索到商品信息', 'mobile'),
+        'enabled'				=> __('开启', 'mobile'),
+        'disabled'				=> __('关闭', 'mobile'),
+        'app_name_required'		=> __('请填写应用名称！', 'mobile'),
+        'app_client_required'	=> __('请选择应用Client！', 'mobile'),
+        'app_code_required'		=> __('请填写应用Code！', 'mobile'),
+        'bundleid_required'		=> __('请填写应用包名！', 'mobile'),
+        'appkey_required'		=> __('请填写AppKey！', 'mobile'),
+        'appsecret_required'	=> __('请填写AppSecret！', 'mobile'),
+        'platform_required'		=> __('请选择服务平台！', 'mobile'),
+
+        'not_set_parameter'		=> __('clone-obj方法未设置data-parent参数。', 'mobile'),
+        'operate_miss_parameter'=> __('批量操作缺少参数！', 'mobile'),
+        'most_eight'			=> __('今日热点最多只能添加8条', 'mobile'),
+        'mobile_news'			=> __('今日热点 ', 'mobile'),
+        'enter_mobile_news'		=> __('请填写今日热点 ', 'mobile'),
+        'upload_mobile_news'	=> __('请上传今日热点 ', 'mobile'),
+        'the_title'				=> __('的标题', 'mobile'),
+        'the_cover'				=> __('的封面', 'mobile'),
+        'the_abstract'			=> __('的摘要', 'mobile'),
+        'the_graphic_link'		=> __('的图文链接', 'mobile'),
+        'title'					=> __('标题', 'mobile'),
+        'title_required'		=> __('请输入新闻标题！', 'mobile'),
+    ),
+
+);
+//end

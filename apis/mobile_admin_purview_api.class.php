@@ -63,7 +63,7 @@ class mobile_admin_purview_api extends Component_Event_Api {
 //         	array('action_name' => RC_Lang::get('mobile::mobile.discover_delete'), 	'action_code' => 'discover_delete', 'relevance' => ''),
         		
         	array('action_name' => __('移动设备管理', 'mobile'), 'action_code' => 'device_manage', 'relevance' => ''),
-//         	array('action_name' => RC_Lang::get('mobile::mobile.view_device_info'), 	'action_code' => 'device_detail', 'relevance' => ''),
+//         	array('action_name' => __('查看移动设备信息', 'mobile'), 	'action_code' => 'device_detail', 'relevance' => ''),
 //         	array('action_name' => RC_Lang::get('mobile::mobile.device_update'), 		'action_code' => 'device_update', 'relevance' => ''),
 //         	array('action_name' => RC_Lang::get('mobile::mobile.device_delete'), 		'action_code' => 'device_delete', 'relevance' => ''),
   
