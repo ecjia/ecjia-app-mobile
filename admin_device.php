@@ -50,14 +50,10 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * ECJIA 移动设备管理
 */
 class admin_device extends ecjia_admin {
-	//private $db_device;
 	
 	public function __construct() {
 		parent::__construct();
 
-		/* 数据模型加载 */
-		//$this->db_device = RC_Model::model('mobile/mobile_device_model');
-		
 		Ecjia\App\Mobile\Helper::assign_adminlog_content();
 		
 		/* 加载全局 js/css */
@@ -84,15 +80,22 @@ class admin_device extends ecjia_admin {
 	 */
 	public function init() {
 		$this->admin_priv('device_manage');
-
-        $code = trim($this->request->input('code'));
-        $app_id   = intval($this->request->input('app_id'));
-        $page   = intval($this->request->input('page'));
+		
+		ecjia_screen::get_current_screen()->remove_last_nav_here();
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('移动设备管理', 'mobile')));
+		
+		$this->assign('ur_here', __('移动设备列表', 'mobile'));
+		
+        $code       = trim($this->request->input('code'));
+        $app_id     = intval($this->request->input('app_id'));
+        $page       = intval($this->request->input('page'));
         $keywords   = trim($this->request->input('keywords'));
-
+        
+        $this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list', array('code' => $code))));
+        
         $meta_key = 'mobile_device';
         $platform = (new \Ecjia\App\Mobile\ApplicationFactory())->platform($code);
-        $options = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
+        $options  = new \Ecjia\App\Mobile\ApplicationConfigOptions($platform, $app_id);
         $options->handleConfigMenus($meta_key);
         $config_handler = $options->getOptionKey($meta_key);
         $config_handler->handleClientMenus();
@@ -116,13 +119,6 @@ class admin_device extends ecjia_admin {
         )->all();
 
         $current_client = $config_handler->getMobilePlatformClient($platform_clients);
-
-		$this->assign('ur_here', __('移动设备列表', 'mobile'));
-		
-		ecjia_screen::get_current_screen()->remove_last_nav_here();
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('移动设备管理', 'mobile')));
-
-        $this->assign('action_link', array('text' => '客户端管理', 'href' => RC_Uri::url('mobile/admin_mobile_manage/client_list', array('code' => $code))));
 
         $MobileDeviceManage = new \Ecjia\App\Mobile\MobileDeviceManage($platform_clients, $current_client);
 
@@ -160,7 +156,6 @@ class admin_device extends ecjia_admin {
             'msg_count' => $total->toArray(), //$msg_count
         );
 
-
         $this->assign('code', $code);
         $this->assign('app_id', $app_id);
 		$this->assign('device_list', $device_list);
@@ -178,9 +173,6 @@ class admin_device extends ecjia_admin {
 		$this->admin_priv('device_manage', ecjia::MSGTYPE_JSON);
 	
 		$id = intval($_GET['id']);
-		$deviceval = intval($_GET['deviceval']);
-		//$success = $this->db_device->device_update($id, array('in_status' => 1));
-		//$info = $this->db_device->device_find($id);
 		$success = Ecjia\App\Mobile\MobileDevice::DeviceUpdate($id, array('in_status' => 1));
 		$info    = Ecjia\App\Mobile\MobileDevice::DeviceInfo($id);
 		
@@ -194,7 +186,7 @@ class admin_device extends ecjia_admin {
 		
 		ecjia_admin::admin_log(sprintf(__('设备类型是 %s', 'mobile'), $info['device_client']).'，'.sprintf(__('设备名是 %s', 'mobile'), $info['device_name']), 'trash', 'mobile_device');
 		if ($success){
-			return $this->showmessage(__('移至回收站成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
+			return $this->showmessage(__('移至回收站成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init')));
 		} else {
 			return $this->showmessage(__('移至回收站失败', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
@@ -207,8 +199,6 @@ class admin_device extends ecjia_admin {
 		$this->admin_priv('device_manage', ecjia::MSGTYPE_JSON);
 	
 		$id = intval($_GET['id']);
-		//$success = $this->db_device->device_update($id, array('in_status' => 0));
-		//$info = $this->db_device->device_find($id);
 		
 		$success = Ecjia\App\Mobile\MobileDevice::DeviceUpdate($id, array('in_status' => 0));
 		$info 	 = Ecjia\App\Mobile\MobileDevice::DeviceInfo($id);
@@ -230,15 +220,13 @@ class admin_device extends ecjia_admin {
 	}
 	
 	/**
-	 * 删除移动设备
+	 * 永久删除移动设备
 	 */
 	public function remove()  {
 		$this->admin_priv('device_manage', ecjia::MSGTYPE_JSON);
 		
 		$id = intval($_GET['id']);
-		$deviceval = intval($_GET['deviceval']);
 		
-		//$info = $this->db_device->device_find($id);
 		$info = Ecjia\App\Mobile\MobileDevice::DeviceInfo($id);
 		
 	    if ($info['device_client'] == 'android') {
@@ -249,24 +237,22 @@ class admin_device extends ecjia_admin {
             $info['device_client'] = 'iPad';
         }
 		
-		//$success = $this->db_device->device_delete($id);
         $success = Ecjia\App\Mobile\MobileDevice::DeviceDelete($id);
         
 		ecjia_admin::admin_log(sprintf(__('设备类型是 %s', 'mobile'), $info['device_client']).'，'.sprintf(__('设备名是 %s', 'mobile'), $info['device_name']), 'remove', 'mobile_device');
 		
 		if ($success){
-			return $this->showmessage(__('删除成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
+			return $this->showmessage(__('删除成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init')));
 		} else {
 			return $this->showmessage(__('删除失败', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	
 	/**
-	 * 批量删除设备
+	 * 批量移至回收站
 	 */
 	public function batch(){
 		$action    = trim ($_GET['sel_action']);
-		$deviceval = intval($_GET['deviceval']);
 		
 		if ($action == 'del') {
 			$this->admin_priv('device_delete', ecjia::MSGTYPE_JSON);
@@ -276,9 +262,7 @@ class admin_device extends ecjia_admin {
 		$ids  = $_POST['id'];
 		$ids  = explode(',', $ids);
 		
-		//$info = $this->db_device->device_select($ids, true);
 		$info	= Ecjia\App\Mobile\MobileDevice::DeviceSelect($ids);
-		
 		foreach ($info as $k => $rows) {
 		    if ($rows['device_client'] == 'android') {
                 $info[$k]['device_client'] = 'Android';
@@ -294,7 +278,6 @@ class admin_device extends ecjia_admin {
 				$data = array(
 					'in_status' => 1
 				);
-				//$this->db_device->device_update($ids, $data, true);
 				Ecjia\App\Mobile\MobileDevice::DeviceUpdate($ids, $data);
 				
 				foreach ($info as $v) {
@@ -306,7 +289,6 @@ class admin_device extends ecjia_admin {
 				$data = array(
 					'in_status' => 0
 				);
-				//$this->db_device->device_update($ids, $data, true);
 				Ecjia\App\Mobile\MobileDevice::DeviceUpdate($ids, $data);
 				
 				foreach ($info as $v) {
@@ -315,7 +297,6 @@ class admin_device extends ecjia_admin {
 				break;
 					
 			case 'del':
-				//$this->db_device->device_delete($ids, true);
 				Ecjia\App\Mobile\MobileDevice::DeviceDelete($ids);
 				foreach ($info as $v) {
 					ecjia_admin::admin_log(sprintf(__('设备类型是 %s', 'mobile'), $v['device_client']).'，'.sprintf(__('设备名是 %s', 'mobile'), $v['device_name']), 'batch_remove', 'mobile_device');
@@ -325,7 +306,7 @@ class admin_device extends ecjia_admin {
 			default :
 				break;
 		}
-		return $this->showmessage(__('批量操作成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init', array('deviceval' => $deviceval))));
+		return $this->showmessage(__('批量操作成功', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('mobile/admin_device/init')));
 	}
 	
 	/**
@@ -333,13 +314,15 @@ class admin_device extends ecjia_admin {
 	 */
 	public function preview() {
 		$this->admin_priv('device_manage');
-	
-		$id = intval($_GET['id']);
-	
+		
+		$code   = trim($_GET['code']);
+		$app_id = intval($_GET['app_id']);
+		
 		$this->assign('ur_here', __('查看移动设备信息', 'mobile'));
-		$this->assign('action_link', array('text' => __('移动设备列表', 'mobile'), 'href' => RC_Uri::url('mobile/admin_device/init')));
+		$this->assign('action_link', array('text' => __('移动设备列表', 'mobile'), 'href' => RC_Uri::url('mobile/admin_device/init', array('code' => $code, 'app_id' => $app_id))));
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('查看移动设备信息', 'mobile')));
-
+		
+		$id     = intval($_GET['id']);
 		//$device                = $this->db_device->device_find($id);
 		$device					 = Ecjia\App\Mobile\MobileDevice::DeviceInfo($id);
 		$device['add_time']    = RC_Time::local_date(ecjia::config('time_format'), $device['add_time']);
@@ -370,11 +353,9 @@ class admin_device extends ecjia_admin {
 			return $this->showmessage(__('请输入设备别名', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
-		//$query = $this->db_device->device_update($id, array('device_alias' => $device_alias));
 		$query = Ecjia\App\Mobile\MobileDevice::DeviceUpdate($id, array('device_alias' => $device_alias));
 		
 		if ($query) {
-			//$info = $this->db_device->device_find($id);
 			$info 	= Ecjia\App\Mobile\MobileDevice::DeviceInfo($id);
 			
 		    if ($info['device_client'] == 'android') {
@@ -389,90 +370,6 @@ class admin_device extends ecjia_admin {
 		} else {
 			return $this->showmessage(__('编辑设备别名失败', 'mobile'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
-	}
-	
-	/**
-	 * 取得设备列表
-	 *
-	 * @return  array
-	 */
-	private function get_device_list() {
-		$device_db = RC_DB::table('mobile_device');
-		
-		$where = $filter = array();
-		$filter['keywords'] 	= empty($_GET['keywords']) 	? '' 	: trim($_GET['keywords']);
-		$filter['deviceval']	= empty($_GET['deviceval']) ? 0 	: intval($_GET['deviceval']);
-	
-		if ($filter['keywords']) {
-			$device_db->where('device_name', 'like', '%' . mysql_like_quote($filter['keywords']) . '%');
-		}
-		
-		$msg_count = $device_db
-	        ->select(RC_DB::raw("SUM(IF(in_status=0,1,0)) AS count,
-				SUM(IF(device_client='android' and device_code !='8001' and in_status = 0,1,0)) AS android,
-				SUM(IF(device_client='iphone' and in_status = 0,1,0)) AS iphone,
-				SUM(IF(device_client='ipad' and in_status = 0,1,0)) AS ipad,
-				SUM(IF(device_client='android' and device_code='8001' and in_status = 0,1,0)) AS cashier,
-				SUM(IF(in_status = 1,1,0)) AS trashed"))
-			->first();
-		
-		$msg_count = array(
-			'count'		=> empty($msg_count['count']) 	? 0 : $msg_count['count'],
-			'android'	=> empty($msg_count['android']) ? 0 : $msg_count['android'],
-			'iphone'	=> empty($msg_count['iphone']) 	? 0 : $msg_count['iphone'],
-			'ipad'	    => empty($msg_count['ipad']) 	? 0 : $msg_count['ipad'],
-			'cashier'	=> empty($msg_count['cashier']) ? 0 : $msg_count['cashier'],
-			'trashed'	=> empty($msg_count['trashed']) ? 0 : $msg_count['trashed']
-		);
-	
-		$android = 'android';
-		if ($filter['deviceval'] == 1) {
-			$device_db->where('device_client', $android)->where('device_code', '!=', 8001)->where('in_status', 0);
-		}
-	
-		$iphone = 'iphone';
-		if ($filter['deviceval'] == 2) {
-			$device_db->where('device_client', $iphone)->where('in_status', 0);
-		}
-	
-		$ipad = 'ipad';
-		if ($filter['deviceval'] == 3) {
-			$device_db->where('device_client', $ipad)->where('in_status', 0);
-		}
-	
-		$cashier = 'android';
-		if ($filter['deviceval'] == 4) {
-			$device_db->where('device_client', $cashier)->where('device_code', 8001)->where('in_status', 0);
-		}
-		
-		if ($filter['deviceval'] == 0) {
-			$device_db->where('in_status', 0);
-		}
-		
-		if ($filter['deviceval'] == 5) {
-			$device_db->where('in_status', 1);
-		}
-
-		$count = $device_db->count('id');
-		$page = new ecjia_page($count, 10, 5);
-	
-		$data = $device_db->select('*')->orderBy('id', 'desc')->take(10)->skip($page->start_id-1)->get();
-		
-		$arr = array();
-		if (!empty($data)) {
-			foreach ($data as $rows) {
-				$rows['add_time'] = RC_Time::local_date(ecjia::config('time_format'), $rows['add_time']);
-				if ($rows['device_client'] == 'android') {
-					$rows['device_client'] = 'Android';
-				} elseif ($rows['device_client'] == 'iphone') {
-					$rows['device_client'] = 'iPhone';
-				} elseif ($rows['device_client'] == 'ipad'){
-					$rows['device_client'] = 'iPad';
-				}
-				$arr[] = $rows;
-			}
-		}
-		return array('device_list' => $arr, 'filter' => $filter, 'page' => $page->show(5), 'desc' => $page->page_desc(), 'msg_count' => $msg_count);
 	}
 }
 
