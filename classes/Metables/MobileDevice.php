@@ -25,7 +25,10 @@ class MobileDevice extends ApplicationConfig
     protected $clients = [
         'all',
         'iphone',
-        'android'
+        'android',
+        'local',
+        'weapp',
+        'h5',
     ];
 
     /**
