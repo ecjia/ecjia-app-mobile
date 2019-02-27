@@ -25,14 +25,13 @@
 					<label class="control-label">{t domain="mobile"}应用名称：{/t}</label>
 					<div class="controls">
 						<input class="span4" name="name" type="text" value="" />
-						<span class="input-must"><span class="require-field" style="color:#FF0000,">*</span></span>
+						<span class="input-must">*</span>
 					</div>
 				</div>
 				<div class="control-group formSep">
 					<label class="control-label">{t domain="mobile"}应用包名：{/t}</label>
 					<div class="controls">
 						<input class="span4" name="bundleid" type="text" value="" />
-						<span class="input-must"><span class="require-field" style="color:#FF0000,">*</span></span>
 					</div>
 				</div>
 				<div class="control-group">
