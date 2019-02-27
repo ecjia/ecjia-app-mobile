@@ -24,7 +24,10 @@ class ConfigClient extends ApplicationConfig
 
     protected $clients = [
         'iphone',
-        'android'
+        'android',
+        'local',
+        'weapp',
+        'h5',
     ];
 
     /**
