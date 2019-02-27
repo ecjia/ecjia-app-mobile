@@ -113,13 +113,11 @@ class EcjiaWeapp extends ApplicationPlatform implements HomeComponentInterface
         return [
             'home_cycleimage',
             'home_shortcut',
-            'scanqrcode_and_membercode',
             'promote_goods',
             'new_goods',
             'best_goods',
             'home_complex_adsense_one',
             'home_complex_adsense_two',
-            'groupbuy_goods',
         ];
     }
 
@@ -137,7 +135,6 @@ class EcjiaWeapp extends ApplicationPlatform implements HomeComponentInterface
             'promote_goods', //促销商品
             'new_goods', //新品推荐
             'best_goods', //店长推荐
-            'groupbuy_goods', //团购商品
         ];
     }
     
