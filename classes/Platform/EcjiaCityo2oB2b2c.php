@@ -173,6 +173,7 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform implements HomeComponentInte
             'best_goods',
             'home_complex_adsense_one',
             'home_complex_adsense_two',
+            'groupbuy_goods',
         ];
     }
 
@@ -192,6 +193,7 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform implements HomeComponentInte
             'promote_goods', //促销商品
             'new_goods', //新品推荐
             'best_goods', //店长推荐
+            'groupbuy_goods', //团购商品
         ];
     }
 }
