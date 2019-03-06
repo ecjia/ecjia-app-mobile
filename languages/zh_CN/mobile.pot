@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Ecjia App mobile package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ecjia App mobile 1.27.4\n"
+"Project-Id-Version: Ecjia App mobile 1.28.0\n"
 "Report-Msgid-Bugs-To: https://make.ecjia.com/polyglots/\n"
-"POT-Creation-Date: 2019-03-01 01:45:19+00:00\n"
+"POT-Creation-Date: 2019-03-06 09:04:40+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -339,19 +339,19 @@ msgstr ""
 msgid "ECJia收银通App是一款多站点通用的商家收银客户端。"
 msgstr ""
 
-#: classes/Platform/EcjiaCityo2o.php:153
+#: classes/Platform/EcjiaCityo2o.php:155
 msgid "ECJia到家"
 msgstr ""
 
-#: classes/Platform/EcjiaCityo2o.php:154
+#: classes/Platform/EcjiaCityo2o.php:156
 msgid "ECJia到家App是一款集消费者、商家、配送员于一体的客户端。"
 msgstr ""
 
-#: classes/Platform/EcjiaCityo2oB2b2c.php:155
+#: classes/Platform/EcjiaCityo2oB2b2c.php:157
 msgid "ECJia到家商城"
 msgstr ""
 
-#: classes/Platform/EcjiaCityo2oB2b2c.php:156
+#: classes/Platform/EcjiaCityo2oB2b2c.php:158
 msgid ""
 "ECJia到家商城是一款全新的电商业务APP，去除了O2O定位的限制，适合跨区域的购物与"
 "配送。"
@@ -373,11 +373,11 @@ msgstr ""
 msgid "ECJia到家Local是为了方便在同一进程中快速调用API数据的模拟客户端。"
 msgstr ""
 
-#: classes/Platform/EcjiaExpress.php:120
+#: classes/Platform/EcjiaExpress.php:119
 msgid "ECJia配送员"
 msgstr ""
 
-#: classes/Platform/EcjiaExpress.php:121
+#: classes/Platform/EcjiaExpress.php:120
 msgid "ECJia配送员App是一款多站点通用的配送员骑手客户端。"
 msgstr ""
 
@@ -389,11 +389,11 @@ msgstr ""
 msgid "ECJia收银POS App是一款多站点通用的商家POS机收银终端。"
 msgstr ""
 
-#: classes/Platform/EcjiaShop.php:134
+#: classes/Platform/EcjiaShop.php:136
 msgid "ECJia到家门店"
 msgstr ""
 
-#: classes/Platform/EcjiaShop.php:135
+#: classes/Platform/EcjiaShop.php:137
 msgid "ECJia到家门店App是一款以附近门店为中心的消费者购物客户端。"
 msgstr ""
 
