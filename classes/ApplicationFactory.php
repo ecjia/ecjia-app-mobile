@@ -195,11 +195,43 @@ class ApplicationFactory
                 $allClients[$client['device_code']] = with(new ApplicationClient())->setDeviceClient($client['device_client'])
                                                                                    ->setDeviceName($client['device_name'])
                                                                                    ->setDeviceCode($client['device_code'])
+                                                                                   ->setDeviceIcon($client['device_icon'])
                                                                                    ->setPlatformCode($platform->getCode())
                                                                                    ->setPlatform($platform);
             }
         }
         
+        return $allClients;
+    }
+
+    /**
+     * 获取所有平台的客户端
+     * @param string | array $platforms
+     * @return array
+     */
+    public function getClientsByPlatform($platforms)
+    {
+        $platforms = (array) $platforms;
+
+        $allClients = [];
+
+        foreach (self::$factories as $key => $value) {
+            $platform = new $value;
+
+            if (in_array($platform->getCode(), $platforms)) {
+                $clients = $platform->getClients();
+
+                foreach ($clients as $client) {
+                    $allClients[$client['device_code']] = with(new ApplicationClient())->setDeviceClient($client['device_client'])
+                        ->setDeviceName($client['device_name'])
+                        ->setDeviceCode($client['device_code'])
+                        ->setDeviceIcon($client['device_icon'])
+                        ->setPlatformCode($platform->getCode())
+                        ->setPlatform($platform);
+                }
+            }
+        }
+
         return $allClients;
     }
     

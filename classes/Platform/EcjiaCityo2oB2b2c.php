@@ -81,11 +81,13 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform implements HomeComponentInte
         	'device_client' => 'iphone',
             'device_name' => 'iPhone',
             'device_code' => '6022',
+            'device_icon' => '/statics/images/iphone.png',
         ],
         [
             'device_client' => 'android',
             'device_name' => 'Android',
             'device_code' => '6021',
+            'device_icon' => '/statics/images/android.png',
         ]
     ];
     
