@@ -66,7 +66,7 @@ class User {
     public function getClientOptions($client_code, $name)
     {
         $client = with(new ApplicationFactory)->client($client_code);
-        return $client->getOptions($name);
+        return $client->getOption($name);
     }
     
     
