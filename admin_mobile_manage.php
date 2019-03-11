@@ -162,8 +162,8 @@ class admin_mobile_manage extends ecjia_admin {
 		
 		$ok_img = RC_App::apps_url('statics/images/ok.png', __FILE__);
 		$error_img = RC_App::apps_url('statics/images/error.png', __FILE__);
-		$Android_img = RC_App::apps_url('statics/images/Android.png', __FILE__);
-		$iPhone_img = RC_App::apps_url('statics/images/iPhone.png', __FILE__);
+		$Android_img = RC_App::apps_url('statics/images/android.png', __FILE__);
+		$iPhone_img = RC_App::apps_url('statics/images/iphone.png', __FILE__);
 		$wechant_client = RC_App::apps_url('statics/images/wechant_client.png', __FILE__);
 		$h5 = RC_App::apps_url('statics/images/h5_client.png', __FILE__);
 		$local = RC_App::apps_url('statics/images/cityo2olocal.png', __FILE__);
