@@ -188,16 +188,27 @@ class ApplicationFactory
         $allClients = [];
         
         foreach (self::$factories as $key => $value) {
+            /**
+             * @var \Ecjia\App\Mobile\ApplicationPlatform $platform
+             */
             $platform = new $value;
             $clients = $platform->getClients();
             
             foreach ($clients as $client) {
-                $allClients[$client['device_code']] = with(new ApplicationClient())->setDeviceClient($client['device_client'])
-                                                                                   ->setDeviceName($client['device_name'])
-                                                                                   ->setDeviceCode($client['device_code'])
-                                                                                   ->setDeviceIcon($client['device_icon'])
-                                                                                   ->setPlatformCode($platform->getCode())
-                                                                                   ->setPlatform($platform);
+                if (array_get($client, 'device_code')) {
+
+                    $allClients[array_get($client, 'device_code')]
+                        = with(new ApplicationClient())
+                        ->setDeviceClient(array_get($client, 'device_client'))
+                        ->setDeviceName(array_get($client, 'device_name'))
+                        ->setDeviceCode(array_get($client, 'device_code'))
+                        ->setDeviceIcon(array_get($client, 'device_icon'))
+                        ->setPlatformCode($platform->getCode())
+                        ->setPlatform($platform);
+
+                }
+
+
             }
         }
         
@@ -216,18 +227,25 @@ class ApplicationFactory
         $allClients = [];
 
         foreach (self::$factories as $key => $value) {
+            /**
+             * @var \Ecjia\App\Mobile\ApplicationPlatform $platform
+             */
             $platform = new $value;
 
             if (in_array($platform->getCode(), $platforms)) {
                 $clients = $platform->getClients();
 
                 foreach ($clients as $client) {
-                    $allClients[$client['device_code']] = with(new ApplicationClient())->setDeviceClient($client['device_client'])
-                        ->setDeviceName($client['device_name'])
-                        ->setDeviceCode($client['device_code'])
-                        ->setDeviceIcon($client['device_icon'])
+
+                    $allClients[array_get($client, 'device_code')]
+                        = with(new ApplicationClient())
+                        ->setDeviceClient(array_get($client, 'device_client'))
+                        ->setDeviceName(array_get($client, 'device_name'))
+                        ->setDeviceCode(array_get($client, 'device_code'))
+                        ->setDeviceIcon(array_get($client, 'device_icon'))
                         ->setPlatformCode($platform->getCode())
                         ->setPlatform($platform);
+
                 }
             }
         }
