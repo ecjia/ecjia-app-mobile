@@ -102,8 +102,7 @@ class device_setDeviceinfo_module extends api_front implements api_interface {
 			$data['visit_times']		        = $row['visit_times'] + 1;
 			$data['update_time']		        = RC_Time::gmtime();
             $data['user_id']		            = session('session_user_id');
-            $data['user_type']		            = session('session_user_type');
-			
+
 			RC_DB::table('mobile_device')->where('device_udid', $device['udid'])->where('device_client', $device['client'])->where('device_code', $device['code'])->where('user_type', $user_type)->update($data);
 		}
 		return array();
