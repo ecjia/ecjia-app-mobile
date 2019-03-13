@@ -54,7 +54,7 @@ class device_setDeviceinfo_module extends api_front implements api_interface {
 		
 		$device = $this->device;
 		
-		$device['device_token'] = $this->requestData('device_token');
+		$device_token = $this->requestData('device_token');
 		
 		$device_name	= $this->requestData('device_name');
 		$device_os		= $this->requestData('device_os');
@@ -77,7 +77,8 @@ class device_setDeviceinfo_module extends api_front implements api_interface {
 		
 		if (empty($row)) {
 			$device_data['add_time']		    = RC_Time::gmtime();
-			$device_data['device_token']	    = !empty($device['device_token']) ? $device['device_token'] : '';
+            $device_data['update_time']		    = RC_Time::gmtime();
+			$device_data['device_token']	    = $device_token;
 			$device_data['device_name']		    = $device_name;
 			$device_data['device_os']		    = $device_os;
 			$device_data['device_type']		    = $device_type;
@@ -91,9 +92,7 @@ class device_setDeviceinfo_module extends api_front implements api_interface {
 			RC_DB::table('mobile_device')->insert($device_data);
 		} else {
 			$data = array();
-			if (!empty($device['device_token'])) {
-				$data['device_token'] = $device['device_token'];
-			}
+            $data['device_token']               = $device_token;
 			$data['device_name']		        = $device_name;
 			$data['device_os']			        = $device_os;
 			$data['device_type']		        = $device_type;
@@ -105,6 +104,7 @@ class device_setDeviceinfo_module extends api_front implements api_interface {
 
 			RC_DB::table('mobile_device')->where('device_udid', $device['udid'])->where('device_client', $device['client'])->where('device_code', $device['code'])->where('user_type', $user_type)->update($data);
 		}
+		
 		return array();
 		
 	}
