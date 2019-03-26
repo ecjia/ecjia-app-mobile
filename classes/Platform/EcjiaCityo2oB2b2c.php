@@ -99,7 +99,7 @@ class EcjiaCityo2oB2b2c extends ApplicationPlatform implements HomeComponentInte
     	'pay_balance',
     	'pay_cod',
     	'pay_alipay',
-    	'pay_wxpay_app',
+    	'pay_wxpay_bbc',
     ];
     
     /**
