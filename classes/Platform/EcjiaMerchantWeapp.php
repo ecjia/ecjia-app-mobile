@@ -48,9 +48,8 @@
 namespace Ecjia\App\Mobile\Platform;
 
 use Ecjia\App\Mobile\ApplicationPlatform;
-use Ecjia\App\Mobile\Contracts\HomeComponentInterface;
 
-class EcjiaMerchantWeapp extends ApplicationPlatform implements HomeComponentInterface
+class EcjiaMerchantWeapp extends ApplicationPlatform
 {
 
     /**
@@ -102,28 +101,6 @@ class EcjiaMerchantWeapp extends ApplicationPlatform implements HomeComponentInt
             ],
         ];
 
-    }
-
-    /**
-     * 获取首页默认模块组件
-     * @return mixed
-     */
-    public function getHomeComponent()
-    {
-        return [
-
-        ];
-    }
-
-    /**
-     * 获取首页定义允许使用的模块组件
-     * @return mixed
-     */
-    public function getDefinedHomeComponent()
-    {
-        return [
-
-        ];
     }
     
 }
