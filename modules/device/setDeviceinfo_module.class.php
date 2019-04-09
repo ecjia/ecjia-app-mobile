@@ -73,7 +73,7 @@ class device_setDeviceinfo_module extends api_front implements api_interface {
 				'device_code'	=> $device['code'],
 				'user_type'		=> $user_type,
 		);
-		$row = RC_DB::table('mobile_device')->where('device_udid', $device['udid'])->where('device_client', $device['client'])->where('device_code', $device['code'])->where('user_type', $user_type)->first();
+		$row = RC_DB::table('mobile_device')->where('device_udid', $device['udid'])->where('device_client', $device['client'])->where('device_code', $device['code'])->where('user_type', $user_type)->orderBy('update_time', 'desc')->first();
 		
 		if (empty($row)) {
 			$device_data['add_time']		    = RC_Time::gmtime();
