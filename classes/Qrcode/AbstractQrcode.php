@@ -120,9 +120,11 @@ abstract class AbstractQrcode extends RC_Object
                     ->merge($this->logo, 0.2, true)
                     ->errorCorrection('L')
                     ->generate($this->content(), $tempPath);
-                    
+
+        $content = file_get_contents($tempPath);
+
         //上传临时文件到指定目录            
-        RC_Storage::disk()->move($tempPath, $this->getQrcodePath($size), true, FS_CHMOD_FILE);
+        RC_Storage::disk()->write($this->getQrcodePath($size), $content);
 
         //删除临时文件
         RC_File::delete($tempPath);
