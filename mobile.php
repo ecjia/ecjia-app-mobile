@@ -68,7 +68,7 @@ class mobile extends ecjia_front {
         $this->assign_lang();
         
         
-        return $this->display(
+        return return $this->display(
         	RC_Package::package('app::mobile')->loadTemplate('front/download.dwt', true)
         );
 
