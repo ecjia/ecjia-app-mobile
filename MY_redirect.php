@@ -92,20 +92,22 @@ class MY_redirect extends ecjia_front
             $url = str_replace(RC_Uri::site_url(), RC_Uri::home_url().'/sites/m', $url);
             return $url;
         });
-            // 商家主页跳转
-            ecjia_open::macro('merchant', function($querys) {
-                $url = RC_Uri::url('merchant/index/init', array('store_id' => $querys['merchant_id']));
-                $url = str_replace(RC_Uri::site_url(), RC_Uri::home_url().'/sites/m', $url);
-                return $url;
-            });
-                // 商家收款码跳转
-                ecjia_open::macro('collectmoney', function($querys) {
-                    $url = RC_Uri::url('merchant/quickpay/collectmoney', array('store_id' => $querys['merchant_id']));
-                    $url = str_replace(RC_Uri::site_url(), RC_Uri::home_url().'/sites/m', $url);
-                    return $url;
-                });
+
+        // 商家主页跳转
+        ecjia_open::macro('merchant', function($querys) {
+            $url = RC_Uri::url('merchant/index/init', array('store_id' => $querys['merchant_id']));
+            $url = str_replace(RC_Uri::site_url(), RC_Uri::home_url().'/sites/m', $url);
+            return $url;
+        });
+
+        // 商家收款码跳转
+        ecjia_open::macro('collectmoney', function($querys) {
+            $url = RC_Uri::url('merchant/quickpay/collectmoney', array('store_id' => $querys['merchant_id']));
+            $url = str_replace(RC_Uri::site_url(), RC_Uri::home_url().'/sites/m', $url);
+            return $url;
+        });
                     
-                    return with(new ecjia_open($ecjiaopen))->toHttpUrl();
+        return with(new ecjia_open($ecjiaopen))->toHttpUrl();
     }
     
 }
